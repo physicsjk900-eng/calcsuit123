@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exponent Calculator | CalcSuite</title>
+    <meta name="description" content="Free online exponent calculator. Calculate x to the power of y.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        sky: { 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <div id="sidebar-container" class="contents"></div>
+
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2
+                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
+                            Exponent Calc</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate base <span
+                                class="font-serif italic font-semibold">x</span> raised to the power of <span
+                                class="font-serif italic font-semibold">y</span>.</p>
+                    </div>
+                </div>
+
+                <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-2">
+                            <div>
+                                <label
+                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Base
+                                    (x)</label>
+                                <input type="number" id="exp-base" class="perc-input w-full font-bold text-xl py-3"
+                                    placeholder="2">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Exponent
+                                    (y)</label>
+                                <input type="number" id="exp-power" class="perc-input w-full font-bold text-xl py-3"
+                                    placeholder="8">
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-center">
+                            <span class="text-4xl font-serif italic font-bold text-sky-500" id="exp-visualizer">x<sup
+                                    class="text-2xl text-sky-400 ml-1">y</sup></span>
+                        </div>
+                    </div>
+
+                    <div id="exp-results-area"
+                        class="hidden opacity-0 flex flex-col items-center justify-center gap-4 mt-4 transition-all duration-500">
+                        <div class="text-4xl font-light text-slate-400">=</div>
+                        <div
+                            class="glass-display w-full p-8 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30">
+                            <button
+                                class="copy-trigger absolute top-3 right-3 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="exp-res-value"><i class="fas fa-copy"></i></button>
+                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2">Result
+                            </div>
+                            <div class="text-5xl font-bold text-sky-600 dark:text-sky-400 break-all" id="exp-res-value">
+                                &mdash;</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <br>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
+                        Exponent Calculator – Calculate Base x Raised to the Power of y
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        An exponent calculator is a powerful online tool that helps you quickly calculate numbers raised
+                        to a specific power. Our free online exponent calculator allows you to easily compute base x
+                        raised to the power of y, providing instant and accurate results.
+                    </p>
+                </header>
+                <br>
+
+                <div class="intro-section">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        Exponents are widely used in mathematics, algebra, science, engineering, and computer science.
+                        Instead of performing complicated exponent calculations manually, you can use this power
+                        calculator online to solve exponential expressions quickly and efficiently.
+                    </p>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        Whether you are a student learning exponents, a teacher verifying calculations, or a
+                        professional working with mathematical formulas, this exponent calculator tool makes exponent
+                        calculations simple and reliable.
+                    </p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is an
+                        Exponent?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        An exponent represents how many times a number (called the base) is multiplied by itself. It is
+                        written in the form: <strong>xʸ</strong>
+                    </p>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-2">Where:</p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6 mb-4">
+                        <li><strong>x</strong> is the base number</li>
+                        <li><strong>y</strong> is the exponent or power</li>
+                    </ul>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-2">Examples:</p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
+                        <li>2³ = 2 × 2 × 2 = 8</li>
+                        <li>5² = 5 × 5 = 25</li>
+                        <li>10⁴ = 10 × 10 × 10 × 10 = 10,000</li>
+                    </ul>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
+                        an Online Exponent Calculator</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Instant Results</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">The calculator computes exponential
+                                values instantly without manual multiplication.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Highly Accurate</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Avoid manual mistakes with larger
+                                powers; our tool ensures precise mathematical results.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Completely free to use with no
+                                registration required on any modern device.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Multi-Purpose</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Perfect for algebra, scientific
+                                research, computer science, and financial growth calculations.</p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
+                        Exponent Calculator</h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
+                        <li>Enter the base number (<strong>x</strong>).</li>
+                        <li>Enter the exponent value (<strong>y</strong>).</li>
+                        <li>Click the <strong>Calculate</strong> button.</li>
+                        <li>Instantly view the result of x raised to the power of y.</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Simplify your calculations!</h2>
+                    <p class="text-slate-500 dark:text-slate-400">
+                        Start using the exponent calculator online today and solve complex power expressions in seconds.
+                    </p>
+                </section>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 Exponent Calculator Tool. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/exponent.js"></script>
+</body>
+
+</html>

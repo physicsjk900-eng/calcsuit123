@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter | CalcSuite</title>
+    <meta name="description"
+        content="Free online temperature converter. Convert between Celsius, Fahrenheit, and Kelvin.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        amber: { 100: '#fef3c7', 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', 900: '#78350f' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <div id="sidebar-container" class="contents"></div>
+
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2
+                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
+                            Temperature Converter</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Convert instantly between Celsius,
+                            Fahrenheit, and Kelvin.</p>
+                    </div>
+                </div>
+
+                <div class="max-w-3xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-lg border-t-4 border-t-amber-400">
+                        <div class="flex flex-col md:flex-row gap-6 items-center">
+
+                            <!-- Left Side -->
+                            <div
+                                class="flex-1 w-full bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700">
+                                <label
+                                    class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">From</label>
+                                <input type="number" id="temp-val-1"
+                                    class="perc-input w-full font-bold text-3xl py-4 mb-4" placeholder="0" value="0">
+                                <select id="temp-unit-1"
+                                    class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-medium text-slate-700 dark:text-slate-200 cursor-pointer shadow-sm appearance-none outline-none focus:ring-2 focus:ring-amber-500 transition-shadow">
+                                    <option value="c" selected>Celsius (&deg;C)</option>
+                                    <option value="f">Fahrenheit (&deg;F)</option>
+                                    <option value="k">Kelvin (K)</option>
+                                </select>
+                            </div>
+
+                            <!-- Swap Button -->
+                            <button id="temp-swap"
+                                class="shrink-0 w-12 h-12 bg-amber-100 hover:bg-amber-200 dark:bg-amber-900/40 dark:hover:bg-amber-900/60 text-amber-600 dark:text-amber-400 rounded-full flex items-center justify-center shadow-md transition-all active:scale-95 group">
+                                <i
+                                    class="fas fa-exchange-alt transform group-hover:rotate-180 transition-transform duration-500"></i>
+                            </button>
+
+                            <!-- Right Side -->
+                            <div
+                                class="flex-1 w-full bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700">
+                                <label
+                                    class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">To</label>
+                                <input type="number" id="temp-val-2"
+                                    class="perc-input w-full font-bold text-3xl py-4 mb-4" placeholder="32">
+                                <select id="temp-unit-2"
+                                    class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-medium text-slate-700 dark:text-slate-200 cursor-pointer shadow-sm appearance-none outline-none focus:ring-2 focus:ring-amber-500 transition-shadow">
+                                    <option value="c">Celsius (&deg;C)</option>
+                                    <option value="f" selected>Fahrenheit (&deg;F)</option>
+                                    <option value="k">Kelvin (K)</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <br>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
+                        <strong>Temperature Converter</strong> – Convert Instantly Between <strong>Celsius, Fahrenheit,
+                            and Kelvin</strong>
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        A <strong>temperature converter</strong> is a fast and reliable <strong>online tool</strong>
+                        that allows you to convert temperatures between Celsius, Fahrenheit, and Kelvin instantly. Our
+                        <strong>free online temperature converter</strong> is perfect for students, scientists,
+                        engineers, and everyday users who need <strong>accurate temperature conversions</strong>.
+                    </p>
+                </header>
+                <br>
+
+                <div class="intro-section">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        Whether you are working on science experiments, cooking, or climate data analysis, this
+                        <strong>temperature conversion calculator online</strong> saves time and ensures <strong>precise
+                            results</strong>.
+                    </p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a
+                        <strong>Temperature Converter</strong>?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        A <strong>temperature converter</strong> is a digital tool designed to convert a temperature
+                        value from one unit to another. It supports the most commonly used units:
+                    </p>
+
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
+                        <li><strong>Celsius (°C)</strong> – Metric system</li>
+                        <li><strong>Fahrenheit (°F)</strong> – Imperial/US system</li>
+                        <li><strong>Kelvin (K)</strong> – Scientific standard</li>
+                    </ul>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4">
+                        With a <strong>temperature converter online</strong>, you can switch between units effortlessly,
+                        without needing manual <strong>formulas or calculations</strong>.
+                    </p>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
+                        an <strong>Online Temperature Converter</strong></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Instant and Accurate</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Get <strong>precise temperature
+                                    conversions</strong> in seconds without errors.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Universal Support</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Convert between <strong>Celsius to
+                                    Fahrenheit</strong>, Kelvin, and more for science or cooking.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Our <strong>free temperature
+                                    converter</strong> works on any device without registration.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Easy for Chefs</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Quickly adjust <strong>oven
+                                    temperatures</strong> and recipe measurements from different regions.</p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
+                        <strong>Temperature Converter</strong></h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
+                        <li>Enter the temperature value you want to convert.</li>
+                        <li>Select the unit to <strong>convert from</strong> (Celsius, Fahrenheit, or Kelvin).</li>
+                        <li>Select the unit to <strong>convert to</strong>.</li>
+                        <li>Click <strong>convert</strong> to get the result instantly.</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Simplify your <strong>temperature
+                            calculations</strong>!</h2>
+                    <p class="text-slate-500 dark:text-slate-400">
+                        Try our <strong>online temperature converter</strong> today to ensure <strong>accurate
+                            measurements</strong> for weather, labs, or cooking.
+                    </p>
+                </section>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 <strong>Temperature Converter Tool</strong>. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/temperature.js"></script>
+</body>
+
+</html>

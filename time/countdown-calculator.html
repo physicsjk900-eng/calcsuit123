@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Calculator | CalcSuite</title>
+    <meta name="description"
+        content="Free online countdown timer and date calculator. See how much time is left until a specific date.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        purple: { 100: '#f3e8ff', 400: '#c084fc', 500: '#a855f7', 600: '#9333ea', 900: '#581c87' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <div id="sidebar-container" class="contents"></div>
+
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2
+                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
+                            Countdown</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate exact days, hours, and
+                            minutes until a future date.</p>
+                    </div>
+                </div>
+
+                <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-purple-400">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="sm:col-span-2 text-center mb-2">
+                                <label
+                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide"><i
+                                        class="far fa-calendar-alt mr-1"></i> Target Date & Time</label>
+                                <input type="datetime-local" id="cd-target"
+                                    class="perc-input w-full font-bold text-lg py-3 cursor-pointer text-center">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="cd-results-area" class="opacity-0 flex flex-col mt-4 transition-all duration-500">
+                        <div
+                            class="glass-display w-full p-8 rounded-3xl text-center group relative border border-purple-100 dark:border-purple-900/30 shadow-[inset_0_2px_10px_rgba(0,0,0,0.05)]">
+                            <i
+                                class="fas fa-hourglass-half text-purple-400/50 text-5xl absolute top-6 left-6 -z-10 animate-pulse"></i>
+
+                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-6">Time
+                                Remaining</div>
+
+                            <div class="grid grid-cols-4 gap-2 sm:gap-6 w-full max-w-lg mx-auto">
+                                <div class="flex flex-col items-center">
+                                    <div class="text-3xl sm:text-5xl font-bold text-purple-600 dark:text-purple-400 mb-1"
+                                        id="cd-res-d">00</div>
+                                    <div class="text-xs uppercase tracking-widest text-slate-400">Days</div>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="text-3xl sm:text-5xl font-bold text-purple-600 dark:text-purple-400 mb-1"
+                                        id="cd-res-h">00</div>
+                                    <div class="text-xs uppercase tracking-widest text-slate-400">Hours</div>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="text-3xl sm:text-5xl font-bold text-purple-600 dark:text-purple-400 mb-1"
+                                        id="cd-res-m">00</div>
+                                    <div class="text-xs uppercase tracking-widest text-slate-400">Mins</div>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="text-3xl sm:text-5xl font-bold text-purple-600 dark:text-purple-400 mb-1"
+                                        id="cd-res-s">00</div>
+                                    <div class="text-xs uppercase tracking-widest text-slate-400">Secs</div>
+                                </div>
+                            </div>
+
+                            <div class="mt-8 pt-4 border-t border-slate-200 dark:border-slate-700/50">
+                                <div class="text-sm font-medium text-slate-500 dark:text-slate-400" id="cd-message">
+                                    Select a future date to start the countdown.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <br>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
+                        <strong>Countdown Calculator</strong> – Calculate Exact Days, Hours, and Minutes Until a Future
+                        Date
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        A <strong>countdown calculator</strong> is a handy <strong>online tool</strong> that lets you
+                        calculate the exact <strong>time remaining</strong> until any future date. Our <strong>free
+                            online countdown calculator</strong> displays the remaining days, hours, and minutes,
+                        helping you plan events, deadlines, or special occasions accurately.
+                    </p>
+                </header>
+                <br>
+
+                <div class="intro-section">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        Whether you are a student, professional, or event organizer, this <strong>countdown calculator
+                            online</strong> ensures you never miss an important date.
+                    </p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a
+                        <strong>Countdown Calculator</strong>?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        A <strong>countdown calculator</strong> is a digital tool that calculates the remaining time
+                        from the current moment to a specified <strong>future target date</strong>. It breaks down the
+                        countdown into:
+                    </p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
+                        <li><strong>Remaining Days</strong></li>
+                        <li><strong>Remaining Hours</strong></li>
+                        <li><strong>Remaining Minutes</strong></li>
+                    </ul>
+
+
+
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4">
+                        It is particularly useful for <strong>planning birthdays</strong>, tracking <strong>project
+                            deadlines</strong>, and counting down to exams or special occasions.
+                    </p>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
+                        an <strong>Online Countdown Calculator</strong></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Accurate Time Tracking</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Get precise <strong>time
+                                    differences</strong> between the current moment and your target date.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Easy Planning</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Schedule events and <strong>launch
+                                    dates</strong> efficiently using accurate real-time data.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Our <strong>time countdown
+                                    tool</strong> is free to use on any device without registration.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Instant Calculation</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Results appear immediately, providing
+                                the exact <strong>duration until the event</strong>.</p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
+                        <strong>Countdown Calculator</strong></h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
+                        <li>Enter your <strong>future target date</strong>.</li>
+                        <li>Click <strong>calculate</strong>.</li>
+                        <li>Instantly view the remaining <strong>days, hours, and minutes</strong> until that date.</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Plan your next milestone!</h2>
+                    <p class="text-slate-500 dark:text-slate-400">
+                        Try our <strong>online countdown calculator</strong> today to manage your deadlines and special
+                        occasions with <strong>accurate timing</strong>.
+                    </p>
+                </section>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 <strong>Countdown Calculator Tool</strong>. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/countdown.js"></script>
+</body>
+
+</html>

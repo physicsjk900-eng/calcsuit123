@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Calculator | CalcSuite</title>
+    <meta name="description" content="Free online matrix calculator. Calculate the determinant of a 3x3 matrix.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        sky: { 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <div id="sidebar-container" class="contents"></div>
+
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2
+                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
+                            3x3 Matrix Determinant</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate the determinant |A| of a
+                            3x3 matrix instantly.</p>
+                    </div>
+                </div>
+
+                <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
+                        <div class="flex items-center justify-center">
+                            <!-- Left Bracket -->
+                            <div
+                                class="w-4 border-l-4 border-t-4 border-b-4 border-slate-400 dark:border-slate-500 rounded-l-xl h-48">
+                            </div>
+
+                            <!-- 3x3 Grid -->
+                            <div class="grid grid-cols-3 gap-3 px-4">
+                                <!-- Row 1 -->
+                                <input type="number" id="m-00"
+                                    class="perc-input w-16 sm:w-20 text-center font-bold text-lg py-3" placeholder="a">
+                                <input type="number" id="m-01"
+                                    class="perc-input w-16 sm:w-20 text-center font-bold text-lg py-3" placeholder="b">
+                                <input type="number" id="m-02"
+                                    class="perc-input w-16 sm:w-20 text-center font-bold text-lg py-3" placeholder="c">
+                                <!-- Row 2 -->
+                                <input type="number" id="m-10"
+                                    class="perc-input w-16 sm:w-20 text-center font-bold text-lg py-3" placeholder="d">
+                                <input type="number" id="m-11"
+                                    class="perc-input w-16 sm:w-20 text-center font-bold text-lg py-3" placeholder="e">
+                                <input type="number" id="m-12"
+                                    class="perc-input w-16 sm:w-20 text-center font-bold text-lg py-3" placeholder="f">
+                                <!-- Row 3 -->
+                                <input type="number" id="m-20"
+                                    class="perc-input w-16 sm:w-20 text-center font-bold text-lg py-3" placeholder="g">
+                                <input type="number" id="m-21"
+                                    class="perc-input w-16 sm:w-20 text-center font-bold text-lg py-3" placeholder="h">
+                                <input type="number" id="m-22"
+                                    class="perc-input w-16 sm:w-20 text-center font-bold text-lg py-3" placeholder="i">
+                            </div>
+
+                            <!-- Right Bracket -->
+                            <div
+                                class="w-4 border-r-4 border-t-4 border-b-4 border-slate-400 dark:border-slate-500 rounded-r-xl h-48">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="matrix-results-area"
+                        class="hidden opacity-0 flex flex-col items-center justify-center gap-4 mt-4 transition-all duration-500">
+                        <div class="text-4xl font-light text-slate-400">=</div>
+                        <div
+                            class="glass-display w-full p-8 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30">
+                            <button
+                                class="copy-trigger absolute top-3 right-3 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="matrix-res-value"><i class="fas fa-copy"></i></button>
+                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2">Determinant
+                                |A|</div>
+                            <div class="text-5xl font-bold text-sky-600 dark:text-sky-400 break-all"
+                                id="matrix-res-value">&mdash;</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <br>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
+                        Matrix Calculator – Perform Matrix Operations Online
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        A <strong>matrix calculator</strong> is a powerful online tool that allows you to perform
+                        various matrix operations quickly and accurately. Our <strong>free online matrix
+                            calculator</strong> lets you add, subtract, multiply, find the determinant, inverse, and
+                        transpose of matrices in seconds without manual calculations.
+                    </p>
+                </header>
+                <br>
+
+                <div class="intro-section">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        Whether you are a student learning <strong>linear algebra</strong>, a teacher verifying
+                        solutions, or a professional working with matrices, this <strong>matrix calculator
+                            online</strong> simplifies complex matrix computations and saves time.
+                    </p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a Matrix
+                        Calculator?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        A <strong>matrix calculator</strong> is a digital tool that automates calculations involving
+                        matrices, which are rectangular arrays of numbers, symbols, or expressions arranged in rows and
+                        columns.
+                    </p>
+
+
+
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        With a <strong>matrix math calculator</strong>, you can perform:
+                    </p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
+                        <li><strong>Matrix addition and subtraction</strong></li>
+                        <li><strong>Matrix multiplication</strong></li>
+                        <li><strong>Determinant calculation</strong></li>
+                        <li><strong>Inverse of a matrix</strong></li>
+                        <li><strong>Transpose of a matrix</strong></li>
+                        <li><strong>Scalar multiplication</strong></li>
+                    </ul>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Why Use our Online
+                        Matrix Calculator?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Instant Results</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Compute <strong>matrix
+                                    operations</strong> instantly instead of spending minutes on manual row reduction.
+                            </p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">High Accuracy</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Avoid arithmetic errors in
+                                <strong>determinants</strong> or <strong>inverses</strong>. The tool ensures precise
+                                decimal or integer results.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Our <strong>matrix solver</strong> is
+                                100% free with no registration, working perfectly on mobile and desktop.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Universal Utility</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Essential for <strong>data
+                                    science</strong>, computer graphics, physics simulations, and engineering modeling.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
+                        Matrix Calculator</h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
+                        <li>Enter the elements of your matrices in the input fields provided.</li>
+                        <li>Select the <strong>matrix operation</strong> (add, subtract, multiply, determinant, inverse,
+                            transpose).</li>
+                        <li>Click the <strong>Calculate</strong> button.</li>
+                        <li>Instantly view the resulting matrix or numerical value (like the
+                            <strong>determinant</strong>).</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Solve complex matrices now!</h2>
+                    <p class="text-slate-500 dark:text-slate-400">
+                        Try the <strong>online matrix calculator</strong> today and simplify your <strong>linear
+                            algebra</strong> and numerical computing tasks.
+                    </p>
+                </section>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 Matrix Calculator Tool. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/matrix.js"></script>
+</body>
+
+</html>

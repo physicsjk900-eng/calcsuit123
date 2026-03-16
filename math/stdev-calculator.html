@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Deviation Calculator | CalcSuite</title>
+    <meta name="description"
+        content="Free online standard deviation calculator. Calculate sample and population standard deviation, variance, and mean.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        sky: { 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' },
+                        indigo: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <div id="sidebar-container" class="contents"></div>
+
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2
+                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
+                            Standard Deviation</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate sample and population
+                            standard deviation (&sigma;), variance, and mean.</p>
+                    </div>
+                </div>
+
+                <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
+                        <label
+                            class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Enter
+                            Numbers</label>
+                        <p class="text-xs text-slate-400 mb-4">Values should be separated by commas, spaces, or
+                            newlines.</p>
+                        <textarea id="std-input" rows="4"
+                            class="perc-input w-full font-medium text-lg py-3 px-4 resize-y leading-relaxed"
+                            placeholder="10, 25, 42, 100..."></textarea>
+                    </div>
+
+                    <div id="std-results-area"
+                        class="hidden opacity-0 grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2 transition-all duration-500">
+                        <div
+                            class="glass-display p-6 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30">
+                            <button
+                                class="copy-trigger absolute top-3 right-3 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="std-res-sample"><i class="fas fa-copy"></i></button>
+                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">Sample Std
+                                Dev (s)</div>
+                            <div class="text-4xl font-bold text-sky-600 dark:text-sky-400 break-all"
+                                id="std-res-sample">&mdash;</div>
+                        </div>
+
+                        <div
+                            class="glass-display p-6 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30">
+                            <button
+                                class="copy-trigger absolute top-3 right-3 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="std-res-pop"><i class="fas fa-copy"></i></button>
+                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">Population
+                                Std Dev (&sigma;)</div>
+                            <div class="text-4xl font-bold text-sky-600 dark:text-sky-400 break-all" id="std-res-pop">
+                                &mdash;</div>
+                        </div>
+
+                        <div class="glass-display p-4 rounded-3xl text-center group relative">
+                            <button
+                                class="copy-trigger absolute top-3 right-3 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="std-res-var"><i class="fas fa-copy"></i></button>
+                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">Sample
+                                Variance (s&sup2;)</div>
+                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-200" id="std-res-var">&mdash;
+                            </div>
+                        </div>
+
+                        <div class="glass-display p-4 rounded-3xl text-center group relative">
+                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">Mean (&mu;
+                                / x&#772;)</div>
+                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-200" id="std-res-mean">&mdash;
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+    <br>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
+                        Standard Deviation Calculator – Calculate Sample & Population σ, Variance, and Mean
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        A standard deviation calculator is a powerful online tool that helps you analyze data sets by
+                        calculating sample and population standard deviation (σ), variance, and mean quickly and
+                        accurately. Our free online standard deviation calculator simplifies complex statistical
+                        calculations, making it easy to understand and interpret data.
+                    </p>
+                </header>
+                <br>
+
+                <div class="intro-section">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        Whether you are a student studying statistics, a teacher verifying results, or a professional
+                        analyzing data, this statistics calculator online provides fast and reliable results for all
+                        your statistical needs.
+                    </p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is Standard
+                        Deviation?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        Standard deviation (σ) is a key statistical measure that quantifies the amount of variation or
+                        dispersion in a set of numbers. A low standard deviation means the values are close to the mean,
+                        while a high standard deviation indicates that the data points are spread out over a wider
+                        range.
+                    </p>
+
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4">Standard deviation is commonly used in
+                        statistics, finance, research analysis, and quality control.</p>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a Standard
+                        Deviation Calculator?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        Our online tool automatically performs the heavy lifting for your statistical analysis,
+                        instantly providing:
+                    </p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
+                        <li><strong>Sample Standard Deviation (s)</strong> – Used for a subset of a larger group.</li>
+                        <li><strong>Population Standard Deviation (σ)</strong> – Used for an entire data population.
+                        </li>
+                        <li><strong>Variance</strong> – The square of the standard deviation.</li>
+                        <li><strong>Mean (Average)</strong> – The arithmetic average of your data set.</li>
+                    </ul>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Why Use an Online
+                        Standard Deviation Calculator?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Fast and Accurate</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Calculates σ, s, variance, and mean
+                                instantly, saving you from long manual formulas.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Reduces Manual Errors</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Statistical formulas are complex;
+                                using a digital tool ensures precision for every data set.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">No registration required. Works
+                                perfectly on smartphones, tablets, and desktop computers.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Instant Data Insight</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Perfect for students, teachers, data
+                                analysts, and researchers across all fields.</p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
+                        Standard Deviation Calculator</h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
+                        <li>Enter your data set separated by commas, spaces, or line breaks.</li>
+                        <li>Select whether your data represents a <strong>sample</strong> or a
+                            <strong>population</strong>.</li>
+                        <li>Click the <strong>Calculate</strong> button.</li>
+                        <li>Instantly view the mean, variance, and standard deviation results.</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Make data analysis effortless!
+                    </h2>
+
+                    <p class="text-slate-500 dark:text-slate-400 mt-4">
+                        Try the standard deviation calculator today and get precise results for your assignments or
+                        research projects.
+                    </p>
+                </section>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 Standard Deviation Calculator Tool. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/stdev.js"></script>
+</body>
+
+</html>

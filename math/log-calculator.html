@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logarithm Calculator | CalcSuite</title>
+    <meta name="description"
+        content="Free online logarithm calculator. Calculate log base 10, natural log, or any custom base.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        sky: { 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <div id="sidebar-container" class="contents"></div>
+
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2
+                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
+                            Logarithm Calc</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate logarithms for any base
+                            computationally.</p>
+                    </div>
+                </div>
+
+                <div class="max-w-xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
+                        <div class="flex items-end justify-center gap-4 mb-2">
+                            <span class="text-5xl font-serif italic text-slate-400 mb-2">log</span>
+                            <div class="flex flex-col items-center w-24">
+                                <label
+                                    class="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Base</label>
+                                <input type="number" id="log-base"
+                                    class="perc-input w-full text-center font-bold text-lg py-2" value="10"
+                                    placeholder="10">
+                            </div>
+                            <span class="text-4xl font-light text-slate-400 mb-2">(</span>
+                            <div class="flex flex-col items-center w-32">
+                                <label
+                                    class="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Number</label>
+                                <input type="number" id="log-number"
+                                    class="perc-input w-full text-center font-bold text-2xl py-2" placeholder="100">
+                            </div>
+                            <span class="text-4xl font-light text-slate-400 mb-2">)</span>
+                        </div>
+                    </div>
+
+                    <div id="log-results-area"
+                        class="hidden opacity-0 flex flex-col items-center justify-center gap-4 mt-4 transition-all duration-500">
+                        <div class="text-4xl font-light text-slate-400">=</div>
+                        <div
+                            class="glass-display w-full p-8 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30">
+                            <button
+                                class="copy-trigger absolute top-3 right-3 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="log-res-value"><i class="fas fa-copy"></i></button>
+                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2">Result
+                            </div>
+                            <div class="text-5xl font-bold text-sky-600 dark:text-sky-400 break-all" id="log-res-value">
+                                &mdash;</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <br>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
+                        Logarithm Calculator – Calculate Logarithms for Any Base
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        A logarithm calculator is a powerful online tool that helps you quickly compute logarithms for
+                        any base. Our free online log calculator allows you to calculate logarithmic values for base 10,
+                        base e (natural logarithm), or any custom base, providing instant and accurate results.
+                    </p>
+                </header>
+                <br>
+
+                <div class="intro-section">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        Whether you are a student studying mathematics, a teacher verifying logarithmic calculations, or
+                        a professional working with scientific data, this logarithm calculator online simplifies
+                        computations and saves time.
+                    </p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a
+                        Logarithm?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        A logarithm is the inverse operation of exponentiation. In other words, if $$b^y = x$$, then:
+                    </p>
+
+
+
+                    <p
+                        class="text-xl font-mono text-center text-slate-800 dark:text-white my-6 bg-slate-100 dark:bg-slate-800 p-4 rounded-xl">
+                        $$\log_b(x) = y$$
+                    </p>
+
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-2">Where:</p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6 mb-4">
+                        <li><strong>b</strong> is the base ($$b > 0, b \neq 1$$)</li>
+                        <li><strong>x</strong> is the number you want to find the logarithm of</li>
+                        <li><strong>y</strong> is the exponent</li>
+                    </ul>
+
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-2">Examples:</p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
+                        <li>$$\log_2(8) = 3$$, because $$2^3 = 8$$</li>
+                        <li>$$\log_{10}(1000) = 3$$, because $$10^3 = 1000$$</li>
+                        <li>$$\ln(e^5) = 5$$, where <strong>ln</strong> is the natural logarithm (base
+                            <strong>e</strong>)</li>
+                    </ul>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Why Use an Online
+                        Logarithm Calculator?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Instant Results</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Calculates logarithmic values
+                                immediately without the need for manual table lookups or complex formulas.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">High Accuracy</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Ensures precision in scientific and
+                                financial data where manual rounding errors can cause issues.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Completely free to use on any device,
+                                making it perfect for students and professionals on the go.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Supports Any Base</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Easily switch between Common Log (base
+                                10), Natural Log (base e), or your own custom base values.</p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
+                        Logarithm Calculator</h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
+                        <li>Enter the number you want to calculate the logarithm of.</li>
+                        <li>Select the base (default options include <strong>10</strong>, <strong>e</strong>, or enter a
+                            <strong>custom base</strong>).</li>
+                        <li>Click the <strong>Calculate</strong> button.</li>
+                        <li>Instantly view the accurate logarithmic result.</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Simplify your math today!</h2>
+                    <p class="text-slate-500 dark:text-slate-400">
+                        Try the logarithm calculator online and make your exponential and logarithmic computations
+                        effortless.
+                    </p>
+                </section>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 Logarithm Calculator Tool. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </main>
+    </div>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
+                        Logarithm Calculator – Calculate Logarithms for Any Base
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        A logarithm calculator is a powerful online tool that helps you quickly compute logarithms for
+                        any base. Our free online log calculator allows you to calculate logarithmic values for base 10,
+                        base e (natural logarithm), or any custom base, providing instant and accurate results.
+                    </p>
+                </header>
+                <br>
+
+                <div class="intro-section">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        Whether you are a student studying mathematics, a teacher verifying logarithmic calculations, or
+                        a professional working with scientific data, this logarithm calculator online simplifies
+                        computations and saves time.
+                    </p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a
+                        Logarithm?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        A logarithm is the inverse operation of exponentiation. In other words, if <strong>b<sup>y</sup>
+                            = x</strong>, then <strong>log<sub>b</sub>(x) = y</strong>.
+                    </p>
+
+
+
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4 mb-2">Where:</p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6 mb-4">
+                        <li><strong>b</strong> is the base (b > 0, b ≠ 1)</li>
+                        <li><strong>x</strong> is the number you want to find the logarithm of</li>
+                        <li><strong>y</strong> is the exponent</li>
+                    </ul>
+
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-2">Examples:</p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
+                        <li>log<sub>2</sub>(8) = 3, because 2<sup>3</sup> = 8</li>
+                        <li>log<sub>10</sub>(1000) = 3, because 10<sup>3</sup> = 1000</li>
+                        <li>ln(e<sup>5</sup>) = 5, where <strong>ln</strong> is the natural logarithm (base e)</li>
+                    </ul>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Why Use an Online
+                        Logarithm Calculator?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Instant Results</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Calculates logarithmic values
+                                immediately without manual computation.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Highly Accurate</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Avoid the complexity of manual logs;
+                                the calculator ensures precise results for any base.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Completely free to use with no
+                                registration, accessible on smartphones, tablets, and desktops.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Versatile Features</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Perfect for math homework, scientific
+                                research, and complex engineering formulas.</p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
+                        Logarithm Calculator</h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
+                        <li>Enter the number you want to calculate the logarithm of.</li>
+                        <li>Select the base (options include 10, e, or a custom base).</li>
+                        <li>Click the <strong>Calculate</strong> button.</li>
+                        <li>Instantly view the accurate logarithmic result.</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Simplify your calculations!</h2>
+                    <p class="text-slate-500 dark:text-slate-400">
+                        Try the online logarithm calculator today and simplify your exponential and scientific math
+                        problems.
+                    </p>
+                </section>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 Logarithm Calculator Tool. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </main>
+    </div>
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/log.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>CalcSuit | Free Online Calculator Suite (Basic, Scientific, Financial etc.)</title>
+    <meta name="title" content="CalcSuit | Free Online Calculator Suite (Basic, Scientific, Financial)">
+    <meta name="description"
+        content="A comprehensive, free online calculator suite featuring basic, scientific, percentage, age, EMI, loan, and interest calculators. Built with a modern, user-friendly interface.">
+    <meta name="keywords"
+        content="online calculator, free calculator, scientific calculator, EMI calculator, loan calculator, interest calculator, percentage calculator, age calculator, web tools">
+    <meta name="author" content="CalcSuite">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#6366f1">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://calcsuit.example.com/">
+    <meta property="og:title" content="CalcSuit - Free Online Calculator Suite">
+    <meta property="og:description"
+        content="A comprehensive, free online calculator suite featuring basic, scientific, percentage, age, EMI, loan, and interest calculators.">
+    <meta property="og:image" content="https://calcsuit.example.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://calcsuit.example.com/">
+    <meta property="twitter:title" content="CalcSuit - Free Online Calculator Suite">
+    <meta property="twitter:description"
+        content="A comprehensive, free online calculator suite featuring basic, scientific, percentage, age, EMI, loan, and interest calculators.">
+    <meta property="twitter:image" content="https://calcsuit.example.com/og-image.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://calcsuit.example.com/" />
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "CalcSuit",
+      "url": "https://calcsuit.example.com/",
+      "description": "A comprehensive suite of online calculators including basic math, scientific, financial, percentage, and age calculators.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Basic Arithmetic Calculator",
+        "Scientific Calculator",
+        "Percentage Calculator",
+        "Age Calculator",
+        "EMI Calculator",
+        "Loan Calculator",
+        "Interest Calculator"
+      ]
+    }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        indigo: {
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <!-- Toast Notification -->
+    <div id="toast"
+        class="fixed top-6 right-6 bg-emerald-500 text-white px-5 py-3 rounded-xl shadow-2xl transform transition-transform duration-300 translate-x-[200%] flex items-center gap-3 z-50 font-medium">
+        <i class="fas fa-check-circle text-xl"></i>
+        <span>Copied to clipboard!</span>
+    </div>
+
+    <!-- Main Container -->
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+
+        <!-- Sidebar Injection Point -->
+        <div id="sidebar-container" class="contents"></div>
+
+        <!-- Main Content Area -->
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <!-- Dashboard View -->
+            <div id="calc-dashboard"
+                class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <div class="flex-1 flex flex-col items-center justify-center text-center pb-20">
+                    <div
+                        class="w-24 h-24 bg-indigo-100 dark:bg-slate-800 rounded-full flex items-center justify-center text-indigo-500 mb-6 shadow-sm border border-indigo-200 dark:border-slate-700">
+                        <i class="fas fa-calculator text-4xl"></i>
+                    </div>
+                    <h2 class="text-4xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Select a <span
+                            class="text-indigo-500">Calculator</span></h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-lg max-w-md">Choose from our suite of tools in the
+                        sidebar to get started with your calculations.</p>
+                </div>
+        </main>
+    </div>
+    <br>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <!-- Dashboard View -->
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Free Online
+                        Calculator</h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl"><strong>Fast, Accurate & Easy-to-Use
+                            Calculator Tool</strong></p>
+                </header>
+                <br>
+
+                <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">In today’s digital world, quick
+                        calculations are essential for students, professionals, and
+                        everyday users. A free online calculator makes it easy to perform math operations instantly
+                        without installing any software. Whether you need to calculate simple arithmetic, percentages,
+                        or complex numbers, an online calculator tool helps you get accurate results in seconds.</p>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">Our free calculator is designed to provide
+                        fast, reliable, and convenient calculations for anyone
+                        who needs quick answers. Instead of using physical calculators or complicated spreadsheets, you
+                        can simply use this web-based calculator directly from your browser.</p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is an Online
+                        Calculator?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">An online calculator is a web-based tool
+                        that allows users to perform mathematical calculations
+                        using the internet. Unlike traditional calculators, these tools work directly in your browser
+                        and can be accessed from any device such as smartphones, tablets, laptops, or desktop computers.
+                    </p>
+
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">A simple calculator online typically
+                        supports operations like:</p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        <li>Addition & Subtraction</li>
+                        <li>Multiplication & Division</li>
+                        <li>Percentage & Decimal calculations</li>
+                    </ul>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">Because they are browser-based, free online
+                        calculators are accessible anytime and anywhere
+                        without downloads or installations.</p>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
+                        a Free Online Calculator</h2>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <h3>1. Instant Results</h3>
+                            <p class="text-slate-500 dark:text-slate-400 max-w-5xl">Perform calculations instantly
+                                without writing formulas. Ideal for checking discounts,
+                                splitting bills, or homework.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>2. 100% Free</h3>
+                            <p class="text-slate-500 dark:text-slate-400 max-w-5xl">No subscriptions or accounts
+                                required. Completely accessible to students and
+                                professionals worldwide.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>3. Any Device</h3>
+                            <p class="text-slate-500 dark:text-slate-400 max-w-5xl">Works seamlessly on smartphones,
+                                tablets, and desktops via your favorite browser.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>4. High Accuracy</h3>
+                            <p class="text-slate-500 dark:text-slate-400 max-w-5xl">Eliminate human error. Ensure
+                                precision in financial planning and complex math.</p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Common Uses</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">From <strong>Student Homework</strong> to
+                        <strong>Budget Planning</strong> and <strong>Business
+                            Work</strong>, a digital math calculator is a versatile companion. It helps verify answers,
+                        calculate shopping discounts, and manage monthly expenses with ease.
+                    </p>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use</h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        <li>Enter the first number.</li>
+                        <li>Choose the operation ( + − × ÷ ).</li>
+                        <li>Enter the second number.</li>
+                        <li>Click calculate and view the result instantly.</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section">
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Ready to start
+                        calculating?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">Make your math faster, easier, and more
+                        accurate today.</p>
+                </section>
+                <br>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 Online Calculator Tool. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+
+
+        </main>
+    </div>
+    <script src="js/layout.js"></script>
+</body>
+
+</html>

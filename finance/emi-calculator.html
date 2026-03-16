@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI Calculator | CalcSuite</title>
+    <meta name="description"
+        content="Free online EMI calculator. Calculate Equated Monthly Installment for home or car loans.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' },
+                        emerald: { 400: '#34d399', 500: '#10b981', 600: '#059669' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="toast"
+        class="fixed top-6 right-6 bg-emerald-500 text-white px-5 py-3 rounded-xl shadow-2xl transform transition-transform duration-300 translate-x-[200%] flex items-center gap-3 z-50 font-medium">
+        <i class="fas fa-check-circle text-xl"></i><span>Copied to clipboard!</span>
+    </div>
+
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+
+        <div id="sidebar-container" class="contents"></div>
+
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div id="calc-emi" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <div class="mb-6">
+                    <h2
+                        class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
+                        EMI Calculator</h2>
+                    <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate Equated Monthly Installment for
+                        home/car loans.</p>
+                </div>
+
+                <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
+                    <div class="glass-panel p-6 rounded-3xl mb-6 shadow-lg border-l-4 border-l-emerald-400">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+                            <div>
+                                <label
+                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Principal
+                                    Amount</label>
+                                <div class="relative">
+                                    <span
+                                        class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium">$</span>
+                                    <input type="number" id="emi-principal" class="perc-input w-full pl-8 font-medium"
+                                        placeholder="100000" oninput="calculateEMI()">
+                                </div>
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Interest
+                                    Rate (%)</label>
+                                <div class="relative">
+                                    <input type="number" id="emi-rate" class="perc-input w-full pr-8 font-medium"
+                                        placeholder="7.5" step="0.1" oninput="calculateEMI()">
+                                    <span
+                                        class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium">%</span>
+                                </div>
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Tenure</label>
+                                <div class="flex gap-2">
+                                    <input type="number" id="emi-tenure"
+                                        class="perc-input flex-1 min-w-[50px] font-medium" placeholder="5"
+                                        oninput="calculateEMI()">
+                                    <select id="emi-tenure-type"
+                                        class="perc-input w-24 bg-white/50 dark:bg-slate-800/50 cursor-pointer"
+                                        onchange="calculateEMI()">
+                                        <option value="years">Years</option>
+                                        <option value="months">Months</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                        <div
+                            class="glass-display p-6 rounded-3xl text-center group relative border border-emerald-100 dark:border-emerald-900/30">
+                            <button
+                                class="copy-trigger absolute top-3 right-3 text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="emi-res-monthly"><i class="fas fa-copy"></i></button>
+                            <div class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mb-1"
+                                id="emi-res-monthly">&mdash;</div>
+                            <div class="text-xs font-medium text-slate-500 uppercase tracking-wider">Monthly EMI</div>
+                        </div>
+                        <div class="glass-display p-6 rounded-3xl text-center group relative">
+                            <button
+                                class="copy-trigger absolute top-3 right-3 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="emi-res-interest"><i class="fas fa-copy"></i></button>
+                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-300 mb-1"
+                                id="emi-res-interest">&mdash;</div>
+                            <div class="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Interest
+                            </div>
+                        </div>
+                        <div class="glass-display p-6 rounded-3xl text-center group relative">
+                            <button
+                                class="copy-trigger absolute top-3 right-3 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="emi-res-total"><i class="fas fa-copy"></i></button>
+                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-300 mb-1" id="emi-res-total">
+                                &mdash;</div>
+                            <div class="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Amount</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <br>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
+                        <strong>EMI Calculator</strong> – Calculate Your <strong>Loan EMI Online</strong>
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        An <strong>EMI calculator</strong> is a convenient <strong>online tool</strong> that helps you
+                        calculate your <strong>Equated Monthly Installment (EMI)</strong> for any loan quickly and
+                        accurately. Our <strong>free EMI calculator online</strong> allows you to compute your monthly
+                        payments for <strong>home loans</strong>, <strong>personal loans</strong>, <strong>car
+                            loans</strong>, or any type of loan, helping you plan your finances effectively.
+                    </p>
+                </header>
+                <br>
+
+                <div class="intro-section">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        Whether you are a borrower evaluating <strong>loan options</strong>, a financial planner, or a
+                        bank customer, this <strong>EMI calculator tool</strong> simplifies <strong>loan
+                            calculations</strong> and provides instant results.
+                    </p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is EMI?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        <strong>EMI (Equated Monthly Installment)</strong> is the fixed monthly payment you make to
+                        repay a loan over a specified tenure. It includes:
+                    </p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
+                        <li><strong>Principal amount</strong> – The original loan amount</li>
+                        <li><strong>Interest</strong> – Charged by the lender on the outstanding loan</li>
+                    </ul>
+                    <div
+                        class="mt-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
+                        <p class="text-center font-mono text-slate-700 dark:text-slate-300">
+                            $$EMI = [P \times R \times (1+R)^n] \div [(1+R)^n – 1]$$
+                        </p>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
+                        an <strong>EMI Calculator</strong></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Quick and Accurate</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Calculate <strong>monthly EMI</strong>
+                                instantly without manual math or spreadsheets.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Compare Loan Options</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Evaluate different <strong>interest
+                                    rates</strong>, loan amounts, and tenures to choose the best loan option.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Plan Your Finances</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Understand your monthly obligations
+                                and plan your <strong>financial commitments</strong> effectively.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Our <strong>loan EMI
+                                    calculator</strong> is completely free and requires no registration.</p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
+                        <strong>EMI Calculator</strong>
+                    </h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
+                        <li>Enter the <strong>loan amount</strong> (principal).</li>
+                        <li>Enter the annual <strong>interest rate</strong>.</li>
+                        <li>Enter the <strong>loan tenure</strong> in months or years.</li>
+                        <li>Click the <strong>calculate</strong> button.</li>
+                        <li>Instantly view your <strong>exact EMI</strong>, total interest, and total payment.</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Calculate your <strong>loan
+                            repayment</strong> instantly!</h2>
+                    <p class="text-slate-500 dark:text-slate-400">
+                        Try the <strong>online EMI calculator</strong> today and simplify your <strong>loan
+                            planning</strong> and <strong>amortization schedules</strong>.
+                    </p>
+                </section>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 <strong>EMI Calculator Tool</strong>. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- Core Layout injection -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/core.js"></script>
+    <script src="../js/calculators/emi.js"></script>
+</body>
+
+</html>

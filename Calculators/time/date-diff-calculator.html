@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Difference Calculator | CalcSuite</title>
+    <meta name="description"
+        content="Free online date difference calculator. Calculate years, months, and days between two dates.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        purple: { 100: '#f3e8ff', 400: '#c084fc', 500: '#a855f7', 600: '#9333ea', 900: '#581c87' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <div id="sidebar-container" class="contents"></div>
+
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2
+                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
+                            Date Difference</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate years, months, and days
+                            between two dates.</p>
+                    </div>
+                </div>
+
+                <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-purple-400">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label
+                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide"><i
+                                        class="far fa-calendar-alt mr-1"></i> Start Date</label>
+                                <input type="date" id="date1"
+                                    class="perc-input w-full font-bold text-lg py-3 cursor-pointer">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide"><i
+                                        class="far fa-calendar-check mr-1"></i> End Date</label>
+                                <input type="date" id="date2"
+                                    class="perc-input w-full font-bold text-lg py-3 cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="dd-results-area" class="hidden opacity-0 flex flex-col mt-4 transition-all duration-500">
+                        <div
+                            class="glass-display w-full p-8 rounded-3xl text-center group relative border border-purple-100 dark:border-purple-900/30">
+                            <button
+                                class="copy-trigger absolute top-3 right-3 text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="dd-res-value"><i class="fas fa-copy"></i></button>
+                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-4">Exact
+                                Difference</div>
+                            <div class="text-4xl font-bold text-purple-600 dark:text-purple-400 break-all leading-tight"
+                                id="dd-res-value">&mdash;</div>
+                            <div
+                                class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700 grid grid-cols-2 gap-4">
+                                <div>
+                                    <div class="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+                                        Total Weeks</div>
+                                    <div class="text-xl font-bold text-slate-700 dark:text-slate-300" id="dd-res-weeks">
+                                        0</div>
+                                </div>
+                                <div>
+                                    <div class="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+                                        Total Days</div>
+                                    <div class="text-xl font-bold text-slate-700 dark:text-slate-300" id="dd-res-days">0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <br>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
+                        <strong>Date Difference Calculator</strong> – Calculate Years, Months, and Days Between Two
+                        Dates
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        A <strong>date difference calculator</strong> is a handy <strong>online tool</strong> that helps
+                        you calculate the exact number of years, months, and days between any two dates. Our
+                        <strong>free online date calculator</strong> provides accurate results instantly, making it easy
+                        to plan events, track deadlines, or <strong>calculate age</strong>.
+                    </p>
+                </header>
+                <br>
+
+                <div class="intro-section">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        Whether you are a student, professional, or planner, this <strong>date difference calculator
+                            online</strong> simplifies <strong>date calculations</strong> and saves time.
+                    </p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a
+                        <strong>Date Difference Calculator</strong>?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        A <strong>date difference calculator</strong> is a digital tool designed to compute the duration
+                        between two dates. It calculates <strong>total years</strong>, <strong>total months</strong>,
+                        and <strong>total days</strong>.
+                    </p>
+
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4">
+                        Unlike manual calculations, which can be error-prone, our tool ensures precise results for:
+                    </p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
+                        <li><strong>Calculating age</strong> accurately</li>
+                        <li>Tracking <strong>project timelines</strong></li>
+                        <li>Planning anniversaries and events</li>
+                        <li>Determining time between historical or future dates</li>
+                    </ul>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
+                        an <strong>Online Date Calculator</strong></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Accurate Calculations</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Instantly calculate <strong>time
+                                    intervals</strong> between any two dates without mistakes.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Save Time</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">No need for manual counting or complex
+                                <strong>date formulas</strong>.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Plan Your Schedule</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Track deadlines, <strong>project
+                                    durations</strong>, and personal milestones with ease.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Our <strong>date duration
+                                    tool</strong> is completely free and works on all devices.</p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
+                        <strong>Date Difference Calculator</strong></h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
+                        <li>Enter the <strong>start date</strong>.</li>
+                        <li>Enter the <strong>end date</strong>.</li>
+                        <li>Click the <strong>calculate button</strong>.</li>
+                        <li>Instantly view the difference in years, months, and days.</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Simplify your <strong>date
+                            calculations</strong> today!</h2>
+                    <p class="text-slate-500 dark:text-slate-400">
+                        Try our <strong>online date difference calculator</strong> to manage durations, birthdays, and
+                        deadlines with precision.
+                    </p>
+                </section>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 <strong>Date Difference Calculator Tool</strong>. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/datediff.js"></script>
+</body>
+
+</html>

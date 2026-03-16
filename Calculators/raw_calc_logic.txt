@@ -1,0 +1,523 @@
+﻿
+>     class Calculator {
+          constructor(displayElement, historyElement) {
+              this.displayElement = displayElement;
+              this.historyElement = historyElement;
+              this.clear();
+          }
+  
+          clear() {
+              this.currentOperand = '0';
+              this.previousOperand = '';
+              this.operation = undefined;
+              this.readyToReset = false;
+              this.updateDisplay();
+          }
+  
+          delete() {
+              if (this.readyToReset) return;
+              this.currentOperand = this.currentOperand.toString().slice(0, -1);
+              if (this.currentOperand === '' || this.currentOperand === '-') this.currentOperand = '0';
+              this.updateDisplay();
+          }
+  
+          appendNumber(number) {
+              if (this.readyToReset) {
+                  this.currentOperand = number.toString();
+                  this.readyToReset = false;
+              } else {
+                  if (number === '.' && this.currentOperand.includes('.')) return;
+                  if (this.currentOperand === '0' && number !== '.') {
+                      this.currentOperand = number.toString();
+                  } else {
+                      this.currentOperand = this.currentOperand.toString() + number.toString();
+                  }
+              }
+              this.updateDisplay();
+          }
+  
+          chooseOperation(operation, displayOp) {
+              if (this.currentOperand === 'Error') this.clear();
+              if (this.currentOperand === '') return;
+              if (this.previousOperand !== '') {
+                  this.compute();
+              }
+              this.operation = operation;
+              this.operationDisplay = displayOp;
+              this.previousOperand = this.currentOperand;
+              this.currentOperand = '';
+              this.updateDisplay();
+          }
+  
+          compute() {
+              let computation;
+              const prev = parseFloat(this.previousOperand);
+              const current = parseFloat(this.currentOperand);
+  
+              if (isNaN(prev) || isNaN(current)) return;
+  
+              switch (this.operation) {
+                  case 'add': computation = prev + current; break;
+                  case 'subtract': computation = prev - current; break;
+                  case 'multiply': computation = prev * current; break;
+                  case 'divide':
+                      if (current === 0) {
+                          this.currentOperand = "Error";
+                          this.previousOperand = "";
+                          this.operation = undefined;
+                          this.updateDisplay();
+                          return;
+                      }
+                      computation = prev / current;
+                      break;
+                  case 'power': computation = Math.pow(prev, current); break;
+                  default: return;
+              }
+  
+              // Handle JS floating point anomalies gracefully
+              computation = Math.round(computation * 1e10) / 1e10;
+  
+              this.currentOperand = computation.toString();
+              this.operation = undefined;
+              this.previousOperand = '';
+              this.readyToReset = true;
+              this.updateDisplay();
+          }
+  
+          percentage() {
+              if (this.currentOperand === 'Error' || this.currentOperand === '') return;
+              let val = parseFloat(this.currentOperand);
+              if (isNaN(val)) return;
+              this.currentOperand = (val / 100).toString();
+              this.readyToReset = true;
+              this.updateDisplay();
+          }
+  
+          toggleSign() {
+              if (this.currentOperand === 'Error' || this.currentOperand === '' || this.currentOperand === '0') return;
+              if (this.currentOperand.startsWith('-')) {
+                  this.currentOperand = this.currentOperand.substring(1);
+              } else {
+                  this.currentOperand = '-' + this.currentOperand;
+              }
+              this.updateDisplay();
+          }
+  
+          // Scientific functions execution
+          computeSingleFunc(funcName) {
+              if (this.currentOperand === 'Error' || this.currentOperand === '') return;
+              const current = parseFloat(this.currentOperand);
+              if (isNaN(current)) return;
+  
+              let result;
+              let isRad = scientificIsRad;
+  
+              const toRad = deg => deg * (Math.PI / 180);
+              const toDeg = rad => rad * (180 / Math.PI);
+  
+              switch (funcName) {
+                  case 'sin': result = isRad ? Math.sin(current) : Math.sin(toRad(current)); break;
+                  case 'cos': result = isRad ? Math.cos(current) : Math.cos(toRad(current)); break;
+                  case 'tan': result = isRad ? Math.tan(current) : Math.tan(toRad(current)); break;
+                  case 'asin': result = isRad ? Math.asin(current) : toDeg(Math.asin(current)); break;
+                  case 'acos': result = isRad ? Math.acos(current) : toDeg(Math.acos(current)); break;
+                  case 'atan': result = isRad ? Math.atan(current) : toDeg(Math.atan(current)); break;
+                  case 'log':
+                      if (current <= 0) result = NaN; else result = Math.log10(current); break;
+                  case 'ln':
+                      if (current <= 0) result = NaN; else result = Math.log(current); break;
+                  case 'sqrt':
+                      if (current < 0) result = NaN; else result = Math.sqrt(current); break;
+                  case 'cbrt':
+                      result = Math.cbrt(current); break;
+                  case 'square': result = Math.pow(current, 2); break;
+                  case 'cube': result = Math.pow(current, 3); break;
+                  case 'exp': result = Math.exp(current); break;
+                  case 'factorial':
+                      if (current < 0 || !Number.isInteger(current)) {
+                          result = NaN;
+                      } else if (current > 170) {
+                          result = Infinity; // Avoid extremely long loops
+                      } else {
+                          result = 1;
+                          for (let i = 2; i <= current; i++) result *= i;
+                      }
+                      break;
+              }
+  
+              if (isNaN(result)) {
+                  this.currentOperand = "Error";
+              } else {
+                  result = Math.round(result * 1e10) / 1e10;
+                  this.currentOperand = result.toString();
+              }
+              this.readyToReset = true;
+              this.updateDisplay();
+          }
+  
+          insertConstant(constant) {
+              if (constant === 'pi') {
+                  this.currentOperand = Math.PI.toString();
+              } else if (constant === 'e') {
+                  this.currentOperand = Math.E.toString();
+              }
+              this.readyToReset = true;
+              this.updateDisplay();
+          }
+  
+          updateDisplay() {
+              this.displayElement.innerText = this.currentOperand;
+  
+              // Adjust font size dynamically on basic calc if number is huge
+              if (this.displayElement.id === 'basic-display' || this.displayElement.id === 'sci-display') {
+                  if (this.currentOperand.length > 12) {
+                      this.displayElement.classList.remove('text-5xl', 'text-4xl');
+                      this.displayElement.classList.add('text-3xl');
+                  } else {
+                      this.displayElement.classList.add(this.displayElement.id === 'basic-display' ? 'text-5xl' : 
+'text-4xl');
+                      this.displayElement.classList.remove('text-3xl');
+                  }
+              }
+  
+              if (this.operation != null) {
+                  this.historyElement.innerText = `${this.previousOperand} ${this.operationDisplay}`;
+              } else {
+                  this.historyElement.innerText = '';
+              }
+          }
+  
+          getDisplayValue() { return this.currentOperand; }
+      }
+  
+      // --- Basic Calculator Initialization ---
+      const basicDisplay = document.getElementById('basic-display');
+      const basicHistory = document.getElementById('basic-history');
+      const basicCalc = new Calculator(basicDisplay, basicHistory);
+  
+      document.querySelectorAll('#calc-basic .calc-btn').forEach(button => {
+          button.addEventListener('click', () => {
+              // Add haptic-like visual feedback
+              button.style.transform = "scale(0.95)";
+              setTimeout(() => button.style.transform = "", 100);
+  
+              if (button.classList.contains('btn-number')) {
+                  basicCalc.appendNumber(button.dataset.value);
+              } else if (button.dataset.action === 'clear') {
+                  basicCalc.clear();
+              } else if (button.dataset.action === 'backspace') {
+                  basicCalc.delete();
+              } else if (button.dataset.action === 'decimal') {
+                  basicCalc.appendNumber('.');
+              } else if (button.dataset.action === 'calculate') {
+                  basicCalc.compute();
+              } else if (button.dataset.action === 'percentage') {
+                  basicCalc.percentage();
+              } else if (button.dataset.action) {
+                  basicCalc.chooseOperation(button.dataset.action, button.innerText);
+              }
+          });
+      });
+  
+      // --- Scientific Calculator Initialization ---
+      const sciDisplay = document.getElementById('sci-display');
+      const sciHistory = document.getElementById('sci-history');
+      const sciCalc = new Calculator(sciDisplay, sciHistory);
+      let scientificIsRad = false; // Default to DEG
+  
+      const degBtn = document.getElementById('sci-deg');
+      const radBtn = document.getElementById('sci-rad');
+  
+      const setAngleMode = (isRad) => {
+          scientificIsRad = isRad;
+          if (isRad) {
+              radBtn.classList.add('active-mode'); radBtn.classList.remove('text-slate-500', 'hover:text-slate-800', 
+'dark:text-slate-400', 'dark:hover:text-slate-200');
+              degBtn.classList.remove('active-mode'); degBtn.classList.add('text-slate-500', 'hover:text-slate-800', 
+'dark:text-slate-400', 'dark:hover:text-slate-200');
+          } else {
+              degBtn.classList.add('active-mode'); degBtn.classList.remove('text-slate-500', 'hover:text-slate-800', 
+'dark:text-slate-400', 'dark:hover:text-slate-200');
+              radBtn.classList.remove('active-mode'); radBtn.classList.add('text-slate-500', 'hover:text-slate-800', 
+'dark:text-slate-400', 'dark:hover:text-slate-200');
+          }
+      };
+      degBtn.addEventListener('click', () => setAngleMode(false));
+      radBtn.addEventListener('click', () => setAngleMode(true));
+  
+      document.querySelectorAll('#calc-scientific .calc-btn').forEach(button => {
+          button.addEventListener('click', () => {
+              if (button.classList.contains('btn-number')) {
+                  sciCalc.appendNumber(button.dataset.value);
+              } else if (button.dataset.action === 'clear') {
+                  sciCalc.clear();
+              } else if (button.dataset.action === 'backspace') {
+                  sciCalc.delete();
+              } else if (button.dataset.action === 'decimal') {
+                  sciCalc.appendNumber('.');
+              } else if (button.dataset.action === 'calculate') {
+                  sciCalc.compute();
+              } else if (button.dataset.action === 'toggle-sign') {
+                  sciCalc.toggleSign();
+              } else if (button.dataset.sci === 'pi' || button.dataset.sci === 'e') {
+                  sciCalc.insertConstant(button.dataset.sci);
+              } else if (button.dataset.sci === 'power') {
+                  sciCalc.chooseOperation('power', '^');
+              } else if (button.dataset.sci) {
+                  sciCalc.computeSingleFunc(button.dataset.sci);
+                  // Note: parenthesis parser is omitted for simplicity in vanilla JS, relying on iterative compute 
+instead. 
+              } else if (button.dataset.action) {
+                  sciCalc.chooseOperation(button.dataset.action, button.innerText);
+              }
+          });
+      });
+  
+      // --------------------------------------
+      // 4. Percentage Calculator
+      // --------------------------------------
+      const formatRes = val => isNaN(val) ? "&mdash;" : (Math.round(val * 1e4) / 1e4);
+  
+      window.calcPerc1 = () => {
+          const x = parseFloat(document.getElementById('perc1-x').value);
+          const y = parseFloat(document.getElementById('perc1-y').value);
+          document.getElementById('perc1-res').innerHTML = isNaN(x) || isNaN(y) ? "&mdash;" : formatRes((x / 100) * y);
+      };
+  
+      window.calcPerc2 = () => {
+          const x = parseFloat(document.getElementById('perc2-x').value);
+          const y = parseFloat(document.getElementById('perc2-y').value);
+          document.getElementById('perc2-res').innerHTML = isNaN(x) || isNaN(y) ? "&mdash;" : (formatRes((x / y) * 
+100) + '%');
+      };
+  
+      window.calcPerc3 = () => {
+          const x = parseFloat(document.getElementById('perc3-x').value);
+          const y = parseFloat(document.getElementById('perc3-y').value);
+          if (isNaN(x) || isNaN(y)) {
+              document.getElementById('perc3-res').innerHTML = "&mdash;";
+              return;
+          }
+          let diff = y - x;
+          let p = (diff / Math.abs(x)) * 100;
+          let prefix = p > 0 ? '+' : '';
+          document.getElementById('perc3-res').innerHTML = isNaN(p) ? "&mdash;" : (prefix + formatRes(p) + '%');
+      };
+  
+      // --------------------------------------
+      // 5. Age Calculator
+      // --------------------------------------
+      const dobInput = document.getElementById('dob-input');
+      const targetInput = document.getElementById('target-date-input');
+      // Set default target to today
+      const today = new Date();
+      targetInput.valueAsDate = today;
+  
+      window.calculateAge = () => {
+          if (!dobInput.value || !targetInput.value) return;
+  
+          const dob = new Date(dobInput.value);
+          const target = new Date(targetInput.value);
+  
+          if (dob > target) {
+              alert("Date of birth cannot be after the target date.");
+              return;
+          }
+  
+          let years = target.getFullYear() - dob.getFullYear();
+          let months = target.getMonth() - dob.getMonth();
+          let days = target.getDate() - dob.getDate();
+  
+          if (days < 0) {
+              months--;
+              // get days in previous month
+              const prevMonth = new Date(target.getFullYear(), target.getMonth(), 0);
+              days += prevMonth.getDate();
+          }
+          if (months < 0) {
+              years--;
+              months += 12;
+          }
+  
+          // Animate numbers
+          animateValue("res-years", 0, years, 1000);
+          animateValue("res-months", 0, months, 1000);
+          animateValue("res-days", 0, days, 1000);
+  
+          // Next Birthday Calculation
+          let nextBd = new Date(dob);
+          nextBd.setFullYear(target.getFullYear());
+  
+          // If birthday has passed this year, next birthday is next year
+          if (nextBd.getTime() < target.getTime() && (nextBd.getMonth() !== target.getMonth() || nextBd.getDate() !== 
+target.getDate())) {
+              nextBd.setFullYear(target.getFullYear() + 1);
+          }
+  
+          // Fix timezone offset issues by using UTC for difference
+          const utc1 = Date.UTC(target.getFullYear(), target.getMonth(), target.getDate());
+          const utc2 = Date.UTC(nextBd.getFullYear(), nextBd.getMonth(), nextBd.getDate());
+          const diffDays = Math.floor((utc2 - utc1) / (1000 * 60 * 60 * 24));
+  
+          let nextBdText;
+          if (diffDays === 0) nextBdText = "Today!";
+          else if (diffDays === 1) nextBdText = "1 day";
+          else nextBdText = `${diffDays} days`;
+  
+          document.getElementById('res-next-bd').innerText = nextBdText;
+  
+          const resultsDiv = document.getElementById('age-results');
+          resultsDiv.classList.remove('hidden');
+          // trigger reflow
+          void resultsDiv.offsetWidth;
+          resultsDiv.classList.remove('opacity-0', 'translate-y-4');
+      };
+  
+      function animateValue(id, start, end, duration) {
+          if (start === end) {
+              document.getElementById(id).innerHTML = end;
+              return;
+          }
+          let range = end - start;
+          let current = start;
+          let increment = end > start ? 1 : -1;
+          let stepTime = Math.abs(Math.floor(duration / range));
+          let obj = document.getElementById(id);
+          let timer = setInterval(function () {
+              current += increment;
+              obj.innerHTML = current;
+              if (current == end) {
+                  clearInterval(timer);
+              }
+          }, stepTime);
+      }
+  
+      // --------------------------------------
+      // 6. EMI Calculator
+      // --------------------------------------
+      const formatCurrency = val => isNaN(val) ? "&mdash;" : '$' + val.toLocaleString('en-US', { 
+minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  
+      window.calculateEMI = () => {
+          const p = parseFloat(document.getElementById('emi-principal').value);
+          const rAnnual = parseFloat(document.getElementById('emi-rate').value);
+          let n = parseFloat(document.getElementById('emi-tenure').value);
+          const tenureType = document.getElementById('emi-tenure-type').value;
+  
+          if (isNaN(p) || isNaN(rAnnual) || isNaN(n) || p <= 0 || rAnnual <= 0 || n <= 0) {
+              document.getElementById('emi-res-monthly').innerHTML = "&mdash;";
+              document.getElementById('emi-res-interest').innerHTML = "&mdash;";
+              document.getElementById('emi-res-total').innerHTML = "&mdash;";
+              return;
+          }
+  
+          if (tenureType === 'years') n = n * 12; // convert to months
+          const rMonthly = rAnnual / 12 / 100; // monthly rate
+  
+          // Formula: EMI = P * r * (1+r)^n / ((1+r)^n - 1)
+          const emi = p * rMonthly * Math.pow(1 + rMonthly, n) / (Math.pow(1 + rMonthly, n) - 1);
+          const totalAmount = emi * n;
+          const totalInterest = totalAmount - p;
+  
+          document.getElementById('emi-res-monthly').innerHTML = formatCurrency(emi);
+          document.getElementById('emi-res-interest').innerHTML = formatCurrency(totalInterest);
+          document.getElementById('emi-res-total').innerHTML = formatCurrency(totalAmount);
+      };
+  
+      // --------------------------------------
+      // 7. Loan Calculator (Reverse)
+      // --------------------------------------
+      let currentLoanCalcMode = 'principal'; // 'principal', 'tenure', 'rate'
+  
+      window.switchLoanCalcMode = (mode) => {
+          currentLoanCalcMode = mode;
+          const btns = document.querySelectorAll('.loan-tab-btn');
+          btns.forEach(b => {
+              b.classList.remove('active-mode', 'bg-white', 'dark:bg-slate-700', 'text-slate-800', 'dark:text-white');
+              b.classList.add('text-slate-500', 'dark:text-slate-400');
+          });
+  
+          let activeIdx = mode === 'principal' ? 0 : mode === 'tenure' ? 1 : 2;
+          btns[activeIdx].classList.remove('text-slate-500', 'dark:text-slate-400');
+          btns[activeIdx].classList.add('active-mode', 'bg-white', 'dark:bg-slate-700', 'text-slate-800', 
+'dark:text-white');
+  
+          const container = document.getElementById('loan-inputs-container');
+          let html = '';
+          if (mode === 'principal') {
+              document.getElementById('loan-res-label').innerText = "Loan Amount (Principal):";
+              html = `
+                  <div><label class="block text-xs font-semibold text-slate-500 mb-1">Monthly EMI</label><input 
+type="number" id="loan-emi" class="perc-input w-full py-2"></div>
+                  <div><label class="block text-xs font-semibold text-slate-500 mb-1">Interest Rate (%)</label><input 
+type="number" id="loan-rate" step="0.1" class="perc-input w-full py-2"></div>
+                  <div><label class="block text-xs font-semibold text-slate-500 mb-1">Tenure (Months)</label><input 
+type="number" id="loan-tenure" class="perc-input w-full py-2"></div>
+              `;
+          } else if (mode === 'tenure') {
+              document.getElementById('loan-res-label').innerText = "Loan Tenure (Months):";
+              html = `
+                  <div><label class="block text-xs font-semibold text-slate-500 mb-1">Loan Amount</label><input 
+type="number" id="loan-principal" class="perc-input w-full py-2"></div>
+                  <div><label class="block text-xs font-semibold text-slate-500 mb-1">Monthly EMI</label><input 
+type="number" id="loan-emi" class="perc-input w-full py-2"></div>
+                  <div><label class="block text-xs font-semibold text-slate-500 mb-1">Interest Rate (%)</label><input 
+type="number" id="loan-rate" step="0.1" class="perc-input w-full py-2"></div>
+              `;
+          } else {
+              document.getElementById('loan-res-label').innerText = "Annual Interest Rate (%):";
+              html = `
+                  <div><label class="block text-xs font-semibold text-slate-500 mb-1">Loan Amount</label><input 
+type="number" id="loan-principal" class="perc-input w-full py-2"></div>
+                  <div><label class="block text-xs font-semibold text-slate-500 mb-1">Monthly EMI</label><input 
+type="number" id="loan-emi" class="perc-input w-full py-2"></div>
+                  <div><label class="block text-xs font-semibold text-slate-500 mb-1">Tenure (Months)</label><input 
+type="number" id="loan-tenure" class="perc-input w-full py-2"></div>
+              `;
+          }
+          container.innerHTML = html;
+          document.getElementById('loan-res-value').innerHTML = "&mdash;";
+      };
+  
+      // Initialize the default layout
+      switchLoanCalcMode('principal');
+  
+      window.calculateReverseLoan = () => {
+          let p, emi, rAnnual, n, rMonthly;
+  
+          if (currentLoanCalcMode === 'principal') {
+              emi = parseFloat(document.getElementById('loan-emi').value);
+              rAnnual = parseFloat(document.getElementById('loan-rate').value);
+              n = parseFloat(document.getElementById('loan-tenure').value);
+  
+              if (isNaN(emi) || isNaN(rAnnual) || isNaN(n) || emi <= 0 || rAnnual <= 0 || n <= 0) return;
+              rMonthly = rAnnual / 12 / 100;
+              // P = EMI * ((1+r)^n - 1) / (r * (1+r)^n)
+              p = emi * (Math.pow(1 + rMonthly, n) - 1) / (rMonthly * Math.pow(1 + rMonthly, n));
+              document.getElementById('loan-res-value').innerHTML = formatCurrency(p);
+  
+          } else if (currentLoanCalcMode === 'tenure') {
+              p = parseFloat(document.getElementById('loan-principal').value);
+              emi = parseFloat(document.getElementById('loan-emi').value);
+              rAnnual = parseFloat(document.getElementById('loan-rate').value);
+  
+              if (isNaN(p) || isNaN(emi) || isNaN(rAnnual) || p <= 0 || emi <= 0 || rAnnual <= 0) return;
+              rMonthly = rAnnual / 12 / 100;
+              if (emi <= p * rMonthly) {
+                  alert("EMI must be greater than monthly interest.");
+                  return;
+              }
+              // n = log(EMI / (EMI - P*r)) / log(1 + r)
+              n = Math.log(emi / (emi - p * rMonthly)) / Math.log(1 + rMonthly);
+              document.getElementById('loan-res-value').innerHTML = Math.ceil(n) + " Months";
+  
+          } else if (currentLoanCalcMode === 'rate') {
+              p = parseFloat(document.getElementById('loan-principal').value);
+              emi = parseFloat(document.getElementById('loan-emi').value);
+              n = parseFloat(document.getElementById('loan-tenure').value);
+  
+              if (isNaN(p) || isNaN(emi) || isNaN(n) || p <= 0 || emi <= 0 || n <= 0) return;
+              if (emi * n <= p) {
+                  alert("Total repayment (EMI * Months) must be greater than Principal.");
+
+

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Calculator | CalcSuite</title>
+    <meta name="description" content="Calculate tip amounts and split the bill among friends easily.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        sky: { 100: '#e0f2fe', 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <div id="sidebar-container" class="contents"></div>
+
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2
+                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
+                            Tip Calculator</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate tip amounts quickly and
+                            split the bill.</p>
+                    </div>
+                </div>
+
+                <div class="max-w-xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
+
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
+                        <div class="mb-6">
+                            <label
+                                class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Bill
+                                Amount</label>
+                            <div class="relative max-w-sm mx-auto">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                                <input type="number" id="tip-bill"
+                                    class="perc-input w-full font-bold text-3xl py-4 pl-10 text-center"
+                                    placeholder="100.00" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label
+                                class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-3 uppercase tracking-wide text-center">Tip
+                                Percentage</label>
+                            <div class="flex justify-center flex-wrap gap-3" id="tip-btn-grp">
+                                <button
+                                    class="tip-btn w-16 py-2 rounded-xl border border-slate-200 dark:border-slate-700 font-bold transition-all bg-white dark:bg-slate-800 hover:border-sky-400"
+                                    data-val="10">10%</button>
+                                <button
+                                    class="tip-btn w-16 py-2 rounded-xl border border-sky-400 dark:border-sky-500 font-bold transition-all bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 shadow-sm"
+                                    data-val="15">15%</button>
+                                <button
+                                    class="tip-btn w-16 py-2 rounded-xl border border-slate-200 dark:border-slate-700 font-bold transition-all bg-white dark:bg-slate-800 hover:border-sky-400"
+                                    data-val="18">18%</button>
+                                <button
+                                    class="tip-btn w-16 py-2 rounded-xl border border-slate-200 dark:border-slate-700 font-bold transition-all bg-white dark:bg-slate-800 hover:border-sky-400"
+                                    data-val="20">20%</button>
+                            </div>
+                            <div class="mt-4 flex justify-center items-center gap-2">
+                                <span class="text-sm text-slate-400 font-medium">Custom:</span>
+                                <div class="relative w-24">
+                                    <input type="number" id="tip-custom"
+                                        class="perc-input w-full font-bold py-2 pr-6 text-center" placeholder="--">
+                                    <span
+                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 font-bold">%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200 dark:border-slate-700/50 flex flex-col items-center">
+                            <label
+                                class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Split
+                                Between</label>
+                            <div class="flex items-center gap-4">
+                                <button id="tip-minus"
+                                    class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-colors"><i
+                                        class="fas fa-minus"></i></button>
+                                <div class="text-3xl font-black w-12 text-center" id="tip-split">1</div>
+                                <button id="tip-plus"
+                                    class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-colors"><i
+                                        class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tip-results-area" class="hidden opacity-0 flex flex-col mt-2 transition-all duration-500">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div
+                                class="glass-display p-6 rounded-3xl text-center border border-sky-100 dark:border-sky-900/30">
+                                <div
+                                    class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">
+                                    Tip Amount</div>
+                                <div class="text-3xl sm:text-4xl font-bold text-sky-600 dark:text-sky-400"
+                                    id="tip-res-amt">&mdash;</div>
+                            </div>
+                            <div
+                                class="glass-display p-6 rounded-3xl text-center border border-sky-100 dark:border-sky-900/30 bg-sky-500 text-white dark:bg-sky-600 border-none shadow-md">
+                                <div
+                                    class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-sky-100 mb-1">
+                                    Total Per Person</div>
+                                <div class="text-3xl sm:text-4xl font-bold" id="tip-res-tot">&mdash;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <br>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
+                        <strong>Tip Calculator</strong> – Calculate <strong>Tip Amounts</strong> Quickly and
+                        <strong>Split the Bill</strong>
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        A <strong>tip calculator</strong> is a handy <strong>online tool</strong> that helps you
+                        calculate <strong>tip amounts</strong> quickly and <strong>split the bill</strong> among friends
+                        or colleagues. Our <strong>free online tip calculator</strong> is perfect for diners,
+                        restaurant-goers, and anyone who wants to manage tipping accurately and efficiently.
+                    </p>
+                </header>
+                <br>
+
+                <div class="intro-section">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        Whether you are dining out, <strong>splitting bills</strong>, or <strong>calculating
+                            gratuity</strong>, this <strong>tip calculator online</strong> makes it easy to determine
+                        the correct tip amount for any situation.
+                    </p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a
+                        <strong>Tip Calculator</strong>?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        A <strong>tip calculator</strong> is a digital tool that calculates the <strong>gratuity
+                            amount</strong> based on the total bill and desired <strong>tip percentage</strong>. It can
+                        also divide the total cost among multiple people for fair <strong>bill splitting</strong>.
+                    </p>
+
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
+                        <li><strong>Total bill amount</strong> input</li>
+                        <li><strong>Tip percentage</strong> selection (customizable)</li>
+                        <li><strong>Number of people</strong> to split the bill</li>
+                        <li>Instant calculation of <strong>tip per person</strong> and <strong>total per person</strong>
+                        </li>
+                    </ul>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4">
+                        With a <strong>free tip calculator online</strong>, you can ensure accurate tipping and
+                        <strong>fair sharing of costs</strong> without manual math.
+                    </p>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
+                        a <strong>Tip Calculator</strong></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Quick and Accurate</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Calculate tips instantly with no math
+                                errors or confusion.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Split the Bill Easily</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Divide the bill fairly among friends,
+                                family, or coworkers.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Our <strong>bill splitting
+                                    tool</strong> is free and works on any device, including smartphones.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Stress-Free Dining</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Avoid the awkwardness of manual
+                                calculations in busy <strong>restaurants</strong> or cafes.</p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
+                        <strong>Tip Calculator</strong></h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
+                        <li>Enter the <strong>total bill amount</strong>.</li>
+                        <li>Select the <strong>tip percentage</strong> or enter a custom value.</li>
+                        <li>Enter the <strong>number of people</strong> to split the bill (optional).</li>
+                        <li>Click calculate to see the <strong>tip per person</strong> and <strong>total per
+                                person</strong>.</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Simplify your group dining!</h2>
+                    <p class="text-slate-500 dark:text-slate-400">
+                        Try our <strong>online tip calculation tool</strong> today to ensure everyone pays their fair
+                        share effortlessly.
+                    </p>
+                </section>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 <strong>Gratuity and Bill Splitter Tool</strong>. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/tip.js"></script>
+</body>
+
+</html>

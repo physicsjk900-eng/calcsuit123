@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Calculator | CalcSuite</title>
+    <meta name="description" content="Free online percentage calculator for calculating proportions and differences.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' },
+                        emerald: { 400: '#34d399', 500: '#10b981', 600: '#059669' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="toast"
+        class="fixed top-6 right-6 bg-emerald-500 text-white px-5 py-3 rounded-xl shadow-2xl transform transition-transform duration-300 translate-x-[200%] flex items-center gap-3 z-50 font-medium">
+        <i class="fas fa-check-circle text-xl"></i><span>Copied to clipboard!</span>
+    </div>
+
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+
+        <div id="sidebar-container" class="contents"></div>
+
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div id="calc-percentage"
+                class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <div class="mb-8">
+                    <h2
+                        class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
+                        Percentage</h2>
+                    <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Quickly calculate proportions and
+                        differences.</p>
+                </div>
+
+                <div class="max-w-2xl mx-auto w-full space-y-6 flex-1 overflow-y-auto pr-2 custom-scrollbar">
+
+                    <div
+                        class="glass-panel p-6 sm:p-8 rounded-3xl relative group hover:shadow-lg transition-all duration-300 border-l-4 border-l-indigo-400">
+                        <div class="absolute top-6 right-6 flex items-center gap-3">
+                            <button
+                                class="text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity bg-indigo-50 dark:bg-indigo-500/10 w-8 h-8 rounded-full flex items-center justify-center hover:bg-indigo-100"
+                                onclick="calcPerc1()" title="Calculate"><i class="fas fa-play text-xs"></i></button>
+                            <button
+                                class="copy-trigger text-slate-400 hover:text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="perc1-res" title="Copy result"><i class="fas fa-copy"></i></button>
+                        </div>
+                        <h3
+                            class="text-lg font-semibold mb-6 text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                            <i class="fas fa-percentage text-indigo-400 text-sm"></i> What is <span
+                                class="bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 px-2 rounded">X</span>
+                            % of <span
+                                class="bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 px-2 rounded">Y</span>
+                            ?
+                        </h3>
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
+                            <div class="flex items-center gap-3 w-full sm:w-auto">
+                                <input type="number" id="perc1-x"
+                                    class="perc-input w-24 text-lg font-medium text-center" placeholder="X"
+                                    oninput="calcPerc1()">
+                                <span class="text-sm font-medium text-slate-500">% of</span>
+                            </div>
+                            <input type="number" id="perc1-y" class="perc-input flex-1 w-full text-lg font-medium"
+                                placeholder="Y" oninput="calcPerc1()">
+                        </div>
+                        <div
+                            class="bg-white/60 dark:bg-slate-800/60 p-4 rounded-2xl flex items-center justify-between border border-white/20 dark:border-white/5">
+                            <span class="text-sm text-slate-500 font-medium">Result:</span>
+                            <div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 tracking-wide"
+                                id="perc1-res">&mdash;</div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="glass-panel p-6 sm:p-8 rounded-3xl relative group hover:shadow-lg transition-all duration-300 border-l-4 border-l-emerald-400">
+                        <div class="absolute top-6 right-6 flex items-center gap-3">
+                            <button
+                                class="text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity bg-emerald-50 dark:bg-emerald-500/10 w-8 h-8 rounded-full flex items-center justify-center hover:bg-emerald-100"
+                                onclick="calcPerc2()" title="Calculate"><i class="fas fa-play text-xs"></i></button>
+                            <button
+                                class="copy-trigger text-slate-400 hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="perc2-res" title="Copy result"><i class="fas fa-copy"></i></button>
+                        </div>
+                        <h3
+                            class="text-lg font-semibold mb-6 text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                            <i class="fas fa-chart-pie text-emerald-400 text-sm"></i> <span
+                                class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 px-2 rounded">X</span>
+                            is what % of <span
+                                class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 px-2 rounded">Y</span>
+                            ?
+                        </h3>
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
+                            <input type="number" id="perc2-x" class="perc-input w-full sm:w-32 text-lg font-medium"
+                                placeholder="X" oninput="calcPerc2()">
+                            <span class="text-sm font-medium text-slate-500 whitespace-nowrap">is what % of</span>
+                            <input type="number" id="perc2-y" class="perc-input flex-1 w-full text-lg font-medium"
+                                placeholder="Y" oninput="calcPerc2()">
+                        </div>
+                        <div
+                            class="bg-white/60 dark:bg-slate-800/60 p-4 rounded-2xl flex items-center justify-between border border-white/20 dark:border-white/5">
+                            <span class="text-sm text-slate-500 font-medium">Result:</span>
+                            <div class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 tracking-wide"
+                                id="perc2-res" data-suffix="%">&mdash;</div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="glass-panel p-6 sm:p-8 rounded-3xl relative group hover:shadow-lg transition-all duration-300 border-l-4 border-l-rose-400">
+                        <div class="absolute top-6 right-6 flex items-center gap-3">
+                            <button
+                                class="text-rose-500 opacity-0 group-hover:opacity-100 transition-opacity bg-rose-50 dark:bg-rose-500/10 w-8 h-8 rounded-full flex items-center justify-center hover:bg-rose-100"
+                                onclick="calcPerc3()" title="Calculate"><i class="fas fa-play text-xs"></i></button>
+                            <button
+                                class="copy-trigger text-slate-400 hover:text-rose-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="perc3-res" title="Copy result"><i class="fas fa-copy"></i></button>
+                        </div>
+                        <h3
+                            class="text-lg font-semibold mb-6 text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                            <i class="fas fa-arrow-trend-up text-rose-400 text-sm"></i> Percent Increase/Decrease
+                        </h3>
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
+                            <div class="flex-1 w-full">
+                                <label class="block text-xs text-slate-500 mb-1 ml-1 font-medium pb-1">From
+                                    Value:</label>
+                                <input type="number" id="perc3-x" class="perc-input w-full text-lg font-medium"
+                                    placeholder="Initial" oninput="calcPerc3()">
+                            </div>
+                            <div class="flex-1 w-full">
+                                <label class="block text-xs text-slate-500 mb-1 ml-1 font-medium pb-1">To Value:</label>
+                                <input type="number" id="perc3-y" class="perc-input w-full text-lg font-medium"
+                                    placeholder="Final" oninput="calcPerc3()">
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white/60 dark:bg-slate-800/60 p-4 rounded-2xl flex items-center justify-between border border-white/20 dark:border-white/5">
+                            <span class="text-sm text-slate-500 font-medium">Difference:</span>
+                            <div class="text-2xl font-bold text-rose-600 dark:text-rose-400 tracking-wide"
+                                id="perc3-res">&mdash;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <br>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
+                        Percentage Calculator – Fast & Accurate Online Tool
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        <strong>What Is a Percentage Calculator?</strong><br>
+                        A percentage calculator is an online tool designed to calculate percentage values quickly and
+                        accurately. Percentages are widely used in mathematics, finance, statistics, and everyday life.
+                    </p>
+                </header>
+                <br>
+
+                <div class="intro-section">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        A percent calculator online helps you perform calculations such as:
+                    </p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6 mb-4">
+                        <li>What percentage is one number of another</li>
+                        <li>Percentage increase and decrease</li>
+                        <li>Finding a percentage of a number</li>
+                        <li>Comparing values using percentages</li>
+                    </ul>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        Using a percentage calculation tool eliminates the need for manual formulas and reduces the
+                        chances of making errors.
+                    </p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Why Use an Online
+                        Percentage Calculator?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Fast & Accurate</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Instantly computes results and ensures
+                                precision every time, eliminating manual mistakes.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Easy & Accessible</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Simple interface designed for any
+                                device—completely free to use anytime, anywhere.</p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Common Percentage
+                        Calculations</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        Our tool solves various problems like <strong>Percentage Increase</strong> (for salary or price
+                        changes), <strong>Percentage Decrease</strong> (for discounts and losses), and <strong>Value
+                            Comparison</strong>.
+                    </p>
+                    <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border-l-4 border-blue-500">
+                        <p class="text-sm text-slate-600 dark:text-slate-300 italic">
+                            Example: "What is 20% of 150?" — The calculator provides the result instantly without manual
+                            formulas.
+                        </p>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Who Can Use This
+                        Tool?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        From <strong>Students</strong> solving math homework to <strong>Shoppers</strong> calculating
+                        discounts and <strong>Business Professionals</strong> analyzing profit margins, this tool is
+                        designed for everyone.
+                    </p>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use</h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
+                        <li>Enter the numbers required for the calculation.</li>
+                        <li>Choose the type of percentage calculation (Increase, Decrease, etc.).</li>
+                        <li>Click the <strong>Calculate</strong> button.</li>
+                        <li>Instantly view the accurate result.</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Ready to simplify your math?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 mb-0">
+                        Start using the percentage calculator today for fast, easy, and reliable results.
+                    </p>
+                </section>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 Percentage Calculator Tool. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- Core Layout injection -->
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/core.js"></script>
+    <script src="../js/calculators/percentage.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Duration Calculator | CalcSuite</title>
+    <meta name="description"
+        content="Free online time duration calculator. Add or subtract time (hours, minutes, seconds).">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        purple: { 100: '#f3e8ff', 400: '#c084fc', 500: '#a855f7', 600: '#9333ea', 900: '#581c87' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <div id="sidebar-container" class="contents"></div>
+
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2
+                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
+                            Time Duration</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Add or subtract time spans (Days,
+                            Hours, Minutes, Seconds).</p>
+                    </div>
+                </div>
+
+                <div class="max-w-3xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-purple-400">
+                        <!-- Time 1 -->
+                        <label
+                            class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Time
+                            1</label>
+                        <div class="grid grid-cols-4 gap-2 sm:gap-4 mb-4">
+                            <input type="number" id="td-d1" class="perc-input w-full font-bold py-2 text-center"
+                                placeholder="D" min="0">
+                            <input type="number" id="td-h1" class="perc-input w-full font-bold py-2 text-center"
+                                placeholder="H" min="0">
+                            <input type="number" id="td-m1" class="perc-input w-full font-bold py-2 text-center"
+                                placeholder="M" min="0">
+                            <input type="number" id="td-s1" class="perc-input w-full font-bold py-2 text-center"
+                                placeholder="S" min="0">
+                        </div>
+
+                        <!-- Operator -->
+                        <div class="flex justify-center mb-4">
+                            <select id="td-op"
+                                class="perc-input bg-white/50 dark:bg-slate-800/50 cursor-pointer text-2xl font-bold py-2 px-6 appearance-none text-center rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                                <option value="+">+</option>
+                                <option value="-">-</option>
+                            </select>
+                        </div>
+
+                        <!-- Time 2 -->
+                        <label
+                            class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Time
+                            2</label>
+                        <div class="grid grid-cols-4 gap-2 sm:gap-4 mb-2">
+                            <input type="number" id="td-d2" class="perc-input w-full font-bold py-2 text-center"
+                                placeholder="D" min="0">
+                            <input type="number" id="td-h2" class="perc-input w-full font-bold py-2 text-center"
+                                placeholder="H" min="0">
+                            <input type="number" id="td-m2" class="perc-input w-full font-bold py-2 text-center"
+                                placeholder="M" min="0">
+                            <input type="number" id="td-s2" class="perc-input w-full font-bold py-2 text-center"
+                                placeholder="S" min="0">
+                        </div>
+                    </div>
+
+                    <div id="td-results-area"
+                        class="hidden opacity-0 flex flex-col items-center justify-center gap-4 mt-2 transition-all duration-500">
+                        <div class="text-4xl font-light text-slate-400">=</div>
+                        <div
+                            class="glass-display w-full p-8 rounded-3xl text-center group relative border border-purple-100 dark:border-purple-900/30">
+                            <button
+                                class="copy-trigger absolute top-3 right-3 text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                data-target="td-res-value"><i class="fas fa-copy"></i></button>
+                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2">Result
+                                Duration</div>
+                            <div class="text-4xl sm:text-5xl font-bold text-purple-600 dark:text-purple-400 break-all"
+                                id="td-res-value">&mdash;</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <br>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
+                        <strong>Time Duration Calculator</strong> – <strong>Add or Subtract Time Spans Online</strong>
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        A <strong>time duration calculator</strong> is a handy <strong>online tool</strong> that helps
+                        you <strong>add or subtract time spans</strong> in days, hours, minutes, and seconds. Our
+                        <strong>free online time calculator</strong> allows you to perform accurate <strong>time
+                            computations</strong> quickly, saving you the hassle of manual calculations.
+                    </p>
+                </header>
+                <br>
+
+                <div class="intro-section">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        Whether you are a student, professional, or planner, this <strong>time duration calculator
+                            online</strong> simplifies <strong>time management</strong> and <strong>scheduling</strong>.
+                    </p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a
+                        <strong>Time Duration Calculator</strong>?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        A <strong>time duration calculator</strong> is a digital tool that computes the difference or
+                        sum of two time periods. It allows you to:
+                    </p>
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
+                        <li>Add multiple <strong>time durations</strong></li>
+                        <li>Subtract one <strong>time span</strong> from another</li>
+                        <li><strong>Convert time</strong> into hours, minutes, or seconds</li>
+                        <li>Track total duration for projects, tasks, or events</li>
+                    </ul>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4">
+                        Unlike manual calculations, which can be error-prone, our <strong>time calculator</strong>
+                        ensures precise results instantly.
+                    </p>
+
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
+                        an <strong>Online Time Duration Calculator</strong></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Quick and Accurate</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Calculate <strong>time
+                                    differences</strong> or sums instantly without manual math.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Convert Between Units</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Easily convert <strong>total
+                                    time</strong> into days, hours, minutes, or seconds.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">The <strong>free time
+                                    calculator</strong> works on any device without registration.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Simplify Scheduling</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Plan tasks and <strong>track
+                                    durations</strong> efficiently for better productivity.</p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
+                        <strong>Time Duration Calculator</strong></h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
+                        <li>Enter the first <strong>time span</strong> (days, hours, minutes, seconds).</li>
+                        <li>Enter the second <strong>time span</strong>.</li>
+                        <li>Select <strong>add or subtract</strong>.</li>
+                        <li>Click <strong>calculate</strong> to view the total duration instantly.</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Simplify your <strong>time
+                            calculations</strong> today!</h2>
+                    <p class="text-slate-500 dark:text-slate-400">
+                        Try our <strong>online time duration calculator</strong> to manage projects, deadlines, and
+                        schedules with precision.
+                    </p>
+                </section>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 <strong>Time Duration Calculator Tool</strong>. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/timeduration.js"></script>
+</body>
+
+</html>

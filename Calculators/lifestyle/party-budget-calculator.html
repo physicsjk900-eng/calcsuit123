@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Party Budget Calculator | CalcSuite</title>
+    <meta name="description" content="Calculate your party expenses, from food and drinks to venue and decor.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        sky: { 100: '#e0f2fe', 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <div id="sidebar-container" class="contents"></div>
+
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2
+                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
+                            Party Budget Calculator</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Estimate expenses for throwing a
+                            party based on guest count.</p>
+                    </div>
+                </div>
+
+                <div class="max-w-4xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
+
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
+                        <div class="flex flex-col md:flex-row gap-8">
+
+                            <!-- Inputs -->
+                            <div class="flex-1">
+                                <h3
+                                    class="font-bold text-slate-700 dark:text-slate-200 mb-4 border-b border-slate-200 dark:border-slate-700 pb-2">
+                                    <i class="fas fa-users text-sky-500 mr-2"></i>Guest Details</h3>
+
+                                <div class="mb-4">
+                                    <label
+                                        class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Number
+                                        of Guests</label>
+                                    <input type="number" id="party-guests"
+                                        class="perc-input w-full font-bold text-lg py-3 text-center" placeholder="50"
+                                        value="50">
+                                </div>
+                                <div class="mb-4">
+                                    <label
+                                        class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Food
+                                        Avg Cost / Person</label>
+                                    <div class="relative">
+                                        <span
+                                            class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                                        <input type="number" id="party-food"
+                                            class="perc-input w-full font-bold text-lg py-3 pl-8 text-center"
+                                            placeholder="25" value="25">
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label
+                                        class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Drinks
+                                        Avg Cost / Person</label>
+                                    <div class="relative">
+                                        <span
+                                            class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                                        <input type="number" id="party-drinks"
+                                            class="perc-input w-full font-bold text-lg py-3 pl-8 text-center"
+                                            placeholder="15" value="15">
+                                    </div>
+                                </div>
+
+                                <h3
+                                    class="font-bold text-slate-700 dark:text-slate-200 mb-4 mt-6 border-b border-slate-200 dark:border-slate-700 pb-2">
+                                    <i class="fas fa-music text-sky-500 mr-2"></i>Fixed Costs</h3>
+
+                                <div class="mb-4">
+                                    <label
+                                        class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Venue
+                                        Rental</label>
+                                    <div class="relative">
+                                        <span
+                                            class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                                        <input type="number" id="party-venue"
+                                            class="perc-input w-full font-bold text-lg py-3 pl-8 text-center"
+                                            placeholder="400" value="400">
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label
+                                        class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Entertainment
+                                        & Decor</label>
+                                    <div class="relative">
+                                        <span
+                                            class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                                        <input type="number" id="party-decor"
+                                            class="perc-input w-full font-bold text-lg py-3 pl-8 text-center"
+                                            placeholder="200" value="200">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Results -->
+                            <div class="flex-1 flex flex-col">
+                                <div id="party-results-area"
+                                    class="glass-display flex-1 p-6 sm:p-8 rounded-3xl border border-sky-100 dark:border-sky-900/30 flex flex-col justify-between hidden opacity-0 transition-all duration-500">
+
+                                    <div class="text-center mb-6">
+                                        <div
+                                            class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2">
+                                            Total Estimated Budget</div>
+                                        <div class="text-5xl font-extrabold text-sky-600 dark:text-sky-400 break-all"
+                                            id="party-res-total">&mdash;</div>
+                                        <div class="text-xs text-slate-400 mt-2 font-medium" id="party-res-pp">&mdash;
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="flex-1 flex flex-col justify-end space-y-3 pt-6 border-t border-slate-200 dark:border-slate-700">
+                                        <div class="flex justify-between items-center text-sm">
+                                            <span class="font-bold text-slate-500 dark:text-slate-400">Food</span>
+                                            <span class="font-black text-slate-700 dark:text-slate-300"
+                                                id="party-res-f">&mdash;</span>
+                                        </div>
+                                        <div
+                                            class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                                            <div class="bg-amber-400 h-full rounded-full" id="party-bar-f"
+                                                style="width: 0%"></div>
+                                        </div>
+
+                                        <div class="flex justify-between items-center text-sm pt-2">
+                                            <span class="font-bold text-slate-500 dark:text-slate-400">Drinks</span>
+                                            <span class="font-black text-slate-700 dark:text-slate-300"
+                                                id="party-res-d">&mdash;</span>
+                                        </div>
+                                        <div
+                                            class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                                            <div class="bg-emerald-400 h-full rounded-full" id="party-bar-d"
+                                                style="width: 0%"></div>
+                                        </div>
+
+                                        <div class="flex justify-between items-center text-sm pt-2">
+                                            <span class="font-bold text-slate-500 dark:text-slate-400">Venue &
+                                                Mix</span>
+                                            <span class="font-black text-slate-700 dark:text-slate-300"
+                                                id="party-res-v">&mdash;</span>
+                                        </div>
+                                        <div
+                                            class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                                            <div class="bg-purple-400 h-full rounded-full" id="party-bar-v"
+                                                style="width: 0%"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <br>
+    <div id="app-container"
+        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <main
+            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+
+            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
+                <header>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
+                        <strong>Party Budget Calculator</strong> – Estimate <strong>Expenses for Your Event</strong>
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        A <strong>party budget calculator</strong> is a smart <strong>online tool</strong> that helps
+                        you estimate <strong>expenses for throwing a party</strong> based on your guest count and
+                        budget. Our <strong>free online party budget calculator</strong> is perfect for <strong>event
+                            planners</strong>, hosts, and anyone organizing gatherings, birthdays, weddings, or
+                        corporate events.
+                    </p>
+                </header>
+                <br>
+
+                <div class="intro-section">
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
+                        Whether you are planning a small get-together or a large celebration, this <strong>party budget
+                            tool</strong> ensures you allocate funds efficiently and keep your event within budget.
+                    </p>
+                </div>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a
+                        <strong>Party Budget Calculator</strong>?</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
+                        A <strong>party budget calculator</strong> helps you estimate the <strong>total cost of a
+                            party</strong> by breaking down expenses according to the <strong>number of guests</strong>
+                        and event requirements. It considers important factors such as:
+                    </p>
+
+                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
+                        <li><strong>Number of guests</strong></li>
+                        <li><strong>Food and beverages</strong></li>
+                        <li><strong>Venue or location costs</strong></li>
+                        <li><strong>Decorations and entertainment</strong></li>
+                        <li>Miscellaneous costs (invitations, party favors, equipment rentals)</li>
+                    </ul>
+
+
+
+                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4">
+                        With a <strong>free party budget calculator online</strong>, you can get an accurate estimate
+                        and plan your <strong>party finances</strong> confidently.
+                    </p>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
+                        a <strong>Party Budget Calculator</strong></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Plan Efficiently</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Allocate your budget to food, drinks,
+                                and decor based on <strong>guest count</strong>.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Save Money</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Avoid overspending by estimating costs
+                                accurately before the event starts.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Our <strong>party expense
+                                    estimator</strong> works on any device—desktop, tablet, or smartphone.</p>
+                        </div>
+                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <h3 class="font-bold text-slate-800 dark:text-white">Stress-Free Planning</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Focus on making your event memorable
+                                without worrying about <strong>unexpected costs</strong>.</p>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <section>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
+                        <strong>Party Budget Calculator</strong></h2>
+                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
+                        <li>Enter the <strong>number of guests</strong> attending the party.</li>
+                        <li>Input expected costs for <strong>food, drinks, decorations</strong>, and entertainment.</li>
+                        <li>Click calculate to see a <strong>detailed breakdown of total party expenses</strong>.</li>
+                        <li>Adjust individual categories if needed to fit your priorities.</li>
+                    </ol>
+                </section>
+                <br>
+
+                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Plan your next event confidently!
+                    </h2>
+                    <p class="text-slate-500 dark:text-slate-400">
+                        Try the <strong>party budget tool online</strong> today and enjoy a <strong>stress-free
+                            celebration</strong>.
+                    </p>
+                </section>
+
+                <footer>
+                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
+                        &copy; 2026 <strong>Event Expense Management Tool</strong>. All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/party.js"></script>
+</body>
+
+</html>

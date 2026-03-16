@@ -1,0 +1,157 @@
+﻿
+>     window.calcPerc1 = () => {
+          const x = parseFloat(document.getElementById('perc1-x').value);
+          const y = parseFloat(document.getElementById('perc1-y').value);
+          document.getElementById('perc1-res').innerHTML = isNaN(x) || isNaN(y) ? "&mdash;" : formatRes((x / 100) * y);
+      };
+  
+      window.calcPerc2 = () => {
+          const x = parseFloat(document.getElementById('perc2-x').value);
+          const y = parseFloat(document.getElementById('perc2-y').value);
+          document.getElementById('perc2-res').innerHTML = isNaN(x) || isNaN(y) ? "&mdash;" : (formatRes((x / y) * 
+100) + '%');
+      };
+  
+      window.calcPerc3 = () => {
+          const x = parseFloat(document.getElementById('perc3-x').value);
+          const y = parseFloat(document.getElementById('perc3-y').value);
+          if (isNaN(x) || isNaN(y)) {
+              document.getElementById('perc3-res').innerHTML = "&mdash;";
+              return;
+          }
+          let diff = y - x;
+          let p = (diff / Math.abs(x)) * 100;
+          let prefix = p > 0 ? '+' : '';
+          document.getElementById('perc3-res').innerHTML = isNaN(p) ? "&mdash;" : (prefix + formatRes(p) + '%');
+      };
+  
+      // --------------------------------------
+      // 5. Age Calculator
+      // --------------------------------------
+      const dobInput = document.getElementById('dob-input');
+      const targetInput = document.getElementById('target-date-input');
+      // Set default target to today
+      const today = new Date();
+      targetInput.valueAsDate = today;
+  
+      window.calculateAge = () => {
+          if (!dobInput.value || !targetInput.value) return;
+  
+          const dob = new Date(dobInput.value);
+          const target = new Date(targetInput.value);
+  
+          if (dob > target) {
+              alert("Date of birth cannot be after the target date.");
+              return;
+          }
+  
+          let years = target.getFullYear() - dob.getFullYear();
+          let months = target.getMonth() - dob.getMonth();
+          let days = target.getDate() - dob.getDate();
+  
+          if (days < 0) {
+              months--;
+              // get days in previous month
+              const prevMonth = new Date(target.getFullYear(), target.getMonth(), 0);
+              days += prevMonth.getDate();
+          }
+          if (months < 0) {
+              years--;
+              months += 12;
+          }
+  
+          // Animate numbers
+          animateValue("res-years", 0, years, 1000);
+          animateValue("res-months", 0, months, 1000);
+          animateValue("res-days", 0, days, 1000);
+  
+          // Next Birthday Calculation
+          let nextBd = new Date(dob);
+          nextBd.setFullYear(target.getFullYear());
+  
+          // If birthday has passed this year, next birthday is next year
+          if (nextBd.getTime() < target.getTime() && (nextBd.getMonth() !== target.getMonth() || nextBd.getDate() !== 
+target.getDate())) {
+              nextBd.setFullYear(target.getFullYear() + 1);
+          }
+  
+          // Fix timezone offset issues by using UTC for difference
+          const utc1 = Date.UTC(target.getFullYear(), target.getMonth(), target.getDate());
+          const utc2 = Date.UTC(nextBd.getFullYear(), nextBd.getMonth(), nextBd.getDate());
+          const diffDays = Math.floor((utc2 - utc1) / (1000 * 60 * 60 * 24));
+  
+          let nextBdText;
+          if (diffDays === 0) nextBdText = "Today!";
+          else if (diffDays === 1) nextBdText = "1 day";
+          else nextBdText = `${diffDays} days`;
+  
+          document.getElementById('res-next-bd').innerText = nextBdText;
+  
+          const resultsDiv = document.getElementById('age-results');
+          resultsDiv.classList.remove('hidden');
+          // trigger reflow
+          void resultsDiv.offsetWidth;
+          resultsDiv.classList.remove('opacity-0', 'translate-y-4');
+      };
+  
+      function animateValue(id, start, end, duration) {
+          if (start === end) {
+              document.getElementById(id).innerHTML = end;
+              return;
+          }
+          let range = end - start;
+          let current = start;
+          let increment = end > start ? 1 : -1;
+          let stepTime = Math.abs(Math.floor(duration / range));
+          let obj = document.getElementById(id);
+          let timer = setInterval(function () {
+              current += increment;
+              obj.innerHTML = current;
+              if (current == end) {
+                  clearInterval(timer);
+              }
+          }, stepTime);
+      }
+  
+      // --------------------------------------
+      // 6. EMI Calculator
+      // --------------------------------------
+      const formatCurrency = val => isNaN(val) ? "&mdash;" : '$' + val.toLocaleString('en-US', { 
+minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  
+      window.calculateEMI = () => {
+          const p = parseFloat(document.getElementById('emi-principal').value);
+          const rAnnual = parseFloat(document.getElementById('emi-rate').value);
+          let n = parseFloat(document.getElementById('emi-tenure').value);
+          const tenureType = document.getElementById('emi-tenure-type').value;
+  
+          if (isNaN(p) || isNaN(rAnnual) || isNaN(n) || p <= 0 || rAnnual <= 0 || n <= 0) {
+              document.getElementById('emi-res-monthly').innerHTML = "&mdash;";
+              document.getElementById('emi-res-interest').innerHTML = "&mdash;";
+              document.getElementById('emi-res-total').innerHTML = "&mdash;";
+              return;
+          }
+  
+          if (tenureType === 'years') n = n * 12; // convert to months
+          const rMonthly = rAnnual / 12 / 100; // monthly rate
+  
+          // Formula: EMI = P * r * (1+r)^n / ((1+r)^n - 1)
+          const emi = p * rMonthly * Math.pow(1 + rMonthly, n) / (Math.pow(1 + rMonthly, n) - 1);
+          const totalAmount = emi * n;
+          const totalInterest = totalAmount - p;
+  
+          document.getElementById('emi-res-monthly').innerHTML = formatCurrency(emi);
+          document.getElementById('emi-res-interest').innerHTML = formatCurrency(totalInterest);
+          document.getElementById('emi-res-total').innerHTML = formatCurrency(totalAmount);
+      };
+  
+      // --------------------------------------
+      // 7. Loan Calculator (Reverse)
+      // --------------------------------------
+      let currentLoanCalcMode = 'principal'; // 'principal', 'tenure', 'rate'
+  
+      window.switchLoanCalcMode = (mode) => {
+          currentLoanCalcMode = mode;
+          const btns = document.querySelectorAll('.loan-tab-btn');
+
+

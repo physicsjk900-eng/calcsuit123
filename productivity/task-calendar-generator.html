@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Calendar Generator - CalcSuit</title>
+    <meta name="description" content="Generate a daily, weekly, or monthly task calendar and export it instantly to PDF.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' },
+                        emerald: { 400: '#34d399', 500: '#10b981', 600: '#059669' },
+                        rose: { 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48' },
+                        amber: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' },
+                        sky: { 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' },
+                        purple: { 400: '#c084fc', 500: '#a855f7', 600: '#9333ea' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PDF Generation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        .view-tab.active {
+            background-color: #6366f1;
+            color: white;
+            border-color: #6366f1;
+        }
+        .calendar-cell {
+            min-height: 80px;
+        }
+        .color-choice.selected {
+            box-shadow: 0 0 0 2px white;
+            outline: 2px solid #6366f1;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+
+<body class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="app-container" class="m-auto glass-panel w-full max-w-6xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[700px] relative z-10 transition-all duration-300">
+        <div id="sidebar-container" class="contents"></div>
+
+        <main class="flex-1 p-6 md:p-8 lg:p-10 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md flex flex-col lg:flex-row gap-8">
+            
+            <!-- Left Panel: Input Form -->
+            <div class="w-full lg:w-1/3 flex flex-col gap-6">
+                <div>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white flex items-center gap-3">
+                        <i class="fas fa-calendar-alt text-indigo-500"></i> Calendar Generator
+                    </h1>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Add tasks and export beautiful PDFs.</p>
+                </div>
+
+                <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm flex-1">
+                    <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4">Add Event / Task</h3>
+                    <form id="event-form" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Title</label>
+                            <input type="text" id="event-title" required placeholder="Meeting with team" class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Date</label>
+                            <input type="date" id="event-date" required class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 text-sm">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Start Time</label>
+                                <input type="time" id="event-start" class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">End Time</label>
+                                <input type="time" id="event-end" class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Color Tag</label>
+                            <div class="flex gap-3" id="color-picker">
+                                <button type="button" class="color-choice w-8 h-8 rounded-full bg-indigo-500 selected" data-color="bg-indigo-500"></button>
+                                <button type="button" class="color-choice w-8 h-8 rounded-full bg-emerald-500" data-color="bg-emerald-500"></button>
+                                <button type="button" class="color-choice w-8 h-8 rounded-full bg-rose-500" data-color="bg-rose-500"></button>
+                                <button type="button" class="color-choice w-8 h-8 rounded-full bg-amber-500" data-color="bg-amber-500"></button>
+                                <button type="button" class="color-choice w-8 h-8 rounded-full bg-purple-500" data-color="bg-purple-500"></button>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md text-sm mt-4">Add to Calendar</button>
+                        <button type="button" id="btn-clear-all" class="w-full bg-transparent border border-slate-300 dark:border-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 font-semibold py-2.5 rounded-xl transition-all text-sm mt-2">Clear All Events</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Panel: Visual Calendar & PDF Generation -->
+            <div class="w-full lg:w-2/3 flex flex-col gap-4">
+                <div class="flex flex-col sm:flex-row justify-between items-center sm:items-end gap-4">
+                    <div class="flex gap-2 bg-slate-200/50 dark:bg-slate-800 p-1 rounded-xl w-full sm:w-auto overflow-x-auto">
+                        <button class="view-tab active px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-400 transition-colors" data-view="monthly">Monthly</button>
+                        <button class="view-tab px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-400 transition-colors bg-transparent border border-transparent" data-view="weekly">Weekly</button>
+                        <button class="view-tab px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-400 transition-colors bg-transparent border border-transparent" data-view="daily">Daily</button>
+                    </div>
+
+                    <div class="flex gap-2 items-center">
+                        <input type="month" id="calendar-month-picker" class="bg-white dark:bg-slate-800 border-none rounded-xl px-3 py-2 text-sm shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-indigo-500">
+                        <button id="btn-export-pdf" class="flex-shrink-0 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-xl transition-all shadow-md text-sm flex items-center gap-2">
+                            <i class="fas fa-file-export"></i> PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Printable Area -->
+                <div id="printable-calendar" class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden flex-1 p-6 relative">
+                    <!-- Dynamic Header -->
+                    <h2 id="calendar-title" class="text-2xl font-bold text-center text-slate-800 dark:text-white mb-6 uppercase tracking-widest bg-slate-50 dark:bg-slate-900/50 py-3 rounded-lg">March 2026</h2>
+                    
+                    <!-- Calendar Container injected via JS -->
+                    <div id="calendar-grid-container" class="w-full transition-all"></div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Hidden HTML Template for PDF Export -->
+    <div id="pdf-template" class="fixed left-[-9999px] top-0 bg-white w-[794px] min-h-[1123px] flex flex-col font-sans z-[-1] text-slate-800 antialiased h-auto">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-12 py-10 flex justify-between items-center rounded-b-3xl shadow-sm mb-6 pb-12">
+            <div>
+                <h1 class="text-5xl font-extrabold tracking-tight mb-3 uppercase drop-shadow-sm" id="pdf-template-title">Task Planner</h1>
+                <p class="text-2xl font-medium opacity-90 tracking-wide" id="pdf-template-subtitle">Subtitle</p>
+            </div>
+            <div class="text-right flex flex-col items-end">
+                <div class="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-4xl mb-3 shadow-[0_4px_15px_rgba(0,0,0,0.1)] border border-white/30"><i class="fas fa-rocket"></i></div>
+                <div class="text-xs font-bold tracking-widest uppercase opacity-80" id="pdf-template-date">Printed: 2026-03-22</div>
+            </div>
+        </div>
+        <!-- Motivational Quote -->
+        <div class="px-12 mb-2 text-center -mt-12 relative z-10">
+            <p class="text-lg italic font-medium text-slate-600 bg-white py-4 px-8 rounded-2xl shadow-md shadow-indigo-500/10 inline-block border border-indigo-50">"Success is the sum of small efforts, repeated day in and day out."</p>
+        </div>
+        
+        <!-- List Container -->
+        <div class="px-12 py-6 flex-1 flex flex-col gap-5" id="pdf-template-content">
+            <!-- Dynamic rows will go here -->
+        </div>
+
+        <!-- Footer Notes Area -->
+        <div class="px-12 py-6 mb-4">
+            <h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-3"><i class="fas fa-pen mr-2"></i>Additional Notes</h4>
+            <div class="w-full h-32 rounded-3xl border-2 border-dashed border-slate-200 bg-slate-50/50"></div>
+        </div>
+
+        <!-- Footer -->
+        <div class="px-12 py-8 text-center text-slate-400 font-semibold text-[10px] tracking-widest uppercase border-t border-slate-100 mt-auto bg-slate-50/50">
+            Smart Task Calendar &bull; CalcSuit Productivity Suite &bull; Automatically Generated
+        </div>
+    </div>
+
+    <!-- PDF Loading Overlay -->
+    <div id="pdf-processing" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[200] hidden items-center justify-center flex-col text-white">
+        <i class="fas fa-spinner fa-spin text-5xl mb-4 text-emerald-500"></i>
+        <h3 class="text-xl font-bold">Rendering High-Quality PDF</h3>
+        <p class="text-sm text-slate-300 mt-2">Please wait, building the image blueprint...</p>
+    </div>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/task-calendar.js"></script>
+</body>
+</html>

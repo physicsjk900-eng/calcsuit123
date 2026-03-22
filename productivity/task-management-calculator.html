@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Task Tracker - CalcSuit</title>
+    <meta name="description" content="Manage daily, weekly, and monthly tasks with smart tracking and performance reports.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' },
+                        emerald: { 400: '#34d399', 500: '#10b981', 600: '#059669' },
+                        rose: { 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48' },
+                        amber: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' },
+                        sky: { 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' },
+                        purple: { 400: '#c084fc', 500: '#a855f7', 600: '#9333ea' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js & jsPDF -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        .task-tab-btn.active {
+            border-bottom: 2px solid #6366f1;
+            color: #6366f1;
+            font-weight: 600;
+        }
+        .task-tab-content { display: none; }
+        .task-tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        /* Custom progress bar styles */
+        ::-webkit-progress-bar { background-color: #e2e8f0; border-radius: 999px; }
+        .dark ::-webkit-progress-bar { background-color: #334155; }
+        ::-webkit-progress-value { background-color: #6366f1; border-radius: 999px; transition: width 0.5s ease; }
+    </style>
+</head>
+
+<body class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+
+    <div id="app-container" class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        <div id="sidebar-container" class="contents"></div>
+
+        <main class="flex-1 p-6 md:p-8 lg:p-10 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white flex items-center gap-3">
+                        <i class="fas fa-tasks text-indigo-500"></i> Smart Task Tracker
+                    </h1>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Plan, Track, and Evaluate your productivity.</p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex items-center gap-2 px-4 py-2 bg-rose-100/50 dark:bg-rose-900/30 text-rose-600 rounded-xl shadow-sm">
+                        <i class="fas fa-fire"></i>
+                        <span class="font-bold text-lg" id="streak-counter">0</span>
+                        <span class="text-xs uppercase tracking-wider font-semibold opacity-80">Days Streak</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div class="flex border-b border-slate-200 dark:border-slate-700 mb-6 gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
+                <button class="task-tab-btn active pb-3 px-1 transition-colors hover:text-indigo-500" data-target="daily-tab">Daily</button>
+                <button class="task-tab-btn pb-3 px-1 transition-colors hover:text-indigo-500" data-target="weekly-tab">Weekly</button>
+                <button class="task-tab-btn pb-3 px-1 transition-colors hover:text-indigo-500" data-target="monthly-tab">Monthly</button>
+                <button class="task-tab-btn pb-3 px-1 transition-colors hover:text-indigo-500" data-target="insights-tab"><i class="fas fa-chart-pie mr-1"></i> Insights</button>
+                <button class="task-tab-btn pb-3 px-1 transition-colors hover:text-indigo-500" data-target="reports-tab"><i class="fas fa-file-pdf mr-1"></i> Reports</button>
+            </div>
+
+            <!-- Daily Tab -->
+            <div id="daily-tab" class="task-tab-content active">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-1">
+                        <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
+                            <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4 flex items-center gap-2"><i class="fas fa-plus-circle text-indigo-500"></i> Add Daily Task</h3>
+                            <form id="daily-form" class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Task Name</label>
+                                    <input type="text" id="daily-title" required class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 text-sm">
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Priority</label>
+                                        <select id="daily-priority" class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 text-sm">
+                                            <option value="High">High 🔴</option>
+                                            <option value="Medium" selected>Medium 🟡</option>
+                                            <option value="Low">Low 🟢</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Category</label>
+                                        <select id="daily-category" class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 text-sm">
+                                            <option value="Work">Work 💼</option>
+                                            <option value="Study">Study 📚</option>
+                                            <option value="Health">Health 🏃</option>
+                                            <option value="Personal">Personal ✨</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Est. Time (Mins)</label>
+                                    <input type="number" id="daily-est-time" min="5" value="30" required class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 text-sm">
+                                </div>
+                                <button type="submit" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg active:scale-95 text-sm">Add Task</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-2 flex flex-col">
+                        <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm flex-1 flex flex-col">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="font-bold text-slate-700 dark:text-slate-200">Today's Tasks</h3>
+                                <div class="text-sm font-semibold text-indigo-500" id="daily-progress-text">0% Completed</div>
+                            </div>
+                            <progress id="daily-progress-bar" value="0" max="100" class="w-full h-2 mb-4"></progress>
+                            
+                            <!-- Task List Container -->
+                            <div id="daily-task-list" class="flex-1 overflow-y-auto space-y-2 pr-2 custom-scrollbar max-h-[350px]">
+                                <!-- Injected via JS -->
+                            </div>
+                            <div id="daily-empty-state" class="hidden flex-1 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 py-10 opacity-70">
+                                <i class="fas fa-clipboard-list text-4xl mb-3"></i>
+                                <p>No tasks for today. Plan ahead!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly Tab -->
+            <div id="weekly-tab" class="task-tab-content">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-1">
+                        <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
+                            <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4 flex items-center gap-2"><i class="fas fa-calendar-week text-emerald-500"></i> Add Weekly Goal</h3>
+                            <!-- Form Similar to Daily -->
+                            <form id="weekly-form" class="space-y-4">
+                                <div><label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Goal Name</label><input type="text" id="weekly-title" required class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 text-sm"></div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div><label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Priority</label><select id="weekly-priority" class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-sm"><option value="High">High</option><option value="Medium" selected>Medium</option><option value="Low">Low</option></select></div>
+                                    <div><label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Category</label><select id="weekly-category" class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-sm"><option value="Work">Work</option><option value="Study">Study</option><option value="Health">Health</option><option value="Personal">Personal</option></select></div>
+                                </div>
+                                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md text-sm">Add Goal</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-2">
+                        <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
+                            <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4">This Week's Goals</h3>
+                            <div id="weekly-task-list" class="overflow-y-auto space-y-2 max-h-[400px]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Tab -->
+            <div id="monthly-tab" class="task-tab-content">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-1">
+                        <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
+                            <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4 flex items-center gap-2"><i class="fas fa-calendar-alt text-amber-500"></i> Add Monthly Target</h3>
+                            <form id="monthly-form" class="space-y-4">
+                                <div><label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Target Name</label><input type="text" id="monthly-title" required class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-amber-500 text-sm"></div>
+                                <div><label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Category</label><select id="monthly-category" class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-sm"><option value="Work">Work</option><option value="Study">Study</option><option value="Health">Health</option><option value="Personal">Personal</option></select></div>
+                                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md text-sm">Add Target</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-2">
+                        <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
+                            <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4">This Month's Targets</h3>
+                            <div id="monthly-task-list" class="overflow-y-auto space-y-2 max-h-[400px]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Insights Dashboard Tab -->
+            <div id="insights-tab" class="task-tab-content">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <!-- Scorecards -->
+                    <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl p-5 text-white shadow-lg shadow-indigo-500/30">
+                        <div class="text-indigo-100 text-sm font-semibold mb-1"><i class="fas fa-bullseye"></i> Completion Rate</div>
+                        <div class="text-3xl font-bold" id="insight-completion">0%</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl p-5 text-white shadow-lg shadow-emerald-500/30">
+                        <div class="text-emerald-100 text-sm font-semibold mb-1"><i class="fas fa-clock"></i> Time Efficiency</div>
+                        <div class="text-3xl font-bold" id="insight-efficiency">N/A</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-5 text-white shadow-lg shadow-purple-500/30">
+                        <div class="text-purple-100 text-sm font-semibold mb-1"><i class="fas fa-trophy"></i> Consistency Score</div>
+                        <div class="text-3xl font-bold" id="insight-consistency">0.0</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Charts -->
+                    <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm relative h-64 flex flex-col items-center justify-center">
+                        <h4 class="text-sm font-semibold text-slate-500 mb-2 w-full text-left">Productivity by Category</h4>
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm relative h-64 flex flex-col items-center justify-center">
+                        <h4 class="text-sm font-semibold text-slate-500 mb-2 w-full text-left">Daily Completion Trend</h4>
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Smart Suggestions -->
+                <div class="mt-6 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/30 rounded-2xl p-4 flex gap-4 items-start">
+                    <div class="mt-1 w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-800/50 flex items-center justify-center text-amber-500 shrink-0"><i class="fas fa-lightbulb"></i></div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 dark:text-slate-200">AI Assistant Suggestions</h4>
+                        <ul id="smart-suggestions" class="list-disc list-inside text-sm text-slate-600 dark:text-slate-400 mt-2 space-y-1">
+                            <li>Complete some tasks to generate tailored feedback.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reports-tab" class="task-tab-content">
+                <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700/50 shadow-sm text-center max-w-2xl mx-auto mt-4">
+                    <div class="w-20 h-20 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-file-pdf text-3xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Generate PDF Report</h2>
+                    <p class="text-slate-500 dark:text-slate-400 mb-8">Download a comprehensive breakdown of your tasks, performance stats, and intelligent insights to review your productivity over time.</p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button id="btn-export-daily" class="px-6 py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"><i class="fas fa-download"></i> Daily Report</button>
+                        <button id="btn-export-weekly" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"><i class="fas fa-download"></i> Weekly Report</button>
+                        <button id="btn-export-monthly" class="px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"><i class="fas fa-download"></i> Monthly Report</button>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+                        <button id="btn-carry-forward" class="text-sm font-medium text-slate-500 hover:text-indigo-500 underline decoration-indigo-300 underline-offset-4 decoration-2"><i class="fas fa-share mr-1"></i> Simulate "Next Day" (Carry forward unfinished & rest)</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Modals (e.g., Task Completion Input Est/Actual Time) -->
+    <div id="completion-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100] hidden items-center justify-center">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-6 w-full max-w-sm m-4 transform scale-95 opacity-0 transition-all duration-300" id="completion-modal-content">
+            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-1">Verify Time Estimate</h3>
+            <p class="text-sm text-slate-500 mb-4 truncate" id="modal-task-title">Task name...</p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500">Estimated Minutes</label>
+                    <input type="number" id="modal-est" disabled class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2 mt-1 opacity-70">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500">Actual Minutes Taken</label>
+                    <input type="number" id="modal-actual" min="1" class="w-full bg-slate-100 dark:bg-slate-900 border-2 border-indigo-100 dark:border-indigo-900/30 rounded-xl px-4 py-2 mt-1 focus:border-indigo-500 focus:ring-0">
+                </div>
+            </div>
+            <div class="flex gap-3 mt-6">
+                <button id="btn-modal-cancel" class="flex-1 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:bg-slate-200 transition-colors">Cancel</button>
+                <button id="btn-modal-save" class="flex-1 py-2 rounded-xl bg-indigo-500 text-white font-semibold hover:bg-indigo-600 transition-colors shadow-md">Complete!</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/task-management.js"></script>
+</body>
+</html>

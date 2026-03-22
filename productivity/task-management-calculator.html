@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Task Tracker - CalcSuit</title>
-    <meta name="description" content="Manage daily, weekly, and monthly tasks with smart tracking and performance reports.">
-    
+    <meta name="description"
+        content="Manage daily, weekly, and monthly tasks with smart tracking and performance reports.">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -32,58 +33,100 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Chart.js & jsPDF -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
+
     <style>
         .task-tab-btn.active {
             border-bottom: 2px solid #6366f1;
             color: #6366f1;
             font-weight: 600;
         }
-        .task-tab-content { display: none; }
-        .task-tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .task-tab-content {
+            display: none;
+        }
+
+        .task-tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Custom progress bar styles */
-        ::-webkit-progress-bar { background-color: #e2e8f0; border-radius: 999px; }
-        .dark ::-webkit-progress-bar { background-color: #334155; }
-        ::-webkit-progress-value { background-color: #6366f1; border-radius: 999px; transition: width 0.5s ease; }
+        ::-webkit-progress-bar {
+            background-color: #e2e8f0;
+            border-radius: 999px;
+        }
+
+        .dark ::-webkit-progress-bar {
+            background-color: #334155;
+        }
+
+        ::-webkit-progress-value {
+            background-color: #6366f1;
+            border-radius: 999px;
+            transition: width 0.5s ease;
+        }
     </style>
 </head>
 
-<body class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col relative overflow-x-hidden">
+<body
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col relative overflow-x-hidden">
 
     <!-- Global Header -->
-    <header class="w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 sticky top-0 z-[150] shadow-sm mb-6 lg:mb-10">
+    <header
+        class="w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 sticky top-0 z-[150] shadow-sm mb-6 lg:mb-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="../index.html" class="flex items-center gap-2 text-2xl font-bold font-serif text-slate-800 dark:text-white transition-transform hover:scale-105">
+            <a href="../index.html"
+                class="flex items-center gap-2 text-2xl font-bold font-serif text-slate-800 dark:text-white transition-transform hover:scale-105">
                 <i class="fas fa-calculator text-indigo-500"></i>
                 Calc<span class="text-indigo-500">Suit</span>
             </a>
-            
+
             <nav class="hidden md:flex items-center gap-8">
-                <a href="../index.html" class="text-sm font-semibold tracking-wide text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition-colors">Home</a>
-                
+                <a href="../index.html"
+                    class="text-sm font-semibold tracking-wide text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition-colors">Home</a>
+
                 <!-- Calculators Dropdown Menu -->
                 <div class="relative group">
-                    <button class="flex items-center gap-1.5 text-sm font-semibold tracking-wide text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition-colors py-5 outline-none">
-                        Calculators <i class="fas fa-chevron-down text-[10px] transition-transform duration-300 group-hover:rotate-180"></i>
+                    <button
+                        class="flex items-center gap-1.5 text-sm font-semibold tracking-wide text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition-colors py-5 outline-none">
+                        Calculators <i
+                            class="fas fa-chevron-down text-[10px] transition-transform duration-300 group-hover:rotate-180"></i>
                     </button>
                     <!-- Dropdown Content (Injected by layout.js) -->
-                    <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 w-[320px] z-50">
-                        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-700/50 p-3 overflow-y-auto max-h-[60vh] custom-scrollbar" id="header-calculator-dropdown">
-                            <div class="text-center py-4 text-xs font-semibold text-slate-400"><i class="fas fa-circle-notch fa-spin text-indigo-500 mb-2 text-lg block"></i>Loading tools...</div>
+                    <div
+                        class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 w-[320px] z-50">
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-700/50 p-3 overflow-y-auto max-h-[60vh] custom-scrollbar"
+                            id="header-calculator-dropdown">
+                            <div class="text-center py-4 text-xs font-semibold text-slate-400"><i
+                                    class="fas fa-circle-notch fa-spin text-indigo-500 mb-2 text-lg block"></i>Loading
+                                tools...</div>
                         </div>
                     </div>
                 </div>
 
-                <a href="../contact.html" class="text-sm font-semibold tracking-wide text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition-colors">Contact</a>
+                <a href="../contact.html"
+                    class="text-sm font-semibold tracking-wide text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition-colors">Contact</a>
             </nav>
 
             <div class="flex items-center gap-3">
-                <button id="theme-toggle-header" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-slate-500 dark:text-slate-400 cursor-pointer shadow-sm">
+                <button id="theme-toggle-header"
+                    class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-slate-500 dark:text-slate-400 cursor-pointer shadow-sm">
                     <i class="fas fa-moon dark:hidden"></i>
                     <i class="fas fa-sun hidden dark:block"></i>
                 </button>
@@ -92,244 +135,451 @@
     </header>
 
     <div class="px-4 sm:px-6 lg:px-8 flex-1 flex flex-col w-full">
-        <div id="TrackerApp" class="mx-auto w-full max-w-5xl rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] overflow-hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border-4 border-indigo-50/50 dark:border-slate-800/50 flex flex-col min-h-[650px] relative z-10 transition-all duration-300">
+        <div id="TrackerApp"
+            class="mx-auto w-full max-w-5xl rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] overflow-hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border-4 border-indigo-50/50 dark:border-slate-800/50 flex flex-col min-h-[650px] relative z-10 transition-all duration-300">
 
-        <main class="flex-1 p-6 md:p-8 lg:p-10 relative overflow-y-auto">
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-8">
-                <div>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white flex items-center gap-3">
-                        <i class="fas fa-tasks text-indigo-500"></i> Smart Task Tracker
-                    </h1>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Plan, Track, and Evaluate your productivity.</p>
-                </div>
-                <div class="flex gap-4">
-                    <div class="flex items-center gap-2 px-4 py-2 bg-rose-100/50 dark:bg-rose-900/30 text-rose-600 rounded-xl shadow-sm">
-                        <i class="fas fa-fire"></i>
-                        <span class="font-bold text-lg" id="streak-counter">0</span>
-                        <span class="text-xs uppercase tracking-wider font-semibold opacity-80">Days Streak</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tabs Navigation -->
-            <div class="flex border-b border-slate-200 dark:border-slate-700 mb-6 gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
-                <button class="task-tab-btn active pb-3 px-1 transition-colors hover:text-indigo-500" data-target="daily-tab">Daily</button>
-                <button class="task-tab-btn pb-3 px-1 transition-colors hover:text-indigo-500" data-target="weekly-tab">Weekly</button>
-                <button class="task-tab-btn pb-3 px-1 transition-colors hover:text-indigo-500" data-target="monthly-tab">Monthly</button>
-                <button class="task-tab-btn pb-3 px-1 transition-colors hover:text-indigo-500" data-target="insights-tab"><i class="fas fa-chart-pie mr-1"></i> Insights</button>
-                <button class="task-tab-btn pb-3 px-1 transition-colors hover:text-indigo-500" data-target="reports-tab"><i class="fas fa-file-pdf mr-1"></i> Reports</button>
-            </div>
-
-            <!-- Daily Tab -->
-            <div id="daily-tab" class="task-tab-content active">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-1">
-                        <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
-                            <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4 flex items-center gap-2"><i class="fas fa-plus-circle text-indigo-500"></i> Add Daily Task</h3>
-                            <form id="daily-form" class="space-y-4">
-                                <div>
-                                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Task Name</label>
-                                    <input type="text" id="daily-title" required class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 text-sm">
-                                </div>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Priority</label>
-                                        <select id="daily-priority" class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 text-sm">
-                                            <option value="High">High 🔴</option>
-                                            <option value="Medium" selected>Medium 🟡</option>
-                                            <option value="Low">Low 🟢</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Category</label>
-                                        <select id="daily-category" class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 text-sm">
-                                            <option value="Work">Work 💼</option>
-                                            <option value="Study">Study 📚</option>
-                                            <option value="Health">Health 🏃</option>
-                                            <option value="Personal">Personal ✨</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Est. Time (Mins)</label>
-                                    <input type="number" id="daily-est-time" min="5" value="30" required class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 text-sm">
-                                </div>
-                                <button type="submit" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg active:scale-95 text-sm">Add Task</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="lg:col-span-2 flex flex-col">
-                        <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm flex-1 flex flex-col">
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="font-bold text-slate-700 dark:text-slate-200">Today's Tasks</h3>
-                                <div class="text-sm font-semibold text-indigo-500" id="daily-progress-text">0% Completed</div>
-                            </div>
-                            <progress id="daily-progress-bar" value="0" max="100" class="w-full h-2 mb-4"></progress>
-                            
-                            <!-- Task List Container -->
-                            <div id="daily-task-list" class="flex-1 overflow-y-auto space-y-2 pr-2 custom-scrollbar max-h-[350px]">
-                                <!-- Injected via JS -->
-                            </div>
-                            <div id="daily-empty-state" class="hidden flex-1 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 py-10 opacity-70">
-                                <i class="fas fa-clipboard-list text-4xl mb-3"></i>
-                                <p>No tasks for today. Plan ahead!</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Weekly Tab -->
-            <div id="weekly-tab" class="task-tab-content">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-1">
-                        <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
-                            <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4 flex items-center gap-2"><i class="fas fa-calendar-week text-emerald-500"></i> Add Weekly Goal</h3>
-                            <!-- Form Similar to Daily -->
-                            <form id="weekly-form" class="space-y-4">
-                                <div><label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Goal Name</label><input type="text" id="weekly-title" required class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 text-sm"></div>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <div><label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Priority</label><select id="weekly-priority" class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-sm"><option value="High">High</option><option value="Medium" selected>Medium</option><option value="Low">Low</option></select></div>
-                                    <div><label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Category</label><select id="weekly-category" class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-sm"><option value="Work">Work</option><option value="Study">Study</option><option value="Health">Health</option><option value="Personal">Personal</option></select></div>
-                                </div>
-                                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md text-sm">Add Goal</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="lg:col-span-2">
-                        <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
-                            <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4">This Week's Goals</h3>
-                            <div id="weekly-task-list" class="overflow-y-auto space-y-2 max-h-[400px]"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Monthly Tab -->
-            <div id="monthly-tab" class="task-tab-content">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-1">
-                        <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
-                            <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4 flex items-center gap-2"><i class="fas fa-calendar-alt text-amber-500"></i> Add Monthly Target</h3>
-                            <form id="monthly-form" class="space-y-4">
-                                <div><label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Target Name</label><input type="text" id="monthly-title" required class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-amber-500 text-sm"></div>
-                                <div><label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Category</label><select id="monthly-category" class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-sm"><option value="Work">Work</option><option value="Study">Study</option><option value="Health">Health</option><option value="Personal">Personal</option></select></div>
-                                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md text-sm">Add Target</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="lg:col-span-2">
-                        <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
-                            <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4">This Month's Targets</h3>
-                            <div id="monthly-task-list" class="overflow-y-auto space-y-2 max-h-[400px]"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Insights Dashboard Tab -->
-            <div id="insights-tab" class="task-tab-content">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <!-- Scorecards -->
-                    <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl p-5 text-white shadow-lg shadow-indigo-500/30">
-                        <div class="text-indigo-100 text-sm font-semibold mb-1"><i class="fas fa-bullseye"></i> Completion Rate</div>
-                        <div class="text-3xl font-bold" id="insight-completion">0%</div>
-                    </div>
-                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl p-5 text-white shadow-lg shadow-emerald-500/30">
-                        <div class="text-emerald-100 text-sm font-semibold mb-1"><i class="fas fa-clock"></i> Time Efficiency</div>
-                        <div class="text-3xl font-bold" id="insight-efficiency">N/A</div>
-                    </div>
-                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-5 text-white shadow-lg shadow-purple-500/30">
-                        <div class="text-purple-100 text-sm font-semibold mb-1"><i class="fas fa-trophy"></i> Consistency Score</div>
-                        <div class="text-3xl font-bold" id="insight-consistency">0.0</div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Charts -->
-                    <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm relative h-64 flex flex-col items-center justify-center">
-                        <h4 class="text-sm font-semibold text-slate-500 mb-2 w-full text-left">Productivity by Category</h4>
-                        <canvas id="categoryChart"></canvas>
-                    </div>
-                    <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm relative h-64 flex flex-col items-center justify-center">
-                        <h4 class="text-sm font-semibold text-slate-500 mb-2 w-full text-left">Daily Completion Trend</h4>
-                        <canvas id="trendChart"></canvas>
-                    </div>
-                </div>
-                
-                <!-- Smart Suggestions -->
-                <div class="mt-6 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/30 rounded-2xl p-4 flex gap-4 items-start">
-                    <div class="mt-1 w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-800/50 flex items-center justify-center text-amber-500 shrink-0"><i class="fas fa-lightbulb"></i></div>
+            <main class="flex-1 p-6 md:p-8 lg:p-10 relative overflow-y-auto">
+                <!-- Header -->
+                <div class="flex items-center justify-between mb-8">
                     <div>
-                        <h4 class="font-bold text-slate-800 dark:text-slate-200">AI Assistant Suggestions</h4>
-                        <ul id="smart-suggestions" class="list-disc list-inside text-sm text-slate-600 dark:text-slate-400 mt-2 space-y-1">
-                            <li>Complete some tasks to generate tailored feedback.</li>
-                        </ul>
+                        <h1
+                            class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white flex items-center gap-3">
+                            <i class="fas fa-tasks text-indigo-500"></i> Smart Task Tracker
+                        </h1>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Plan, Track, and Evaluate your
+                            productivity.</p>
+                    </div>
+                    <div class="flex gap-4">
+                        <div
+                            class="flex items-center gap-2 px-4 py-2 bg-rose-100/50 dark:bg-rose-900/30 text-rose-600 rounded-xl shadow-sm">
+                            <i class="fas fa-fire"></i>
+                            <span class="font-bold text-lg" id="streak-counter">0</span>
+                            <span class="text-xs uppercase tracking-wider font-semibold opacity-80">Days Streak</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Reports Tab -->
-            <div id="reports-tab" class="task-tab-content">
-                <div class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700/50 shadow-sm text-center max-w-2xl mx-auto mt-4">
-                    <div class="w-20 h-20 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-file-pdf text-3xl"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Generate PDF Report</h2>
-                    <p class="text-slate-500 dark:text-slate-400 mb-8">Download a comprehensive breakdown of your tasks, performance stats, and intelligent insights to review your productivity over time.</p>
-                    
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button id="btn-export-daily" class="px-6 py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"><i class="fas fa-download"></i> Daily Report</button>
-                        <button id="btn-export-weekly" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"><i class="fas fa-download"></i> Weekly Report</button>
-                        <button id="btn-export-monthly" class="px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"><i class="fas fa-download"></i> Monthly Report</button>
-                    </div>
+                <!-- Tabs Navigation -->
+                <div
+                    class="flex border-b border-slate-200 dark:border-slate-700 mb-6 gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
+                    <button class="task-tab-btn active pb-3 px-1 transition-colors hover:text-indigo-500"
+                        data-target="daily-tab">Daily</button>
+                    <button class="task-tab-btn pb-3 px-1 transition-colors hover:text-indigo-500"
+                        data-target="weekly-tab">Weekly</button>
+                    <button class="task-tab-btn pb-3 px-1 transition-colors hover:text-indigo-500"
+                        data-target="monthly-tab">Monthly</button>
+                    <button class="task-tab-btn pb-3 px-1 transition-colors hover:text-indigo-500"
+                        data-target="insights-tab"><i class="fas fa-chart-pie mr-1"></i> Insights</button>
+                    <button class="task-tab-btn pb-3 px-1 transition-colors hover:text-indigo-500"
+                        data-target="reports-tab"><i class="fas fa-file-pdf mr-1"></i> Reports</button>
+                </div>
 
-                    <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
-                        <button id="btn-carry-forward" class="text-sm font-medium text-slate-500 hover:text-indigo-500 underline decoration-indigo-300 underline-offset-4 decoration-2"><i class="fas fa-share mr-1"></i> Simulate "Next Day" (Carry forward unfinished & rest)</button>
+                <!-- Daily Tab -->
+                <div id="daily-tab" class="task-tab-content active">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-1">
+                            <div
+                                class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
+                                <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4 flex items-center gap-2"><i
+                                        class="fas fa-plus-circle text-indigo-500"></i> Add Daily Task</h3>
+                                <form id="daily-form" class="space-y-4">
+                                    <div>
+                                        <label
+                                            class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Task
+                                            Name</label>
+                                        <input type="text" id="daily-title" required
+                                            class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 text-sm">
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label
+                                                class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Priority</label>
+                                            <select id="daily-priority"
+                                                class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 text-sm">
+                                                <option value="High">High 🔴</option>
+                                                <option value="Medium" selected>Medium 🟡</option>
+                                                <option value="Low">Low 🟢</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label
+                                                class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Category</label>
+                                            <select id="daily-category"
+                                                class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 text-sm">
+                                                <option value="Work">Work 💼</option>
+                                                <option value="Study">Study 📚</option>
+                                                <option value="Health">Health 🏃</option>
+                                                <option value="Personal">Personal ✨</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Est.
+                                            Time (Mins)</label>
+                                        <input type="number" id="daily-est-time" min="5" value="30" required
+                                            class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 text-sm">
+                                    </div>
+                                    <button type="submit"
+                                        class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg active:scale-95 text-sm">Add
+                                        Task</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-2 flex flex-col">
+                            <div
+                                class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm flex-1 flex flex-col">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="font-bold text-slate-700 dark:text-slate-200">Today's Tasks</h3>
+                                    <div class="text-sm font-semibold text-indigo-500" id="daily-progress-text">0%
+                                        Completed</div>
+                                </div>
+                                <progress id="daily-progress-bar" value="0" max="100"
+                                    class="w-full h-2 mb-4"></progress>
+
+                                <!-- Task List Container -->
+                                <div id="daily-task-list"
+                                    class="flex-1 overflow-y-auto space-y-2 pr-2 custom-scrollbar max-h-[350px]">
+                                    <!-- Injected via JS -->
+                                </div>
+                                <div id="daily-empty-state"
+                                    class="hidden flex-1 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 py-10 opacity-70">
+                                    <i class="fas fa-clipboard-list text-4xl mb-3"></i>
+                                    <p>No tasks for today. Plan ahead!</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </main>
-    </div>
+                <!-- Weekly Tab -->
+                <div id="weekly-tab" class="task-tab-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-1">
+                            <div
+                                class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
+                                <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4 flex items-center gap-2"><i
+                                        class="fas fa-calendar-week text-emerald-500"></i> Add Weekly Goal</h3>
+                                <!-- Form Similar to Daily -->
+                                <form id="weekly-form" class="space-y-4">
+                                    <div><label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Goal
+                                            Name</label><input type="text" id="weekly-title" required
+                                            class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 text-sm">
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div><label
+                                                class="block text-xs font-semibold text-slate-500 uppercase mb-1">Priority</label><select
+                                                id="weekly-priority"
+                                                class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-sm">
+                                                <option value="High">High</option>
+                                                <option value="Medium" selected>Medium</option>
+                                                <option value="Low">Low</option>
+                                            </select></div>
+                                        <div><label
+                                                class="block text-xs font-semibold text-slate-500 uppercase mb-1">Category</label><select
+                                                id="weekly-category"
+                                                class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-sm">
+                                                <option value="Work">Work</option>
+                                                <option value="Study">Study</option>
+                                                <option value="Health">Health</option>
+                                                <option value="Personal">Personal</option>
+                                            </select></div>
+                                    </div>
+                                    <button type="submit"
+                                        class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md text-sm">Add
+                                        Goal</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-2">
+                            <div
+                                class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
+                                <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4">This Week's Goals</h3>
+                                <div id="weekly-task-list" class="overflow-y-auto space-y-2 max-h-[400px]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- SEO Content Section -->
-    <article class="m-auto w-full max-w-6xl mt-12 p-8 lg:p-16 rounded-[3rem] bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/50 dark:border-slate-700/50 shadow-2xl relative z-10 mb-12">
-        <div class="prose prose-lg prose-indigo dark:prose-invert max-w-none">
-            <h2 class="text-4xl lg:text-5xl font-extrabold text-slate-800 dark:text-white mb-6 leading-tight">Supercharge Your Focus with a <strong class="text-indigo-600 dark:text-indigo-400">Smart Task Tracker</strong></h2>
-            
-            <img src="file:///C:/Users/bhara/.gemini/antigravity/brain/e9b582ae-0488-475b-8ac4-cf4a08a0e287/manager_dashboard_concept_1774168946117.png" alt="High-tech Analytics Dashboard" class="w-full h-auto max-h-[600px] object-cover rounded-3xl shadow-xl mt-6 mb-10 border border-slate-200 dark:border-slate-700">
+                <!-- Monthly Tab -->
+                <div id="monthly-tab" class="task-tab-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-1">
+                            <div
+                                class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
+                                <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4 flex items-center gap-2"><i
+                                        class="fas fa-calendar-alt text-amber-500"></i> Add Monthly Target</h3>
+                                <form id="monthly-form" class="space-y-4">
+                                    <div><label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Target
+                                            Name</label><input type="text" id="monthly-title" required
+                                            class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-amber-500 text-sm">
+                                    </div>
+                                    <div><label
+                                            class="block text-xs font-semibold text-slate-500 uppercase mb-1">Category</label><select
+                                            id="monthly-category"
+                                            class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-3 py-2.5 text-sm">
+                                            <option value="Work">Work</option>
+                                            <option value="Study">Study</option>
+                                            <option value="Health">Health</option>
+                                            <option value="Personal">Personal</option>
+                                        </select></div>
+                                    <button type="submit"
+                                        class="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md text-sm">Add
+                                        Target</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-2">
+                            <div
+                                class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm">
+                                <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-4">This Month's Targets</h3>
+                                <div id="monthly-task-list" class="overflow-y-auto space-y-2 max-h-[400px]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-6">The concept of modern digital productivity has evolved vastly beyond merely jotting down a static, uninspired list of chores on a blank physical notepad. To successfully thrive in highly competitive, rapidly shifting, and cognitively demanding environments, modern professionals absolutely require a deeply integrated, highly analytical ecosystem—specifically, a robust <strong>Smart Task Tracker</strong>. This advanced software application practically serves as your personal command center, enabling you to construct a hyper-actionable blueprint for every minor operational micro-objective structured throughout your entire day. By permanently transitioning from highly disorganized sticky notes and fragmented, distracting mobile applications to a single, centralized, statistically intelligent dashboard, you definitively reclaim critical mental overhead. The tracker doesn't simply passively store what you tentatively intend to do; it actively monitors your execution velocity, intelligently organizes your nested priorities, and mathematically computes your ongoing success trajectories using sophisticated <strong>Productivity Analytics</strong>. This technological paradigm shift transforms utterly abstract, anxiety-inducing goals into inevitable, highly predictable, and deeply satisfying daily milestones.</p>
-            
-            <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-6">One of the most profound architectural advantages inherent to utilizing a specialized <strong>Smart Task Tracker</strong> is the implementation of systematic, non-negotiable mental compartmentalization. A highly resilient workflow algorithm inherently demands that you strictly categorize all incoming tasks by structural scope—Daily granular actions, Weekly intensive sprints, and massive Monthly operational targets. This hierarchal separation flawlessly and entirely prevents the chronic psychological phenomenon often known as "objective paralysis," wherein a user becomes viscerally terrified to initiate a massive long-term project precisely because it visually feels insurmountable. Our proprietary application architecture intuitively empowers you to rapidly define a colossal monthly aspiration, strategically dismantle it into thoroughly achievable weekly sub-targets, and funnel those pieces directly into highly actionable, hyper-focused 30-minute daily execution blocks. This ruthless, methodical dissection of complexity outright guarantees absolute forward momentum. Every single structural micro-action you execute actively compounds over time, dynamically driving up your comprehensive <strong>Completion Rate Metrics</strong>, which practically results in a tremendously motivating, scientifically validated neurological dopamine response.</p>
-            
-            <h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-12 mb-6">Demystifying True <strong class="text-purple-500">Time Efficiency Metrics</strong></h3>
+                <!-- Insights Dashboard Tab -->
+                <div id="insights-tab" class="task-tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <!-- Scorecards -->
+                        <div
+                            class="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl p-5 text-white shadow-lg shadow-indigo-500/30">
+                            <div class="text-indigo-100 text-sm font-semibold mb-1"><i class="fas fa-bullseye"></i>
+                                Completion Rate</div>
+                            <div class="text-3xl font-bold" id="insight-completion">0%</div>
+                        </div>
+                        <div
+                            class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl p-5 text-white shadow-lg shadow-emerald-500/30">
+                            <div class="text-emerald-100 text-sm font-semibold mb-1"><i class="fas fa-clock"></i> Time
+                                Efficiency</div>
+                            <div class="text-3xl font-bold" id="insight-efficiency">N/A</div>
+                        </div>
+                        <div
+                            class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-5 text-white shadow-lg shadow-purple-500/30">
+                            <div class="text-purple-100 text-sm font-semibold mb-1"><i class="fas fa-trophy"></i>
+                                Consistency Score</div>
+                            <div class="text-3xl font-bold" id="insight-consistency">0.0</div>
+                        </div>
+                    </div>
 
-            <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-6">A traditional analog checklist purely operates on an elementary binary constraint: a task is either successfully complete or fundamentally incomplete. However, elite workflow management requires much deeper dimensional velocity data. Time is ultimately finite. If you successfully check off ten distinct tasks but simultaneously expend fourteen harrowing hours to unexpectedly accomplish objectives you originally arrogantly forecasted to take merely four, your underlying <strong>Time Efficiency</strong> is fundamentally, disastrously compromised. To aggressively combat this frequent phenomenon, our deeply integrated platform architecture intrinsically forces you to predict a granular, minute-by-minute time estimation constraint for every individual assignment strictly prior to initiating execution. Upon successful milestone completion, the software algorithmically mandates an actual-time verification input step. This incredibly simple mechanism alone securely generates an incredibly potent, self-correcting statistical feedback loop. Over weeks of rigorous tracking consistency, the engine mathematically aggregates your specific estimation discrepancies, automatically plotting them against vivid, dynamic graphical <strong>Productivity Analytics</strong> charts.</p>
-            
-            <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-6">Ultimately, exposing your personal cognitive blind spots is the solitary, genuine method available to proactively recalibrate your intrinsic focus capabilities. Countless power users routinely discover a deeply chronic psychological tendency to drastically under-estimate the timeframe strictly required for deep administrative inbox cleanup, whilst simultaneously severely over-estimating the agonizing duration of intense creative sprints. By strictly and unapologetically auditing your granular timestamps via a highly methodical <strong>Smart Task Tracker</strong>, you slowly begin neurologically training your cerebral cortex to forecast organizational time blocks with immense, razor-sharp accuracy. When your "Estimated Duration" closely and repeatedly aligns with your "Actual Duration" across hundreds of distinct data points, your <strong>Time Efficiency Score</strong> radically skyrockets. This analytical mastery flawlessly allows you to confidently lock in demanding deadlines, deeply accurately promise crucial deliverables to anxious stakeholders, and definitively end your grueling workday precisely when logically scheduled, completely permanently eliminating the pervasive, highly toxic corporate culture of indefinite burnout overtime.</p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Charts -->
+                        <div
+                            class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm relative h-64 flex flex-col items-center justify-center">
+                            <h4 class="text-sm font-semibold text-slate-500 mb-2 w-full text-left">Productivity by
+                                Category</h4>
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                        <div
+                            class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-700/50 shadow-sm relative h-64 flex flex-col items-center justify-center">
+                            <h4 class="text-sm font-semibold text-slate-500 mb-2 w-full text-left">Daily Completion
+                                Trend</h4>
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
 
-            <img src="file:///C:/Users/bhara/.gemini/antigravity/brain/e9b582ae-0488-475b-8ac4-cf4a08a0e287/productivity_workflow_person_1774168988403.png" alt="Professional Checking Milestone tablet" class="w-full h-auto max-h-[600px] object-cover rounded-3xl shadow-xl mt-12 mb-10 border border-slate-200 dark:border-slate-700">
+                    <!-- Smart Suggestions -->
+                    <div
+                        class="mt-6 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/30 rounded-2xl p-4 flex gap-4 items-start">
+                        <div
+                            class="mt-1 w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-800/50 flex items-center justify-center text-amber-500 shrink-0">
+                            <i class="fas fa-lightbulb"></i></div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 dark:text-slate-200">AI Assistant Suggestions</h4>
+                            <ul id="smart-suggestions"
+                                class="list-disc list-inside text-sm text-slate-600 dark:text-slate-400 mt-2 space-y-1">
+                                <li>Complete some tasks to generate tailored feedback.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-            <h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-12 mb-6">The Psychology Behind the <strong class="text-emerald-500">Consistency Streak Engine</strong></h3>
+                <!-- Reports Tab -->
+                <div id="reports-tab" class="task-tab-content">
+                    <div
+                        class="bg-white/50 dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700/50 shadow-sm text-center max-w-2xl mx-auto mt-4">
+                        <div
+                            class="w-20 h-20 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-file-pdf text-3xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Generate PDF Report</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mb-8">Download a comprehensive breakdown of your
+                            tasks, performance stats, and intelligent insights to review your productivity over time.
+                        </p>
 
-            <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-6">Human psychological motivation is fundamentally heavily engineered around consecutive, uninterrupted behavioral reinforcement strings. Top-tier software game designers have notoriously weaponized this psychological addiction phenomenon for decades to ruthlessly fuel digital user engagement; our platform proactively and highly ethically re-appropriates this incredibly powerful behavioral circuitry exclusively to aggressively drive your professional and academic ascendency. Featured prominently and undeniably at the peak crest of the application dashboard is your active Consistency Streak metric. Every single continuous day that you aggressively plan, execute, and thoroughly verify a critical priority task, your streak mathematically compoundly increases. This bright visual representation of continuous, unbroken effort successfully acts as a tremendously potent, nearly impenetrable psychological firewall heavily guarding against systemic procrastination and complacency. Even on challenging days inevitably overshadowed by intense lethargy or massive external chaos, the sheer burning desire to desperately keep your mathematical digital streak alive provides exactly enough activation energy to log in, define a minimal viable target, and flawlessly execute it using our <a href="task-calendar-generator.html" class="text-indigo-500 underline hover:text-indigo-600 hover:decoration-2 transition-all">Printable Calendar Systems</a>.</p>
-            
-            <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-6">This addictive gamification concept is heavily historically rooted in the highly acclaimed 'Don't Break the Chain' operational philosophy profoundly popularized by elite touring comedians and insanely prolific bestselling authors. A robustly engineered <strong>Smart Task Tracker</strong> flawlessly digitizes this exact analog technique, massively supercharging its efficacy with incredibly deep, granular category tracking. By visually and mathematically witnessing your unyielding dedication stringing together uninterrupted weeks of massive deep-focus, your intrinsic personal identity actively and securely begins to permanently shift. You absolutely and fundamentally stop viewing yourself simply as someone loosely 'trying to be productive,' and instead subconsciously completely adopt the ironclad identity of a ruthless, high-functioning executor. Your <strong>Consistency Score</strong> completely ceases to be an abstract, detached dashboard metric and instantly becomes a highly visceral, tangible reflection of your unyielding internal fortitude. Once this deeply profound identity transition is permanently solidified within the digital platform, achieving unparalleled operational output simply becomes your new unquestionable biological default state.</p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <button id="btn-export-daily"
+                                class="px-6 py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"><i
+                                    class="fas fa-download"></i> Daily Report</button>
+                            <button id="btn-export-weekly"
+                                class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"><i
+                                    class="fas fa-download"></i> Weekly Report</button>
+                            <button id="btn-export-monthly"
+                                class="px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"><i
+                                    class="fas fa-download"></i> Monthly Report</button>
+                        </div>
 
-            <h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-12 mb-6">Harmonization With <strong class="text-amber-500">Global Productivity Suites</strong></h3>
+                        <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+                            <button id="btn-carry-forward"
+                                class="text-sm font-medium text-slate-500 hover:text-indigo-500 underline decoration-indigo-300 underline-offset-4 decoration-2"><i
+                                    class="fas fa-share mr-1"></i> Simulate "Next Day" (Carry forward unfinished &
+                                rest)</button>
+                        </div>
+                    </div>
+                </div>
 
-            <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-8">Operating completely flawlessly within the vastly overarching infrastructural lattice of the <a href="../index.html" class="text-indigo-500 underline hover:text-indigo-600 hover:decoration-2 transition-all">CalcSuit ecosystem</a>, the dynamic Task Manager securely establishes an incredibly fluid, synergistic relationship with an impressive array of external software utilities. We inherently logically recognize that supreme operational productivity rarely, if ever, exists in an isolated software vacuum. Whether you are actively aggressively compiling highly complex organizational variables via our robust Finance algorithms to proactively project immense long-term operational budgets, generating an incredibly visually detailed interactive chronological timeline deeply inside our beautiful <strong>Productivity Analytics</strong> tab, or heavily physically capturing absolute visual deadlines specifically via our dedicated task calendar modules, all digital data structures are deliberately designed to heavily augment and accelerate your overarching mission. The relentless development commitment to elegant, fundamentally frictionless design paradigms completely and securely removes clunky software friction directly from the operational equation. Decisively stop expending your deeply precious cognitive neurological bandwidth vainly attempting to merely 'organize your fragmented software,' and immediately begin explosively deploying your ultimate creative genius exclusively toward executing the monumental, world-changing work itself. Master your daily tracking, predict statistical outcomes exactly, generate uniquely beautiful PDF reports, and completely decisively transform your professional trajectory right now.</p>
+            </main>
         </div>
-    </article>
+
+        <!-- SEO Content Section -->
+        <article
+            class="m-auto w-full max-w-6xl mt-12 p-8 lg:p-16 rounded-[3rem] bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/50 dark:border-slate-700/50 shadow-2xl relative z-10 mb-12">
+            <div class="prose prose-lg prose-indigo dark:prose-invert max-w-none">
+                <h2 class="text-4xl lg:text-5xl font-extrabold text-slate-800 dark:text-white mb-6 leading-tight">
+                    Supercharge Your Focus with a <strong class="text-indigo-600 dark:text-indigo-400">Smart Task
+                        Tracker</strong></h2>
+
+                <img src="productivity/manager_dashboard_concept_1774168946117.png" alt="High-tech Analytics Dashboard"
+                    class="w-full h-auto max-h-[600px] object-cover rounded-3xl shadow-xl mt-6 mb-10 border border-slate-200 dark:border-slate-700">
+
+                <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-6">The concept of modern digital
+                    productivity has evolved vastly beyond merely jotting down a static, uninspired list of chores on a
+                    blank physical notepad. To successfully thrive in highly competitive, rapidly shifting, and
+                    cognitively demanding environments, modern professionals absolutely require a deeply integrated,
+                    highly analytical ecosystem—specifically, a robust <strong>Smart Task Tracker</strong>. This
+                    advanced software application practically serves as your personal command center, enabling you to
+                    construct a hyper-actionable blueprint for every minor operational micro-objective structured
+                    throughout your entire day. By permanently transitioning from highly disorganized sticky notes and
+                    fragmented, distracting mobile applications to a single, centralized, statistically intelligent
+                    dashboard, you definitively reclaim critical mental overhead. The tracker doesn't simply passively
+                    store what you tentatively intend to do; it actively monitors your execution velocity, intelligently
+                    organizes your nested priorities, and mathematically computes your ongoing success trajectories
+                    using sophisticated <strong>Productivity Analytics</strong>. This technological paradigm shift
+                    transforms utterly abstract, anxiety-inducing goals into inevitable, highly predictable, and deeply
+                    satisfying daily milestones.</p>
+
+                <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-6">One of the most profound
+                    architectural advantages inherent to utilizing a specialized <strong>Smart Task Tracker</strong> is
+                    the implementation of systematic, non-negotiable mental compartmentalization. A highly resilient
+                    workflow algorithm inherently demands that you strictly categorize all incoming tasks by structural
+                    scope—Daily granular actions, Weekly intensive sprints, and massive Monthly operational targets.
+                    This hierarchal separation flawlessly and entirely prevents the chronic psychological phenomenon
+                    often known as "objective paralysis," wherein a user becomes viscerally terrified to initiate a
+                    massive long-term project precisely because it visually feels insurmountable. Our proprietary
+                    application architecture intuitively empowers you to rapidly define a colossal monthly aspiration,
+                    strategically dismantle it into thoroughly achievable weekly sub-targets, and funnel those pieces
+                    directly into highly actionable, hyper-focused 30-minute daily execution blocks. This ruthless,
+                    methodical dissection of complexity outright guarantees absolute forward momentum. Every single
+                    structural micro-action you execute actively compounds over time, dynamically driving up your
+                    comprehensive <strong>Completion Rate Metrics</strong>, which practically results in a tremendously
+                    motivating, scientifically validated neurological dopamine response.</p>
+
+                <h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-12 mb-6">Demystifying True <strong
+                        class="text-purple-500">Time Efficiency Metrics</strong></h3>
+
+                <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-6">A traditional analog
+                    checklist purely operates on an elementary binary constraint: a task is either successfully complete
+                    or fundamentally incomplete. However, elite workflow management requires much deeper dimensional
+                    velocity data. Time is ultimately finite. If you successfully check off ten distinct tasks but
+                    simultaneously expend fourteen harrowing hours to unexpectedly accomplish objectives you originally
+                    arrogantly forecasted to take merely four, your underlying <strong>Time Efficiency</strong> is
+                    fundamentally, disastrously compromised. To aggressively combat this frequent phenomenon, our deeply
+                    integrated platform architecture intrinsically forces you to predict a granular, minute-by-minute
+                    time estimation constraint for every individual assignment strictly prior to initiating execution.
+                    Upon successful milestone completion, the software algorithmically mandates an actual-time
+                    verification input step. This incredibly simple mechanism alone securely generates an incredibly
+                    potent, self-correcting statistical feedback loop. Over weeks of rigorous tracking consistency, the
+                    engine mathematically aggregates your specific estimation discrepancies, automatically plotting them
+                    against vivid, dynamic graphical <strong>Productivity Analytics</strong> charts.</p>
+
+                <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-6">Ultimately, exposing your
+                    personal cognitive blind spots is the solitary, genuine method available to proactively recalibrate
+                    your intrinsic focus capabilities. Countless power users routinely discover a deeply chronic
+                    psychological tendency to drastically under-estimate the timeframe strictly required for deep
+                    administrative inbox cleanup, whilst simultaneously severely over-estimating the agonizing duration
+                    of intense creative sprints. By strictly and unapologetically auditing your granular timestamps via
+                    a highly methodical <strong>Smart Task Tracker</strong>, you slowly begin neurologically training
+                    your cerebral cortex to forecast organizational time blocks with immense, razor-sharp accuracy. When
+                    your "Estimated Duration" closely and repeatedly aligns with your "Actual Duration" across hundreds
+                    of distinct data points, your <strong>Time Efficiency Score</strong> radically skyrockets. This
+                    analytical mastery flawlessly allows you to confidently lock in demanding deadlines, deeply
+                    accurately promise crucial deliverables to anxious stakeholders, and definitively end your grueling
+                    workday precisely when logically scheduled, completely permanently eliminating the pervasive, highly
+                    toxic corporate culture of indefinite burnout overtime.</p>
+
+                <img src="productivity/productivity_workflow_person_1774168988403.png"
+                    alt="Professional Checking Milestone tablet"
+                    class="w-full h-auto max-h-[600px] object-cover rounded-3xl shadow-xl mt-12 mb-10 border border-slate-200 dark:border-slate-700">
+
+                <h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-12 mb-6">The Psychology Behind the
+                    <strong class="text-emerald-500">Consistency Streak Engine</strong></h3>
+
+                <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-6">Human psychological
+                    motivation is fundamentally heavily engineered around consecutive, uninterrupted behavioral
+                    reinforcement strings. Top-tier software game designers have notoriously weaponized this
+                    psychological addiction phenomenon for decades to ruthlessly fuel digital user engagement; our
+                    platform proactively and highly ethically re-appropriates this incredibly powerful behavioral
+                    circuitry exclusively to aggressively drive your professional and academic ascendency. Featured
+                    prominently and undeniably at the peak crest of the application dashboard is your active Consistency
+                    Streak metric. Every single continuous day that you aggressively plan, execute, and thoroughly
+                    verify a critical priority task, your streak mathematically compoundly increases. This bright visual
+                    representation of continuous, unbroken effort successfully acts as a tremendously potent, nearly
+                    impenetrable psychological firewall heavily guarding against systemic procrastination and
+                    complacency. Even on challenging days inevitably overshadowed by intense lethargy or massive
+                    external chaos, the sheer burning desire to desperately keep your mathematical digital streak alive
+                    provides exactly enough activation energy to log in, define a minimal viable target, and flawlessly
+                    execute it using our <a href="task-calendar-generator.html"
+                        class="text-indigo-500 underline hover:text-indigo-600 hover:decoration-2 transition-all">Printable
+                        Calendar Systems</a>.</p>
+
+                <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-6">This addictive gamification
+                    concept is heavily historically rooted in the highly acclaimed 'Don't Break the Chain' operational
+                    philosophy profoundly popularized by elite touring comedians and insanely prolific bestselling
+                    authors. A robustly engineered <strong>Smart Task Tracker</strong> flawlessly digitizes this exact
+                    analog technique, massively supercharging its efficacy with incredibly deep, granular category
+                    tracking. By visually and mathematically witnessing your unyielding dedication stringing together
+                    uninterrupted weeks of massive deep-focus, your intrinsic personal identity actively and securely
+                    begins to permanently shift. You absolutely and fundamentally stop viewing yourself simply as
+                    someone loosely 'trying to be productive,' and instead subconsciously completely adopt the ironclad
+                    identity of a ruthless, high-functioning executor. Your <strong>Consistency Score</strong>
+                    completely ceases to be an abstract, detached dashboard metric and instantly becomes a highly
+                    visceral, tangible reflection of your unyielding internal fortitude. Once this deeply profound
+                    identity transition is permanently solidified within the digital platform, achieving unparalleled
+                    operational output simply becomes your new unquestionable biological default state.</p>
+
+                <h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-12 mb-6">Harmonization With <strong
+                        class="text-amber-500">Global Productivity Suites</strong></h3>
+
+                <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-300 mb-8">Operating completely
+                    flawlessly within the vastly overarching infrastructural lattice of the <a href="../index.html"
+                        class="text-indigo-500 underline hover:text-indigo-600 hover:decoration-2 transition-all">CalcSuit
+                        ecosystem</a>, the dynamic Task Manager securely establishes an incredibly fluid, synergistic
+                    relationship with an impressive array of external software utilities. We inherently logically
+                    recognize that supreme operational productivity rarely, if ever, exists in an isolated software
+                    vacuum. Whether you are actively aggressively compiling highly complex organizational variables via
+                    our robust Finance algorithms to proactively project immense long-term operational budgets,
+                    generating an incredibly visually detailed interactive chronological timeline deeply inside our
+                    beautiful <strong>Productivity Analytics</strong> tab, or heavily physically capturing absolute
+                    visual deadlines specifically via our dedicated task calendar modules, all digital data structures
+                    are deliberately designed to heavily augment and accelerate your overarching mission. The relentless
+                    development commitment to elegant, fundamentally frictionless design paradigms completely and
+                    securely removes clunky software friction directly from the operational equation. Decisively stop
+                    expending your deeply precious cognitive neurological bandwidth vainly attempting to merely
+                    'organize your fragmented software,' and immediately begin explosively deploying your ultimate
+                    creative genius exclusively toward executing the monumental, world-changing work itself. Master your
+                    daily tracking, predict statistical outcomes exactly, generate uniquely beautiful PDF reports, and
+                    completely decisively transform your professional trajectory right now.</p>
+            </div>
+        </article>
 
         <!-- Global Footer -->
-        <footer class="w-full max-w-6xl mx-auto mt-12 mb-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/50 dark:border-slate-800/50 rounded-3xl py-8 px-6 lg:px-12 relative z-10 shadow-lg">
+        <footer
+            class="w-full max-w-6xl mx-auto mt-12 mb-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/50 dark:border-slate-800/50 rounded-3xl py-8 px-6 lg:px-12 relative z-10 shadow-lg">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="text-slate-500 dark:text-slate-400 text-sm font-semibold flex items-center gap-2">
-                    <i class="fas fa-calculator text-indigo-500 text-lg"></i> CalcSuit &copy; <script>document.write(new Date().getFullYear())</script>
+                    <i class="fas fa-calculator text-indigo-500 text-lg"></i> CalcSuit &copy;
+                    <script>document.write(new Date().getFullYear())</script>
                 </div>
                 <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-xs font-bold tracking-widest uppercase">
                     <a href="../index.html" class="text-slate-500 hover:text-indigo-500 transition-colors">Home</a>
@@ -343,23 +593,29 @@
     </div> <!-- Close Global Padding Wrapper -->
 
     <!-- Modals (e.g., Task Completion Input Est/Actual Time) -->
-    <div id="completion-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100] hidden items-center justify-center">
-        <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-6 w-full max-w-sm m-4 transform scale-95 opacity-0 transition-all duration-300" id="completion-modal-content">
+    <div id="completion-modal"
+        class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100] hidden items-center justify-center">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-6 w-full max-w-sm m-4 transform scale-95 opacity-0 transition-all duration-300"
+            id="completion-modal-content">
             <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-1">Verify Time Estimate</h3>
             <p class="text-sm text-slate-500 mb-4 truncate" id="modal-task-title">Task name...</p>
             <div class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-500">Estimated Minutes</label>
-                    <input type="number" id="modal-est" disabled class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2 mt-1 opacity-70">
+                    <input type="number" id="modal-est" disabled
+                        class="w-full bg-slate-100 dark:bg-slate-900 border-0 rounded-xl px-4 py-2 mt-1 opacity-70">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-500">Actual Minutes Taken</label>
-                    <input type="number" id="modal-actual" min="1" class="w-full bg-slate-100 dark:bg-slate-900 border-2 border-indigo-100 dark:border-indigo-900/30 rounded-xl px-4 py-2 mt-1 focus:border-indigo-500 focus:ring-0">
+                    <input type="number" id="modal-actual" min="1"
+                        class="w-full bg-slate-100 dark:bg-slate-900 border-2 border-indigo-100 dark:border-indigo-900/30 rounded-xl px-4 py-2 mt-1 focus:border-indigo-500 focus:ring-0">
                 </div>
             </div>
             <div class="flex gap-3 mt-6">
-                <button id="btn-modal-cancel" class="flex-1 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:bg-slate-200 transition-colors">Cancel</button>
-                <button id="btn-modal-save" class="flex-1 py-2 rounded-xl bg-indigo-500 text-white font-semibold hover:bg-indigo-600 transition-colors shadow-md">Complete!</button>
+                <button id="btn-modal-cancel"
+                    class="flex-1 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:bg-slate-200 transition-colors">Cancel</button>
+                <button id="btn-modal-save"
+                    class="flex-1 py-2 rounded-xl bg-indigo-500 text-white font-semibold hover:bg-indigo-600 transition-colors shadow-md">Complete!</button>
             </div>
         </div>
     </div>
@@ -367,4 +623,5 @@
     <script src="../js/layout.js"></script>
     <script src="../js/task-management.js"></script>
 </body>
+
 </html>

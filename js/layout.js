@@ -104,6 +104,41 @@ document.addEventListener('DOMContentLoaded', async () => {
         htmlElement.classList.remove('dark');
     }
 
+    // 2.5 Initialize Standalone Header Dropdown
+    const headerDropdown = document.getElementById('header-calculator-dropdown');
+    if (headerDropdown) {
+        const categories = [...new Set(calculatorConfig.map(c => c.category))];
+        let dropdownHtml = '';
+        categories.forEach(cat => {
+            if (cat === 'General') return; // Skip dashboard item
+            const items = calculatorConfig.filter(c => c.category === cat);
+            dropdownHtml += `<div class="px-4 py-2 mt-2 mb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-indigo-400 dark:text-indigo-500 border-b border-slate-100 dark:border-slate-700/50">${cat}</div>`;
+            items.forEach(c => {
+                dropdownHtml += `
+                    <a href="../${c.id.replace(/^\//, '')}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors group">
+                        <div class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/30 group-hover:text-indigo-600 transition-colors">
+                            ${c.icon}
+                        </div>
+                        ${c.name}
+                    </a>
+                `;
+            });
+        });
+        headerDropdown.innerHTML = dropdownHtml;
+    }
+
+    const themeToggleHeaderBtn = document.getElementById('theme-toggle-header');
+    if (themeToggleHeaderBtn) {
+        themeToggleHeaderBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+        });
+    }
+
     const sidebarContainer = document.getElementById('sidebar-container');
     if (sidebarContainer) {
         sidebarContainer.innerHTML = sidebarHtml;

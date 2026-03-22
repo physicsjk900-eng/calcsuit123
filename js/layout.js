@@ -96,32 +96,33 @@ document.addEventListener('DOMContentLoaded', async () => {
 </nav>
     `;
 
-    const sidebarContainer = document.getElementById('sidebar-container');
-    if (sidebarContainer) {
-        sidebarContainer.innerHTML = sidebarHtml;
-    } else {
-        console.error("No #sidebar-container found on the page.");
-        return;
-    }
-
-    // 2. Initialize Theme System
-    const themeToggleBtn = document.getElementById('theme-toggle');
+    // 2. Initialize Theme System globally so standalone pages without sidebars still receive correct color themes
     const htmlElement = document.documentElement;
-
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         htmlElement.classList.add('dark');
     } else {
         htmlElement.classList.remove('dark');
     }
 
-    themeToggleBtn.addEventListener('click', () => {
-        htmlElement.classList.toggle('dark');
-        if (htmlElement.classList.contains('dark')) {
-            localStorage.theme = 'dark';
-        } else {
-            localStorage.theme = 'light';
+    const sidebarContainer = document.getElementById('sidebar-container');
+    if (sidebarContainer) {
+        sidebarContainer.innerHTML = sidebarHtml;
+        
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                htmlElement.classList.toggle('dark');
+                if (htmlElement.classList.contains('dark')) {
+                    localStorage.theme = 'dark';
+                } else {
+                    localStorage.theme = 'light';
+                }
+            });
         }
-    });
+    } else {
+        console.warn("Deploying in standalone mode: no sidebar initialized.");
+        return; // Safe exit: standalone pages do not need active sidebar link computations
+    }
 
     // 3. Render Dynamic Sidebar
     const dynamicSidebar = document.getElementById('dynamic-sidebar');

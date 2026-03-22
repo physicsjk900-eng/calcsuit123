@@ -40,7 +40,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/lifestyle/fuel-cost-calculator.html', name: 'Fuel Cost', icon: '<i class="fas fa-gas-pump"></i>', category: 'Lifestyle & Finance', colorClass: 'bg-sky-100/50 text-sky-600 dark:bg-slate-700/50 dark:text-sky-400' },
         { id: '/lifestyle/tip-calculator.html', name: 'Tip Calculator', icon: '<i class="fas fa-receipt"></i>', category: 'Lifestyle & Finance', colorClass: 'bg-sky-100/50 text-sky-600 dark:bg-slate-700/50 dark:text-sky-400' },
         { id: '/lifestyle/wedding-budget-calculator.html', name: 'Wedding Budget', icon: '<i class="fas fa-ring"></i>', category: 'Lifestyle & Finance', colorClass: 'bg-sky-100/50 text-sky-600 dark:bg-slate-700/50 dark:text-sky-400' },
-        { id: '/lifestyle/party-budget-calculator.html', name: 'Party Budget', icon: '<i class="fas fa-glass-cheers"></i>', category: 'Lifestyle & Finance', colorClass: 'bg-sky-100/50 text-sky-600 dark:bg-slate-700/50 dark:text-sky-400' }
+        { id: '/lifestyle/party-budget-calculator.html', name: 'Party Budget', icon: '<i class="fas fa-glass-cheers"></i>', category: 'Lifestyle & Finance', colorClass: 'bg-sky-100/50 text-sky-600 dark:bg-slate-700/50 dark:text-sky-400' },
+        { id: '/productivity/task-management-calculator.html', name: 'Task Manager', icon: '<i class="fas fa-tasks"></i>', category: 'Productivity', colorClass: 'bg-teal-100/50 text-teal-600 dark:bg-slate-700/50 dark:text-teal-400' },
+        { id: '/productivity/task-calendar-generator.html', name: 'Task Calendar', icon: '<i class="fas fa-calendar-alt"></i>', category: 'Productivity', colorClass: 'bg-teal-100/50 text-teal-600 dark:bg-slate-700/50 dark:text-teal-400' }
     ];
 
     // Determine the base path prefix (e.g., if hosted at /calcsuite/ or local file path)
@@ -49,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // We compute the true 'root' of our app by finding the distance from the current path.
     // If the URL contains an inner directory like '/finance/', we need to step back one folder '../'.
-    const innerDirs = ['calculators', 'finance', 'health', 'math', 'time', 'conversion', 'lifestyle', 'business'];
+    const innerDirs = ['calculators', 'finance', 'health', 'math', 'time', 'conversion', 'lifestyle', 'business', 'productivity'];
     const depth = window.location.pathname.split('/').reverse().findIndex(p => innerDirs.includes(p));
     const rootPrefix = depth > -1 ? '../' : './';
 

@@ -55,10 +55,14 @@
 
 <body class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
 
-    <div id="app-container" class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <div id="sidebar-container" class="contents"></div>
+    <!-- Floating Back Button -->
+    <a href="../index.html" class="absolute top-6 left-6 z-50 bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-700 backdrop-blur-md text-indigo-600 dark:text-indigo-400 px-5 py-2.5 rounded-full font-bold shadow-lg shadow-indigo-500/10 flex items-center gap-2 transition-all hover:scale-105 border border-white/50 dark:border-slate-700">
+        <i class="fas fa-arrow-left"></i> Home
+    </a>
 
-        <main class="flex-1 p-6 md:p-8 lg:p-10 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+    <div id="TrackerApp" class="m-auto w-full max-w-5xl rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] overflow-hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border-4 border-indigo-50/50 dark:border-slate-800/50 flex flex-col min-h-[650px] relative z-10 transition-all duration-300">
+
+        <main class="flex-1 p-6 md:p-8 lg:p-10 relative overflow-y-auto">
             <!-- Header -->
             <div class="flex items-center justify-between mb-8">
                 <div>

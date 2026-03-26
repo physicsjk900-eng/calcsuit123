@@ -350,4 +350,80 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    // 6. Global Multi-Language Translator Widget
+    const translateContainerHtml = `
+        <div id="google_translate_element" style="display:none;"></div>
+        <div class="fixed bottom-6 right-6 z-[200] group">
+            <button class="w-14 h-14 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-[0_10px_25px_-5px_rgba(79,70,229,0.5)] flex items-center justify-center text-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 border-2 border-white/20 dark:border-slate-800 backdrop-blur-md relative overflow-hidden">
+                <i class="fas fa-globe-americas relative z-10"></i>
+                <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></div>
+            </button>
+            <div class="absolute bottom-full right-0 mb-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-bottom-right scale-95 group-hover:scale-100">
+                <div class="bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl p-5 rounded-3xl shadow-2xl border border-slate-200/50 dark:border-slate-700/50 min-w-[220px]">
+                    <div class="flex items-center gap-2 mb-3 px-1">
+                        <i class="fas fa-language text-indigo-500 text-lg"></i>
+                        <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-widest">Translate</h4>
+                    </div>
+                    <div id="custom-translate-container" class="translate-wrapper"></div>
+                </div>
+            </div>
+        </div>
+        <style>
+            /* Hide Google Translate ugly UI elements */
+            body { top: 0 !important; }
+            .skiptranslate.goog-te-banner-frame { display: none !important; }
+            #goog-gt-tt { display: none !important; }
+            .goog-tooltip { display: none !important; }
+            .goog-tooltip:hover { display: none !important; }
+            .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
+            
+            /* Style the dropdown menu */
+            #custom-translate-container .goog-te-combo { 
+                width: 100%; 
+                padding: 10px 14px; 
+                border-radius: 12px; 
+                border: 2px solid #e2e8f0; 
+                background-color: #f8fafc; 
+                color: #334155; 
+                font-family: inherit;
+                font-size: 14px;
+                font-weight: 500;
+                outline: none;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            #custom-translate-container .goog-te-combo:focus {
+                border-color: #6366f1;
+            }
+            html.dark #custom-translate-container .goog-te-combo {
+                border-color: #334155;
+                background-color: #0f172a;
+                color: #e2e8f0;
+            }
+            html.dark #custom-translate-container .goog-te-combo:focus {
+                border-color: #818cf8;
+            }
+            /* Remove Google Branding link */
+            .goog-logo-link { display: none !important; }
+            .goog-te-gadget { color: transparent !important; font-size: 0 !important; }
+            .goog-te-gadget .goog-te-combo { margin: 0 !important; }
+        </style>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', translateContainerHtml);
+
+    // Initialize Google Translate globally
+    window.googleTranslateElementInit = function() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en', 
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+        }, 'custom-translate-container');
+    };
+
+    const gtScript = document.createElement('script');
+    gtScript.type = 'text/javascript';
+    gtScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(gtScript);
+
 });

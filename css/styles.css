@@ -1,120 +1,186 @@
 /* styles.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 /* Base Styles & Utility overrides */
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-family: 'Inter', sans-serif;
 }
 
-/* Stunning Mesh Gradient Backgrounds */
-.bg-mesh {
-    background-color: #fce7f3;
-    /* Fallback */
-    background-image:
-        radial-gradient(at 10% 20%, hsla(228, 100%, 94%, 1) 0px, transparent 50%),
-        radial-gradient(at 80% 10%, hsla(189, 100%, 86%, 1) 0px, transparent 50%),
-        radial-gradient(at 20% 80%, hsla(355, 80%, 93%, 1) 0px, transparent 50%),
-        radial-gradient(at 80% 90%, hsla(340, 70%, 86%, 1) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, hsla(252, 100%, 92%, 1) 0px, transparent 50%),
-        radial-gradient(at 90% 50%, hsla(242, 100%, 88%, 1) 0px, transparent 50%),
-        radial-gradient(at 0% 50%, hsla(343, 100%, 90%, 1) 0px, transparent 50%);
-    background-attachment: fixed;
+/* ======================================================== */
+/* 🚀 SAAS STRUCTURAL OVERRIDES                             */
+/* These !important rules force the legacy 30+ floating     */
+/* HTML containers into a professional Top-Nav Full-Bleed   */
+/* architecture without rewriting their individual tags.    */
+/* ======================================================== */
+
+body.bg-mesh, .bg-mesh {
+    background: #f8fafc !important; /* slate-50 */
+    animation: none !important;
 }
 
-.dark .bg-mesh {
-    background-color: #0f172a;
-    background-image:
-        radial-gradient(at 10% 20%, hsla(228, 80%, 12%, 1) 0px, transparent 50%),
-        radial-gradient(at 80% 10%, hsla(189, 80%, 10%, 1) 0px, transparent 50%),
-        radial-gradient(at 20% 80%, hsla(355, 60%, 14%, 1) 0px, transparent 50%),
-        radial-gradient(at 80% 90%, hsla(340, 60%, 15%, 1) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, hsla(252, 70%, 14%, 1) 0px, transparent 50%),
-        radial-gradient(at 90% 50%, hsla(242, 60%, 13%, 1) 0px, transparent 50%),
-        radial-gradient(at 0% 50%, hsla(343, 70%, 13%, 1) 0px, transparent 50%);
-    background-attachment: fixed;
+.dark body.bg-mesh, .dark .bg-mesh {
+    background: #0f172a !important; /* slate-900 */
+    animation: none !important;
 }
 
-/* Glassmorphism Structural Classes */
-.glass-panel {
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 25px 50px -12px rgba(66, 68, 90, 0.1);
+/* Force `#app-container` to be full-screen, stack items vertically */
+#app-container {
+    max-width: 100% !important;
+    margin: 0 !important;
+    min-height: 100vh !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    flex-direction: column !important; /* Header on top, Main below */
+    background: transparent !important;
 }
 
-.dark .glass-panel {
-    background: rgba(15, 23, 42, 0.75);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+/* Force `<main>` to encapsulate the calculator module into a clean B2B Card */
+#app-container main {
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    max-width: 1200px !important;
+    margin: 2.5rem auto 4rem auto !important;
+    width: calc(100% - 2rem) !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    border-radius: 1.5rem !important;
+    position: relative !important;
 }
 
-.glass-display {
-    background: rgba(255, 255, 255, 0.85);
-    box-shadow: inset 0 2px 5px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.9);
+.dark #app-container main {
+    background: #1e293b !important; /* slate-800 */
+    border-color: #334155 !important;
 }
 
-.dark .glass-display {
-    background: rgba(15, 23, 42, 0.85);
-    box-shadow: inset 0 2px 8px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+/* Kill Glassmorphism - Convert to Solid SaaS Cards */
+.glass-panel, .glass-display {
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 1rem !important;
 }
 
-/* Sidebar Tab Buttons */
-.tab-btn.active-tab {
-    background-color: #ffffff;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
-    color: #4f46e5;
-    border: 1px solid rgba(255, 255, 255, 0.6);
+.dark .glass-panel, .dark .glass-display {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important;
 }
 
-.dark .tab-btn.active-tab {
-    background-color: #334155;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
-    color: #818cf8;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+
+/* ======================================================== */
+/* 🛠️ GLOBAL FORM INPUT STYLING                             */
+/* ======================================================== */
+
+input[type="number"], 
+input[type="text"], 
+input[type="date"], 
+input[type="time"], 
+input[type="email"], 
+select, 
+textarea,
+.perc-input,
+.date-input {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    color: #1e293b;
+    font-size: 0.95rem;
+    font-weight: 500;
+    width: 100%;
 }
 
-.tab-btn:hover:not(.active-tab) {
-    background-color: rgba(255, 255, 255, 0.4);
+input:focus, 
+select:focus, 
+textarea:focus, 
+.perc-input:focus,
+.date-input:focus {
+    border-color: #6366f1;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
-.dark .tab-btn:hover:not(.active-tab) {
-    background-color: rgba(51, 65, 85, 0.4);
+.dark input, 
+.dark select, 
+.dark textarea,
+.dark .perc-input,
+.dark .date-input {
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #f8fafc;
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
-.tab-btn.active-tab span:not(.bg-transparent) {
-    background-color: #6366f1;
-    color: white;
+.dark input:focus, 
+.dark select:focus, 
+.dark textarea:focus {
+    border-color: #818cf8;
+    background: #0f172a;
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.15);
 }
 
-.dark .tab-btn.active-tab span:not(.bg-transparent) {
+::placeholder {
+    color: #94a3b8;
+    opacity: 1;
+}
+
+.dark ::placeholder {
+    color: #475569;
+}
+
+/* Primary Button Standardization */
+button[type="submit"],
+.btn-primary {
     background-color: #4f46e5;
     color: white;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    border: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
 }
 
-/* Explicit fallback for transparent active items (like dashboard) */
-.tab-btn.active-tab span.bg-transparent {
-    color: #6366f1;
+button[type="submit"]:hover,
+.btn-primary:hover {
+    background-color: #4338ca;
 }
 
-.dark .tab-btn.active-tab span.bg-transparent {}
+button[type="submit"]:active,
+.btn-primary:active {
+    background-color: #3730a3;
+}
+
+.dark button[type="submit"],
+.dark .btn-primary {
+    background-color: #6366f1;
+}
+.dark button[type="submit"]:hover,
+.dark .btn-primary:hover {
+    background-color: #4f46e5;
+}
 
 
-/* Calculator Keypad Buttons */
+/* ======================================================== */
+/* 🔢 CALCULATOR KEYPAD STANDARD SAAS                       */
+/* ======================================================== */
 .calc-btn {
-    border-radius: 1.25rem;
-    padding: 1.2rem 0;
-    font-size: 1.5rem;
-    font-weight: 500;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+    border-radius: 0.5rem;
+    padding: 1rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    transition: all 0.15s ease;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     color: #334155;
     display: flex;
     align-items: center;
@@ -124,122 +190,54 @@ body {
 
 .calc-btn:hover,
 .calc-btn:focus-visible {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -5px rgba(0, 0, 0, 0.04);
+    background: #f1f5f9;
+    border-color: #cbd5e1;
     outline: none;
 }
 
 .calc-btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    background: #e2e8f0;
 }
 
-/* Dark Mode Calculator Buttons */
 .dark .calc-btn {
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-    color: #e2e8f0;
+    background: #1e293b;
+    border: 1px solid #334155;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.3);
+    color: #f1f5f9;
 }
 
 .dark .calc-btn:hover,
 .dark .calc-btn:focus-visible {
-    background: rgba(51, 65, 85, 0.9);
-    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    background: #334155;
+    border-color: #475569;
 }
 
-/* Specific Button Styles */
 .btn-operator {
-    color: #6366f1;
-    background: rgba(238, 242, 255, 0.7);
-    border-color: rgba(255, 255, 255, 0.9);
-    font-weight: 600;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-color: #e0e7ff;
 }
 
 .btn-operator:hover {
-    background: rgba(224, 231, 255, 0.9);
+    background: #e0e7ff;
+    border-color: #c7d2fe;
 }
 
 .dark .btn-operator {
     color: #818cf8;
-    background: rgba(49, 46, 129, 0.4);
-    border-color: rgba(255, 255, 255, 0.05);
+    background: #312e81;
+    border-color: #3730a3;
 }
 
 .dark .btn-operator:hover {
-    background: rgba(55, 48, 163, 0.6);
-}
-
-.btn-sci {
-    background: rgba(248, 250, 252, 0.6);
-    color: #475569;
-}
-
-.dark .btn-sci {
-    background: rgba(15, 23, 42, 0.4);
-    color: #94a3b8;
-}
-
-/* Percentage and Date Inputs */
-.perc-input,
-.date-input {
-    background: #ffffff;
-    border: 1px solid #cbd5e1;
-    border-radius: 0.75rem;
-    padding: 0.75rem 1rem;
-    outline: none;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    color: #1e293b;
-    font-size: 1rem;
-}
-
-.perc-input:focus,
-.date-input:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
-}
-
-.dark .perc-input,
-.dark .date-input {
-    background: #1e293b;
-    border: 1px solid #475569;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    color: #f8fafc;
-}
-
-.dark .perc-input:focus,
-.dark .date-input:focus {
-    border-color: #818cf8;
-    box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.2);
-}
-
-/* Date Input specific fixes to map icon color */
-::-webkit-calendar-picker-indicator {
-    filter: opacity(0.5);
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-::-webkit-calendar-picker-indicator:hover {
-    filter: opacity(0.8);
-}
-
-.dark ::-webkit-calendar-picker-indicator {
-    filter: invert(1) opacity(0.6);
-}
-
-.dark ::-webkit-calendar-picker-indicator:hover {
-    filter: invert(1) opacity(0.9);
+    background: #3730a3;
 }
 
 
-/* Scrollbar hiding & custom styling */
+/* Scrollbar Customization */
 .hide-scrollbar::-webkit-scrollbar {
     display: none;
 }
-
 .hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -247,32 +245,28 @@ body {
 
 .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
 }
-
 .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
 }
-
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.3);
-    border-radius: 10px;
+    background: #cbd5e1;
+    border-radius: 999px;
 }
-
 .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(100, 116, 139, 0.4);
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(148, 163, 184, 0.5);
-}
-
-/* Scientific Mode Toggle */
-.sci-mode-btn.active-mode {
-    color: #0f172a;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.dark .sci-mode-btn.active-mode {
-    color: #f8fafc;
     background: #475569;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Date Pickers */
+::-webkit-calendar-picker-indicator {
+    filter: opacity(0.5);
+    cursor: pointer;
+}
+
+.dark ::-webkit-calendar-picker-indicator {
+    filter: invert(1) opacity(0.6);
 }

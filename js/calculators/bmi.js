@@ -80,6 +80,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 resArea.classList.remove('hidden');
                 setTimeout(() => { resArea.classList.add('opacity-100'); }, 10);
             }
+
+            // Move Pointer
+            const pointer = document.getElementById('bmi-pointer');
+            if (pointer) {
+                const minBMI = 10;
+                const maxBMI = 45;
+                let percentage = ((bmi - minBMI) / (maxBMI - minBMI)) * 100;
+                percentage = Math.max(0, Math.min(100, percentage));
+                pointer.style.left = `${percentage}%`;
+            }
         });
     }
 });

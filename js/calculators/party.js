@@ -42,6 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (resArea) {
             resArea.classList.remove('hidden');
             
+            // Trigger animation
+            requestAnimationFrame(() => {
+                resArea.classList.add('opacity-100');
+                resArea.style.transform = 'translateX(0)';
+            });
+            
             resTotal.textContent = curFmt.format(total);
             resPP.textContent = `Averages out to ${curFmt.format(pp)} per person`;
             
@@ -58,8 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 barD.style.width = '0%';
                 barV.style.width = '0%';
             }
-
-            setTimeout(() => { resArea.classList.add('opacity-100'); }, 10);
         }
     }
 

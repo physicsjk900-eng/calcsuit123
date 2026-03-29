@@ -28,23 +28,25 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        categories.forEach(cat => {
+        categories.forEach((cat, index) => {
             const amount = total * cat.pct;
+            const colors = ['pink', 'rose', 'fuchsia', 'purple', 'indigo', 'blue', 'sky', 'teal', 'emerald', 'amber'];
+            const color = colors[index % colors.length];
             
             const div = document.createElement('div');
-            div.className = "flex items-center justify-between p-4 rounded-xl bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 hover:border-sky-300 transition-colors";
+            div.className = `group/cat flex items-center justify-between p-6 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-${color}-400/50 transition-all duration-300 shadow-sm hover:shadow-md`;
             
             div.innerHTML = `
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center text-sky-600 dark:text-sky-400 shrink-0">
-                        <i class="fas ${cat.icon}"></i>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-${color}-50 dark:bg-${color}-900/20 flex items-center justify-center text-${color}-600 dark:text-${color}-400 shrink-0 transition-transform group-hover/cat:scale-110">
+                        <i class="fas ${cat.icon} text-xl"></i>
                     </div>
                     <div>
-                        <div class="text-sm font-bold text-slate-700 dark:text-slate-300">${cat.name}</div>
-                        <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">${(cat.pct * 100).toFixed(0)}% Allocation</div>
+                        <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">${(cat.pct * 100).toFixed(0)}% Allocation</div>
+                        <div class="text-sm font-bold text-slate-700 dark:text-slate-200">${cat.name}</div>
                     </div>
                 </div>
-                <div class="text-lg font-black text-sky-600 dark:text-sky-400 text-right shrink-0 ml-4">
+                <div class="text-xl font-black text-slate-900 dark:text-white text-right shrink-0 ml-4 tabular-nums">
                     ${curFmt.format(amount)}
                 </div>
             `;

@@ -17,9 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateBtnStyles() {
         tipBtns.forEach(btn => {
             if (parseInt(btn.dataset.val) === currentTipPct && !customInput.value) {
-                btn.className = "tip-btn w-16 py-2 rounded-xl border border-sky-400 dark:border-sky-500 font-bold transition-all bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 shadow-sm";
+                btn.classList.add('border-indigo-500', 'text-indigo-500', 'bg-indigo-50', 'dark:bg-indigo-900/30');
+                btn.classList.remove('border-slate-100', 'dark:border-slate-800');
             } else {
-                btn.className = "tip-btn w-16 py-2 rounded-xl border border-slate-200 dark:border-slate-700 font-bold transition-all bg-white dark:bg-slate-800 hover:border-sky-400 text-slate-600 dark:text-slate-300";
+                btn.classList.remove('border-indigo-500', 'text-indigo-500', 'bg-indigo-50', 'dark:bg-indigo-900/30');
+                btn.classList.add('border-slate-100', 'dark:border-slate-800');
             }
         });
     }

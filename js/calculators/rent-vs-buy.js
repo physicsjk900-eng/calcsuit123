@@ -93,15 +93,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // Verdict
             if (totalBuySunkCost < totalRentPaid) {
                 const diff = totalRentPaid - totalBuySunkCost;
-                banner.innerHTML = `Buying is Better<div class="text-sm font-medium mt-1 text-slate-500 font-normal tracking-normal pt-2 border-t border-slate-200 dark:border-slate-800">Saves ${fmt.format(diff)} over ${targetYears} yrs</div>`;
-                banner.className = "text-3xl font-extrabold break-all px-2 py-3 rounded-xl shadow-inner bg-emerald-100/30 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/50";
+                banner.innerHTML = `<span class="text-emerald-400">Buying is Better</span><div class="text-xs font-medium mt-3 text-slate-500 font-normal tracking-tight pt-4 border-t border-white/5">Saves ${fmt.format(diff)} over ${targetYears} years</div>`;
+                banner.classList.remove('text-red-400');
+                banner.classList.add('text-emerald-400');
             } else {
                 const diff = totalBuySunkCost - totalRentPaid;
-                 banner.innerHTML = `Renting is Better<div class="text-sm font-medium mt-1 text-slate-500 font-normal tracking-normal pt-2 border-t border-slate-200 dark:border-slate-800">Saves ${fmt.format(diff)} over ${targetYears} yrs</div>`;
-                 banner.className = "text-3xl font-extrabold break-all px-2 py-3 rounded-xl shadow-inner bg-red-100/30 dark:bg-red-900/30 text-red-600 dark:text-red-400 border border-red-200/50 dark:border-red-800/50";
+                banner.innerHTML = `<span class="text-red-400">Renting is Better</span><div class="text-xs font-medium mt-3 text-slate-500 font-normal tracking-tight pt-4 border-t border-white/5">Saves ${fmt.format(diff)} over ${targetYears} years</div>`;
+                banner.classList.remove('text-emerald-400');
+                banner.classList.add('text-red-400');
             }
 
-            setTimeout(() => { resArea.classList.add('opacity-100'); }, 10);
+            setTimeout(() => { resArea.classList.add('opacity-100', 'translate-y-0'); }, 10);
         }
     }
 

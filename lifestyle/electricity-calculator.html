@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electricity Bill Calculator | CalcSuite</title>
+    <title>Electricity Bill Calculator | CalcSuit</title>
     <meta name="description" content="Calculate your home appliance energy consumption and monthly electricity bill.">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -27,228 +27,175 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body
-    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+<body class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
 
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <div id="sidebar-container" class="contents"></div>
+    <div id="sidebar-container" class="contents"></div>
 
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
-            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2
-                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
-                            Electricity Bill Calculator</h2>
-                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Estimate the cost to run an appliance
-                            per month or year.</p>
-                    </div>
+    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
+        
+        <!-- Calculator Card -->
+        <div id="calc-view" class="w-full max-w-3xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300 mb-12">
+            <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Energy <span class="text-amber-500 font-light">Audit</span></h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Calculate Appliance Running Costs</p>
                 </div>
-
-                <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
-
-                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                            <div class="sm:col-span-2">
-                                <label
-                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Appliance
-                                    Power Consumption</label>
-                                <div class="flex gap-2">
-                                    <input type="number" id="elec-watts"
-                                        class="perc-input w-full font-bold text-lg py-3" placeholder="150" value="150">
-                                    <select id="elec-unit" class="perc-input font-bold px-4 py-3 cursor-pointer">
-                                        <option value="W" selected>Watts (W)</option>
-                                        <option value="kW">Kilowatts (kW)</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Usage
-                                    Per Day</label>
-                                <div class="relative">
-                                    <input type="number" id="elec-hours"
-                                        class="perc-input w-full font-bold text-lg py-3 pr-12 text-center"
-                                        placeholder="4" value="4" max="24" min="0">
-                                    <span
-                                        class="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 font-bold">Hours</span>
-                                </div>
-                            </div>
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Cost
-                                    per kWh</label>
-                                <div class="relative">
-                                    <span
-                                        class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
-                                    <input type="number" id="elec-rate"
-                                        class="perc-input w-full font-bold text-lg py-3 pl-8 text-left"
-                                        placeholder="0.15" value="0.15" step="0.01">
-                                    <span
-                                        class="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 font-bold">/kWh</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="elec-results-area" class="hidden opacity-0 flex flex-col mt-2 transition-all duration-500">
-                        <div
-                            class="glass-display w-full p-8 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30">
-
-                            <div class="mb-8">
-                                <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2">Monthly
-                                    Cost</div>
-                                <div class="text-5xl font-bold text-sky-600 dark:text-sky-400 break-all"
-                                    id="elec-res-month">&mdash;</div>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4 pt-6 border-t border-slate-200 dark:border-slate-700/50">
-                                <div>
-                                    <div
-                                        class="text-[10px] font-semibold uppercase tracking-widest text-slate-400 mb-1">
-                                        Daily Cost</div>
-                                    <div class="text-xl font-bold text-slate-700 dark:text-slate-300" id="elec-res-day">
-                                        &mdash;</div>
-                                </div>
-                                <div>
-                                    <div
-                                        class="text-[10px] font-semibold uppercase tracking-widest text-slate-400 mb-1">
-                                        Yearly Cost</div>
-                                    <div class="text-xl font-bold text-slate-700 dark:text-slate-300"
-                                        id="elec-res-year">&mdash;</div>
-                                </div>
-                            </div>
-
-                            <div
-                                class="mt-6 text-sm text-slate-400 font-medium pt-4 border-t border-slate-200 dark:border-slate-700/50">
-                                Consumes <span id="elec-res-kwh"
-                                    class="font-bold text-slate-600 dark:text-slate-300">0</span> kWh per month.
-                            </div>
-                        </div>
-                    </div>
+                <div class="bg-amber-100/50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-amber-200 dark:border-amber-800/50 shadow-sm self-start sm:self-auto uppercase tracking-tighter">
+                    <i class="fas fa-bolt"></i> Watts Logic
                 </div>
-
             </div>
-        </main>
-    </div>
-    <br>
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
 
-            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <header>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
-                        <strong>Electricity Bill Calculator</strong> – Estimate the <strong>Cost to Run Your
-                            Appliances</strong>
-                    </h1>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        An <strong>electricity bill calculator</strong> is a simple <strong>online tool</strong> that
-                        helps you estimate the <strong>cost of running an appliance</strong> per month or per year. Our
-                        <strong>free online electricity bill calculator</strong> is perfect for homeowners, renters,
-                        students, and anyone looking to manage their <strong>energy usage</strong> efficiently.
-                    </p>
-                </header>
-                <br>
-
-                <div class="intro-section">
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        Whether you are planning your household budget, reducing <strong>energy costs</strong>, or
-                        monitoring <strong>appliance consumption</strong>, this <strong>electricity cost calculator
-                            online</strong> provides accurate estimates quickly and easily.
-                    </p>
+            <div class="space-y-6 mb-8">
+                <!-- Power Input -->
+                <div class="p-6 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-700">
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 pl-1">Power Consumption</label>
+                    <div class="flex gap-2">
+                        <input type="number" id="elec-watts" class="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-bold text-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all" placeholder="150" value="150">
+                        <select id="elec-unit" class="w-32 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-3 font-bold text-xs text-slate-600 dark:text-slate-300 cursor-pointer hover:border-amber-500 transition-colors outline-none">
+                            <option value="W">Watts (W)</option>
+                            <option value="kW">kW</option>
+                        </select>
+                    </div>
                 </div>
-                <br>
 
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is an
-                        <strong>Electricity Bill Calculator</strong>?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        An <strong>electricity bill calculator</strong> estimates the <strong>cost of electricity
-                            consumption</strong> for individual appliances or entire households. It considers factors
-                        such as:
-                    </p>
-
-
-
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
-                        <li><strong>Power rating</strong> of the appliance (Watts)</li>
-                        <li><strong>Hours of use</strong> per day or month</li>
-                        <li><strong>Electricity tariff</strong> (cost per <strong>kWh</strong>)</li>
-                        <li>Duration of usage to calculate monthly or yearly costs</li>
-                    </ul>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4">
-                        With a <strong>free electricity bill calculator online</strong>, you can determine the
-                        <strong>energy cost of appliances</strong> like refrigerators, air conditioners, heaters, TVs,
-                        or lights without complex calculations.
-                    </p>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
-                        an <strong>Electricity Bill Calculator</strong></h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Track Energy Costs</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Understand exactly how much each
-                                device adds to your <strong>monthly utility bill</strong>.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Save Money</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Identify high-energy appliances and
-                                implement <strong>energy-saving</strong> strategies.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Our <strong>online energy
-                                    calculator</strong> is free and works on any device, including smartphones.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Plan Your Budget</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Estimate your <strong>yearly
-                                    electricity expenses</strong> to manage your household finances better.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Usage Hours -->
+                    <div class="p-6 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-700">
+                        <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 pl-1">Usage Duration (Day)</label>
+                        <div class="relative group">
+                            <input type="number" id="elec-hours" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 font-bold text-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-center" placeholder="4" value="4" max="24" min="0">
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black text-slate-400 uppercase">Hours</span>
                         </div>
                     </div>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
-                        <strong>Electricity Bill Calculator</strong></h2>
-                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
-                        <li>Enter the <strong>power rating</strong> of the appliance in Watts.</li>
-                        <li>Input the <strong>hours used</strong> per day or per month.</li>
-                        <li>Enter your <strong>electricity tariff</strong> (cost per kWh).</li>
-                        <li>Click calculate to see the <strong>estimated monthly and yearly cost</strong>.</li>
-                    </ol>
-                </section>
-                <br>
-
-                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Start saving on your energy
-                        bills!</h2>
-                    <p class="text-slate-500 dark:text-slate-400">
-                        Try our <strong>electricity cost calculator online</strong> today to make smarter decisions
-                        about your <strong>electricity consumption</strong>.
-                    </p>
-                </section>
-
-                <footer>
-                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
-                        &copy; 2026 <strong>Electricity Cost Tool</strong>. All rights reserved.
-                    </p>
-                </footer>
+                    <!-- Utility Rate -->
+                    <div class="p-6 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-700">
+                        <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 pl-1">Utility Rate (Cost/kWh)</label>
+                        <div class="relative group">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold group-focus-within:text-amber-500 transition-colors">$</span>
+                            <input type="number" id="elec-rate" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl py-3 pl-8 pr-4 font-bold text-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all" placeholder="0.15" value="0.15" step="0.01">
+                        </div>
+                    </div>
+                </div>
             </div>
-        </main>
-    </div>
+
+            <!-- Result Area -->
+            <div id="elec-results-area" class="hidden opacity-0 space-y-6 transition-all duration-500 transform translate-y-4">
+                <div class="bg-gradient-to-br from-amber-500 to-orange-600 p-8 rounded-3xl text-white text-center shadow-xl shadow-amber-500/20 relative overflow-hidden group">
+                    <div class="relative z-10">
+                        <h4 class="text-[10px] font-black uppercase tracking-widest mb-2 opacity-80">Estimated Monthly Running Cost</h4>
+                        <div id="elec-res-month" class="text-5xl font-black tracking-tighter mb-6 break-all">&mdash;</div>
+                        
+                        <div class="grid grid-cols-2 gap-4 border-t border-white/20 pt-6">
+                            <div>
+                                <div class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-1">Daily Burn</div>
+                                <div id="elec-res-day" class="text-xl font-bold tracking-tight">&mdash;</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-1">Annual Total</div>
+                                <div id="elec-res-year" class="text-xl font-bold tracking-tight">&mdash;</div>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fas fa-plug absolute -bottom-10 -right-10 text-white/10 text-[180px] -rotate-12 group-hover:rotate-0 transition-transform duration-700"></i>
+                </div>
+                
+                <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 text-center">
+                    <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                        Total Energy Impact: <span id="elec-res-kwh" class="text-amber-500">0</span> kWh / Month
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Educational Content -->
+        <div class="w-full max-w-4xl space-y-16 pb-24">
+            
+            <!-- Strategic Header -->
+            <section class="text-center space-y-6">
+                <h1 class="text-5xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">
+                    Master Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-500">Energy Expenses</span>
+                </h1>
+                <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
+                    Ever wondered how much that desktop PC or old refrigerator is actually costing you? Our <strong>Electricity Calculator</strong> breaks down the numbers to help you optimize your utility bill.
+                </p>
+                <div class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full text-xs font-black uppercase tracking-widest border border-emerald-200 dark:border-emerald-800">
+                    <i class="fas fa-leaf"></i> Calculate Passive Savings
+                </div>
+            </section>
+
+            <!-- Feature Blocks -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-4xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+                    <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 text-amber-500 rounded-2xl flex items-center justify-center text-xl font-bold">1</div>
+                    <h3 class="font-black text-slate-900 dark:text-white uppercase tracking-tighter">Find the Watts</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Check the sticker on the back or bottom of your appliance to find the <strong>Wattage (W)</strong> rating.</p>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-4xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+                    <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 text-amber-500 rounded-2xl flex items-center justify-center text-xl font-bold">2</div>
+                    <h3 class="font-black text-slate-900 dark:text-white uppercase tracking-tighter">Enter Usage</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Be honest about how many hours a day that device is actually running or plugged in.</p>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-4xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+                    <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 text-amber-500 rounded-2xl flex items-center justify-center text-xl font-bold">3</div>
+                    <h3 class="font-black text-slate-900 dark:text-white uppercase tracking-tighter">See the Damage</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Our system applies your local utility rate to show your projected <strong>monthly and yearly overhead</strong>.</p>
+                </div>
+            </div>
+
+            <!-- Pro Tips Section -->
+            <section class="bg-slate-900 rounded-4xl p-10 md:p-14 text-white relative overflow-hidden">
+                <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <h2 class="text-3xl font-black uppercase tracking-tight">The 24/7 Cost Trap</h2>
+                        <p class="text-slate-400 leading-relaxed">
+                            "Vampire power" or standby power can account for up to 10% of a household's electricity usage. Devices like chargers, TVs, and microwaves consume energy even when turned off if they remain plugged in.
+                        </p>
+                        <ul class="space-y-4">
+                            <li class="flex items-center gap-3 text-sm">
+                                <i class="fas fa-check-circle text-amber-500"></i>
+                                <span>Switch to LED bulbs (up to 80% more efficient)</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-sm">
+                                <i class="fas fa-check-circle text-amber-500"></i>
+                                <span>Use smart power strips to kill standby power</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-sm">
+                                <i class="fas fa-check-circle text-amber-500"></i>
+                                <span>Upgrade to Energy Star® certified appliances</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-md">
+                        <h4 class="font-black text-amber-500 uppercase tracking-widest mb-4 text-xs text-center">Typical Consumption Estimates</h4>
+                        <div class="space-y-4">
+                            <div class="flex justify-between text-sm py-2 border-b border-white/5">
+                                <span class="text-slate-400">LED TV (55")</span>
+                                <span class="font-bold">60-150W</span>
+                            </div>
+                            <div class="flex justify-between text-sm py-2 border-b border-white/5">
+                                <span class="text-slate-400">Gaming PC</span>
+                                <span class="font-bold">300-600W</span>
+                            </div>
+                            <div class="flex justify-between text-sm py-2 border-b border-white/5">
+                                <span class="text-slate-400">Coffee Maker</span>
+                                <span class="font-bold">800-1200W</span>
+                            </div>
+                            <div class="flex justify-between text-sm py-2">
+                                <span class="text-slate-400">Central AC</span>
+                                <span class="font-bold">3000-5000W</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
 
     <script src="../js/layout.js"></script>
+    <script src="../js/calculators/core.js"></script>
     <script src="../js/calculators/electricity.js"></script>
 </body>
+
 
 </html>

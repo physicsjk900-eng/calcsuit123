@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rent vs Buy Calculator | CalcSuite</title>
+    <title>Rent vs Buy Calculator | CalcSuit</title>
     <meta name="description" content="Compare the costs of renting verses buying a home.">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -27,286 +27,244 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body
-    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+<body class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
 
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <div id="sidebar-container" class="contents"></div>
+    <div id="sidebar-container" class="contents"></div>
 
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
-            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2
-                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
-                            Rent vs Buy</h2>
-                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">A simplified comparison of long-term
-                            costs between renting and buying.</p>
-                    </div>
+    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
+        
+        <!-- Comparison Dashboard -->
+        <div id="calc-view" class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-4xl shadow-2xl border border-slate-200 dark:border-slate-700 p-6 md:p-12 transition-all duration-300 mb-12 relative overflow-hidden">
+            
+            <div class="mb-12 text-center">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-2xl text-[10px] font-black uppercase tracking-widest mb-4 border border-blue-200 dark:border-blue-800/50">
+                    <i class="fas fa-balance-scale"></i> Financial Equilibrium
                 </div>
-
-                <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
-
-                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-6 relative">
-                            <!-- Divider line -->
-                            <div
-                                class="hidden sm:block absolute left-1/2 top-4 bottom-4 w-px bg-slate-200 dark:bg-slate-700 -translate-x-1/2">
-                            </div>
-
-                            <!-- RENT SIDE -->
-                            <div>
-                                <h3
-                                    class="font-bold text-slate-700 dark:text-slate-200 mb-4 border-b border-slate-200 dark:border-slate-700 pb-2">
-                                    <i class="fas fa-key text-red-500 mr-2"></i>Renting</h3>
-                                <label
-                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Monthly
-                                    Rent</label>
-                                <div class="relative mb-4">
-                                    <span
-                                        class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
-                                    <input type="number" id="rvb-rent"
-                                        class="perc-input w-full font-bold text-lg py-3 pl-8" placeholder="1500"
-                                        value="1500">
-                                </div>
-                                <label
-                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Rent
-                                    Increase/Yr</label>
-                                <div class="relative">
-                                    <input type="number" id="rvb-rent-inc"
-                                        class="perc-input w-full font-bold text-lg py-3 pr-8" placeholder="3" value="3"
-                                        step="0.5">
-                                    <span
-                                        class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">%</span>
-                                </div>
-                            </div>
-
-                            <!-- BUY SIDE -->
-                            <div>
-                                <h3
-                                    class="font-bold text-slate-700 dark:text-slate-200 mb-4 border-b border-slate-200 dark:border-slate-700 pb-2">
-                                    <i class="fas fa-home text-emerald-500 mr-2"></i>Buying</h3>
-                                <label
-                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Home
-                                    Price</label>
-                                <div class="relative mb-4">
-                                    <span
-                                        class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
-                                    <input type="number" id="rvb-price"
-                                        class="perc-input w-full font-bold text-lg py-3 pl-8" placeholder="350000"
-                                        value="350000">
-                                </div>
-
-                                <label
-                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Down
-                                    Payment</label>
-                                <div class="relative mb-4">
-                                    <span
-                                        class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
-                                    <input type="number" id="rvb-down"
-                                        class="perc-input w-full font-bold text-lg py-3 pl-8" placeholder="70000"
-                                        value="70000">
-                                </div>
-
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label
-                                            class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Rate</label>
-                                        <div class="relative">
-                                            <input type="number" id="rvb-rate"
-                                                class="perc-input w-full font-bold text-lg py-3 px-2 text-center"
-                                                placeholder="6.5" value="6.5" step="0.1">
-                                            <span
-                                                class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 font-bold">%</span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label
-                                            class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Prop.
-                                            Tax/Yr</label>
-                                        <div class="relative">
-                                            <input type="number" id="rvb-tax"
-                                                class="perc-input w-full font-bold text-lg py-3 px-2 text-center"
-                                                placeholder="1.2" value="1.2" step="0.1">
-                                            <span
-                                                class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 font-bold">%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="pt-4 border-t border-slate-200 dark:border-slate-700/50 flex flex-col items-center">
-                            <label
-                                class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Years
-                                to Compare</label>
-                            <input type="range" id="rvb-years" min="1" max="30" value="7"
-                                class="w-full max-w-sm h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-700 accent-sky-500">
-                            <div class="mt-2 text-xl font-black text-sky-600 dark:text-sky-400" id="rvb-years-disp">7
-                                Years</div>
-                        </div>
-
-                    </div>
-
-                    <div id="rvb-results-area" class="hidden opacity-0 flex flex-col mt-2 transition-all duration-500">
-                        <div
-                            class="glass-display w-full p-6 sm:p-8 rounded-3xl group relative border border-sky-100 dark:border-sky-900/30">
-                            <div class="text-center mb-6">
-                                <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2">Verdict
-                                    over <span id="rvb-res-y-span">7</span> Years</div>
-                                <div class="text-3xl font-extrabold break-all px-2 py-3 rounded-xl bg-white/20 dark:bg-slate-900/30 shadow-inner"
-                                    id="rvb-banner">&mdash;</div>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4 text-center">
-                                <div
-                                    class="p-4 bg-red-100/50 dark:bg-red-900/10 rounded-2xl border border-red-200 dark:border-red-900/30">
-                                    <div
-                                        class="text-[10px] font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-1">
-                                        Total Rent Paid</div>
-                                    <div class="text-2xl font-bold text-red-600 dark:text-red-400"
-                                        id="rvb-res-rentcost">&mdash;</div>
-                                    <div class="text-[10px] text-slate-400 mt-2">Zero equity gained.</div>
-                                </div>
-                                <div
-                                    class="p-4 bg-emerald-100/50 dark:bg-emerald-900/10 rounded-2xl border border-emerald-200 dark:border-emerald-900/30">
-                                    <div
-                                        class="text-[10px] font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-1">
-                                        Total Buy Cost</div>
-                                    <div class="text-2xl font-bold text-emerald-600 dark:text-emerald-400"
-                                        id="rvb-res-buycost">&mdash;</div>
-                                    <div class="text-[10px] text-slate-400 mt-2">P&I + Taxes + Down - Gained Equity.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Rent vs <span class="text-blue-500 font-light">Buy</span></h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Find the "Breakeven" Point for Your Next Move</p>
             </div>
-        </main>
-    </div>
-    <br>
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
 
-            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <header>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
-                        <strong>Rent vs Buy Calculator</strong> – Compare the <strong>Long-Term Costs of Renting vs
-                            Buying</strong>
-                    </h1>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        A <strong>Rent vs Buy calculator</strong> is a smart <strong>online tool</strong> that helps you
-                        compare the <strong>long-term costs</strong> of renting a home versus buying one. Our
-                        <strong>free online Rent vs Buy calculator</strong> makes it easy to see which option is more
-                        financially advantageous based on your personal circumstances.
-                    </p>
-                </header>
-                <br>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12 relative">
+                <!-- Vertical Divider -->
+                <div class="hidden lg:block absolute left-1/2 top-4 bottom-4 w-px bg-slate-100 dark:bg-slate-700/50 -translate-x-1/2"></div>
 
-                <div class="intro-section">
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        Whether you are considering your <strong>first home</strong>, evaluating a move, or planning
-                        your finances, this <strong>Rent vs Buy comparison tool</strong> provides clear insights to help
-                        you make informed <strong>housing decisions</strong>.
-                    </p>
-                </div>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a
-                        <strong>Rent vs Buy Calculator</strong>?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        A <strong>Rent vs Buy calculator</strong> estimates the long-term financial impact of renting
-                        versus buying a property. It considers important factors such as:
-                    </p>
-
-
-
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
-                        <li><strong>Monthly rent payments</strong> and expected increases</li>
-                        <li><strong>Home purchase price</strong> and potential <strong>mortgage payments</strong></li>
-                        <li><strong>Down payment</strong> and <strong>interest rates</strong></li>
-                        <li><strong>Property taxes</strong>, insurance, and maintenance costs</li>
-                        <li>Investment growth of potential savings</li>
-                        <li>Duration of stay in the property</li>
-                    </ul>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4">
-                        With a <strong>Rent vs Buy calculator online</strong>, you can quickly determine whether
-                        <strong>renting or buying</strong> is more cost-effective for your specific situation.
-                    </p>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
-                        a <strong>Rent vs Buy Calculator</strong></h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Financial Clarity</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Understand the true <strong>long-term
-                                    costs</strong> and avoid hidden expenses like taxes and maintenance.</p>
+                <!-- Renting Inputs -->
+                <div class="space-y-6">
+                    <h3 class="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-400 mb-4 truncate">
+                        <span class="w-2 h-2 rounded-full bg-red-400"></span> Current Renting Scenario
+                    </h3>
+                    
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900/50 rounded-3xl border border-slate-100 dark:border-slate-800 space-y-4">
+                        <div>
+                            <label class="block text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2 pl-1">Monthly Rent</label>
+                            <div class="relative group">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold group-focus-within:text-blue-500">$</span>
+                                <input type="number" id="rvb-rent" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-3 pl-8 pr-4 font-bold text-slate-800 dark:text-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all" value="1500">
+                            </div>
                         </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Informed Decisions</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Make confident <strong>housing
-                                    choices</strong> based on <strong>accurate calculations</strong> and personalized
-                                data.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Our <strong>financial planning
-                                    tool</strong> is free and works on any device, including smartphones.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Instant Results</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Get a visual <strong>cost
-                                    comparison</strong> instantly to see which option fits your <strong>budget</strong>.
-                            </p>
+                        <div>
+                            <label class="block text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2 pl-1">Annual Increase %</label>
+                            <div class="relative group">
+                                <input type="number" id="rvb-rent-inc" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-3 px-4 font-bold text-slate-800 dark:text-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all" value="3" step="0.5">
+                                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">%</span>
+                            </div>
                         </div>
                     </div>
-                </section>
-                <br>
+                </div>
 
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
-                        <strong>Rent vs Buy Calculator</strong></h2>
-                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
-                        <li>Enter your <strong>monthly rent</strong> and expected annual increase.</li>
-                        <li>Input the <strong>home price</strong>, <strong>down payment</strong>, and <strong>mortgage
-                                rate</strong>.</li>
-                        <li>Add <strong>property taxes</strong>, insurance, and estimated maintenance costs.</li>
-                        <li>Enter how many years you plan to stay in the home.</li>
-                        <li>Click calculate to see the <strong>financial comparison</strong>.</li>
-                    </ol>
-                </section>
-                <br>
+                <!-- Buying Inputs -->
+                <div class="space-y-6">
+                    <h3 class="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-400 mb-4 truncate">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Potential Purchase
+                    </h3>
 
-                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Secure your financial future!
-                    </h2>
-                    <p class="text-slate-500 dark:text-slate-400">
-                        Try our <strong>online Rent vs Buy comparison tool</strong> today and make the best choice for
-                        your <strong>lifestyle and budget</strong>.
-                    </p>
-                </section>
-
-                <footer>
-                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
-                        &copy; 2026 <strong>Rent vs Buy Comparison Tool</strong>. All rights reserved.
-                    </p>
-                </footer>
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900/50 rounded-3xl border border-slate-100 dark:border-slate-800 space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="sm:col-span-2">
+                                <label class="block text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2 pl-1">Home Price</label>
+                                <div class="relative group">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold group-focus-within:text-blue-500">$</span>
+                                    <input type="number" id="rvb-price" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-3 pl-8 pr-4 font-bold text-slate-800 dark:text-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all" value="350000">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2 pl-1">Down Payment</label>
+                                <div class="relative group">
+                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold">$</span>
+                                    <input type="number" id="rvb-down" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-3 pl-6 pr-2 font-bold text-sm text-slate-800 dark:text-white outline-none" value="70000">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2 pl-1">Int. Rate %</label>
+                                <div class="relative group">
+                                    <input type="number" id="rvb-rate" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-3 px-3 font-bold text-sm text-slate-800 dark:text-white outline-none" value="6.5" step="0.1">
+                                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold">%</span>
+                                </div>
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2 pl-1">Property Tax / Yr %</label>
+                                <div class="relative group">
+                                    <input type="number" id="rvb-tax" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-3 px-4 font-bold text-slate-800 dark:text-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all" value="1.2" step="0.1">
+                                    <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </main>
-    </div>
+
+            <!-- Global Control: Years -->
+            <div class="max-w-xl mx-auto pt-8 border-t border-slate-100 dark:border-slate-800 text-center space-y-6">
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Comparison Timeline</label>
+                <div class="px-6">
+                    <input type="range" id="rvb-years" min="1" max="30" value="7" class="w-full h-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-600 transition-all active:scale-[1.02]">
+                    <div id="rvb-years-disp" class="mt-4 text-3xl font-black text-blue-600 dark:text-blue-400 tracking-tighter">7 Years</div>
+                </div>
+            </div>
+
+            <!-- Dynamic Result Area -->
+            <div id="rvb-results-area" class="hidden opacity-0 mt-12 transition-all duration-700 transform translate-y-8">
+                <div class="bg-slate-900 rounded-3xl p-8 shadow-2xl relative overflow-hidden group">
+                    <!-- Verdict Banner -->
+                    <div class="text-center relative z-10 mb-10">
+                        <span class="text-[9px] font-black text-slate-500 uppercase tracking-[0.3em] block mb-2">The Verdict</span>
+                        <div id="rvb-banner" class="text-3xl font-black transition-all duration-500">&mdash;</div>
+                    </div>
+
+                    <!-- Comparison Detail Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
+                        <div class="p-6 bg-white/5 border border-white/5 rounded-2xl group/card hover:bg-white/10 transition-colors">
+                            <h4 class="text-[9px] font-black text-red-400 uppercase tracking-widest mb-3">Sunk Rent Costs</h4>
+                            <div id="rvb-res-rentcost" class="text-3xl font-black text-white mb-2">&mdash;</div>
+                            <p class="text-[10px] text-slate-500 leading-relaxed font-medium">Total rent paid over <span id="rvb-res-y-span">7</span> years with zero equity gain.</p>
+                        </div>
+                        <div class="p-6 bg-white/5 border border-white/5 rounded-2xl group/card hover:bg-white/10 transition-colors">
+                            <h4 class="text-[9px] font-black text-emerald-400 uppercase tracking-widest mb-3">Sunk Buy Costs</h4>
+                            <div id="rvb-res-buycost" class="text-3xl font-black text-white mb-2">&mdash;</div>
+                            <p class="text-[10px] text-slate-500 leading-relaxed font-medium">Net cost after P&I, taxes, and fees, minus home equity gain.</p>
+                        </div>
+                    </div>
+
+                    <!-- Background Decor -->
+                    <i class="fas fa-chart-line absolute -bottom-10 -right-10 text-white/5 text-[200px] -rotate-12 group-hover:rotate-0 transition-transform duration-1000"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Educational Content -->
+        <div class="w-full max-w-4xl space-y-24 pb-32">
+            
+            <!-- Strategic Narrative -->
+            <section class="text-center space-y-8">
+                <h1 class="text-6xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tighter">
+                    Beyond the <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Monthly Payment</span>
+                </h1>
+                <p class="text-xl text-slate-500 dark:text-slate-400 leading-relaxed max-w-3xl mx-auto">
+                    Choosing between <strong>renting vs buying</strong> isn't just about comparing rent to a mortgage payment. It’s a complex calculation of asset appreciation, opportunity cost, and tax efficiency.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <span class="px-6 py-2 bg-slate-100 dark:bg-slate-900/50 rounded-full text-[10px] font-black uppercase tracking-widest text-slate-400"><i class="fas fa-home mr-2"></i> Equity Modeling</span>
+                    <span class="px-6 py-2 bg-slate-100 dark:bg-slate-900/50 rounded-full text-[10px] font-black uppercase tracking-widest text-slate-400"><i class="fas fa-chart-pie mr-2"></i> Tax Strategy</span>
+                    <span class="px-6 py-2 bg-slate-100 dark:bg-slate-900/50 rounded-full text-[10px] font-black uppercase tracking-widest text-slate-400"><i class="fas fa-history mr-2"></i> Time Horizon</span>
+                </div>
+            </section>
+
+            <!-- Grid: Complex Factors -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="p-12 bg-white dark:bg-slate-800 rounded-4xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                    <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-3xl flex items-center justify-center text-3xl"><i class="fas fa-mountain"></i></div>
+                    <h3 class="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Asset Appreciation</h3>
+                    <p class="text-slate-500 dark:text-slate-400 leading-relaxed">
+                        Buying a home is essentially a <strong>leveraged investment</strong>. When home prices rise, you gain equity on the full value of the house, not just your initial down payment. Over a 7-10 year horizon, this typically outweighs rental flexibility.
+                    </p>
+                </div>
+                <div class="p-12 bg-blue-600 rounded-4xl text-white shadow-xl shadow-blue-500/20 space-y-6">
+                    <div class="w-16 h-16 bg-white/10 text-white rounded-3xl flex items-center justify-center text-3xl"><i class="fas fa-undo"></i></div>
+                    <h3 class="text-3xl font-black uppercase tracking-tighter">Opportunity Cost</h3>
+                    <p class="text-blue-100 leading-relaxed">
+                        The money you put into a down payment could potentially earn 7-10% in the stock market. Renting allows you to keep that capital liquid, which in high-interest rate environments might yield better long-term returns for some portfolios.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sunk Cost Breakdown -->
+            <section class="space-y-12">
+                <div class="text-center">
+                    <h2 class="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">The "Sunk Cost" Checklist</h2>
+                    <p class="text-slate-500 mt-3">Expenses you never get back, regardless of which path you choose.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Buy Sunk Costs -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 rounded-4xl p-10 border border-slate-100 dark:border-slate-800">
+                        <h4 class="text-xs font-black text-emerald-500 uppercase tracking-widest mb-6 flex items-center gap-3">
+                            <span class="w-8 h-px bg-emerald-500/20"></span> Buying Sunk Costs
+                        </h4>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3 text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                                <span><strong>Mortgage Interest:</strong> Significant in the first 10 years.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                                <span><strong>Property Taxes & Insurance:</strong> Perpetual expenses.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                                <span><strong>Maintenance (1% Rule):</strong> Annual upkeep costs.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                                <span><strong>Closing Costs:</strong> 2-5% when buying and 6% when selling.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Rent Sunk Costs -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 rounded-4xl p-10 border border-slate-100 dark:border-slate-800">
+                        <h4 class="text-xs font-black text-red-400 uppercase tracking-widest mb-6 flex items-center gap-3">
+                            <span class="w-8 h-px bg-red-400/20"></span> Renting Sunk Costs
+                        </h4>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3 text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <i class="fas fa-times-circle text-red-400 mt-1"></i>
+                                <span><strong>100% of Rent:</strong> Every dollar paid is a sunk cost.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <i class="fas fa-times-circle text-red-400 mt-1"></i>
+                                <span><strong>Rental Insurance:</strong> Necessary but adds up.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <i class="fas fa-times-circle text-red-400 mt-1"></i>
+                                <span><strong>Inflation Risk:</strong> No protection against rising local rates.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <i class="fas fa-times-circle text-red-400 mt-1"></i>
+                                <span><strong>No Tax Deductions:</strong> Missed mortgage interest tax benefits.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action -->
+            <section class="relative bg-slate-900 rounded-5xl p-16 text-center overflow-hidden">
+                <div class="relative z-10 space-y-8">
+                    <h2 class="text-4xl font-black text-white">Ready to make your move?</h2>
+                    <p class="text-slate-400 max-w-xl mx-auto leading-relaxed">
+                        Housing is personal. While this tool models the math, your lifestyle, career mobility, and local market trends are the final deciding factors.
+                    </p>
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent"></div>
+            </section>
+
+        </div>
+    </main>
 
     <script src="../js/layout.js"></script>
+    <script src="../js/calculators/core.js"></script>
     <script src="../js/calculators/rent-vs-buy.js"></script>
 </body>
+
 
 </html>

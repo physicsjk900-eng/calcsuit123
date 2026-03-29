@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fuel Cost Calculator | CalcSuite</title>
+    <title>Fuel Cost Calculator | CalcSuit</title>
     <meta name="description" content="Calculate your trip's fuel consumption and total fuel cost.">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -27,219 +27,158 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body
-    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+<body class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
 
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <div id="sidebar-container" class="contents"></div>
+    <div id="sidebar-container" class="contents"></div>
 
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
-            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2
-                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
-                            Fuel Cost Calculator</h2>
-                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Estimate trip fuel consumption and
-                            total travel cost.</p>
-                    </div>
+    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
+        
+        <!-- Calculator Card -->
+        <div id="calc-view" class="w-full max-w-3xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300 mb-12">
+            <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Trip <span class="text-emerald-500 font-light">Budgeter</span></h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Calculate Exact Travel Fuel Costs</p>
                 </div>
-
-                <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
-
-                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Trip
-                                    Distance</label>
-                                <div class="flex gap-2">
-                                    <input type="number" id="fc-dist"
-                                        class="perc-input w-full font-bold text-lg py-3 pr-2 text-right"
-                                        placeholder="300" value="300">
-                                    <select id="fc-dist-u" class="perc-input font-bold px-3 py-3 cursor-pointer">
-                                        <option value="km" selected>km</option>
-                                        <option value="mi">miles</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Fuel
-                                    Efficiency</label>
-                                <div class="flex gap-2">
-                                    <input type="number" id="fc-eff"
-                                        class="perc-input w-full font-bold text-lg py-3 pr-2 text-right"
-                                        placeholder="15" value="15">
-                                    <select id="fc-eff-u" class="perc-input font-bold px-2 py-3 cursor-pointer">
-                                        <option value="kml" selected>km/L</option>
-                                        <option value="mpg">mpg (US)</option>
-                                        <option value="l100">L/100km</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="sm:col-span-2">
-                                <label
-                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Fuel
-                                    Price</label>
-                                <div class="relative max-w-xs mx-auto">
-                                    <span
-                                        class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
-                                    <input type="number" id="fc-price"
-                                        class="perc-input w-full font-bold text-lg py-3 pl-8 text-center"
-                                        placeholder="1.80" value="1.80" step="0.05">
-                                    <span
-                                        class="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 font-bold"
-                                        id="fc-price-label">/ Liter</span>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div id="fc-results-area" class="hidden opacity-0 flex flex-col mt-2 transition-all duration-500">
-                        <div
-                            class="glass-display w-full p-8 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30">
-
-                            <div class="mb-6">
-                                <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2">Total
-                                    Fuel Cost</div>
-                                <div class="text-5xl font-bold text-sky-600 dark:text-sky-400 break-all"
-                                    id="fc-res-cost">&mdash;</div>
-                            </div>
-
-                            <div class="pt-6 border-t border-slate-200 dark:border-slate-700/50">
-                                <div class="text-[10px] font-semibold uppercase tracking-widest text-slate-400 mb-1">
-                                    Fuel Required</div>
-                                <div class="text-2xl font-bold text-slate-700 dark:text-slate-300" id="fc-res-req">
-                                    &mdash;</div>
-                            </div>
-
-                        </div>
-                    </div>
+                <div class="bg-emerald-100/50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-emerald-200 dark:border-emerald-800/50 shadow-sm self-start sm:self-auto uppercase tracking-tighter">
+                    <i class="fas fa-gas-pump"></i> Fuel Logic
                 </div>
-
             </div>
-        </main>
-    </div>
-    <br>
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
 
-            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <header>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
-                        <strong>Fuel Cost Calculator</strong> – Estimate Your <strong>Trip Fuel Consumption</strong> and
-                        <strong>Total Travel Cost</strong>
-                    </h1>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        A <strong>fuel cost calculator</strong> is an essential <strong>online tool</strong> that helps
-                        you estimate the <strong>fuel consumption</strong> and total cost of a trip. Our <strong>free
-                            online fuel cost calculator</strong> is perfect for drivers, commuters, road-trippers, and
-                        fleet managers who want to plan <strong>travel budgets</strong> efficiently.
-                    </p>
-                </header>
-                <br>
-
-                <div class="intro-section">
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        Whether you are planning a road trip, calculating <strong>daily commute expenses</strong>, or
-                        managing vehicle costs, this <strong>fuel cost calculator online</strong> provides accurate
-                        results in seconds.
-                    </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Distance -->
+                <div class="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-700">
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 pl-1">Trip Distance</label>
+                    <div class="flex gap-2">
+                        <input type="number" id="fc-dist" class="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-bold text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all" placeholder="300" value="300">
+                        <select id="fc-dist-u" class="w-20 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-2 py-3 font-bold text-[10px] text-slate-600 dark:text-slate-300 cursor-pointer outline-none">
+                            <option value="km">KM</option>
+                            <option value="mi">MI</option>
+                        </select>
+                    </div>
                 </div>
-                <br>
 
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a
-                        <strong>Fuel Cost Calculator</strong>?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        A <strong>fuel cost calculator</strong> estimates the total fuel needed and the cost for a
-                        journey based on your vehicle’s <strong>fuel efficiency</strong> and travel distance. It
-                        considers factors like:
-                    </p>
+                <!-- Efficiency -->
+                <div class="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-700">
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 pl-1">Efficiency</label>
+                    <div class="flex gap-2">
+                        <input type="number" id="fc-eff" class="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-bold text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all" placeholder="15" value="15">
+                        <select id="fc-eff-u" class="w-24 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-2 py-3 font-bold text-[10px] text-slate-600 dark:text-slate-300 cursor-pointer outline-none">
+                            <option value="kml">KM/L</option>
+                            <option value="mpg">MPG (US)</option>
+                            <option value="l100">L/100KM</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Price Input -->
+            <div class="mb-8 p-6 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-2xl border border-emerald-100 dark:border-emerald-800/30">
+                <label class="block text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-3 pl-1">Fuel Price (per Unit)</label>
+                <div class="relative group max-w-xs mx-auto">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold group-focus-within:text-emerald-500 transition-colors">$</span>
+                    <input type="number" id="fc-price" class="w-full bg-white dark:bg-slate-800 border border-emerald-200 dark:border-emerald-800 rounded-xl py-3 pl-8 pr-20 font-bold text-slate-800 dark:text-white text-center focus:ring-2 focus:ring-emerald-500/20 outline-none" placeholder="1.80" value="1.80" step="0.05">
+                    <span id="fc-price-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black text-slate-400 uppercase">/ Liter</span>
+                </div>
+            </div>
 
-
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
-                        <li><strong>Trip distance</strong> in kilometers or miles</li>
-                        <li>Vehicle <strong>fuel efficiency</strong> (MPG, L/100 km)</li>
-                        <li><strong>Fuel price</strong> per unit (liter or gallon)</li>
-                    </ul>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4">
-                        With a <strong>free fuel cost calculator online</strong>, you can quickly plan trips,
-                        <strong>budget travel expenses</strong>, and avoid surprises at the pump.
-                    </p>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
-                        a <strong>Fuel Cost Calculator</strong></h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Save Money</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Estimate <strong>fuel
-                                    expenses</strong> beforehand and plan your budget efficiently.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Accurate Trip Planning</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Calculate fuel requirements and costs
-                                for short and long <strong>journeys</strong>.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Our <strong>trip fuel cost
-                                    calculator</strong> is free and works on any device, including smartphones.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Eco-Friendly Planning</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Understand <strong>fuel
-                                    consumption</strong> to optimize trips and reduce unnecessary usage.</p>
+            <!-- Result Area -->
+            <div id="fc-results-area" class="hidden opacity-0 space-y-4 transition-all duration-500 transform translate-y-4">
+                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 p-8 rounded-3xl text-white text-center shadow-xl shadow-emerald-500/20 relative overflow-hidden group">
+                    <div class="relative z-10">
+                        <h4 class="text-[10px] font-black uppercase tracking-widest mb-2 opacity-80">Total Trip Fuel Cost</h4>
+                        <div id="fc-res-cost" class="text-5xl font-black tracking-tighter mb-6 break-all">&mdash;</div>
+                        
+                        <div class="border-t border-white/20 pt-6">
+                            <div class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-1">Fuel Volume Required</div>
+                            <div id="fc-res-req" class="text-2xl font-bold tracking-tight">&mdash;</div>
                         </div>
                     </div>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
-                        <strong>Fuel Cost Calculator</strong></h2>
-                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
-                        <li>Enter the distance of your trip in <strong>miles or kilometers</strong>.</li>
-                        <li>Input your vehicle’s <strong>fuel efficiency</strong> (MPG or L/100 km).</li>
-                        <li>Enter the <strong>fuel price per unit</strong> (per gallon or per liter).</li>
-                        <li>Click calculate to see the estimated <strong>fuel needed</strong> and <strong>total trip
-                                cost</strong>.</li>
-                    </ol>
-                </section>
-                <br>
-
-                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Budget your trips smarter!</h2>
-                    <p class="text-slate-500 dark:text-slate-400">
-                        Try our <strong>online fuel cost tool</strong> today and travel stress-free by knowing your
-                        <strong>travel expenses</strong> in advance.
-                    </p>
-                </section>
-
-                <footer>
-                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
-                        &copy; 2026 <strong>Fuel Cost Comparison Tool</strong>. All rights reserved.
-                    </p>
-                </footer>
+                    <i class="fas fa-road absolute -bottom-10 -right-10 text-white/10 text-[180px] -rotate-12 group-hover:rotate-0 transition-transform duration-700"></i>
+                </div>
             </div>
-        </main>
-    </div>
+        </div>
+
+        <!-- Educational Content -->
+        <div class="w-full max-w-4xl space-y-16 pb-24">
+            
+            <!-- Strategic Header -->
+            <section class="text-center space-y-6">
+                <h1 class="text-5xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">
+                    Drive Smarter with <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">Fuel Analytics</span>
+                </h1>
+                <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
+                    Planning a cross-country road trip or just your weekly commute? Our <strong>Fuel Cost Calculator</strong> ensures you know exactly what the trip will cost before you even start the engine.
+                </p>
+                <div class="inline-flex items-center gap-2 px-6 py-3 bg-slate-100 dark:bg-slate-900/50 text-slate-600 dark:text-slate-400 rounded-full text-xs font-black uppercase tracking-widest border border-slate-200 dark:border-slate-800">
+                    <i class="fas fa-calculator"></i> Real-Time Multi-Unit Conversion
+                </div>
+            </section>
+
+            <!-- Grid: Factors -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="group p-10 bg-white dark:bg-slate-800 rounded-4xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-500">
+                    <div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-500 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform"><i class="fas fa-tachometer-alt"></i></div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-4 uppercase tracking-tighter">Efficiency Awareness</h3>
+                    <p class="text-slate-500 dark:text-slate-400 leading-relaxed">
+                        Vehicle <strong>fuel efficiency</strong> varies wildly based on driving style, cargo weight, and terrain. Use your car's "lifetime average" MPG or L/100km for the most accurate multi-day trip estimates.
+                    </p>
+                </div>
+                <div class="group p-10 bg-slate-900 rounded-4xl text-white shadow-xl hover:-translate-y-2 transition-all duration-500 overflow-hidden relative">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-white/10 text-emerald-400 rounded-2xl flex items-center justify-center text-2xl mb-6"><i class="fas fa-map-marked-alt"></i></div>
+                        <h3 class="text-2xl font-black mb-4 uppercase tracking-tighter">Distance Precision</h3>
+                        <p class="text-slate-400 leading-relaxed">
+                            A 10% error in distance estimation on a long-haul trip can mean the difference between making it to the next station or calling roadside assistance. Always add a 5-10% "buffer" to your calculated distance.
+                        </p>
+                    </div>
+                    <i class="fas fa-compass absolute -bottom-10 -right-10 text-white/5 text-[150px] -rotate-12"></i>
+                </div>
+            </div>
+
+            <!-- Pro Tips List -->
+            <section class="space-y-10">
+                <h2 class="text-3xl font-black text-center dark:text-white uppercase tracking-tight">How to Burn Less Fuel</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="p-8 bg-emerald-50 dark:bg-emerald-900/10 rounded-3xl space-y-4">
+                        <i class="fas fa-wind text-emerald-500 text-2xl"></i>
+                        <h4 class="font-bold dark:text-white">Aerodynamics</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Roof racks and open windows at high speeds significantly increase drag and fuel burn.</p>
+                    </div>
+                    <div class="p-8 bg-emerald-50 dark:bg-emerald-900/10 rounded-3xl space-y-4">
+                        <i class="fas fa-weight-hanging text-emerald-500 text-2xl"></i>
+                        <h4 class="font-bold dark:text-white">Weight Management</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Every extra 50kg in your vehicle can increase fuel consumption by up to 2%.</p>
+                    </div>
+                    <div class="p-8 bg-emerald-50 dark:bg-emerald-900/10 rounded-3xl space-y-4">
+                        <i class="fas fa-cog text-emerald-500 text-2xl"></i>
+                        <h4 class="font-bold dark:text-white">Smooth Driving</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Rapid acceleration and hard braking are the biggest enemies of fuel efficiency.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Formula Section -->
+            <section class="bg-indigo-600 rounded-4xl p-10 md:p-14 text-white text-center space-y-6">
+                <h2 class="text-3xl font-black uppercase tracking-tight">The Fuel Formula</h2>
+                <p class="text-indigo-100 max-w-xl mx-auto leading-relaxed">
+                    Ever wondered how the math works? To get your total cost manually:
+                </p>
+                <div class="inline-block bg-white/10 px-8 py-6 rounded-3xl font-mono text-xl md:text-2xl border border-white/20">
+                    (Distance / Efficiency) × Price
+                </div>
+                <p class="text-xs text-indigo-300 italic opacity-70">
+                    *Ensure units (Metric vs Imperial) are consistent before calculating manually.
+                </p>
+            </section>
+
+        </div>
+    </main>
 
     <script src="../js/layout.js"></script>
+    <script src="../js/calculators/core.js"></script>
     <script src="../js/calculators/fuelcost.js"></script>
 </body>
+
 
 </html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tip Calculator | CalcSuite</title>
+    <title>Tip Calculator | CalcSuit</title>
     <meta name="description" content="Calculate tip amounts and split the bill among friends easily.">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -27,223 +27,153 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body
-    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+<body class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
 
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <div id="sidebar-container" class="contents"></div>
+    <div id="sidebar-container" class="contents"></div>
 
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
-            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2
-                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
-                            Tip Calculator</h2>
-                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate tip amounts quickly and
-                            split the bill.</p>
-                    </div>
+    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
+        
+        <!-- Calculator Card -->
+        <div id="calc-view" class="w-full max-w-xl bg-white dark:bg-slate-800 rounded-4xl shadow-2xl border border-slate-200 dark:border-slate-700 p-8 md:p-12 transition-all duration-300 mb-12 relative overflow-hidden">
+            
+            <!-- Context Header -->
+            <div class="mb-10 text-center">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full text-[10px] font-black uppercase tracking-widest mb-4">
+                    <i class="fas fa-utensils"></i> Dining Logic
                 </div>
-
-                <div class="max-w-xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
-
-                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
-                        <div class="mb-6">
-                            <label
-                                class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Bill
-                                Amount</label>
-                            <div class="relative max-w-sm mx-auto">
-                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
-                                <input type="number" id="tip-bill"
-                                    class="perc-input w-full font-bold text-3xl py-4 pl-10 text-center"
-                                    placeholder="100.00" step="0.01">
-                            </div>
-                        </div>
-
-                        <div class="mb-6">
-                            <label
-                                class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-3 uppercase tracking-wide text-center">Tip
-                                Percentage</label>
-                            <div class="flex justify-center flex-wrap gap-3" id="tip-btn-grp">
-                                <button
-                                    class="tip-btn w-16 py-2 rounded-xl border border-slate-200 dark:border-slate-700 font-bold transition-all bg-white dark:bg-slate-800 hover:border-sky-400"
-                                    data-val="10">10%</button>
-                                <button
-                                    class="tip-btn w-16 py-2 rounded-xl border border-sky-400 dark:border-sky-500 font-bold transition-all bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 shadow-sm"
-                                    data-val="15">15%</button>
-                                <button
-                                    class="tip-btn w-16 py-2 rounded-xl border border-slate-200 dark:border-slate-700 font-bold transition-all bg-white dark:bg-slate-800 hover:border-sky-400"
-                                    data-val="18">18%</button>
-                                <button
-                                    class="tip-btn w-16 py-2 rounded-xl border border-slate-200 dark:border-slate-700 font-bold transition-all bg-white dark:bg-slate-800 hover:border-sky-400"
-                                    data-val="20">20%</button>
-                            </div>
-                            <div class="mt-4 flex justify-center items-center gap-2">
-                                <span class="text-sm text-slate-400 font-medium">Custom:</span>
-                                <div class="relative w-24">
-                                    <input type="number" id="tip-custom"
-                                        class="perc-input w-full font-bold py-2 pr-6 text-center" placeholder="--">
-                                    <span
-                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 font-bold">%</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="pt-4 border-t border-slate-200 dark:border-slate-700/50 flex flex-col items-center">
-                            <label
-                                class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Split
-                                Between</label>
-                            <div class="flex items-center gap-4">
-                                <button id="tip-minus"
-                                    class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-colors"><i
-                                        class="fas fa-minus"></i></button>
-                                <div class="text-3xl font-black w-12 text-center" id="tip-split">1</div>
-                                <button id="tip-plus"
-                                    class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-colors"><i
-                                        class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="tip-results-area" class="hidden opacity-0 flex flex-col mt-2 transition-all duration-500">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div
-                                class="glass-display p-6 rounded-3xl text-center border border-sky-100 dark:border-sky-900/30">
-                                <div
-                                    class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">
-                                    Tip Amount</div>
-                                <div class="text-3xl sm:text-4xl font-bold text-sky-600 dark:text-sky-400"
-                                    id="tip-res-amt">&mdash;</div>
-                            </div>
-                            <div
-                                class="glass-display p-6 rounded-3xl text-center border border-sky-100 dark:border-sky-900/30 bg-sky-500 text-white dark:bg-sky-600 border-none shadow-md">
-                                <div
-                                    class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-sky-100 mb-1">
-                                    Total Per Person</div>
-                                <div class="text-3xl sm:text-4xl font-bold" id="tip-res-tot">&mdash;</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Tip <span class="text-indigo-500 font-light">Master</span></h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Calculate Gratuity & Split the Bill</p>
             </div>
-        </main>
-    </div>
-    <br>
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
 
-            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <header>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
-                        <strong>Tip Calculator</strong> – Calculate <strong>Tip Amounts</strong> Quickly and
-                        <strong>Split the Bill</strong>
-                    </h1>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        A <strong>tip calculator</strong> is a handy <strong>online tool</strong> that helps you
-                        calculate <strong>tip amounts</strong> quickly and <strong>split the bill</strong> among friends
-                        or colleagues. Our <strong>free online tip calculator</strong> is perfect for diners,
-                        restaurant-goers, and anyone who wants to manage tipping accurately and efficiently.
-                    </p>
-                </header>
-                <br>
-
-                <div class="intro-section">
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        Whether you are dining out, <strong>splitting bills</strong>, or <strong>calculating
-                            gratuity</strong>, this <strong>tip calculator online</strong> makes it easy to determine
-                        the correct tip amount for any situation.
-                    </p>
+            <div class="space-y-8">
+                <!-- Bill Input -->
+                <div class="relative group">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4 text-center">Bill Total</label>
+                    <div class="relative max-w-xs mx-auto">
+                        <span class="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 text-4xl font-light group-focus-within:text-indigo-500 transition-colors">$</span>
+                        <input type="number" id="tip-bill" class="w-full bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-100 dark:border-slate-800 rounded-3xl py-6 pl-14 pr-6 text-5xl font-black text-slate-900 dark:text-white text-center focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-200 dark:placeholder:text-slate-800" placeholder="0.00" step="0.01">
+                    </div>
                 </div>
-                <br>
 
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a
-                        <strong>Tip Calculator</strong>?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        A <strong>tip calculator</strong> is a digital tool that calculates the <strong>gratuity
-                            amount</strong> based on the total bill and desired <strong>tip percentage</strong>. It can
-                        also divide the total cost among multiple people for fair <strong>bill splitting</strong>.
-                    </p>
-
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
-                        <li><strong>Total bill amount</strong> input</li>
-                        <li><strong>Tip percentage</strong> selection (customizable)</li>
-                        <li><strong>Number of people</strong> to split the bill</li>
-                        <li>Instant calculation of <strong>tip per person</strong> and <strong>total per person</strong>
-                        </li>
-                    </ul>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4">
-                        With a <strong>free tip calculator online</strong>, you can ensure accurate tipping and
-                        <strong>fair sharing of costs</strong> without manual math.
-                    </p>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
-                        a <strong>Tip Calculator</strong></h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Quick and Accurate</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Calculate tips instantly with no math
-                                errors or confusion.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Split the Bill Easily</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Divide the bill fairly among friends,
-                                family, or coworkers.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Our <strong>bill splitting
-                                    tool</strong> is free and works on any device, including smartphones.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Stress-Free Dining</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Avoid the awkwardness of manual
-                                calculations in busy <strong>restaurants</strong> or cafes.</p>
+                <!-- Tip Select -->
+                <div class="space-y-6">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-center">Select Tip %</label>
+                    <div class="flex justify-center gap-3" id="tip-btn-grp">
+                        <button class="tip-btn w-16 h-16 rounded-2xl border-2 border-slate-100 dark:border-slate-800 font-black text-lg transition-all hover:border-indigo-500 hover:text-indigo-500 bg-white dark:bg-slate-900 shadow-sm" data-val="10">10</button>
+                        <button class="tip-btn w-16 h-16 rounded-2xl border-2 border-slate-100 dark:border-slate-800 font-black text-lg transition-all hover:border-indigo-500 hover:text-indigo-500 bg-white dark:bg-slate-900 shadow-sm" data-val="15">15</button>
+                        <button class="tip-btn w-16 h-16 rounded-2xl border-2 border-slate-100 dark:border-slate-800 font-black text-lg transition-all hover:border-indigo-500 hover:text-indigo-500 bg-white dark:bg-slate-900 shadow-sm" data-val="18">18</button>
+                        <button class="tip-btn w-16 h-16 rounded-2xl border-2 border-slate-100 dark:border-slate-800 font-black text-lg transition-all hover:border-indigo-500 hover:text-indigo-500 bg-white dark:bg-slate-900 shadow-sm" data-val="20">20</button>
+                    </div>
+                    <div class="flex items-center justify-center gap-4 pt-2">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Custom %</span>
+                        <div class="relative w-24 group">
+                            <input type="number" id="tip-custom" class="w-full bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-100 dark:border-slate-800 rounded-xl py-2 px-3 font-bold text-center focus:border-indigo-500 outline-none transition-all dark:text-white" placeholder="--">
+                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-black text-slate-400">%</span>
                         </div>
                     </div>
-                </section>
-                <br>
+                </div>
 
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
-                        <strong>Tip Calculator</strong></h2>
-                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
-                        <li>Enter the <strong>total bill amount</strong>.</li>
-                        <li>Select the <strong>tip percentage</strong> or enter a custom value.</li>
-                        <li>Enter the <strong>number of people</strong> to split the bill (optional).</li>
-                        <li>Click calculate to see the <strong>tip per person</strong> and <strong>total per
-                                person</strong>.</li>
-                    </ol>
-                </section>
-                <br>
-
-                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Simplify your group dining!</h2>
-                    <p class="text-slate-500 dark:text-slate-400">
-                        Try our <strong>online tip calculation tool</strong> today to ensure everyone pays their fair
-                        share effortlessly.
-                    </p>
-                </section>
-
-                <footer>
-                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
-                        &copy; 2026 <strong>Gratuity and Bill Splitter Tool</strong>. All rights reserved.
-                    </p>
-                </footer>
+                <!-- Split Logic -->
+                <div class="pt-8 border-t border-slate-100 dark:border-slate-800 text-center">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Split Between</label>
+                    <div class="flex items-center justify-center gap-8">
+                        <button id="tip-minus" class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-indigo-500 transition-all flex items-center justify-center text-xl"><i class="fas fa-minus"></i></button>
+                        <div class="text-5xl font-black dark:text-white min-w-[3rem]" id="tip-split">1</div>
+                        <button id="tip-plus" class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-indigo-500 transition-all flex items-center justify-center text-xl"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
             </div>
-        </main>
-    </div>
+
+            <!-- Result Area -->
+            <div id="tip-results-area" class="hidden opacity-0 mt-12 space-y-4 transition-all duration-500 transform translate-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-6 bg-slate-50 dark:bg-slate-900/50 rounded-3xl border border-slate-100 dark:border-slate-800 text-center">
+                        <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Tip Amount</h4>
+                        <div id="tip-res-amt" class="text-2xl font-black text-indigo-500 tracking-tight">&mdash;</div>
+                        <p class="text-[8px] text-slate-400 mt-1">per person</p>
+                    </div>
+                    <div class="p-6 bg-indigo-600 rounded-3xl shadow-xl shadow-indigo-500/20 text-center text-white">
+                        <h4 class="text-[9px] font-black text-indigo-200 uppercase tracking-widest mb-1">Total Bill</h4>
+                        <div id="tip-res-tot" class="text-2xl font-black tracking-tight">&mdash;</div>
+                        <p class="text-[8px] text-indigo-200 mt-1">per person</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Flare -->
+            <div class="absolute -top-12 -right-12 w-24 h-24 bg-indigo-500/10 blur-3xl rounded-full"></div>
+            <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-indigo-500/10 blur-3xl rounded-full"></div>
+        </div>
+
+        <!-- Educational Content -->
+        <div class="w-full max-w-4xl space-y-16 pb-24">
+            
+            <!-- Strategic Header -->
+            <section class="text-center space-y-6">
+                <h1 class="text-5xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">
+                    The Art of <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">Elegant Tipping</span>
+                </h1>
+                <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
+                    Never fumble with the check again. Our <strong>Smart Tip Calculator</strong> provides instant accuracy for group dining, solo meals, and everything in between.
+                </p>
+            </section>
+
+            <!-- Guide Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white dark:bg-slate-800 p-10 rounded-4xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                    <div class="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-500 rounded-2xl flex items-center justify-center text-2xl font-bold">15%</div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">The Standard Baseline</h3>
+                    <p class="text-slate-500 dark:text-slate-400 leading-relaxed">
+                        In many regions, <strong>15%</strong> is considered the baseline for good service. If you're unsure where to start, this percentage ensures the staff is fairly compensated for a standard dining experience.
+                    </p>
+                </div>
+                <div class="bg-slate-900 p-10 rounded-4xl text-white space-y-6 relative overflow-hidden group">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-white/10 text-indigo-400 rounded-2xl flex items-center justify-center text-2xl font-bold">20%</div>
+                        <h3 class="text-2xl font-black uppercase tracking-tight">The Excellence Tier</h3>
+                        <p class="text-slate-400 leading-relaxed text-sm">
+                            Outstanding service often warrants a <strong>20-25% tip</strong>. This is common in high-end establishments or when a server goes above and beyond to personalize your visit.
+                        </p>
+                    </div>
+                    <i class="fas fa-star absolute -bottom-10 -right-10 text-white/5 text-[150px] -rotate-12 group-hover:rotate-0 transition-transform duration-700"></i>
+                </div>
+            </div>
+
+            <!-- Tipping Etiquette Section -->
+            <section class="bg-indigo-600 rounded-4xl p-10 md:p-14 text-white">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                    <div class="lg:col-span-1 border-r border-white/10 pr-8">
+                        <h2 class="text-4xl font-black uppercase tracking-tighter mb-4">Etiquette <br>Protocol</h2>
+                        <p class="text-indigo-100 text-sm opacity-80 leading-relaxed">International standards vary. In some cultures, tipping is expected, while in others, it may be perceived as rude.</p>
+                    </div>
+                    <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-black text-xs uppercase tracking-widest text-indigo-200 mb-3 underline decoration-indigo-400 decoration-2 underline-offset-4">North America</h4>
+                            <p class="text-xs text-indigo-50 opacity-90 leading-relaxed">Mandatory for service workers; generally 18-22% is expected in restaurants.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-xs uppercase tracking-widest text-indigo-200 mb-3 underline decoration-indigo-400 decoration-2 underline-offset-4">Europe / UK</h4>
+                            <p class="text-xs text-indigo-50 opacity-90 leading-relaxed">Often included as a "Service Charge." Otherwise, 10-12% is a standard polite gesture.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-xs uppercase tracking-widest text-indigo-200 mb-3 underline decoration-indigo-400 decoration-2 underline-offset-4">Japan / Korea</h4>
+                            <p class="text-xs text-indigo-50 opacity-90 leading-relaxed">Rarely required and sometimes declined. Exceptional service is usually included in the price.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-xs uppercase tracking-widest text-indigo-200 mb-3 underline decoration-indigo-400 decoration-2 underline-offset-4">Australia / NZ</h4>
+                            <p class="text-xs text-indigo-50 opacity-90 leading-relaxed">Not mandatory but appreciated for exceptional hospitality. Generally 10%.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
 
     <script src="../js/layout.js"></script>
+    <script src="../js/calculators/core.js"></script>
     <script src="../js/calculators/tip.js"></script>
 </body>
+
 
 </html>

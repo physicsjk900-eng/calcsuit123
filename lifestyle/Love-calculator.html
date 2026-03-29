@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Calculator | CalcSuit</title>
+    <meta name="description" content="Calculate your love match percentage based on your names.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        sky: { 100: '#e0f2fe', 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-rose-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-200 min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- Global Header (Injected automatically) -->
+    <div id="sidebar-container" class="contents"></div>
+
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative overflow-y-auto flex flex-col items-center">
+
+        <div id="SoulmateScanner"
+            class="w-full max-w-md rounded-3xl shadow-lg overflow-hidden bg-white dark:bg-slate-800 border-t-8 border-rose-400 relative">
+
+        <div class="absolute inset-0 pointer-events-none opacity-30">
+            <div class="heart-anim" style="left:15%; animation-delay:0s">💖</div>
+            <div class="heart-anim" style="left:45%; animation-delay:2s">✨</div>
+            <div class="heart-anim" style="left:80%; animation-delay:1s">🌸</div>
+        </div>
+
+        <main class="p-8 relative z-10 flex flex-col items-center">
+            <div id="setup-view" class="w-full text-center space-y-8 py-6">
+                <header>
+                    <h2 class="text-4xl font-serif font-bold text-rose-500 italic">Our Love Story</h2>
+                    <p class="text-slate-400 text-sm mt-2 font-medium">Is it meant to be? Let's find out...</p>
+                </header>
+
+                <div class="space-y-6">
+                    <div class="group">
+                        <input type="text" id="user-name" placeholder="Your Name"
+                            class="w-full p-5 rounded-3xl bg-rose-50/50 border-2 border-transparent focus:border-rose-300 outline-none text-center text-2xl font-serif text-rose-600 placeholder-rose-200 transition-all">
+                    </div>
+
+                    <div class="text-3xl animate-pulse text-rose-300">♡</div>
+
+                    <div class="group">
+                        <input type="text" id="partner-name" placeholder="Their Name"
+                            class="w-full p-5 rounded-3xl bg-rose-50/50 border-2 border-transparent focus:border-rose-300 outline-none text-center text-2xl font-serif text-rose-600 placeholder-rose-200 transition-all">
+                    </div>
+                </div>
+
+                <button onclick="revealTheMagic()"
+                    class="w-full py-5 bg-gradient-to-r from-rose-400 to-pink-500 text-white rounded-[2rem] font-bold text-xl shadow-lg shadow-rose-200 hover:shadow-rose-400/40 transition-all active:scale-95">
+                    See Our Spark ✨
+                </button>
+            </div>
+
+            <div id="reveal-view" class="hidden w-full text-center space-y-6 animate-in zoom-in duration-700">
+                <div id="printable-card"
+                    class="p-10 rounded-[2.5rem] bg-gradient-to-b from-rose-50 to-white dark:from-slate-800 dark:to-slate-900 border-2 border-rose-100 shadow-xl">
+                    <div class="flex justify-center items-center gap-4 mb-6">
+                        <span id="label-name1"
+                            class="text-xl font-serif font-bold text-slate-700 dark:text-white underline decoration-rose-300">...</span>
+                        <span class="text-2xl">💍</span>
+                        <span id="label-name2"
+                            class="text-xl font-serif font-bold text-slate-700 dark:text-white underline decoration-rose-300">...</span>
+                    </div>
+
+                    <div id="love-percent" class="text-9xl font-serif font-black text-rose-500 leading-none my-4">0%
+                    </div>
+
+                    <div class="space-y-4 mt-8">
+                        <div
+                            class="inline-block px-6 py-2 bg-rose-500 text-white rounded-full text-xs font-bold tracking-widest uppercase">
+                            Destiny Match</div>
+                        <p id="love-message"
+                            class="text-lg font-serif italic text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+                    </div>
+
+                    <div
+                        class="mt-8 pt-6 border-t border-rose-100 text-[10px] text-rose-300 font-bold tracking-[0.2em] uppercase">
+                        Made with Love</div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="savePhoto()"
+                        class="py-4 bg-slate-800 text-white rounded-2xl font-bold text-sm flex items-center justify-center gap-2">
+                        📸 Save Photo
+                    </button>
+                    <button onclick="sendToPartner()"
+                        class="py-4 bg-emerald-500 text-white rounded-2xl font-bold text-sm flex items-center justify-center gap-2">
+                        WhatsApp 💬
+                    </button>
+                </div>
+                <button onclick="location.reload()"
+                    class="text-xs text-slate-400 hover:text-rose-400 font-bold transition-colors uppercase tracking-widest">Try
+                    with someone else?</button>
+            </div>
+        </main>
+    </div>
+
+    <section class="w-full max-w-3xl mt-12 p-8 md:p-12 rounded-3xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+
+        <div class="prose prose-slate dark:prose-invert max-w-none">
+            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
+                <span class="text-rose-500">📖</span> Understanding Your Love Connection
+            </h2>
+
+            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-3">Why Use a Love Calculator?</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                Ever wondered if your names align in the stars? A <strong>Love Calculator</strong> is a timeless digital
+                tool that helps couples and crushes alike explore their potential. Whether you're in a long-term
+                relationship or just starting a new spark, using a <strong>Love Calculator</strong> adds a touch of
+                excitement to your day. It’s not just about a percentage; it’s a way to reflect on the unique bond you
+                share with someone special.
+            </p>
+
+            <div class="space-y-6 mb-8">
+                <div class="flex gap-4 items-start">
+                    <div class="p-2 bg-rose-100 dark:bg-rose-900/30 rounded-lg text-rose-500">❤️</div>
+                    <div>
+                        <h4 class="text-md font-bold text-slate-700 dark:text-slate-200">The Fun of Name Compatibility
+                        </h4>
+                        <p class="text-xs text-slate-500 mt-1 italic">
+                            From high school notebooks to modern web apps, checking a <strong>Love Calculator</strong>
+                            has been a cultural staple. Our version uses a refined algorithm to ensure your <strong>Love
+                                Match</strong> feels as unique as your own story.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 items-start">
+                    <div class="p-2 bg-rose-100 dark:bg-rose-900/30 rounded-lg text-rose-500">✨</div>
+                    <div>
+                        <h4 class="text-md font-bold text-slate-700 dark:text-slate-200">Perfect for Every Stage</h4>
+                        <p class="text-xs text-slate-500 mt-1 italic">
+                            Use this <strong>Love Match</strong> tool to celebrate your anniversary, break the ice with
+                            a crush, or simply share a smile with your partner. A high score on our <strong>Love
+                                Calculator</strong> is the perfect screenshot to share on social media or send in a
+                            sweet morning text.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-3">Frequently Asked Questions</h3>
+            <div class="bg-white/30 dark:bg-slate-800/30 p-5 rounded-2xl border border-white/20 mb-8">
+                <details class="group cursor-pointer">
+                    <summary
+                        class="text-sm font-semibold text-slate-700 dark:text-slate-300 list-none flex justify-between items-center">
+                        Is a Love Calculator 100% accurate?
+                        <span class="group-open:rotate-180 transition-transform text-rose-500">▼</span>
+                    </summary>
+                    <p class="text-xs text-slate-500 mt-3 leading-relaxed">
+                        While our <strong>Love Calculator</strong> is based on name vibrations and numerology, true love
+                        is built on time and effort. This tool is designed for entertainment and to celebrate the
+                        <strong>Love Match</strong> you already feel in your heart!
+                    </p>
+                </details>
+                <div class="h-px bg-slate-200 dark:bg-slate-700 my-4"></div>
+                <details class="group cursor-pointer">
+                    <summary
+                        class="text-sm font-semibold text-slate-700 dark:text-slate-300 list-none flex justify-between items-center">
+                        Can I check my Love Match with multiple names?
+                        <span class="group-open:rotate-180 transition-transform text-rose-500">▼</span>
+                    </summary>
+                    <p class="text-xs text-slate-500 mt-3 leading-relaxed">
+                        Yes! You can use the <strong>Love Calculator</strong> as many times as you like. It’s a fun way
+                        to test different variations of names or nicknames to see which <strong>Love Match</strong>
+                        vibrates the highest.
+                    </p>
+                </details>
+            </div>
+
+            <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+                A <strong>Love Compatibility Calculator</strong> is a lighthearted way to explore the harmony between
+                two people. Using the unique characters in your names, our <strong>Soulmate Scanner</strong> looks for
+                patterns of resonance and alignment. While true love is built on trust and communication, seeing your
+                "Match Score" can be a beautiful spark to celebrate a special moment or anniversary.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                <div
+                    class="p-4 bg-white/50 dark:bg-slate-800/50 rounded-2xl border border-rose-100 dark:border-rose-900/30">
+                    <h3 class="text-sm font-bold text-rose-500 uppercase tracking-wider mb-2">The Magic of Names</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        Our algorithm is inspired by <strong>Name Numerology</strong>. Every letter carries a vibration;
+                        when combined, they create a unique rhythm that defines your compatibility.
+                    </p>
+                </div>
+                <div
+                    class="p-4 bg-white/50 dark:bg-slate-800/50 rounded-2xl border border-rose-100 dark:border-rose-900/30">
+                    <h3 class="text-sm font-bold text-rose-500 uppercase tracking-wider mb-2">Privacy First</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        We value your story. Your names are processed locally in your browser and are <strong>never
+                            stored</strong> on our servers. Your magic is your own.
+                    </p>
+                </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-3">Interpreting Your Score</h3>
+            <ul class="space-y-3 mb-8">
+                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                    <span class="text-rose-400">★</span>
+                    <strong>75% – 85%:</strong> A steady, beautiful flame. You balance each other with grace.
+                </li>
+                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                    <span class="text-rose-400">★</span>
+                    <strong>86% – 95%:</strong> Powerful chemistry! You likely share deep-rooted values and a similar
+                    vision.
+                </li>
+                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                    <span class="text-rose-400">★</span>
+                    <strong>96% – 100%:</strong> Soulmate Status. Your connection feels effortless and destined.
+                </li>
+            </ul>
+
+            <div class="pt-6 border-t border-slate-200 dark:border-slate-800">
+                <p class="text-[10px] text-slate-400 text-center uppercase tracking-[0.3em]">
+                    Optimized for Love & Connection
+                </p>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <style>
+        @keyframes float {
+            0% {
+                transform: translateY(105vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .heart-anim {
+            position: absolute;
+            bottom: -10%;
+            animation: float 8s linear infinite;
+            font-size: 1.5rem;
+        }
+    </style>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/love-calc.js"></script>
+</body>
+
+</html>

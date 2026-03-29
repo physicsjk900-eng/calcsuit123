@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Calculator | CalcSuite</title>
+    <title>Basic Calculator | CalcSuit</title>
     <meta name="description" content="Free online basic calculator for standard arithmetic operations.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -28,64 +28,124 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
-
-    <div id="toast" class="fixed top-6 right-6 bg-emerald-500 text-white px-5 py-3 rounded-xl shadow-2xl transform transition-transform duration-300 translate-x-[200%] flex items-center gap-3 z-50 font-medium">
-        <i class="fas fa-check-circle text-xl"></i><span>Copied to clipboard!</span>
-    </div>
-
-    <div id="app-container" class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-
-        <div id="sidebar-container" class="contents"></div>
-
-        <main class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
-            
-            <div id="calc-basic" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <div class="mb-6 flex items-center justify-between">
-                    <h2 class="text-3xl font-light tracking-tight">Basic Calc</h2>
+    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
+        
+        <!-- Calculator Section -->
+        <div id="calc-basic" class="w-full max-w-md bg-white dark:bg-slate-800 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
+            <div class="mb-8 flex items-center justify-between">
+                <div>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Basic <span class="text-indigo-500 font-light">Calc</span></h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Standard Arithmetic Operations</p>
                 </div>
-
-                <div class="max-w-sm mx-auto w-full flex-1 flex flex-col justify-center">
-                    <div class="glass-display rounded-3xl p-6 mb-8 text-right relative min-h-[140px] flex flex-col justify-end group">
-                        <button class="copy-trigger absolute top-4 right-4 text-slate-400 hover:text-indigo-500 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100" data-target="basic-display" aria-label="Copy result" title="Copy result">
-                            <i class="fas fa-copy text-lg"></i>
-                        </button>
-                        <div id="basic-history" class="text-sm font-medium text-slate-400 dark:text-slate-500 h-6 tracking-wide mb-1"></div>
-                        <div id="basic-display" class="text-5xl font-semibold tracking-wider overflow-x-auto overflow-y-hidden hide-scrollbar">0</div>
-                    </div>
-
-                    <div class="grid grid-cols-4 gap-3 sm:gap-4">
-                        <button class="calc-btn btn-action font-semibold text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10" data-action="clear">AC</button>
-                        <button class="calc-btn btn-action text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10" data-action="backspace"><i class="fas fa-backspace"></i></button>
-                        <button class="calc-btn btn-action text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10" data-action="percentage">%</button>
-                        <button class="calc-btn btn-operator text-2xl" data-action="divide">÷</button>
-
-                        <button class="calc-btn btn-number" data-value="7">7</button>
-                        <button class="calc-btn btn-number" data-value="8">8</button>
-                        <button class="calc-btn btn-number" data-value="9">9</button>
-                        <button class="calc-btn btn-operator text-2xl" data-action="multiply">×</button>
-
-                        <button class="calc-btn btn-number" data-value="4">4</button>
-                        <button class="calc-btn btn-number" data-value="5">5</button>
-                        <button class="calc-btn btn-number" data-value="6">6</button>
-                        <button class="calc-btn btn-operator text-2xl" data-action="subtract">-</button>
-
-                        <button class="calc-btn btn-number" data-value="1">1</button>
-                        <button class="calc-btn btn-number" data-value="2">2</button>
-                        <button class="calc-btn btn-number" data-value="3">3</button>
-                        <button class="calc-btn btn-operator text-2xl" data-action="add">+</button>
-
-                        <button class="calc-btn btn-number col-span-2" data-value="0">0</button>
-                        <button class="calc-btn btn-action text-2xl" data-action="decimal">.</button>
-                        <button class="calc-btn btn-equals bg-indigo-500 text-white hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-500 shadow-lg shadow-indigo-500/30 text-2xl border-none" data-action="calculate">=</button>
-                    </div>
+                <div class="bg-indigo-100/50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-indigo-200 dark:border-indigo-800/50 shadow-sm">
+                    <i class="fas fa-calculator"></i> Utility
                 </div>
             </div>
 
-        </main>
-    </div>
+            <div class="space-y-6">
+                <!-- Display -->
+                <div class="glass-display rounded-2xl p-6 text-right relative min-h-[140px] flex flex-col justify-end group bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800">
+                    <button class="copy-trigger absolute top-4 right-4 text-slate-400 hover:text-indigo-500 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100" data-target="basic-display" aria-label="Copy result" title="Copy result">
+                        <i class="fas fa-copy text-lg"></i>
+                    </button>
+                    <div id="basic-history" class="text-sm font-medium text-slate-400 dark:text-slate-500 h-6 tracking-wide mb-1 transition-all duration-200"></div>
+                    <div id="basic-display" class="text-5xl font-bold tracking-tight text-slate-800 dark:text-white overflow-x-auto overflow-y-hidden hide-scrollbar">0</div>
+                </div>
 
-    <!-- Core Layout injection -->
+                <!-- Keypad -->
+                <div class="grid grid-cols-4 gap-3">
+                    <button class="calc-btn btn-action font-bold text-rose-500 bg-rose-50 dark:bg-rose-500/10 hover:bg-rose-100 dark:hover:bg-rose-500/20 rounded-2xl h-14" data-action="clear">AC</button>
+                    <button class="calc-btn btn-action text-slate-500 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-2xl h-14" data-action="backspace"><i class="fas fa-backspace"></i></button>
+                    <button class="calc-btn btn-action text-slate-500 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-2xl h-14" data-action="percentage">%</button>
+                    <button class="calc-btn btn-operator text-2xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 rounded-2xl h-14 font-bold" data-action="divide">÷</button>
+
+                    <button class="calc-btn btn-number bg-white dark:bg-slate-700 border border-slate-100 dark:border-slate-600 text-slate-800 dark:text-white text-xl font-bold rounded-2xl h-14 shadow-sm hover:shadow-md transition-all" data-value="7">7</button>
+                    <button class="calc-btn btn-number bg-white dark:bg-slate-700 border border-slate-100 dark:border-slate-600 text-slate-800 dark:text-white text-xl font-bold rounded-2xl h-14 shadow-sm hover:shadow-md transition-all" data-value="8">8</button>
+                    <button class="calc-btn btn-number bg-white dark:bg-slate-700 border border-slate-100 dark:border-slate-600 text-slate-800 dark:text-white text-xl font-bold rounded-2xl h-14 shadow-sm hover:shadow-md transition-all" data-value="9">9</button>
+                    <button class="calc-btn btn-operator text-2xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 rounded-2xl h-14 font-bold" data-action="multiply">×</button>
+
+                    <button class="calc-btn btn-number bg-white dark:bg-slate-700 border border-slate-100 dark:border-slate-600 text-slate-800 dark:text-white text-xl font-bold rounded-2xl h-14 shadow-sm hover:shadow-md transition-all" data-value="4">4</button>
+                    <button class="calc-btn btn-number bg-white dark:bg-slate-700 border border-slate-100 dark:border-slate-600 text-slate-800 dark:text-white text-xl font-bold rounded-2xl h-14 shadow-sm hover:shadow-md transition-all" data-value="5">5</button>
+                    <button class="calc-btn btn-number bg-white dark:bg-slate-700 border border-slate-100 dark:border-slate-600 text-slate-800 dark:text-white text-xl font-bold rounded-2xl h-14 shadow-sm hover:shadow-md transition-all" data-value="6">6</button>
+                    <button class="calc-btn btn-operator text-2xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 rounded-2xl h-14 font-bold" data-action="subtract">-</button>
+
+                    <button class="calc-btn btn-number bg-white dark:bg-slate-700 border border-slate-100 dark:border-slate-600 text-slate-800 dark:text-white text-xl font-bold rounded-2xl h-14 shadow-sm hover:shadow-md transition-all" data-value="1">1</button>
+                    <button class="calc-btn btn-number bg-white dark:bg-slate-700 border border-slate-100 dark:border-slate-600 text-slate-800 dark:text-white text-xl font-bold rounded-2xl h-14 shadow-sm hover:shadow-md transition-all" data-value="2">2</button>
+                    <button class="calc-btn btn-number bg-white dark:bg-slate-700 border border-slate-100 dark:border-slate-600 text-slate-800 dark:text-white text-xl font-bold rounded-2xl h-14 shadow-sm hover:shadow-md transition-all" data-value="3">3</button>
+                    <button class="calc-btn btn-operator text-2xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 rounded-2xl h-14 font-bold" data-action="add">+</button>
+
+                    <button class="calc-btn btn-number col-span-2 bg-white dark:bg-slate-700 border border-slate-100 dark:border-slate-600 text-slate-800 dark:text-white text-xl font-bold rounded-2xl h-14 shadow-sm hover:shadow-md transition-all" data-value="0">0</button>
+                    <button class="calc-btn btn-action text-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-2xl h-14 font-bold text-slate-600 dark:text-slate-300" data-action="decimal">.</button>
+                    <button class="calc-btn btn-equals bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 shadow-lg shadow-indigo-500/30 text-2xl border-none rounded-2xl h-14 font-bold transition-all transform hover:scale-[1.02] active:scale-95" data-action="calculate">=</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Content Section -->
+        <div class="w-full max-w-4xl mt-12 space-y-12 pb-20">
+            <!-- Learning Concept -->
+            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-12 shadow-sm">
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-8">Mastering the Basics</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <div class="space-y-6">
+                        <p>
+                            The basic calculator is the cornerstone of modern mathematics, designed to handle the four fundamental operations: **addition, subtraction, multiplication, and division**.
+                        </p>
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-white">Order of Operations</h3>
+                        <p class="text-sm">
+                            Always remember the **PEMDAS** rule (Parentheses, Exponents, Multiplication & Division from left to right, Addition & Subtraction from left to right). While this basic tool handles one operation at a time, keeping this logic in mind ensures mathematical accuracy in your complex projects.
+                        </p>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="bg-indigo-50/50 dark:bg-indigo-900/10 p-6 rounded-2xl border border-indigo-100/50 dark:border-indigo-800/30">
+                            <h4 class="font-bold text-indigo-900 dark:text-indigo-400 mb-4 flex items-center gap-2">
+                                <i class="fas fa-history"></i> Fun Fact
+                            </h4>
+                            <p class="text-sm text-indigo-800/80 dark:text-indigo-300">
+                                The first mechanical calculator, the Pascaline, was invented by Blaise Pascal in 1642. It could only add and subtract, yet it paved the way for the digital age we live in today.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-slate-400">
+                            <span class="flex-1 h-px bg-slate-200 dark:bg-slate-700"></span>
+                            Efficiency Matters
+                            <span class="flex-1 h-px bg-slate-200 dark:bg-slate-700"></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Usage Cases -->
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 rounded-2xl flex items-center justify-center text-indigo-600 mb-4">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 dark:text-white mb-2">Grocery Totals</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Quickly tally up items in your cart to stay within your holiday or monthly grocery budget.</p>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center text-emerald-600 mb-4">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 dark:text-white mb-2">Bill Splitting</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Divide dinner checks with friends or colleagues instantly without the awkward head-math.</p>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="w-12 h-12 bg-rose-100 dark:bg-rose-900/30 rounded-2xl flex items-center justify-center text-rose-600 mb-4">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 dark:text-white mb-2">DIY Projects</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Measure twice, calculate once. Perfect for quick area or length adjustments during home repairs.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/core.js"></script>
+    <script src="../js/calculators/basic.js"></script>
+</body>
+
     <script src="../js/layout.js"></script>
     <script src="../js/calculators/core.js"></script>
     <script src="../js/calculators/basic.js"></script>

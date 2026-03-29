@@ -50,6 +50,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const innerDirs = ['calculators', 'finance', 'health', 'math', 'time', 'conversion', 'lifestyle', 'business', 'productivity'];
     const depth = window.location.pathname.split('/').reverse().findIndex(p => innerDirs.includes(p));
     const rootPrefix = depth > -1 ? '../' : './';
+    
+    // Extrapolate for global indexing
+    window.calculatorConfig = calculatorConfig;
+    window.rootPrefix = rootPrefix;
 
     let activeId = '/';
     calculatorConfig.forEach(calc => {

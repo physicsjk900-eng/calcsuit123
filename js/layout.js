@@ -50,10 +50,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const innerDirs = ['calculators', 'finance', 'health', 'math', 'time', 'conversion', 'lifestyle', 'business', 'productivity'];
     const depth = window.location.pathname.split('/').reverse().findIndex(p => innerDirs.includes(p));
     const rootPrefix = depth > -1 ? '../' : './';
-    
-    // Extrapolate for global indexing
-    window.calculatorConfig = calculatorConfig;
-    window.rootPrefix = rootPrefix;
 
     let activeId = '/';
     calculatorConfig.forEach(calc => {
@@ -92,27 +88,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
     }).join('');
 
-    const mobileNavHtml = categories.map(cat => {
-        const items = calculatorConfig.filter(c => c.category === cat);
-        return `
-            <div class="mb-5">
-                <h4 class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-3 mb-2">${cat}</h4>
-                <div class="space-y-1">
-                    ${items.map(c => {
-                        const isItemActive = c.id === activeId;
-                        let href = rootPrefix + c.id.replace(/^\//, '');
-                        return `
-                            <a href="${href}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${isItemActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50'}">
-                                <span class="w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center ${isItemActive ? 'text-indigo-600 dark:text-indigo-400' : c.colorClass} shrink-0">${c.icon}</span>
-                                <span class="truncate">${c.name}</span>
-                            </a>
-                        `;
-                    }).join('')}
-                </div>
-            </div>
-        `;
-    }).join('');
-
     // 1. Inject SaaS Top Header HTML instead of Sidebar
     const headerHtml = `
 <header class="w-full bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 transition-colors duration-300">
@@ -121,14 +96,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center gap-3">
-                <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 flex items-center justify-center text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors bg-slate-50 dark:bg-slate-800 rounded-lg">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="hidden sm:flex w-9 h-9 rounded-lg bg-indigo-600 items-center justify-center text-white shadow-sm shadow-indigo-500/20">
+                <div class="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-sm shadow-indigo-500/20">
                     <i class="fas fa-calculator text-sm"></i>
                 </div>
                 <!-- Important: link back to root dashboard -->
-                <a href="${rootPrefix}index.html" class="text-xl font-bold tracking-tight text-slate-900 dark:text-white ml-2 sm:ml-0">
+                <a href="${rootPrefix}index.html" class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                     Calc<span class="text-indigo-600 dark:text-indigo-400">Suit</span>
                 </a>
             </div>
@@ -161,27 +133,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
         </div>
     </div>
-    
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 cursor-pointer" id="mobile-menu-bg"></div>
-        <div id="mobile-menu-panel" class="absolute top-0 left-0 bottom-0 w-[280px] sm:w-[320px] bg-white dark:bg-slate-900 shadow-2xl transform -translate-x-full transition-transform duration-300 overflow-y-auto flex flex-col border-r border-slate-200 dark:border-slate-800">
-            <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur z-10">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-sm">
-                        <i class="fas fa-calculator text-xs"></i>
-                    </div>
-                    <span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Calc<span class="text-indigo-600 dark:text-indigo-400">Suit</span></span>
-                </div>
-                <button id="mobile-menu-close" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-rose-500 transition-colors rounded-full bg-slate-100 dark:bg-slate-800">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="p-4 flex-1 pb-12">
-                ${mobileNavHtml}
-            </div>
-        </div>
-    </div>
 </header>
     `;
 
@@ -208,34 +159,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
         }
-        
-        // Mobile Menu Initialization
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
-        const mobileMenuClose = document.getElementById('mobile-menu-close');
-        const mobileMenuBg = document.getElementById('mobile-menu-bg');
-
-        function toggleMobileMenu(show) {
-            if(!mobileMenuOverlay || !mobileMenuPanel) return;
-            if(show) {
-                mobileMenuOverlay.classList.remove('hidden');
-                setTimeout(() => {
-                    mobileMenuOverlay.classList.remove('opacity-0');
-                    mobileMenuPanel.classList.remove('-translate-x-full');
-                }, 10);
-            } else {
-                mobileMenuOverlay.classList.add('opacity-0');
-                mobileMenuPanel.classList.add('-translate-x-full');
-                setTimeout(() => {
-                    mobileMenuOverlay.classList.add('hidden');
-                }, 300);
-            }
-        }
-
-        if(mobileMenuBtn) mobileMenuBtn.addEventListener('click', () => toggleMobileMenu(true));
-        if(mobileMenuClose) mobileMenuClose.addEventListener('click', () => toggleMobileMenu(false));
-        if(mobileMenuBg) mobileMenuBg.addEventListener('click', () => toggleMobileMenu(false));
     }
 
     // 4. Search Filter

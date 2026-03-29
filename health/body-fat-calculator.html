@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Fat Calculator | CalcSuit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        rose: { 50: '#fdf2f2', 100: '#ffe4e6', 200: '#fecdd3', 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 800: '#9f1239', 900: '#881337' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-200 min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <div id="sidebar-container" class="contents"></div>
+
+    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
+        
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
+            <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Body Fat <span class="text-rose-500 font-light">Calculator</span></h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">US Navy Method Estimation</p>
+                </div>
+                <div class="bg-rose-100/50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-rose-200 dark:border-rose-800/50 shadow-sm self-start sm:self-auto">
+                    <i class="fas fa-percentage"></i> Health
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Unit & Gender -->
+                <div class="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-700/50 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Unit System</label>
+                        <select id="bf-unit" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-semibold outline-none focus:ring-2 focus:ring-rose-500/20">
+                            <option value="metric">Metric (cm/kg)</option>
+                            <option value="imperial">Imperial (in/lbs)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Gender</label>
+                        <select id="bf-gender" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-semibold outline-none focus:ring-2 focus:ring-rose-500/20">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Basic Inputs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Height</label>
+                        <div class="relative">
+                            <input type="number" id="bf-height" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 font-bold text-lg" placeholder="175">
+                            <span id="bf-height-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs">cm</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Weight</label>
+                        <div class="relative">
+                            <input type="number" id="bf-weight" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 font-bold text-lg" placeholder="75">
+                            <span id="bf-weight-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs">kg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Measurements -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Neck Circumference</label>
+                        <div class="relative">
+                            <input type="number" id="bf-neck" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 font-bold text-lg" placeholder="38">
+                            <span id="bf-neck-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs">cm</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Waist (At Navel)</label>
+                        <div class="relative">
+                            <input type="number" id="bf-waist" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 font-bold text-lg" placeholder="85">
+                            <span id="bf-waist-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs">cm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="bf-hip-container" class="hidden">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Hip Circumference</label>
+                    <div class="relative">
+                        <input type="number" id="bf-hip" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 font-bold text-lg" placeholder="95">
+                        <span id="bf-hip-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs">cm</span>
+                    </div>
+                </div>
+
+                <button id="calc-btn-bf" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-rose-500/25 transition-all active:scale-95">
+                    Calculate Body Fat
+                </button>
+
+                <!-- Results -->
+                <div id="bf-results-area" class="hidden opacity-0 grid grid-cols-1 md:grid-cols-2 gap-4 transition-all duration-500">
+                    <div class="bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-800/50 rounded-2xl p-6">
+                        <span class="text-xs font-bold text-rose-500 uppercase tracking-widest mb-1 block">Body Fat Percentage</span>
+                        <div id="bf-output-val" class="text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">--%</div>
+                        <div id="bf-output-cat" class="mt-2 inline-block px-3 py-1 bg-white dark:bg-slate-800 rounded-lg text-sm font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">--</div>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 flex flex-col justify-center">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 block">Estimated Fat Mass</span>
+                        <div id="bf-output-mass" class="text-3xl font-bold text-slate-700 dark:text-slate-200">-- kg</div>
+                        <p class="text-[10px] text-slate-400 mt-2 font-medium">Estimated purely based on Navy formula metrics.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/core.js"></script>
+    <script src="../js/calculators/bodyfat.js"></script>
+</body>
+
+</html>

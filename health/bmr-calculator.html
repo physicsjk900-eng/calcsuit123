@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMR Calculator | CalcSuit</title>
+    <meta name="description" content="Calculate your Basal Metabolic Rate (BMR) with our free online tool. Understand your daily calorie needs at rest.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' },
+                        rose: { 50: '#fdf2f2', 100: '#ffe4e6', 200: '#fecdd3', 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 800: '#9f1239', 900: '#881337' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-200 min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <div id="sidebar-container" class="contents"></div>
+
+    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative overflow-y-auto flex flex-col items-center">
+        
+        <div id="calc-bmr" class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
+            <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">BMR <span class="text-rose-500 font-light">Calculator</span></h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Basal Metabolic Rate</p>
+                </div>
+                <div class="bg-rose-100/50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-rose-200 dark:border-rose-800/50 shadow-sm self-start sm:self-auto">
+                    <i class="fas fa-heartbeat"></i> Health
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Settings Card -->
+                <div class="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-700/50">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Unit System</label>
+                            <select id="bmr-unit" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium">
+                                <option value="metric">Metric (kg / cm)</option>
+                                <option value="imperial">Imperial (lbs / in)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Gender</label>
+                            <select id="bmr-gender" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Age</label>
+                        <div class="relative">
+                            <input type="number" id="bmr-age" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-lg" placeholder="25">
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs uppercase tracking-widest">yrs</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Weight</label>
+                        <div class="relative">
+                            <input type="number" id="bmr-weight" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-lg" placeholder="70">
+                            <span id="bmr-weight-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs uppercase tracking-widest">kg</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Height</label>
+                        <div class="relative">
+                            <input type="number" id="bmr-height" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-lg" placeholder="175">
+                            <span id="bmr-height-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs uppercase tracking-widest">cm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="calc-btn-bmr" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-rose-500/25 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+                    <i class="fas fa-calculator"></i> Calculate BMR
+                </button>
+
+                <!-- Result Area -->
+                <div id="bmr-results-area" class="hidden opacity-0 bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-800/50 rounded-2xl p-6 transition-all duration-500">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold text-rose-500 uppercase tracking-widest">Your Result</span>
+                        <button class="copy-trigger text-rose-400 hover:text-rose-600 transition-colors" data-target="bmr-output-val">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span id="bmr-output-val" class="text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">--</span>
+                        <span class="text-xl font-bold text-slate-500">Calories/Day</span>
+                    </div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
+                        This is the amount of energy your body needs while at rest. It does not include calories burned from daily activity or exercise.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="w-full max-w-2xl mt-12 bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-10">
+            <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">About BMR</h3>
+            <div class="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 space-y-4">
+                <p>
+                    <strong>Basal Metabolic Rate (BMR)</strong> is the number of calories your body needs to accomplish its most basic (basal) life-sustaining functions, such as breathing, circulation, and cell production.
+                </p>
+                <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/50">
+                    <h4 class="text-lg font-bold text-slate-800 dark:text-white mb-2">Mifflin-St Jeor Equation</h4>
+                    <p class="text-sm mb-0">Our calculator uses the scientifically validated Mifflin-St Jeor Equation:</p>
+                    <ul class="text-sm mt-3 space-y-1">
+                        <li><strong>Men:</strong> BMR = (10 × weight) + (6.25 × height) - (5 × age) + 5</li>
+                        <li><strong>Women:</strong> BMR = (10 × weight) + (6.25 × height) - (5 × age) - 161</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/core.js"></script>
+    <script src="../js/calculators/bmr.js"></script>
+</body>
+
+</html>

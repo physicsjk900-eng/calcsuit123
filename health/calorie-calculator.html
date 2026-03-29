@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Calculator | CalcSuit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        rose: { 50: '#fdf2f2', 100: '#ffe4e6', 200: '#fecdd3', 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 800: '#9f1239', 900: '#881337' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-200 min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <div id="sidebar-container" class="contents"></div>
+
+    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
+        
+        <div id="calc-calories" class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
+            <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Calorie <span class="text-rose-500 font-light">Calculator</span></h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Total Daily Energy Expenditure (TDEE)</p>
+                </div>
+                <div class="bg-rose-100/50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-rose-200 dark:border-rose-800/50 shadow-sm self-start sm:self-auto">
+                    <i class="fas fa-fire"></i> Health
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Settings Card -->
+                <div class="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-700/50">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Unit System</label>
+                            <select id="cal-unit" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium">
+                                <option value="metric">Metric (kg / cm)</option>
+                                <option value="imperial">Imperial (lbs / in)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Gender</label>
+                            <select id="cal-gender" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Age</label>
+                        <input type="number" id="cal-age" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-lg" placeholder="25">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Weight</label>
+                        <div class="relative">
+                            <input type="number" id="cal-weight" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-lg" placeholder="70">
+                            <span id="cal-weight-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs">kg</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Height</label>
+                        <div class="relative">
+                            <input type="number" id="cal-height" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-lg" placeholder="175">
+                            <span id="cal-height-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs">cm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Activity Level</label>
+                    <select id="cal-activity" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium">
+                        <option value="1.2">Sedentary (Little or no exercise)</option>
+                        <option value="1.375">Lightly Active (Exercise 1-3 days/week)</option>
+                        <option value="1.55">Moderately Active (Exercise 3-5 days/week)</option>
+                        <option value="1.725">Very Active (Exercise 6-7 days/week)</option>
+                        <option value="1.9">Extra Active (Very hard exercise & physical job)</option>
+                    </select>
+                </div>
+
+                <button id="calc-btn-cal" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-rose-500/25 transition-all active:scale-95">
+                    Calculate Calories
+                </button>
+
+                <!-- Result Area -->
+                <div id="cal-results-area" class="hidden opacity-0 space-y-4 transition-all duration-500">
+                    <div class="bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-800/50 rounded-2xl p-6">
+                        <span class="text-xs font-bold text-rose-500 uppercase tracking-widest mb-2 block">Daily Maintenance Calories</span>
+                        <div class="flex items-baseline gap-2">
+                            <span id="cal-output-val" class="text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">--</span>
+                            <span class="text-xl font-bold text-slate-500">kcal/day</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-center">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Weight Loss</span>
+                            <span id="cal-lose" class="text-xl font-bold text-rose-500">--</span>
+                            <span class="text-[10px] text-slate-400 block mt-1">kcal (-500)</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-center">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Maintain</span>
+                            <span id="cal-maintain" class="text-xl font-bold text-slate-700 dark:text-slate-300">--</span>
+                            <span class="text-[10px] text-slate-400 block mt-1">kcal (Base)</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-center">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Weight Gain</span>
+                            <span id="cal-gain" class="text-xl font-bold text-emerald-500">--</span>
+                            <span class="text-[10px] text-slate-400 block mt-1">kcal (+500)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/core.js"></script>
+    <script src="../js/calculators/calories.js"></script>
+</body>
+
+</html>

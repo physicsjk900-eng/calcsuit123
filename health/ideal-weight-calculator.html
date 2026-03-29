@@ -31,65 +31,132 @@
 
     <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
         
-        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
+        <div id="calc-idealweight" class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
             <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Ideal Weight <span class="text-rose-500 font-light">Calculator</span></h2>
-                    <p class="text-sm text-slate-500 dark:text-slate-400">Devine Formula & Healthy BMI Range</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Devine Formula & Healthy BMI Reference</p>
                 </div>
-                <div class="bg-rose-100/50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-rose-200 dark:border-rose-800/50 shadow-sm self-start sm:self-auto">
-                    <i class="fas fa-balance-scale"></i> Health
+                <div class="bg-rose-100/50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-rose-200 dark:border-rose-800/50 shadow-sm self-start sm:self-auto uppercase tracking-tighter">
+                    <i class="fas fa-balance-scale"></i> Health Suite
                 </div>
             </div>
 
             <div class="space-y-6">
-                <!-- Settings -->
-                <div class="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-700/50 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Unit</label>
-                        <select id="iw-unit" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-semibold outline-none focus:ring-2 focus:ring-rose-500/20">
-                            <option value="metric">Metric (cm)</option>
-                            <option value="imperial">Imperial (in)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Gender</label>
-                        <select id="iw-gender" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-semibold outline-none focus:ring-2 focus:ring-rose-500/20">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
+                <!-- Settings Card -->
+                <div class="bg-slate-50/50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-800/50">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-1">Unit System</label>
+                            <select id="iw-unit" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-sm">
+                                <option value="metric">Metric (kg/cm)</option>
+                                <option value="imperial">Imperial (in/lbs)</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-1">Biological Gender</label>
+                            <select id="iw-gender" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-sm">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Input -->
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Height</label>
+                <div class="group">
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-rose-500 transition-colors">Height</label>
                     <div class="relative">
-                        <input type="number" id="iw-height" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 font-bold text-lg" placeholder="175">
-                        <span id="iw-height-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs">cm</span>
+                        <input type="number" id="iw-height" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-4 pr-12 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-xl placeholder:text-slate-300" placeholder="175">
+                        <span id="iw-height-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 dark:text-slate-600 font-bold text-xs uppercase tracking-widest pointer-events-none">cm</span>
                     </div>
                 </div>
 
-                <button id="calc-btn-iw" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-rose-500/25 transition-all active:scale-95">
-                    Calculate Ideal Weight
+                <button id="calc-btn-iw" class="w-full bg-rose-500 hover:bg-rose-600 active:bg-rose-700 text-white font-black py-5 rounded-2xl shadow-xl shadow-rose-500/30 transition-all transform hover:scale-[1.01] active:scale-[0.98] flex items-center justify-center gap-3 text-lg">
+                    <i class="fas fa-weight-hanging"></i> CALCULATE TARGET WEIGHT
                 </button>
 
-                <!-- Results -->
-                <div id="iw-results-area" class="hidden opacity-0 grid grid-cols-1 md:grid-cols-2 gap-4 transition-all duration-500">
-                    <div class="bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-800/50 rounded-2xl p-6">
-                        <span class="text-xs font-bold text-rose-500 uppercase tracking-widest mb-1 block">Ideal Body Weight</span>
-                        <div id="iw-output-val" class="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">-- kg</div>
-                        <p class="text-[10px] text-slate-400 mt-2">Based on the Devine Formula.</p>
+                <!-- Result Area -->
+                <div id="iw-results-area" class="hidden opacity-0 bg-rose-50/50 dark:bg-rose-900/10 border border-rose-100/50 dark:border-rose-800/30 rounded-3xl p-8 transition-all duration-700 transform translate-y-4">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                            <span class="text-xs font-black text-rose-500 uppercase tracking-[0.2em]">Target Weight Result</span>
+                        </div>
+                        <button class="copy-trigger w-10 h-10 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center text-slate-400 hover:text-rose-500 transition-all active:scale-95" data-target="iw-output-val" title="Copy result">
+                            <i class="fas fa-copy"></i>
+                        </button>
                     </div>
-                    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 flex flex-col justify-center">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 block">Healthy Range</span>
-                        <div id="iw-output-range" class="text-2xl font-bold text-slate-700 dark:text-slate-200">--</div>
-                        <p class="text-[10px] text-slate-400 mt-2 font-medium">Healthy BMI (18.5 - 25.0) range.</p>
+                    
+                    <div class="flex flex-col mb-8 text-center sm:text-left">
+                        <div class="flex items-baseline justify-center sm:justify-start gap-2">
+                            <span id="iw-output-val" class="text-6xl font-black text-slate-900 dark:text-white tracking-tighter">--</span>
+                            <span class="text-lg font-bold text-slate-400 dark:text-slate-500 italic">Ideal (Devine)</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm border-l-4 border-l-indigo-500">
+                        <h4 class="text-[10px] font-black text-indigo-500 uppercase tracking-widest mb-1">Healthy BMI Range (18.5 - 25.0)</h4>
+                        <div class="flex items-baseline gap-2">
+                            <span id="iw-output-range" class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">--</span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-2 leading-relaxed">Based on World Health Organization standards for your height.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+        <!-- Info Section -->
+        <div class="w-full max-w-2xl mt-12 space-y-8 pb-20">
+            <!-- Concept Section -->
+            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
+                <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
+                    <i class="fas fa-balance-scale-right text-rose-500"></i>
+                    What is my "Ideal" Body Weight?
+                </h3>
+                <div class="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 space-y-4">
+                    <p>
+                        The term **"Ideal Body Weight" (IBW)** was originally developed for medical use to calculate drug dosages. Today, it serves as a helpful baseline for individuals to understand a healthy weight range based on height, gender, and biological skeletal frames.
+                    </p>
+                    <div class="bg-amber-50 dark:bg-amber-900/10 p-5 rounded-2xl border border-amber-100 dark:border-amber-800/40 text-sm italic text-amber-800 dark:text-amber-400">
+                        "Remember: IBW is a mathematical estimate. It does not account for muscle mass, bone density, or overall body composition."
+                    </div>
+                </div>
+            </section>
+
+            <!-- Methodology Section -->
+            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
+                <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
+                    <i class="fas fa-layer-group text-rose-500"></i>
+                    Dual Methodology Accuracy
+                </h3>
+                <p class="text-slate-600 dark:text-slate-400 mb-6">
+                    Our tool cross-references two primary standards to provide the most comprehensive healthy weight profile:
+                </p>
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900/40 rounded-2xl border border-slate-100 dark:border-slate-800">
+                        <h4 class="font-bold text-slate-800 dark:text-white text-sm mb-2">1. The Devine Formula (Scientific Standard)</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">The clinical standard for estimating weight based on inches over 5 feet. It is the most widely cited formula in medical literature.</p>
+                    </div>
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900/40 rounded-2xl border border-slate-100 dark:border-slate-800">
+                        <h4 class="font-bold text-slate-800 dark:text-white text-sm mb-2">2. Healthy BMI Calibration (World Health Std)</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">While the Devine formula gives a single point, we also provide the 18.5 - 25.0 BMI range, which represents the weight spectrum associated with the lowest long-term health risks.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Guide Section -->
+            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
+                <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Important Considerations</h3>
+                <div class="space-y-4 text-slate-600 dark:text-slate-400 text-sm">
+                    <p>When reviewing your results, keep these factors in mind:</p>
+                    <ul class="list-disc ml-6 space-y-2">
+                        <li><strong>Athletes:</strong> If you have high muscle mass, you may safely weigh more than your "Ideal" weight.</li>
+                        <li><strong>Frame Size:</strong> People with larger bone structures (large frames) naturally weigh more than those with small frames at the same height.</li>
+                        <li><strong>Age:</strong> As we age, a slightly higher BMI target is often associated with better health outcomes and bone density support.</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
 
     <script src="../js/layout.js"></script>
     <script src="../js/calculators/core.js"></script>

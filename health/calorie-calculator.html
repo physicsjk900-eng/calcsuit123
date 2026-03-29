@@ -31,31 +31,32 @@
 
     <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
         
+        <!-- Calculator Section -->
         <div id="calc-calories" class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
             <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Calorie <span class="text-rose-500 font-light">Calculator</span></h2>
                     <p class="text-sm text-slate-500 dark:text-slate-400">Total Daily Energy Expenditure (TDEE)</p>
                 </div>
-                <div class="bg-rose-100/50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-rose-200 dark:border-rose-800/50 shadow-sm self-start sm:self-auto">
-                    <i class="fas fa-fire"></i> Health
+                <div class="bg-rose-100/50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-rose-200 dark:border-rose-800/50 shadow-sm self-start sm:self-auto uppercase tracking-tighter">
+                    <i class="fas fa-fire"></i> Health Suite
                 </div>
             </div>
 
             <div class="space-y-6">
                 <!-- Settings Card -->
-                <div class="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-700/50">
+                <div class="bg-slate-50/50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-800/50">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Unit System</label>
-                            <select id="cal-unit" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium">
+                        <div class="space-y-2">
+                            <label class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-1">Unit System</label>
+                            <select id="cal-unit" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-sm">
                                 <option value="metric">Metric (kg / cm)</option>
                                 <option value="imperial">Imperial (lbs / in)</option>
                             </select>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Gender</label>
-                            <select id="cal-gender" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium">
+                        <div class="space-y-2">
+                            <label class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-1">Biological Gender</label>
+                            <select id="cal-gender" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-sm">
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                             </select>
@@ -65,70 +66,160 @@
 
                 <!-- Input Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Age</label>
-                        <input type="number" id="cal-age" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-lg" placeholder="25">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Weight</label>
+                    <div class="group">
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-rose-500 transition-colors">Age</label>
                         <div class="relative">
-                            <input type="number" id="cal-weight" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-lg" placeholder="70">
-                            <span id="cal-weight-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs">kg</span>
+                            <input type="number" id="cal-age" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-4 pr-12 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-xl placeholder:text-slate-300" placeholder="25">
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 dark:text-slate-600 font-bold text-xs uppercase tracking-widest pointer-events-none">yrs</span>
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Height</label>
+                    <div class="group">
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-rose-500 transition-colors">Weight</label>
                         <div class="relative">
-                            <input type="number" id="cal-height" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-lg" placeholder="175">
-                            <span id="cal-height-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs">cm</span>
+                            <input type="number" id="cal-weight" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-4 pr-12 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-xl placeholder:text-slate-300" placeholder="70">
+                            <span id="cal-weight-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 dark:text-slate-600 font-bold text-xs uppercase tracking-widest pointer-events-none">kg</span>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-rose-500 transition-colors">Height</label>
+                        <div class="relative">
+                            <input type="number" id="cal-height" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-4 pr-12 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-xl placeholder:text-slate-300" placeholder="175">
+                            <span id="cal-height-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 dark:text-slate-600 font-bold text-xs uppercase tracking-widest pointer-events-none">cm</span>
                         </div>
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Activity Level</label>
-                    <select id="cal-activity" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium">
-                        <option value="1.2">Sedentary (Little or no exercise)</option>
+                <!-- Activity Level -->
+                <div class="group">
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-rose-500 transition-colors">Activity Level</label>
+                    <select id="cal-activity" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-4 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-bold text-lg">
+                        <option value="1.2">Sedentary (Little/no exercise)</option>
                         <option value="1.375">Lightly Active (Exercise 1-3 days/week)</option>
                         <option value="1.55">Moderately Active (Exercise 3-5 days/week)</option>
-                        <option value="1.725">Very Active (Exercise 6-7 days/week)</option>
+                        <option value="1.725">Very Active (Hard exercise 6-7 days/week)</option>
                         <option value="1.9">Extra Active (Very hard exercise & physical job)</option>
                     </select>
                 </div>
 
-                <button id="calc-btn-cal" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-rose-500/25 transition-all active:scale-95">
-                    Calculate Calories
+                <button id="calc-btn-cal" class="w-full bg-rose-500 hover:bg-rose-600 active:bg-rose-700 text-white font-black py-5 rounded-2xl shadow-xl shadow-rose-500/30 transition-all transform hover:scale-[1.01] active:scale-[0.98] flex items-center justify-center gap-3 text-lg">
+                    <i class="fas fa-calculator"></i> CALCULATE DAILY NEED
                 </button>
 
                 <!-- Result Area -->
-                <div id="cal-results-area" class="hidden opacity-0 space-y-4 transition-all duration-500">
-                    <div class="bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-800/50 rounded-2xl p-6">
-                        <span class="text-xs font-bold text-rose-500 uppercase tracking-widest mb-2 block">Daily Maintenance Calories</span>
-                        <div class="flex items-baseline gap-2">
-                            <span id="cal-output-val" class="text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">--</span>
-                            <span class="text-xl font-bold text-slate-500">kcal/day</span>
+                <div id="cal-results-area" class="hidden opacity-0 bg-rose-50/50 dark:bg-rose-900/10 border border-rose-100/50 dark:border-rose-800/30 rounded-3xl p-8 transition-all duration-700 transform translate-y-4">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                            <span class="text-xs font-black text-rose-500 uppercase tracking-[0.2em]">Maintenance Calories</span>
+                        </div>
+                        <button class="copy-trigger w-10 h-10 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center text-slate-400 hover:text-rose-500 transition-all active:scale-95" data-target="cal-output-val" title="Copy result">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex flex-col mb-8 text-center sm:text-left">
+                        <div class="flex items-baseline justify-center sm:justify-start gap-2">
+                            <span id="cal-output-val" class="text-6xl font-black text-slate-900 dark:text-white tracking-tighter">--</span>
+                            <span class="text-lg font-bold text-slate-400 dark:text-slate-500">kcal/day</span>
                         </div>
                     </div>
 
+                    <!-- Targets Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-center">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Weight Loss</span>
-                            <span id="cal-lose" class="text-xl font-bold text-rose-500">--</span>
-                            <span class="text-[10px] text-slate-400 block mt-1">kcal (-500)</span>
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                            <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Maintain Weight</h4>
+                            <div class="flex items-baseline gap-1">
+                                <span id="cal-maintain" class="text-xl font-bold text-slate-900 dark:text-white">--</span>
+                                <span class="text-[10px] text-slate-400 font-bold">kcal</span>
+                            </div>
                         </div>
-                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-center">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Maintain</span>
-                            <span id="cal-maintain" class="text-xl font-bold text-slate-700 dark:text-slate-300">--</span>
-                            <span class="text-[10px] text-slate-400 block mt-1">kcal (Base)</span>
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm border-l-4 border-l-emerald-500">
+                            <h4 class="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">Weight Gain</h4>
+                            <div class="flex items-baseline gap-1">
+                                <span id="cal-gain" class="text-xl font-bold text-slate-900 dark:text-white">--</span>
+                                <span class="text-[10px] text-slate-400 font-bold">kcal</span>
+                            </div>
                         </div>
-                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-center">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Weight Gain</span>
-                            <span id="cal-gain" class="text-xl font-bold text-emerald-500">--</span>
-                            <span class="text-[10px] text-slate-400 block mt-1">kcal (+500)</span>
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm border-l-4 border-l-rose-500">
+                            <h4 class="text-[10px] font-black text-rose-500 uppercase tracking-widest mb-1">Weight Loss</h4>
+                            <div class="flex items-baseline gap-1">
+                                <span id="cal-lose" class="text-xl font-bold text-slate-900 dark:text-white">--</span>
+                                <span class="text-[10px] text-slate-400 font-bold">kcal</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="w-full max-w-2xl mt-12 space-y-8 pb-20">
+            <!-- Learning Section 1 -->
+            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
+                <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
+                    <i class="fas fa-bolt text-rose-500"></i>
+                    Understanding Total Daily Energy Expenditure (TDEE)
+                </h3>
+                <div class="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 space-y-4">
+                    <p>
+                        While your **BMR** represents calories burned at rest, your **TDEE (Total Daily Energy Expenditure)** is the actual total number of calories you burn each day when exercise and daily activity are factored in.
+                    </p>
+                    <div class="bg-rose-50 dark:bg-rose-900/10 p-5 rounded-2xl border border-rose-100 dark:border-rose-800/40 text-sm italic">
+                        "To lose weight, you must eat below your TDEE. To gain weight, you must eat above it."
+                    </div>
+                    <p>
+                        Our calculator uses the most accurate multipliers to help you find your "Maintenance Calories"—the sweet spot where your weight remains stable.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Activity Factor Guide -->
+            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
+                <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Activity Level Tiers</h3>
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div class="w-10 h-10 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 font-bold">1.2</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 dark:text-white text-sm">Sedentary</h4>
+                            <p class="text-xs text-slate-500">Office jobs, very little intentional exercise.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">1.375</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 dark:text-white text-sm">Lightly Active</h4>
+                            <p class="text-xs text-slate-500">Light exercise 1-3 days per week.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">1.55</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 dark:text-white text-sm">Moderately Active</h4>
+                            <p class="text-xs text-slate-500">Regular exercise/sports 3-5 days per week.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div class="w-10 h-10 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold">1.725</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 dark:text-white text-sm">Very Active</h4>
+                            <p class="text-xs text-slate-500">Hard exercise 6-7 days per week.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Goals Section -->
+            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
+                <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Weight Management Strategies</h3>
+                <div class="space-y-6">
+                    <div class="p-5 border-l-4 border-rose-500 bg-rose-50/30 dark:bg-rose-900/5 rounded-r-xl">
+                        <h4 class="font-bold text-rose-600 dark:text-rose-400 mb-1 italic">Weight Loss (Deficit)</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Aim for a 500 calorie reduction from your TDEE. This typically results in a sustainable loss of ~1lb (0.5kg) per week.</p>
+                    </div>
+                    <div class="p-5 border-l-4 border-emerald-500 bg-emerald-50/30 dark:bg-emerald-900/5 rounded-r-xl">
+                        <h4 class="font-bold text-emerald-600 dark:text-emerald-400 mb-1 italic">Weight Gain (Surplus)</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Add 500 calories to your TDEE. Combined with resistance training, this supports lean muscle growth while minimizing excess fat storage.</p>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 

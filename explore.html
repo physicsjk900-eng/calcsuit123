@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore the Suite | CalcSuit - 40+ Professional Tools</title>
+    <meta name="description" content="Browse our complete collection of 40+ professional online calculators, converters, and productivity tools.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Header (Navigation) -->
+    <div id="sidebar-container" class="contents"></div>
+
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        
+        <!-- Hero Title -->
+        <div class="text-center mb-20">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6">
+                Professional <span class="text-indigo-600 dark:text-indigo-400">Calculator Suite</span>
+            </h1>
+            <p class="text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+                Discover our complete range of high-precision tools designed for math, finance, and daily productivity.
+            </p>
+        </div>
+
+        <!-- Categories Grid -->
+        <div class="space-y-24">
+
+            <!-- Mathematics Section -->
+            <section id="math">
+                <div class="flex items-center gap-4 mb-8 border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 flex items-center justify-center rounded-lg text-lg"><i class="fas fa-calculator"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-wider">Mathematics & Algebra</h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <a href="calculators/basic-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mb-1">Standard Calculator</h3>
+                        <p class="text-sm text-slate-500">Basic arithmetic operations.</p>
+                    </a>
+                    <a href="calculators/scientific-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mb-1">Scientific Math</h3>
+                        <p class="text-sm text-slate-500">Trigonometry and logarithms.</p>
+                    </a>
+                    <a href="calculators/age-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mb-1">Age Calculator</h3>
+                        <p class="text-sm text-slate-500">Calculate age in years, months, days.</p>
+                    </a>
+                    <a href="math/fraction-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mb-1">Fraction Engine</h3>
+                        <p class="text-sm text-slate-500">Simplify and calculate fractions.</p>
+                    </a>
+                    <a href="math/matrix-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mb-1">Matrix Algebra</h3>
+                        <p class="text-sm text-slate-500">Solve matrix equations.</p>
+                    </a>
+                    <a href="calculators/percentage-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mb-1">Percentages</h3>
+                        <p class="text-sm text-slate-500">Calculate relative changes.</p>
+                    </a>
+                    <a href="math/average-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mb-1">Average Tool</h3>
+                        <p class="text-sm text-slate-500">Mean, median, and mode.</p>
+                    </a>
+                    <a href="math/exponent-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mb-1">Exponents</h3>
+                        <p class="text-sm text-slate-500">Power of N calculations.</p>
+                    </a>
+                    <a href="math/log-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mb-1">Logarithms</h3>
+                        <p class="text-sm text-slate-500">Base-10 and natural logs.</p>
+                    </a>
+                    <a href="math/ratio-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mb-1">Ratio Solver</h3>
+                        <p class="text-sm text-slate-500">Simplify and solve ratios.</p>
+                    </a>
+                    <a href="math/squareroot-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mb-1">Square Root</h3>
+                        <p class="text-sm text-slate-500">N-th root calculations.</p>
+                    </a>
+                    <a href="math/stdev-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mb-1">Standard Deviation</h3>
+                        <p class="text-sm text-slate-500">Statistical data analysis.</p>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Finance Section -->
+            <section id="finance">
+                <div class="flex items-center gap-4 mb-8 border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <div class="w-10 h-10 bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 flex items-center justify-center rounded-lg text-lg"><i class="fas fa-chart-line"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-wider">Financial Planning</h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <a href="finance/emi-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 mb-1">EMI Calculator</h3>
+                        <p class="text-sm text-slate-500">Monthly loan installments.</p>
+                    </a>
+                    <a href="finance/interest-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 mb-1">Interest Engine</h3>
+                        <p class="text-sm text-slate-500">Simple & compound interest.</p>
+                    </a>
+                    <a href="finance/loan-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 mb-1">Loan Optimizer</h3>
+                        <p class="text-sm text-slate-500">Analyze depth and tenure.</p>
+                    </a>
+                    <a href="finance/mortgage-afford-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 mb-1">Mortgage Limit</h3>
+                        <p class="text-sm text-slate-500">How much home affordably?</p>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Conversion Section -->
+            <section id="conversion">
+                <div class="flex items-center gap-4 mb-8 border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <div class="w-10 h-10 bg-amber-100 dark:bg-amber-500/10 text-amber-600 flex items-center justify-center rounded-lg text-lg"><i class="fas fa-exchange-alt"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-wider">Unit Conversions</h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <a href="conversion/currency-converter.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 mb-1">Currency</h3>
+                        <p class="text-sm text-slate-500">Global exchange rates.</p>
+                    </a>
+                    <a href="conversion/length-converter.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 mb-1">Length</h3>
+                        <p class="text-sm text-slate-500">Metric and imperial units.</p>
+                    </a>
+                    <a href="conversion/weight-converter.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 mb-1">Mass & Weight</h3>
+                        <p class="text-sm text-slate-500">kg, lbs, stones, and plates.</p>
+                    </a>
+                    <a href="conversion/area-converter.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 mb-1">Land Area</h3>
+                        <p class="text-sm text-slate-500">m², acres, and feet².</p>
+                    </a>
+                    <a href="conversion/energy-converter.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 mb-1">Energy Unit</h3>
+                        <p class="text-sm text-slate-500">Joules, Calories, kWh.</p>
+                    </a>
+                    <a href="conversion/pressure-converter.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 mb-1">Pressure</h3>
+                        <p class="text-sm text-slate-500">Bar, PSI, Pascal, atm.</p>
+                    </a>
+                    <a href="conversion/volume-converter.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 mb-1">Fluid Volume</h3>
+                        <p class="text-sm text-slate-500">Liters, Gallons, m³.</p>
+                    </a>
+                    <a href="conversion/temperature-converter.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 mb-1">Temperature</h3>
+                        <p class="text-sm text-slate-500">C°, F°, and Kelvin.</p>
+                    </a>
+                    <a href="conversion/speed-converter.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 mb-1">Velocity</h3>
+                        <p class="text-sm text-slate-500">km/h, mph, and knots.</p>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Health Section -->
+            <section id="health">
+                <div class="flex items-center gap-4 mb-8 border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <div class="w-10 h-10 bg-rose-100 dark:bg-rose-500/10 text-rose-500 flex items-center justify-center rounded-lg text-lg"><i class="fas fa-heartbeat"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-wider">Health & Fitness</h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <a href="health/bmi-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-rose-500 dark:hover:border-rose-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-rose-600 dark:group-hover:text-rose-400 mb-1">BMI Index</h3>
+                        <p class="text-sm text-slate-500">Body Mass Ratio analysis.</p>
+                    </a>
+                    <a href="health/calorie-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-rose-500 dark:hover:border-rose-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-rose-600 dark:group-hover:text-rose-400 mb-1">Calorie Intake</h3>
+                        <p class="text-sm text-slate-500">Daily maintenance needs.</p>
+                    </a>
+                    <a href="health/body-fat-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-rose-500 dark:hover:border-rose-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-rose-600 dark:group-hover:text-rose-400 mb-1">Body Fat %</h3>
+                        <p class="text-sm text-slate-500">U.S. Navy method analysis.</p>
+                    </a>
+                    <a href="health/bmr-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-rose-500 dark:hover:border-rose-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-rose-600 dark:group-hover:text-rose-400 mb-1">BMR Tool</h3>
+                        <p class="text-sm text-slate-500">Basal metabolic rate.</p>
+                    </a>
+                    <a href="health/ideal-weight-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-rose-500 dark:hover:border-rose-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-rose-600 dark:group-hover:text-rose-400 mb-1">Ideal Mass</h3>
+                        <p class="text-sm text-slate-500">BMI-based weight targets.</p>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Time & Date Section -->
+            <section id="time">
+                <div class="flex items-center gap-4 mb-8 border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <div class="w-10 h-10 bg-purple-100 dark:bg-purple-500/10 text-purple-600 flex items-center justify-center rounded-lg text-lg"><i class="far fa-calendar-alt"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-wider">Time & Duration</h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <a href="time/date-diff-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-purple-500 dark:hover:border-purple-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 mb-1">Date Interval</h3>
+                        <p class="text-sm text-slate-500">Time between two dates.</p>
+                    </a>
+                    <a href="time/work-hours-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-purple-500 dark:hover:border-purple-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 mb-1">Work Hours</h3>
+                        <p class="text-sm text-slate-500">Track billable time.</p>
+                    </a>
+                    <a href="time/countdown-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-purple-500 dark:hover:border-purple-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 mb-1">Countdown</h3>
+                        <p class="text-sm text-slate-500">Timer for future events.</p>
+                    </a>
+                    <a href="time/days-between-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-purple-500 dark:hover:border-purple-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 mb-1">Days Between</h3>
+                        <p class="text-sm text-slate-500">Count total calendar days.</p>
+                    </a>
+                    <a href="time/time-duration-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-purple-500 dark:hover:border-purple-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 mb-1">Add Duration</h3>
+                        <p class="text-sm text-slate-500">Sum hours and minutes.</p>
+                    </a>
+                </div>
+            </section>
+
+             <!-- Lifestyle Section -->
+             <section id="lifestyle">
+                <div class="flex items-center gap-4 mb-8 border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <div class="w-10 h-10 bg-sky-100 dark:bg-sky-500/10 text-sky-500 flex items-center justify-center rounded-lg text-lg"><i class="fas fa-cocktail"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-wider">Daily Lifestyle</h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <a href="lifestyle/Love-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 mb-1">Love Match</h3>
+                        <p class="text-sm text-slate-500">Compatibility analyzer.</p>
+                    </a>
+                    <a href="lifestyle/wedding-budget-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 mb-1">Wedding Budget</h3>
+                        <p class="text-sm text-slate-500">Plan your special day.</p>
+                    </a>
+                    <a href="lifestyle/party-budget-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 mb-1">Party Splitting</h3>
+                        <p class="text-sm text-slate-500">Fair share calculator.</p>
+                    </a>
+                    <a href="lifestyle/rent-vs-buy-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 mb-1">Rent vs Buy</h3>
+                        <p class="text-sm text-slate-500">Real estate math.</p>
+                    </a>
+                    <a href="lifestyle/fuel-cost-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 mb-1">Trip Fuel</h3>
+                        <p class="text-sm text-slate-500">Estimate travel costs.</p>
+                    </a>
+                    <a href="lifestyle/electricity-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 mb-1">Power Usage</h3>
+                        <p class="text-sm text-slate-500">Monthly bill predictor.</p>
+                    </a>
+                    <a href="lifestyle/tip-calculator.html" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 shadow-sm hover:shadow-md transition-all">
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 mb-1">Gratuity Tool</h3>
+                        <p class="text-sm text-slate-500">Easy tip splitting.</p>
+                    </a>
+                </div>
+            </section>
+
+             <!-- Productivity Section -->
+             <section id="productivity">
+                <div class="flex items-center gap-4 mb-8 border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <div class="w-10 h-10 bg-indigo-900 text-white flex items-center justify-center rounded-lg text-lg"><i class="fas fa-tasks"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-wider">Productivity Systems</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <a href="productivity/task-management-calculator.html" class="group flex items-start gap-6 bg-slate-900 dark:bg-slate-800 p-8 rounded-3xl border border-slate-800 hover:border-indigo-500 shadow-xl transition-all">
+                        <div class="w-16 h-16 bg-indigo-500/10 text-indigo-400 flex items-center justify-center rounded-2xl text-2xl border border-indigo-500/20"><i class="fas fa-brain"></i></div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-400">Task Management Dashboard</h3>
+                            <p class="text-slate-400 leading-relaxed">Run Pomodoro sessions, track habits, and manage your daily flow with integrated statistics.</p>
+                        </div>
+                    </a>
+                    <a href="productivity/task-calendar-generator.html" class="group flex items-start gap-6 bg-slate-900 dark:bg-slate-800 p-8 rounded-3xl border border-slate-800 hover:border-emerald-500 shadow-xl transition-all">
+                        <div class="w-16 h-16 bg-emerald-500/10 text-emerald-400 flex items-center justify-center rounded-2xl text-2xl border border-emerald-500/20"><i class="fas fa-calendar-alt"></i></div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald-400">PDF Calendar Generator</h3>
+                            <p class="text-slate-400 leading-relaxed">Map your entire week or month and export beautiful, printable PDF schedules instantly.</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center gap-2 mb-4 md:mb-0">
+                    <i class="fas fa-calculator text-indigo-600 dark:text-indigo-400 text-lg"></i>
+                    <span class="text-xl font-bold text-slate-900 dark:text-white">CalcSuit</span>
+                </div>
+                <div class="flex space-x-8 text-sm font-medium">
+                    <a href="about.html" class="text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">About Us</a>
+                    <a href="privacy.html" class="text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Privacy Policy</a>
+                    <a href="terms.html" class="text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Legal Terms</a>
+                    <a href="contact.html" class="text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Contact</a>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col items-center">
+                <p class="text-slate-400 text-sm">
+                    &copy; 2026 CalcSuit Enterprise. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Initialize Core Scripts -->
+    <script src="js/layout.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ohm's Law Solver | CalcSuit Physics Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-indigo-600 p-8 text-white text-center">
+                <i class="fas fa-bolt text-4xl mb-4 text-emerald-300"></i>
+                <h1 class="text-3xl font-bold italic uppercase tracking-tighter">Ohm's Law Solver</h1>
+                <p class="text-indigo-100 mt-2">Professional DC circuit parameter analysis</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Voltage (V - Volts)</label>
+                        <input type="number" id="voltage" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" placeholder="Enter V">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Current (I - Amps)</label>
+                        <input type="number" id="current" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" placeholder="Enter I">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Resistance (R - Ohms Ω)</label>
+                        <input type="number" id="resistance" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" placeholder="Enter R">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Power (P - Watts)</label>
+                        <input type="number" id="power" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" placeholder="Enter P">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-indigo-50 dark:bg-indigo-500/10 rounded-2xl p-6 border border-indigo-100 dark:border-indigo-500/20 text-center animate-in fade-in zoom-in-95 duration-500 hidden">
+                    <h4 class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Calculated Values</h4>
+                    <pre id="res-list" class="text-xl font-bold text-slate-800 dark:text-white font-mono"></pre>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="calculate-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-lg">
+                        Solve Parameters
+                    </button>
+                    <button id="clear-btn" class="border border-slate-200 dark:border-slate-700 py-4 rounded-xl font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+                        Clear Inputs
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The Ohm's Law Foundation</h2>
+            <p>Our <strong>Ohm's Law Solver</strong> engine implements the fundamental relationship <span class="font-bold">V = I × R</span>. By providing any two parameters, the CalcSuit engine will derive the remaining electrical variables including power dissipation (<span class="font-bold">P = I² × R</span> or <span class="font-bold">P = V × I</span>), essential for DC circuit design and hardware troubleshooting.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const vIn = document.getElementById('voltage');
+        const iIn = document.getElementById('current');
+        const rIn = document.getElementById('resistance');
+        const pIn = document.getElementById('power');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const resArea = document.getElementById('result-area');
+        const resList = document.getElementById('res-list');
+
+        function calculate() {
+            let v = parseFloat(vIn.value);
+            let i = parseFloat(iIn.value);
+            let r = parseFloat(rIn.value);
+            let p = parseFloat(pIn.value);
+
+            let filled = [v, i, r, p].filter(x => !isNaN(x)).length;
+            if (filled < 2) {
+                alert("Please enter at least two parameters.");
+                return;
+            }
+
+            // Simple iterative solving
+            for (let k = 0; k < 5; k++) {
+                if (isNaN(v) && !isNaN(i) && !isNaN(r)) v = i * r;
+                if (isNaN(v) && !isNaN(p) && !isNaN(i)) v = p / i;
+                if (isNaN(v) && !isNaN(p) && !isNaN(r)) v = Math.sqrt(p * r);
+
+                if (isNaN(i) && !isNaN(v) && !isNaN(r)) i = v / r;
+                if (isNaN(i) && !isNaN(p) && !isNaN(v)) i = p / v;
+                if (isNaN(i) && !isNaN(p) && !isNaN(r)) i = Math.sqrt(p / r);
+
+                if (isNaN(r) && !isNaN(v) && !isNaN(i)) r = v / i;
+                if (isNaN(r) && !isNaN(p) && !isNaN(i)) r = p / (i * i);
+                if (isNaN(r) && !isNaN(v) && !isNaN(p)) r = (v * v) / p;
+
+                if (isNaN(p) && !isNaN(v) && !isNaN(i)) p = v * i;
+                if (isNaN(p) && !isNaN(i) && !isNaN(r)) p = (i * i) * r;
+                if (isNaN(p) && !isNaN(v) && !isNaN(r)) p = (v * v) / r;
+            }
+
+            resList.innerHTML = `Voltage (V): ${v.toFixed(3)}V\n` +
+                              `Current (I): ${i.toFixed(3)}A\n` +
+                              `Resistance (R): ${r.toFixed(3)}Ω\n` +
+                              `Power (P): ${p.toFixed(3)}W`;
+
+            resArea.classList.remove('hidden');
+        }
+
+        clearBtn.addEventListener('click', () => {
+            vIn.value = iIn.value = rIn.value = pIn.value = "";
+            resArea.classList.add('hidden');
+        });
+
+        calculateBtn.addEventListener('click', calculate);
+    </script>
+</body>
+</html>

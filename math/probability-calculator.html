@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probability & Combinatorics | CalcSuit Math</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-slate-900 p-8 text-white text-center">
+                <i class="fas fa-dice text-4xl mb-4 text-indigo-400"></i>
+                <h1 class="text-3xl font-bold">Probability Hub</h1>
+                <p class="text-slate-400 mt-2">Factorials, Permutations (nPr), and Combinations (nCr)</p>
+            </div>
+            <div class="p-8 space-y-8">
+                <!-- Inputs -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="block text-sm font-bold text-slate-500 uppercase">Total Items (n)</label>
+                        <input type="number" id="input-n" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="10">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-bold text-slate-500 uppercase">Selected Items (r)</label>
+                        <input type="number" id="input-r" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="3">
+                    </div>
+                </div>
+
+                <div id="result-area" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-indigo-50 dark:bg-indigo-500/10 p-5 rounded-2xl border border-indigo-100 dark:border-indigo-500/20 text-center">
+                        <div class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Factorial (n!)</div>
+                        <div id="res-factorial" class="text-xl font-bold text-slate-800 dark:text-white truncate">3,628,800</div>
+                        <button class="copy-trigger mt-1 text-[10px] text-indigo-500 hover:underline" data-target="res-factorial">Copy</button>
+                    </div>
+                    <div class="bg-emerald-50 dark:bg-emerald-500/10 p-5 rounded-2xl border border-emerald-100 dark:border-emerald-500/20 text-center">
+                        <div class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Permutation (nPr)</div>
+                        <div id="res-npr" class="text-xl font-bold text-slate-800 dark:text-white truncate">720</div>
+                        <button class="copy-trigger mt-1 text-[10px] text-emerald-500 hover:underline" data-target="res-npr">Copy</button>
+                    </div>
+                    <div class="bg-amber-50 dark:bg-amber-500/10 p-5 rounded-2xl border border-amber-100 dark:border-amber-500/20 text-center">
+                        <div class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-1">Combination (nCr)</div>
+                        <div id="res-ncr" class="text-xl font-bold text-slate-800 dark:text-white truncate">120</div>
+                        <button class="copy-trigger mt-1 text-[10px] text-amber-500 hover:underline" data-target="res-ncr">Copy</button>
+                    </div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-lg">
+                    Process Probability
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Probability & Sets</h2>
+            <p>Calculate total variations and choices. <strong>Permutations (nPr)</strong> account for arrangement order, while <strong>Combinations (nCr)</strong> focus purely on selection sets without regard for sequence.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const nInput = document.getElementById('input-n');
+        const rInput = document.getElementById('input-r');
+        const resFactorial = document.getElementById('res-factorial');
+        const resNpr = document.getElementById('res-npr');
+        const resNcr = document.getElementById('res-ncr');
+        const calculateBtn = document.getElementById('calculate-btn');
+
+        function factorial(num) {
+            if (num < 0) return 0;
+            if (num === 0) return 1;
+            let res = 1n;
+            for (let i = 2n; i <= BigInt(num); i++) res *= i;
+            return res;
+        }
+
+        function calculate() {
+            const n = parseInt(nInput.value);
+            const r = parseInt(rInput.value);
+
+            if (isNaN(n) || isNaN(r) || n < 0 || r < 0) {
+                alert("Please enter valid positive numbers.");
+                return;
+            }
+            if (r > n) {
+                alert("Selected items (r) cannot exceed total items (n).");
+                return;
+            }
+
+            try {
+                const factN = factorial(n);
+                const factNR = factorial(n - r);
+                const factR = factorial(r);
+
+                resFactorial.innerText = factN.toString().length > 15 ? factN.toString().substring(0, 12) + "..." : factN.toLocaleString();
+                resFactorial.dataset.full = factN.toString();
+
+                const npr = factN / factNR;
+                resNpr.innerText = npr.toString().length > 15 ? npr.toString().substring(0, 12) + "..." : npr.toLocaleString();
+                resNpr.dataset.full = npr.toString();
+
+                const ncr = npr / factR;
+                resNcr.innerText = ncr.toString().length > 15 ? ncr.toString().substring(0, 12) + "..." : ncr.toLocaleString();
+                resNcr.dataset.full = ncr.toString();
+                
+            } catch(e) {
+                alert("Calculation error: Result may be too large.");
+            }
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

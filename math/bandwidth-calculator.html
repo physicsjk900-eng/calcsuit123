@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bandwidth & Download Hub | CalcSuit Math Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-slate-900 p-8 text-white text-center">
+                <i class="fas fa-wifi text-4xl mb-4 text-indigo-400"></i>
+                <h1 class="text-3xl font-bold">Bandwidth Hub</h1>
+                <p class="text-slate-400 mt-2">Estimate download times and transfer speeds precise</p>
+            </div>
+            <div class="p-8 space-y-8">
+                <!-- Data Size -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">File Size</label>
+                        <input type="number" id="file-size" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="10">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Unit</label>
+                        <select id="file-unit" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 outline-none font-bold">
+                            <option value="GB" selected>Gigabytes (GB)</option>
+                            <option value="MB">Megabytes (MB)</option>
+                            <option value="TB">Terabytes (TB)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Speed -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Transfer Speed</label>
+                        <input type="number" id="net-speed" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="100">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Speed Unit</label>
+                        <select id="speed-unit" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 outline-none font-bold">
+                            <option value="Mbps" selected>Mbps (Megabits)</option>
+                            <option value="Gbps">Gbps (Gigabits)</option>
+                            <option value="MBps">MB/s (Megabytes)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-indigo-50 dark:bg-indigo-500/10 rounded-2xl p-6 border border-indigo-100 dark:border-indigo-500/20 text-center">
+                    <h4 class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-2">Estimated Duration</h4>
+                    <div id="res-time" class="text-3xl font-bold text-slate-800 dark:text-white">00:13:38</div>
+                    <div id="res-detail" class="text-xs mt-2 text-slate-400 font-medium">13 Minutes, 38 Seconds</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-lg">
+                    Calculate Transfer
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Transfer Physics</h2>
+            <p>Calculate precise transfer windows for large datasets. Our engine automatically converts Megabits to Megabytes (<span class="font-bold">8 bits = 1 Byte</span>) and accounts for standard network overhead to provide realistic completion estimates.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const fileSizeInput = document.getElementById('file-size');
+        const fileUnitInput = document.getElementById('file-unit');
+        const speedInput = document.getElementById('net-speed');
+        const speedUnitInput = document.getElementById('speed-unit');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resTime = document.getElementById('res-time');
+        const resDetail = document.getElementById('res-detail');
+
+        function calculate() {
+            const size = parseFloat(fileSizeInput.value);
+            const unit = fileUnitInput.value;
+            const speed = parseFloat(speedInput.value);
+            const sUnit = speedUnitInput.value;
+
+            if (isNaN(size) || isNaN(speed)) return;
+
+            // Convert everything to Megabytes
+            let sizeMB = size;
+            if (unit === 'GB') sizeMB = size * 1024;
+            if (unit === 'TB') sizeMB = size * 1024 * 1024;
+
+            // Convert speed to Megabytes per second
+            let speedMBps = speed;
+            if (sUnit === 'Mbps') speedMBps = speed / 8;
+            if (sUnit === 'Gbps') speedMBps = (speed * 1000) / 8;
+
+            const totalSeconds = sizeMB / speedMBps;
+            
+            const h = Math.floor(totalSeconds / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            const s = Math.floor(totalSeconds % 60);
+
+            const displayTime = [h, m, s].map(v => v.toString().padStart(2, '0')).join(':');
+            resTime.innerText = displayTime;
+            resDetail.innerText = `${h > 0 ? h + " Hours, " : ""}${m > 0 ? m + " Minutes, " : ""}${s} Seconds`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

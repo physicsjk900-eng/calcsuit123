@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCD & LCM Finder | CalcSuit Math Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-sky-600 p-8 text-white text-center">
+                <i class="fas fa-layer-group text-4xl mb-4"></i>
+                <h1 class="text-3xl font-bold">GCD & LCM Finder</h1>
+                <p class="text-sky-100 mt-2">Find precision divisors and multiples for many numbers</p>
+            </div>
+            <div class="p-8 space-y-8">
+                <!-- Inputs -->
+                <div class="space-y-3">
+                    <label class="block text-sm font-bold text-slate-500 uppercase">Enter Numbers (comma-separated)</label>
+                    <textarea id="input-numbers" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-xl font-mono focus:ring-2 focus:ring-sky-500 outline-none h-24" placeholder="48, 18, 36">48, 18, 36</textarea>
+                </div>
+
+                <div id="result-area" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-sky-50 dark:bg-sky-500/10 p-6 rounded-2xl border border-sky-100 dark:border-sky-500/20 text-center">
+                            <h4 class="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-widest mb-2">Greatest Common Divisor (GCD)</h4>
+                            <div id="res-gcd" class="text-3xl font-bold text-slate-800 dark:text-white">6</div>
+                            <button class="copy-trigger mt-1 text-[10px] text-sky-500 hover:underline" data-target="res-gcd">Copy</button>
+                        </div>
+                        <div class="bg-indigo-50 dark:bg-indigo-500/10 p-6 rounded-2xl border border-indigo-100 dark:border-indigo-500/20 text-center">
+                            <h4 class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-2">Least Common Multiple (LCM)</h4>
+                            <div id="res-lcm" class="text-3xl font-bold text-slate-800 dark:text-white">144</div>
+                            <button class="copy-trigger mt-1 text-[10px] text-indigo-500 hover:underline" data-target="res-lcm">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-sky-500/30 transition-all active:scale-95 text-lg">
+                    Find GCD & LCM
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Precision Factor Analysis</h2>
+            <p>Our solver uses the Euclidean algorithm for GCD and the property <span class="font-mono">LCM(a, b) = |a*b| / GCD(a, b)</span> to compute results for any set of integers. Ideal for academic research and complex engineering calculations.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const inputNumbers = document.getElementById('input-numbers');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resGcd = document.getElementById('res-gcd');
+        const resLcm = document.getElementById('res-lcm');
+        const resultArea = document.getElementById('result-area');
+
+        function gcd(a, b) {
+            a = Math.abs(a);
+            b = Math.abs(b);
+            while (b) {
+                a %= b;
+                [a, b] = [b, a];
+            }
+            return a;
+        }
+
+        function lcm(a, b) {
+            if (a === 0 || b === 0) return 0;
+            return Math.abs(a * b) / gcd(a, b);
+        }
+
+        function calculate() {
+            const raw = inputNumbers.value.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+            if (raw.length < 2) {
+                alert("Please enter at least two numbers.");
+                return;
+            }
+
+            let currentGcd = raw[0];
+            let currentLcm = raw[0];
+
+            for (let i = 1; i < raw.length; i++) {
+                currentGcd = gcd(currentGcd, raw[i]);
+                currentLcm = lcm(currentLcm, raw[i]);
+            }
+
+            resGcd.innerText = currentGcd;
+            resLcm.innerText = currentLcm;
+            resultArea.classList.remove('hidden');
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+    </script>
+</body>
+</html>

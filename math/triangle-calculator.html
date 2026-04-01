@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triangle Pro Solver | CalcSuit Math Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-sky-600 p-8 text-white text-center">
+                <i class="fas fa-draw-polygon text-4xl mb-4"></i>
+                <h1 class="text-3xl font-bold">Triangle Pro</h1>
+                <p class="text-sky-100 mt-2">Solve right-angled triangles with trigonometry</p>
+            </div>
+            <div class="p-8 space-y-8">
+                <!-- Inputs -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-500 uppercase">Side A (Base)</label>
+                        <input type="number" id="side-a" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-xl font-bold focus:ring-2 focus:ring-sky-500 outline-none" value="3">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-500 uppercase">Side B (Height)</label>
+                        <input type="number" id="side-b" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-xl font-bold focus:ring-2 focus:ring-sky-500 outline-none" value="4">
+                    </div>
+                </div>
+
+                <div id="result-area" class="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div class="bg-sky-50 dark:bg-sky-500/10 p-5 rounded-2xl border border-sky-100 dark:border-sky-500/20">
+                        <div class="text-[10px] font-bold text-sky-600 dark:text-sky-400 uppercase tracking-widest mb-1">Hypotenuse (C)</div>
+                        <div id="res-c" class="text-2xl font-bold text-slate-800 dark:text-white">5.00</div>
+                    </div>
+                    <div class="bg-indigo-50 dark:bg-indigo-500/10 p-5 rounded-2xl border border-indigo-100 dark:border-indigo-500/20">
+                        <div class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Area</div>
+                        <div id="res-area" class="text-2xl font-bold text-slate-800 dark:text-white">6.00</div>
+                    </div>
+                    <div class="bg-emerald-50 dark:bg-emerald-500/10 p-5 rounded-2xl border border-emerald-100 dark:border-emerald-500/20">
+                        <div class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Angle α (Deg)</div>
+                        <div id="res-angle-a" class="text-2xl font-bold text-slate-800 dark:text-white">36.87°</div>
+                    </div>
+                    <div class="bg-emerald-50 dark:bg-emerald-500/10 p-5 rounded-2xl border border-emerald-100 dark:border-emerald-500/20">
+                        <div class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Angle β (Deg)</div>
+                        <div id="res-angle-b" class="text-2xl font-bold text-slate-800 dark:text-white">53.13°</div>
+                    </div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-sky-500/30 transition-all active:scale-95 text-xl">
+                    Solve Triangle
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Trigonometric Intelligence</h2>
+            <p>Our Triangle Pro engine uses the <strong>Pythagorean theorem</strong> (<span class="font-mono">a² + b² = c²</span>) and sine/cosine/tangent ratios to solve geometrical relationships instantly. Essential for architectural layout and mechanical design precision.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const aInput = document.getElementById('side-a');
+        const bInput = document.getElementById('side-b');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resC = document.getElementById('res-c');
+        const resArea = document.getElementById('res-area');
+        const resAngleA = document.getElementById('res-angle-a');
+        const resAngleB = document.getElementById('res-angle-b');
+
+        function calculate() {
+            const a = parseFloat(aInput.value);
+            const b = parseFloat(bInput.value);
+
+            if (isNaN(a) || isNaN(b) || a <= 0 || b <= 0) return;
+
+            const c = Math.sqrt(a * a + b * b);
+            const area = 0.5 * a * b;
+            
+            const degA = Math.atan(b / a) * (180 / Math.PI);
+            const degB = 90 - degA;
+
+            resC.innerText = c.toFixed(2);
+            resArea.innerText = area.toFixed(2);
+            resAngleA.innerText = degA.toFixed(2) + "°";
+            resAngleB.innerText = degB.toFixed(2) + "°";
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

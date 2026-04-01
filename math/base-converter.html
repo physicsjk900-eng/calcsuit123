@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base Converter | CalcSuit Math Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-slate-800 p-8 text-white text-center">
+                <i class="fas fa-hashtag text-4xl mb-4 text-indigo-400"></i>
+                <h1 class="text-3xl font-bold">Base Converter</h1>
+                <p class="text-slate-400 mt-2">Switch between Binary, Octal, Hex, and Decimal instantly</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-1 gap-6">
+                    <div class="space-y-2">
+                        <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Decimal (Base 10)</label>
+                        <input type="text" id="base-10" class="w-full bg-slate-50 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-6 text-xl font-mono focus:ring-2 focus:ring-indigo-500 outline-none" value="255">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Binary (Base 2)</label>
+                        <input type="text" id="base-2" class="w-full bg-slate-50 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-6 text-xl font-mono focus:ring-2 focus:ring-indigo-500 outline-none" value="11111111">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Hexadecimal (Base 16)</label>
+                        <input type="text" id="base-16" class="w-full bg-slate-50 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-6 text-xl font-mono focus:ring-2 focus:ring-indigo-500 outline-none uppercase" value="FF">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Octal (Base 8)</label>
+                        <input type="text" id="base-8" class="w-full bg-slate-50 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-6 text-xl font-mono focus:ring-2 focus:ring-indigo-500 outline-none" value="377">
+                    </div>
+                </div>
+                
+                <button id="clear-btn" class="w-full border-2 border-dashed border-slate-200 dark:border-slate-700 hover:border-slate-300 py-4 rounded-xl text-slate-400 dark:text-slate-500 font-bold transition-all uppercase tracking-widest text-xs">Clear Values</button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Base Arithmetic Pro</h2>
+            <p>Our real-time converter facilitates the translation of integer values across computing's most critical number bases. Simply type in any field to see the synchronous translation across all platforms.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const b10 = document.getElementById('base-10');
+        const b2 = document.getElementById('base-2');
+        const b8 = document.getElementById('base-8');
+        const b16 = document.getElementById('base-16');
+        const clearBtn = document.getElementById('clear-btn');
+
+        function updateAll(val, source) {
+            if (val === "" || isNaN(val)) {
+                if (source !== b10) b10.value = "";
+                if (source !== b2) b2.value = "";
+                if (source !== b8) b8.value = "";
+                if (source !== b16) b16.value = "";
+                return;
+            }
+            const decimal = BigInt(val);
+            if (source !== b10) b10.value = decimal.toString(10);
+            if (source !== b2) b2.value = decimal.toString(2);
+            if (source !== b8) b8.value = decimal.toString(8);
+            if (source !== b16) b16.value = decimal.toString(16).toUpperCase();
+        }
+
+        b10.addEventListener('input', () => {
+            try { 
+                const d = BigInt(b10.value); 
+                updateAll(d, b10); 
+            } catch(e) { updateAll("", b10); }
+        });
+        b2.addEventListener('input', () => {
+            try { 
+                const d = BigInt("0b" + b2.value); 
+                updateAll(d, b2); 
+            } catch(e) { updateAll("", b2); }
+        });
+        b8.addEventListener('input', () => {
+            try { 
+                const d = BigInt("0o" + b8.value); 
+                updateAll(d, b8); 
+            } catch(e) { updateAll("", b8); }
+        });
+        b16.addEventListener('input', () => {
+            try { 
+                const d = BigInt("0x" + b16.value); 
+                updateAll(d, b16); 
+            } catch(e) { updateAll("", b16); }
+        });
+
+        clearBtn.addEventListener('click', () => {
+            b10.value = b2.value = b8.value = b16.value = "";
+        });
+    </script>
+</body>
+</html>

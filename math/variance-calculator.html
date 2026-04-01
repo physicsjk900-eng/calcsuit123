@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percent Variance & Change | CalcSuit Math Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-indigo-600 p-8 text-white text-center">
+                <i class="fas fa-chart-line text-4xl mb-4"></i>
+                <h1 class="text-3xl font-bold">Percent Variance</h1>
+                <p class="text-indigo-100 mt-2">Calculate growth, decline, and relative change</p>
+            </div>
+            <div class="p-8 space-y-8">
+                <!-- Inputs -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-500 uppercase">Original Value</label>
+                        <input type="number" id="val-1" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="100">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-500 uppercase">New Value</label>
+                        <input type="number" id="val-2" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="125">
+                    </div>
+                </div>
+
+                <div id="result-area" class="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div class="bg-indigo-50 dark:bg-indigo-500/10 p-5 rounded-2xl border border-indigo-100 dark:border-indigo-500/20 text-center">
+                        <div class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Percentage Change</div>
+                        <div id="res-change" class="text-3xl font-bold text-emerald-600">+25.00%</div>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-500/10 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 text-center">
+                        <div class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">Absolute Difference</div>
+                        <div id="res-diff" class="text-3xl font-bold text-slate-800 dark:text-white">25.00</div>
+                    </div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-xl">
+                    Compare Values
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Variance Logic</h2>
+            <p>Our Variance Engine uses the formula <span class="font-mono">((V2 - V1) / |V1|) * 100</span> to normalize growth and decline. This is the industry standard for financial quarter-over-quarter (QoQ) and year-over-year (YoY) performance tracking.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const v1Input = document.getElementById('val-1');
+        const v2Input = document.getElementById('val-2');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resChange = document.getElementById('res-change');
+        const resDiff = document.getElementById('res-diff');
+
+        function calculate() {
+            const v1 = parseFloat(v1Input.value);
+            const v2 = parseFloat(v2Input.value);
+
+            if (isNaN(v1) || isNaN(v2)) return;
+            if (v1 === 0) {
+                alert("Original value cannot be zero for percentage change calculations.");
+                return;
+            }
+
+            const diff = v2 - v1;
+            const pct = (diff / Math.abs(v1)) * 100;
+
+            resDiff.innerText = diff.toFixed(2);
+            resChange.innerText = (pct >= 0 ? "+" : "") + pct.toFixed(2) + "%";
+            resChange.className = `text-3xl font-bold ${pct >= 0 ? 'text-emerald-600' : 'text-rose-500'}`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

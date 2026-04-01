@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadratic Equation Solver | CalcSuit Math</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-indigo-600 p-8 text-white text-center">
+                <i class="fas fa-superscript text-4xl mb-4"></i>
+                <h1 class="text-3xl font-bold">Quadratic Solver</h1>
+                <p class="text-indigo-100 mt-2">Solve standard quadratic equations: ax² + bx + c = 0</p>
+            </div>
+
+            <div class="p-8 space-y-8">
+                <!-- Inputs -->
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="space-y-2 text-center">
+                        <label class="block text-sm font-bold text-slate-500 uppercase">Coefficient a</label>
+                        <input type="number" id="coeff-a" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="1">
+                    </div>
+                    <div class="space-y-2 text-center">
+                        <label class="block text-sm font-bold text-slate-500 uppercase">Coefficient b</label>
+                        <input type="number" id="coeff-b" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="5">
+                    </div>
+                    <div class="space-y-2 text-center">
+                        <label class="block text-sm font-bold text-slate-500 uppercase">Coefficient c</label>
+                        <input type="number" id="coeff-c" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="6">
+                    </div>
+                </div>
+
+                <div class="text-center text-2xl font-mono text-slate-400 dark:text-slate-500 py-4 border-y border-dashed border-slate-200 dark:border-slate-700">
+                    <span id="display-eqn">1x² + 5x + 6 = 0</span>
+                </div>
+
+                <!-- Result -->
+                <div id="result-area" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div class="bg-indigo-50 dark:bg-indigo-500/10 rounded-2xl p-6 border border-indigo-100 dark:border-indigo-500/20">
+                        <h4 class="text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-4">Calculated Roots</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+                                <div class="text-xs font-bold text-slate-400 uppercase mb-1">Root x₁</div>
+                                <div id="root-1" class="text-2xl font-bold text-slate-800 dark:text-white">-2</div>
+                                <button class="copy-trigger mt-1 text-[10px] text-indigo-500 hover:underline" data-target="root-1">Copy</button>
+                            </div>
+                            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+                                <div class="text-xs font-bold text-slate-400 uppercase mb-1">Root x₂</div>
+                                <div id="root-2" class="text-2xl font-bold text-slate-800 dark:text-white">-3</div>
+                                <button class="copy-trigger mt-1 text-[10px] text-indigo-500 hover:underline" data-target="root-2">Copy</button>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 pt-6 border-t border-indigo-100 dark:border-indigo-500/20 space-y-3">
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-500">Discriminant (D)</span>
+                                <span id="discriminant" class="font-bold">1</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-500">Root Type</span>
+                                <span id="root-type" class="font-bold text-emerald-600">Real and Distinct</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-lg">
+                    Solve Quadratic
+                </button>
+            </div>
+        </div>
+
+        <!-- SEO Content -->
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Mastering Quadratic Equations</h2>
+            <p>Our professional quadratic solver uses the standard formula <span class="font-mono">x = (-b ± √(b² - 4ac)) / (2a)</span> to provide instant roots for any coefficients. Whether you are dealing with real numbers, repeated roots, or complex imaginary segments, the CalcSuit engine provides a precise breakdown.</p>
+        </div>
+    </main>
+
+    <script src="../js/layout.js"></script>
+    <script>
+        const aInput = document.getElementById('coeff-a');
+        const bInput = document.getElementById('coeff-b');
+        const cInput = document.getElementById('coeff-c');
+        const displayEqn = document.getElementById('display-eqn');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resultArea = document.getElementById('result-area');
+        const root1El = document.getElementById('root-1');
+        const root2El = document.getElementById('root-2');
+        const discEl = document.getElementById('discriminant');
+        const typeEl = document.getElementById('root-type');
+
+        function updateDisplay() {
+            const a = aInput.value || 0;
+            const b = bInput.value || 0;
+            const c = cInput.value || 0;
+            const fmtA = a == 1 ? "x²" : a == -1 ? "-x²" : a == 0 ? "" : a + "x²";
+            const fmtB = b == 0 ? "" : (b > 0 ? (a == 0 ? "" : " + ") + b : " - " + Math.abs(b)) + "x";
+            const fmtC = c == 0 ? "" : (c > 0 ? " + " + c : " - " + Math.abs(c));
+            displayEqn.innerText = `${fmtA}${fmtB}${fmtC} = 0`;
+        }
+
+        [aInput, bInput, cInput].forEach(inp => inp.addEventListener('input', updateDisplay));
+
+        calculateBtn.addEventListener('click', () => {
+            const a = parseFloat(aInput.value);
+            const b = parseFloat(bInput.value);
+            const c = parseFloat(cInput.value);
+
+            if (isNaN(a) || isNaN(b) || isNaN(c)) return;
+            if (a === 0) {
+                alert("Coefficient 'a' cannot be zero in a quadratic equation.");
+                return;
+            }
+
+            const D = (b * b) - (4 * a * c);
+            discEl.innerText = D.toFixed(4);
+
+            if (D > 0) {
+                const r1 = (-b + Math.sqrt(D)) / (2 * a);
+                const r2 = (-b - Math.sqrt(D)) / (2 * a);
+                root1El.innerText = r1 % 1 === 0 ? r1 : r1.toFixed(4);
+                root2El.innerText = r2 % 1 === 0 ? r2 : r2.toFixed(4);
+                typeEl.innerText = "Real and Distinct";
+                typeEl.className = "font-bold text-emerald-600";
+            } else if (D === 0) {
+                const r = -b / (2 * a);
+                root1El.innerText = r % 1 === 0 ? r : r.toFixed(4);
+                root2El.innerText = r % 1 === 0 ? r : r.toFixed(4);
+                typeEl.innerText = "Real and Repeated";
+                typeEl.className = "font-bold text-indigo-600";
+            } else {
+                const real = (-b / (2 * a)).toFixed(4);
+                const img = (Math.sqrt(Math.abs(D)) / (2 * a)).toFixed(4);
+                root1El.innerText = `${real} + ${img}i`;
+                root2El.innerText = `${real} - ${img}i`;
+                typeEl.innerText = "Complex Roots";
+                typeEl.className = "font-bold text-rose-500";
+            }
+
+            resultArea.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>

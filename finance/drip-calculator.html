@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRIP Dividend Tracker | CalcSuit Finance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-indigo-600 p-8 text-white text-center">
+                <i class="fas fa-seedling text-4xl mb-4 text-emerald-400"></i>
+                <h1 class="text-3xl font-bold">DRIP Tracker</h1>
+                <p class="text-indigo-100 mt-2">Model long-term dividend reinvestment growth</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Share Price ($)</label>
+                        <input type="number" id="share-price" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="100">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Shares Owned</label>
+                        <input type="number" id="shares" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="100">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Annual Yield (%)</label>
+                        <input type="number" id="yield" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="4">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Years to Hold</label>
+                        <input type="number" id="years" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="10">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-indigo-50 dark:bg-indigo-500/10 rounded-2xl p-6 border border-indigo-100 dark:border-indigo-500/20 text-center">
+                    <h4 class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Estimated Total Portfolio Value</h4>
+                    <div id="res-fv" class="text-4xl font-bold text-slate-800 dark:text-white">$14,802.44</div>
+                    <div id="res-annual-income" class="text-xs mt-2 text-slate-400 font-medium">New Annual Income: $592.10</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-xl">
+                    Forecast Dividend Yield
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The DRIP Core Advantage</h2>
+            <p>Dividend Reinvestment Plans (DRIP) allow investors to automatically purchase additional shares using earned dividends. This creates a compounding effect on both the share count and the future dividend payout, accelerating total return velocity over extended horizons.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const priceInput = document.getElementById('share-price');
+        const sharesInput = document.getElementById('shares');
+        const yieldInput = document.getElementById('yield');
+        const yearsInput = document.getElementById('years');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const fvEl = document.getElementById('res-fv');
+        const incomeEl = document.getElementById('res-annual-income');
+
+        function calculate() {
+            const price = parseFloat(priceInput.value);
+            let shares = parseFloat(sharesInput.value);
+            const annualYield = parseFloat(yieldInput.value) / 100;
+            const years = parseFloat(yearsInput.value);
+
+            if (isNaN(price) || isNaN(shares) || isNaN(annualYield) || isNaN(years)) return;
+
+            // Simple quarterly compounding simulation
+            const quarterlyYield = annualYield / 4;
+            const quarters = years * 4;
+
+            for (let i = 0; i < quarters; i++) {
+                const totalDiv = shares * price * quarterlyYield;
+                const newShares = totalDiv / price;
+                shares += newShares;
+            }
+
+            const totalValue = shares * price;
+            const annualIncome = totalValue * annualYield;
+
+            const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+            fvEl.innerText = fmt.format(totalValue);
+            incomeEl.innerText = `New Annual Income: ${fmt.format(annualIncome)}`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

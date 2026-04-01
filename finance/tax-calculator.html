@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global VAT/GST Calculator | CalcSuit Finance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-indigo-600 p-8 text-white text-center">
+                <i class="fas fa-file-invoice-dollar text-4xl mb-4 text-emerald-400"></i>
+                <h1 class="text-3xl font-bold">VAT/GST Calculator</h1>
+                <p class="text-indigo-100 mt-2">Professional tax addition and extraction tool</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Select Mode -->
+                <div class="flex bg-slate-50 dark:bg-slate-700/50 p-1 rounded-xl gap-1">
+                    <button id="mode-add" class="flex-1 py-3 px-4 rounded-lg font-bold text-sm bg-white dark:bg-slate-600 shadow-sm text-indigo-600 dark:text-white transition-all">Add Tax (Forward)</button>
+                    <button id="mode-rev" class="flex-1 py-3 px-4 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-700 transition-all">Remove Tax (Reverse)</button>
+                </div>
+
+                <!-- Inputs -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Principal Amount ($)</label>
+                        <input type="number" id="input-amount" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold text-2xl outline-none" value="100">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Tax Rate (%)</label>
+                        <input type="number" id="input-tax" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold text-2xl outline-none" value="15">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-indigo-50 dark:bg-indigo-500/10 rounded-2xl p-6 border border-indigo-100 dark:border-indigo-500/20 text-center">
+                    <h4 id="res-header" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Gross Total (Incl. Tax)</h4>
+                    <div id="res-total" class="text-4xl font-bold text-slate-800 dark:text-white">$115.00</div>
+                    <div id="res-tax-val" class="text-xs mt-2 text-slate-400 font-medium">Tax Amount: $15.00</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-xl">
+                    Run Tax Calculation
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Tax Mathematics Pro</h2>
+            <p>Our global tax solver facilitates the precise calculation of Value Added Tax (VAT) and Goods and Services Tax (GST). Whether adding a sales levy to a net value or reverse-extracting the tax component from a gross total (<span class="font-bold">Amount / (1 + Rate)</span>), the CalcSuit engine provides immediate clarity.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const addBtn = document.getElementById('mode-add');
+        const revBtn = document.getElementById('mode-rev');
+        const amountInput = document.getElementById('input-amount');
+        const taxInput = document.getElementById('input-tax');
+        const calculateBtn = document.getElementById('calculate-btn');
+        
+        const resHeader = document.getElementById('res-header');
+        const resTotal = document.getElementById('res-total');
+        const resTaxVal = document.getElementById('res-tax-val');
+
+        let mode = "add";
+
+        addBtn.addEventListener('click', () => {
+            mode = "add";
+            addBtn.className = "flex-1 py-3 px-4 rounded-lg font-bold text-sm bg-white dark:bg-slate-600 shadow-sm text-indigo-600 dark:text-white transition-all";
+            revBtn.className = "flex-1 py-3 px-4 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-700 transition-all";
+            resHeader.innerText = "Gross Total (Incl. Tax)";
+            calculate();
+        });
+
+        revBtn.addEventListener('click', () => {
+            mode = "rev";
+            revBtn.className = "flex-1 py-3 px-4 rounded-lg font-bold text-sm bg-white dark:bg-slate-600 shadow-sm text-indigo-600 dark:text-white transition-all";
+            addBtn.className = "flex-1 py-3 px-4 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-700 transition-all";
+            resHeader.innerText = "Net Total (Excl. Tax)";
+            calculate();
+        });
+
+        function calculate() {
+            const amount = parseFloat(amountInput.value);
+            const rate = parseFloat(taxInput.value) / 100;
+
+            if (isNaN(amount) || isNaN(rate)) return;
+
+            const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+            
+            if (mode === 'add') {
+                const taxVal = amount * rate;
+                const total = amount + taxVal;
+                resTotal.innerText = fmt.format(total);
+                resTaxVal.innerText = `Tax Amount: ${fmt.format(taxVal)}`;
+            } else {
+                const net = amount / (1 + rate);
+                const taxVal = amount - net;
+                resTotal.innerText = fmt.format(net);
+                resTaxVal.innerText = `Extracted Tax: ${fmt.format(taxVal)}`;
+            }
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

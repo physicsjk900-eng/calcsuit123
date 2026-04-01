@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compound Interest Pro | CalcSuit Finance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-emerald-600 p-8 text-white text-center">
+                <i class="fas fa-chart-line text-4xl mb-4"></i>
+                <h1 class="text-3xl font-bold">Compound Growth Pro</h1>
+                <p class="text-emerald-100 mt-2">Model long-term wealth accumulation</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Initial Deposit</label>
+                        <input type="number" id="principal" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="10000">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Monthly Contribution</label>
+                        <input type="number" id="monthly" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="500">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Annual Interest Rate (%)</label>
+                        <input type="number" id="rate" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="8">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Investment Term (Years)</label>
+                        <input type="number" id="years" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="10">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-emerald-50 dark:bg-emerald-500/10 rounded-2xl p-6 border border-emerald-100 dark:border-emerald-500/20 text-center">
+                    <h4 class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Estimated Future Value</h4>
+                    <div id="res-fv" class="text-4xl font-bold text-slate-800 dark:text-white">$100,000.00</div>
+                    <div id="res-total-cont" class="text-xs mt-2 text-slate-400 font-medium">Total Contributed: $70,000.00</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-emerald-500/30 transition-all active:scale-95 text-xl">
+                    Forecast Growth
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The Magic of Compounding</h2>
+            <p>Our Compound Growth engine assumes monthly compounding (<span class="font-bold">n=12</span>). By reinvesting earned interest back into the principal, your wealth expands exponentially rather than linearly, a concept Albert Einstein famously called the "eighth wonder of the world."</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const pInput = document.getElementById('principal');
+        const mInput = document.getElementById('monthly');
+        const rInput = document.getElementById('rate');
+        const yInput = document.getElementById('years');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const fvEl = document.getElementById('res-fv');
+        const contEl = document.getElementById('res-total-cont');
+
+        function calculate() {
+            const P = parseFloat(pInput.value);
+            const PMT = parseFloat(mInput.value);
+            const annualRate = parseFloat(rInput.value) / 100;
+            const years = parseFloat(yInput.value);
+
+            if (isNaN(P) || isNaN(PMT) || isNaN(annualRate) || isNaN(years)) return;
+
+            const n = 12; // monthly compounding
+            const r = annualRate / n;
+            const t = years * n;
+
+            // FV of Principal: P(1 + r/n)^(nt)
+            const fvPrincipal = P * Math.pow(1 + r, t);
+
+            // FV of Annuity: PMT * [((1 + r)^nt - 1) / r]
+            let fvAnnuity = 0;
+            if (r > 0) {
+                fvAnnuity = PMT * (Math.pow(1 + r, t) - 1) / r;
+            } else {
+                fvAnnuity = PMT * t;
+            }
+
+            const FV = fvPrincipal + fvAnnuity;
+            const totalContributed = P + (PMT * t);
+
+            fvEl.innerText = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(FV);
+            contEl.innerText = `Total Contributed: ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalContributed)}`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Goal Tracker | CalcSuit Finance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-emerald-600 p-8 text-white text-center">
+                <i class="fas fa-bullseye text-4xl mb-4 text-emerald-400"></i>
+                <h1 class="text-3xl font-bold">Savings Goal Tracker</h1>
+                <p class="text-emerald-100 mt-2">Find the specific monthly contribution needed</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Target Amount ($)</label>
+                        <input type="number" id="target-fv" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold text-2xl outline-none" value="50000">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Current Savings ($)</label>
+                        <input type="number" id="principal" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold text-2xl outline-none" value="5000">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Time Horizon (Years)</label>
+                        <input type="number" id="years" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold text-2xl outline-none" value="5">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Annual Yield (%)</label>
+                        <input type="number" id="rate" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold text-2xl outline-none" value="6">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-emerald-50 dark:bg-emerald-500/10 rounded-2xl p-6 border border-emerald-100 dark:border-emerald-500/20 text-center">
+                    <h4 class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Required Monthly Deposit</h4>
+                    <div id="res-monthly" class="text-4xl font-bold text-slate-800 dark:text-white">$625.33</div>
+                    <div id="res-total-cont" class="text-xs mt-2 text-slate-400 font-medium">Total Contributions: $37,519.80</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-emerald-500/30 transition-all active:scale-95 text-xl">
+                    Calculate Path
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Target-Based Financial Planning</h2>
+            <p>Our Savings Goal engine uses the Future Value of an Ordinary Annuity formula to solve for the monthly payment (<span class="font-bold">PMT</span>) required to reach a specific financial threshold, considering both initial capital and expected market yields.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const fvInput = document.getElementById('target-fv');
+        const pInput = document.getElementById('principal');
+        const rInput = document.getElementById('rate');
+        const yInput = document.getElementById('years');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const monthlyEl = document.getElementById('res-monthly');
+        const contEl = document.getElementById('res-total-cont');
+
+        function calculate() {
+            const FV = parseFloat(fvInput.value);
+            const P = parseFloat(pInput.value);
+            const rate = parseFloat(rInput.value) / 100;
+            const years = parseFloat(yInput.value);
+
+            if (isNaN(FV) || iNaN(P) || isNaN(rate) || isNaN(years)) return;
+
+            const n = 12; // monthly compounding
+            const i = rate / n;
+            const t = years * n;
+
+            // Solve for PMT: PMT = (FV - P*(1+i)^t) / [((1+i)^t - 1) / i]
+            const fvPrincipal = P * Math.pow(1 + i, t);
+            const remFV = FV - fvPrincipal;
+
+            let PMT = 0;
+            if (i > 0) {
+                const annuityFactor = (Math.pow(1 + i, t) - 1) / i;
+                PMT = remFV / annuityFactor;
+            } else {
+                PMT = remFV / t;
+            }
+
+            const totalMonthlyCont = Math.max(0, PMT);
+            const totalContributed = P + (totalMonthlyCont * t);
+
+            const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+            monthlyEl.innerText = fmt.format(totalMonthlyCont);
+            contEl.innerText = `Total Contributions: ${fmt.format(totalContributed)}`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

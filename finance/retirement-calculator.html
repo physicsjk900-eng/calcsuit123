@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retirement (FIRE) Engine | CalcSuit Finance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-emerald-700 p-8 text-white text-center">
+                <i class="fas fa-umbrella-beach text-4xl mb-4"></i>
+                <h1 class="text-3xl font-bold text-emerald-400">Retirement (FIRE) Engine</h1>
+                <p class="text-emerald-100 mt-2">Find your Financial Independence number</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="space-y-4">
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-500 uppercase">Estimated Annual Expenses ($)</label>
+                        <input type="number" id="expenses" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-6 text-3xl font-bold focus:ring-2 focus:ring-emerald-500 outline-none" value="60000">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase">Safe Withdrawal Rate (%)</label>
+                        <input type="number" id="swr" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="4">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase">Current Portfolio ($)</label>
+                        <input type="number" id="portfolio" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="150000">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-emerald-50 dark:bg-emerald-500/10 rounded-2xl p-6 border border-emerald-100 dark:border-emerald-500/20 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <h4 class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Your FIRE Number</h4>
+                    <div id="res-fire-num" class="text-4xl font-bold text-slate-800 dark:text-white">$1,500,000.00</div>
+                    <div id="res-gap" class="text-xs mt-2 text-slate-400 font-medium">Gap Remaining: $1,350,000.00</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-emerald-500/30 transition-all active:scale-95 text-xl">
+                    Recalculate Freedom
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The 4% Rule Explained</h2>
+            <p>Our FIRE Engine utilizes the <strong>Safe Withdrawal Rate (SWR)</strong> logic established by the Trinity Study. By dividing your annual expenses by your SWR (typically 4%), you arrive at the investment total required to sustain your lifestyle indefinitely without depleting the original principal.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const expInput = document.getElementById('expenses');
+        const swrInput = document.getElementById('swr');
+        const portInput = document.getElementById('portfolio');
+        const calculateBtn = document.getElementById('calculate-btn');
+        
+        const fireEl = document.getElementById('res-fire-num');
+        const gapEl = document.getElementById('res-gap');
+
+        function calculate() {
+            const exp = parseFloat(expInput.value);
+            const swr = parseFloat(swrInput.value) / 100;
+            const port = parseFloat(portInput.value);
+
+            if (isNaN(exp) || isNaN(swr) || isNaN(port) || swr <= 0) return;
+
+            const fireNum = exp / swr;
+            const gap = Math.max(0, fireNum - port);
+
+            const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+            fireEl.innerText = fmt.format(fireNum);
+            gapEl.innerText = gap > 0 ? `Gap Remaining: ${fmt.format(gap)}` : "You have reached Financial Independence!";
+            gapEl.className = `text-xs mt-2 font-medium ${gap > 0 ? 'text-slate-400' : 'text-emerald-500'}`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

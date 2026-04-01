@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Break-Even Analyzer | CalcSuit Finance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-slate-900 p-8 text-white text-center">
+                <i class="fas fa-balance-scale-right text-4xl mb-4 text-emerald-400"></i>
+                <h1 class="text-3xl font-bold">Break-Even Analyzer</h1>
+                <p class="text-slate-400 mt-2">Find the exact point where revenue meets total costs</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="space-y-4">
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-500 uppercase">Fixed Costs (Annual/Monthly)</label>
+                        <input type="number" id="fixed-costs" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-6 text-2xl font-bold focus:ring-2 focus:ring-emerald-500 outline-none" value="5000">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase">Variable Cost per Unit</label>
+                        <input type="number" id="unit-cost" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold outline-none" value="15">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase">Revenue per Unit</label>
+                        <input type="number" id="unit-price" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold outline-none" value="40">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-emerald-50 dark:bg-emerald-500/10 rounded-2xl p-6 border border-emerald-100 dark:border-emerald-500/20 text-center">
+                    <h4 class="text-xs font-bold text-emerald-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Break-Even Point (Units)</h4>
+                    <div id="res-units" class="text-5xl font-bold text-slate-800 dark:text-white">200</div>
+                    <div id="res-revenue" class="text-xs mt-2 text-slate-400 font-medium">Break-Even Revenue: $8,000.00</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-emerald-500/30 transition-all active:scale-95 text-lg">
+                    Run Analysis
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Finding Your Profit Line</h2>
+            <p>The Break-Even equation (<span class="font-bold">Total Fixed Costs / (Price Per Unit - Variable Cost Per Unit)</span>) provides critical insight into the minimum operational volume required for technical profitability. This tool is fundamental for high-level business strategy and resource allocation.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const fixedInput = document.getElementById('fixed-costs');
+        const costInput = document.getElementById('unit-cost');
+        const priceInput = document.getElementById('unit-price');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resUnitsEl = document.getElementById('res-units');
+        const resRevEl = document.getElementById('res-revenue');
+
+        function calculate() {
+            const fixed = parseFloat(fixedInput.value);
+            const cost = parseFloat(costInput.value);
+            const price = parseFloat(priceInput.value);
+
+            if (isNaN(fixed) || isNaN(cost) || isNaN(price)) return;
+            const margin = price - cost;
+            if (margin <= 0) {
+                resUnitsEl.innerHTML = '<span class="text-rose-500 text-2xl">Margin Error</span>';
+                resRevEl.innerText = "Check your unit pricing.";
+                return;
+            }
+
+            const units = Math.ceil(fixed / margin);
+            const rev = units * price;
+
+            resUnitsEl.innerText = units.toLocaleString();
+            resRevEl.innerText = `Break-Even Revenue: ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(rev)}`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

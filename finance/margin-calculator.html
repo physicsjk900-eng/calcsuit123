@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markup & Profit Margin Dashboard | CalcSuit Finance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-slate-800 p-8 text-white text-center">
+                <i class="fas fa-tags text-4xl mb-4 text-emerald-400"></i>
+                <h1 class="text-3xl font-bold">Markup & Margin Dashboard</h1>
+                <p class="text-slate-400 mt-2">Professional retail pricing strategy tool</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase">Cost Price ($)</label>
+                        <input type="number" id="cost" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold outline-none" value="100">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase">Selling Price ($)</label>
+                        <input type="number" id="price" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold outline-none" value="125">
+                    </div>
+                </div>
+
+                <div id="result-area" class="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div class="bg-emerald-50 dark:bg-emerald-500/10 p-5 rounded-2xl border border-emerald-100 dark:border-emerald-500/20 text-center">
+                        <div class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Gross Margin (%)</div>
+                        <div id="res-margin" class="text-3xl font-bold text-slate-800 dark:text-white">20.00%</div>
+                    </div>
+                    <div class="bg-indigo-50 dark:bg-indigo-500/10 p-5 rounded-2xl border border-indigo-100 dark:border-indigo-500/20 text-center">
+                        <div class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Markup (%)</div>
+                        <div id="res-markup" class="text-3xl font-bold text-slate-800 dark:text-white">25.00%</div>
+                    </div>
+                    <div class="md:col-span-2 bg-slate-900 dark:bg-slate-200/10 p-5 rounded-2xl text-center">
+                        <div class="text-[10px] font-bold text-slate-400 uppercase mb-1">Profit per Unit</div>
+                        <div id="res-profit" class="text-2xl font-bold text-emerald-500">$25.00</div>
+                    </div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-emerald-500/30 transition-all active:scale-95 text-lg">
+                    Analyze Pricing
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Margin vs. Markup Explained</h2>
+            <p>While often used interchangeably, these metrics serve distinct functions. <strong>Gross Margin</strong> reflects the percentage of revenue that is profit (<span class="font-bold">Profit / Selling Price</span>), whereas <strong>Markup</strong> indicates the percentage added to the cost to determine the final price (<span class="font-bold">Profit / Cost Price</span>).</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const costInput = document.getElementById('cost');
+        const priceInput = document.getElementById('price');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resMargin = document.getElementById('res-margin');
+        const resMarkup = document.getElementById('res-markup');
+        const resProfit = document.getElementById('res-profit');
+
+        function calculate() {
+            const cost = parseFloat(costInput.value);
+            const price = parseFloat(priceInput.value);
+
+            if (isNaN(cost) || isNaN(price) || cost <= 0 || price <= 0) return;
+
+            const profit = price - cost;
+            const margin = (profit / price) * 100;
+            const markup = (profit / cost) * 100;
+
+            resMargin.innerText = margin.toFixed(2) + "%";
+            resMarkup.innerText = markup.toFixed(2) + "%";
+            resProfit.innerText = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(profit);
+            
+            resProfit.className = `text-2xl font-bold ${profit >= 0 ? 'text-emerald-500' : 'text-rose-500'}`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

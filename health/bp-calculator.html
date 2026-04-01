@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Pressure Audit | CalcSuit Health Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-rose-600 p-8 text-white text-center">
+                <i class="fas fa-heartbeat text-4xl mb-4 text-rose-200"></i>
+                <h1 class="text-3xl font-bold">BP Risk Audit</h1>
+                <p class="text-rose-100 mt-2">Classify and track cardiovascular pressure profiles</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Systolic (Top)</label>
+                        <input type="number" id="systolic" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold text-3xl outline-none" value="120">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Diastolic (Bottom)</label>
+                        <input type="number" id="diastolic" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold text-3xl outline-none" value="80">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-8 border border-dashed border-slate-200 dark:border-slate-700 text-center animate-in fade-in zoom-in-95 duration-500">
+                    <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Clinical Classification</h4>
+                    <div id="res-status" class="text-3xl font-extrabold text-emerald-500 uppercase mb-2 italic">Normal</div>
+                    <div id="res-desc" class="text-sm text-slate-500 leading-relaxed max-w-xs mx-auto">Your blood pressure is within the optimal healthy range.</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-rose-500/30 transition-all active:scale-95 text-xl">
+                    Check Vitals
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Precision BP Standards</h2>
+            <p>Our <strong>BP Risk Audit</strong> uses <strong>American Heart Association (AHA)</strong> guidelines to categorize readings. While "Normal" is historically defined as <span class="font-bold">120/80</span>, modern clinical focus emphasizes "Elevated" and "Stage 1 Hypertension" as critical early intervention windows for long-term vascular health.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const sysInput = document.getElementById('systolic');
+        const diaInput = document.getElementById('diastolic');
+        const calculateBtn = document.getElementById('calculate-btn');
+        
+        const statusEl = document.getElementById('res-status');
+        const descEl = document.getElementById('res-desc');
+
+        function calculate() {
+            const sys = parseFloat(sysInput.value);
+            const dia = parseFloat(diaInput.value);
+
+            if (isNaN(sys) || isNaN(dia)) return;
+
+            let status = "";
+            let desc = "";
+            let color = "";
+
+            if (sys < 120 && dia < 80) {
+                status = "Normal";
+                desc = "Your blood pressure is within the optimal healthy range.";
+                color = "text-emerald-500";
+            } else if (sys < 130 && dia < 80) {
+                status = "Elevated";
+                desc = "Blood pressure is higher than normal. Monitor lifestyle factors.";
+                color = "text-amber-500";
+            } else if (sys < 140 || dia < 90) {
+                status = "Hypertension Stage 1";
+                desc = "Consider consulting a healthcare professional for metabolic review.";
+                color = "text-orange-500";
+            } else if (sys < 180 || dia < 120) {
+                status = "Hypertension Stage 2";
+                desc = "High medical priority. Clinical consultation strongly advised.";
+                color = "text-rose-500";
+            } else {
+                status = "Hypertensive Crisis";
+                desc = "EMERGENCY: Seek immediate medical attention.";
+                color = "text-rose-700 animate-pulse";
+            }
+
+            statusEl.innerText = status;
+            statusEl.className = `text-3xl font-extrabold uppercase mb-2 italic ${color}`;
+            descEl.innerText = desc;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

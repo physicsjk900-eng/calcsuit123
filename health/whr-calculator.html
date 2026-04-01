@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waist-to-Hip Ratio (WHR) | CalcSuit Health Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-emerald-600 p-8 text-white text-center">
+                <i class="fas fa-ruler-horizontal text-4xl mb-4 text-emerald-200"></i>
+                <h1 class="text-3xl font-bold">WHR Risk Audit</h1>
+                <p class="text-emerald-100 mt-2">Assess central obesity and cardiovascular risk profiles</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Gender Profile</label>
+                        <select id="gender" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 outline-none font-bold">
+                            <option value="male" selected>Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Waist Circumference (cm)</label>
+                        <input type="number" id="waist" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="85">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Hip Circumference (cm)</label>
+                        <input type="number" id="hip" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="95">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-emerald-50 dark:bg-emerald-500/10 rounded-2xl p-6 border border-emerald-100 dark:border-emerald-500/20 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <h4 class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Calculated Ratio (WHR)</h4>
+                    <div id="res-ratio" class="text-5xl font-bold text-slate-800 dark:text-white">0.89</div>
+                    <div id="res-status" class="text-xs mt-2 text-slate-400 font-medium">Risk Status: Low</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-emerald-500/30 transition-all active:scale-95 text-xl">
+                    Run Audit
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The WHR Health Indicator</h2>
+            <p><strong>Waist-to-Hip Ratio (WHR)</strong> is recognized by the World Health Organization (WHO) as a superior indicator of visceral fat accumulation compared to BMI alone. High WHR is strongly correlate with increased risks for type-2 diabetes and hypertension. Aim for <span class="font-bold">under 0.90 (Male) or 0.85 (Female)</span> for optimal metabolic health.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const genderInput = document.getElementById('gender');
+        const waistInput = document.getElementById('waist');
+        const hipInput = document.getElementById('hip');
+        const calculateBtn = document.getElementById('calculate-btn');
+        
+        const ratioEl = document.getElementById('res-ratio');
+        const statusEl = document.getElementById('res-status');
+
+        function calculate() {
+            const gender = genderInput.value;
+            const waist = parseFloat(waistInput.value);
+            const hip = parseFloat(hipInput.value);
+
+            if (isNaN(waist) || isNaN(hip) || hip <= 0) return;
+
+            const ratio = waist / hip;
+            ratioEl.innerText = ratio.toFixed(2);
+
+            let status = "Unknown";
+            let color = "text-slate-400";
+
+            if (gender === 'male') {
+                if (ratio < 0.9) { status = "Low Risk"; color = "text-emerald-500"; }
+                else if (ratio < 1) { status = "Moderate Risk"; color = "text-amber-500"; }
+                else { status = "High Risk"; color = "text-rose-500"; }
+            } else {
+                if (ratio < 0.8) { status = "Low Risk"; color = "text-emerald-500"; }
+                else if (ratio < 0.85) { status = "Moderate Risk"; color = "text-amber-500"; }
+                else { status = "High Risk"; color = "text-rose-500"; }
+            }
+
+            statusEl.innerText = `Risk Status: ${status}`;
+            statusEl.className = `text-xs mt-2 font-bold ${color}`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

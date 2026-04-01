@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Hydration Master | CalcSuit Health Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-sky-600 p-8 text-white text-center">
+                <i class="fas fa-tint text-4xl mb-4 text-sky-200 animate-pulse"></i>
+                <h1 class="text-3xl font-bold">Hydration Master</h1>
+                <p class="text-sky-100 mt-2">Personalized daily water intake requirements</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Body Weight (kg)</label>
+                        <input type="number" id="weight" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="70">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Daily Activity (Min)</label>
+                        <input type="number" id="activity" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="30">
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase">Climate / Intensity</label>
+                    <select id="climate" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 outline-none font-bold">
+                        <option value="cool" selected>Cool / Indoor</option>
+                        <option value="moderate">Moderate / Standard</option>
+                        <option value="hot">Hot / High Intensity</option>
+                    </select>
+                </div>
+
+                <div id="result-area" class="bg-sky-50 dark:bg-sky-500/10 rounded-2xl p-6 border border-sky-100 dark:border-sky-500/20 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <h4 class="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-widest mb-1">Target Daily Intake</h4>
+                    <div id="res-liters" class="text-5xl font-bold text-slate-800 dark:text-white">2.8L</div>
+                    <div id="res-glasses" class="text-xs mt-2 text-slate-400 font-medium">Approx. 11 Glasses (250ml each)</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-sky-500/30 transition-all active:scale-95 text-xl">
+                    Recalculate Needs
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Precision Hydration Strategy</h2>
+            <p>Adequate hydration is critical for cognitive function and metabolic efficiency. Our <strong>Hydration Master</strong> engine assumes a baseline of <span class="font-bold">35ml per kg</span>, adjusted for active sweat loss during exercise and ambient environmental temperature variances.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const weightInput = document.getElementById('weight');
+        const activityInput = document.getElementById('activity');
+        const climateInput = document.getElementById('climate');
+        const calculateBtn = document.getElementById('calculate-btn');
+        
+        const litersEl = document.getElementById('res-liters');
+        const glassesEl = document.getElementById('res-glasses');
+
+        function calculate() {
+            const weight = parseFloat(weightInput.value);
+            const activity = parseFloat(activityInput.value);
+            const climate = climateInput.value;
+
+            if (isNaN(weight) || isNaN(activity)) return;
+
+            // Baseline: 35ml per kg
+            let totalML = weight * 35;
+
+            // Add for activity: ~500ml per hour of exercise
+            totalML += (activity / 60) * 500;
+
+            // Climate adjustment
+            if (climate === 'moderate') totalML += 300;
+            if (climate === 'hot') totalML += 700;
+
+            const liters = totalML / 1000;
+            litersEl.innerText = liters.toFixed(1) + "L";
+            glassesEl.innerText = `Approx. ${Math.round(totalML / 250)} Glasses (250ml each)`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

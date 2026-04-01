@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregnancy Due Date Estimator | CalcSuit Health Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-rose-500 p-8 text-white text-center">
+                <i class="fas fa-baby text-4xl mb-4 text-rose-200 animate-bounce"></i>
+                <h1 class="text-3xl font-bold">Pregnancy Horizon</h1>
+                <p class="text-rose-100 mt-2">Estimate your due date and tracking milestones</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="space-y-4">
+                    <label class="block text-sm font-bold text-slate-500 uppercase tracking-widest">Last Period Start Date</label>
+                    <input type="date" id="last-period" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-6 text-xl font-bold focus:ring-2 focus:ring-rose-500 outline-none">
+                </div>
+
+                <div id="result-area" class="bg-rose-50 dark:bg-rose-500/10 rounded-2xl p-6 border border-rose-100 dark:border-rose-500/20 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <h4 class="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-widest mb-1">Estimated Due Date</h4>
+                    <div id="res-date" class="text-3xl font-bold text-slate-800 dark:text-white">Oct 24, 2026</div>
+                    <div id="res-progress" class="text-xs mt-2 text-slate-400 font-medium italic">Approx. 4 Weeks pregnant</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-rose-500/30 transition-all active:scale-95 text-xl">
+                    Calculate Horizon
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The Naegele Method</h2>
+            <p>Our Pregnancy Horizon engine utilizes <strong>Naegele's Rule</strong>: adding 280 days (9 months and 7 days) to the first day of the last menstrual period. While this provide a highly accurate estimation center on a 28-day cycle, standard biological variance accounts for the majority of births occurring within +/- 2 weeks of the target.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const dateInput = document.getElementById('last-period');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const dateEl = document.getElementById('res-date');
+        const progressEl = document.getElementById('res-progress');
+
+        // Set default to today
+        const todayStr = new Date().toISOString().split('T')[0];
+        dateInput.value = todayStr;
+
+        function calculate() {
+            const start = new Date(dateInput.value);
+            if (isNaN(start.getTime())) return;
+
+            // Add 280 days
+            const due = new Date(start.getTime() + (1000 * 60 * 60 * 24 * 280));
+            
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            dateEl.innerText = due.toLocaleDateString(undefined, options);
+
+            const now = new Date();
+            const diffDays = Math.ceil((now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+            const weeks = Math.floor(diffDays / 7);
+
+            progressEl.innerText = `Approx. ${weeks} Weeks pregnant`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

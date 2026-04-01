@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Rate Training Zones | CalcSuit Health Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-rose-700 p-8 text-white text-center">
+                <i class="fas fa-heartbeat text-4xl mb-4 text-rose-400"></i>
+                <h1 class="text-3xl font-bold">HR Training Zones</h1>
+                <p class="text-rose-100 mt-2">Optimize your aerobic and anaerobic efficiency</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Current Age</label>
+                        <input type="number" id="age" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold text-2xl outline-none" value="30">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Resting HR (BPM)</label>
+                        <input type="number" id="resting" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold text-2xl outline-none" value="65">
+                    </div>
+                </div>
+
+                <div id="result-area" class="space-y-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div class="flex items-center justify-between p-4 bg-emerald-50 dark:bg-emerald-500/10 rounded-xl border border-emerald-100 dark:border-emerald-500/20">
+                        <span class="text-sm font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Zone 1: Recovery (50-60%)</span>
+                        <span id="zone-1" class="font-bold text-slate-800 dark:text-white text-lg">118-132 BPM</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-sky-50 dark:bg-sky-500/10 rounded-xl border border-sky-100 dark:border-sky-500/20">
+                        <span class="text-sm font-bold text-sky-600 dark:text-sky-400 uppercase tracking-widest">Zone 2: Aerobic (60-70%)</span>
+                        <span id="zone-2" class="font-bold text-slate-800 dark:text-white text-lg">133-145 BPM</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-amber-50 dark:bg-amber-500/10 rounded-xl border border-amber-100 dark:border-amber-500/20">
+                        <span class="text-sm font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest">Zone 3: Tempo (70-80%)</span>
+                        <span id="zone-3" class="font-bold text-slate-800 dark:text-white text-lg">146-160 BPM</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-orange-50 dark:bg-orange-500/10 rounded-xl border border-orange-100 dark:border-orange-500/20">
+                        <span class="text-sm font-bold text-orange-600 dark:text-orange-400 uppercase tracking-widest">Zone 4: Threshold (80-90%)</span>
+                        <span id="zone-4" class="font-bold text-slate-800 dark:text-white text-lg">161-175 BPM</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-rose-50 dark:bg-rose-500/10 rounded-xl border border-rose-100 dark:border-rose-500/20">
+                        <span class="text-sm font-bold text-rose-600 dark:text-rose-400 uppercase tracking-widest">Zone 5: Peak (90-100%)</span>
+                        <span id="zone-5" class="font-bold text-slate-800 dark:text-white text-lg">176+ BPM</span>
+                    </div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-rose-500/30 transition-all active:scale-95 text-xl">
+                    Recalculate Zones
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The Karvonen Formula</h2>
+            <p>Our Precision Zones engine uses the <strong>Karvonen Formula</strong> (<span class="font-bold">Target HR = ((Max HR - Resting HR) × %Intensity) + Resting HR</span>). This method is significantly more accurate than basic age-based percentages as it accounts for specific cardiovascular conditioning and resting state.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const ageInput = document.getElementById('age');
+        const restInput = document.getElementById('resting');
+        const calculateBtn = document.getElementById('calculate-btn');
+        
+        function calculate() {
+            const age = parseFloat(ageInput.value);
+            const rest = parseFloat(restInput.value);
+
+            if (isNaN(age) || isNaN(rest)) return;
+
+            const maxHR = 220 - age;
+            const reserve = maxHR - rest;
+
+            const calcZone = (lower, upper) => {
+                const l = Math.round((reserve * lower) + rest);
+                const u = Math.round((reserve * upper) + rest);
+                return `${l}-${u} BPM`;
+            };
+
+            document.getElementById('zone-1').innerText = calcZone(0.5, 0.6);
+            document.getElementById('zone-2').innerText = calcZone(0.6, 0.7);
+            document.getElementById('zone-3').innerText = calcZone(0.7, 0.8);
+            document.getElementById('zone-4').innerText = calcZone(0.8, 0.9);
+            document.getElementById('zone-5').innerText = (Math.round((reserve * 0.9) + rest)) + "+ BPM";
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

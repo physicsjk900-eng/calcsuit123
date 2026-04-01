@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Surface Area (BSA) | CalcSuit Health Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-slate-900 p-8 text-white text-center">
+                <i class="fas fa-male text-4xl mb-4 text-emerald-400 animate-pulse"></i>
+                <h1 class="text-3xl font-bold">BSA Analyzer</h1>
+                <p class="text-slate-400 mt-2">Professional Body Surface Area calculation</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Height (cm)</label>
+                        <input type="number" id="height" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="175">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Weight (kg)</label>
+                        <input type="number" id="weight" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="70">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-emerald-50 dark:bg-emerald-500/10 rounded-2xl p-6 border border-emerald-100 dark:border-emerald-500/20 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <h4 class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Total Body Surface Area</h4>
+                    <div id="res-bsa" class="text-5xl font-bold text-slate-800 dark:text-white">1.84 m²</div>
+                    <div id="res-stat" class="text-xs mt-2 text-slate-400 font-medium">Standard Patient Avg: 1.7 - 1.9 m²</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-emerald-500/30 transition-all active:scale-95 text-xl">
+                    Run Analysis
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Clinical BSA Methodology</h2>
+            <p>Our <strong>BSA Analyzer</strong> uses the <strong>Mosteller Formula</strong> (<span class="font-bold">√((Height×Weight)/3600)</span>), which is the clinical gold standard for pharmaceutical dosing and metabolic physiological assessment. BSA provides a significantly more accurate metric for internal organ workload than total mass alone.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const heightInput = document.getElementById('height');
+        const weightInput = document.getElementById('weight');
+        const calculateBtn = document.getElementById('calculate-btn');
+        
+        const bsaEl = document.getElementById('res-bsa');
+
+        function calculate() {
+            const h = parseFloat(heightInput.value);
+            const w = parseFloat(weightInput.value);
+
+            if (isNaN(h) || isNaN(w) || h <= 0 || w <= 0) return;
+
+            // Mosteller Formula
+            const bsa = Math.sqrt((h * w) / 3600);
+            bsaEl.innerText = bsa.toFixed(2) + " m²";
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Macro Blueprint | CalcSuit Health Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-rose-600 p-8 text-white text-center">
+                <i class="fas fa-utensils text-4xl mb-4"></i>
+                <h1 class="text-3xl font-bold">Macro Blueprint</h1>
+                <p class="text-rose-100 mt-2">Target your Protein, Carbs, and Fat for performance</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Multi-Step Inputs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Daily Calorie Target</label>
+                        <input type="number" id="calories" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="2500">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Fitness Goal</label>
+                        <select id="goal" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 outline-none font-bold">
+                            <option value="balanced" selected>Balanced (40/30/30)</option>
+                            <option value="cutting">Cutting (High Protein)</option>
+                            <option value="bulking">Bulking (High Carb)</option>
+                            <option value="keto">Ketogenic (High Fat)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="result-area" class="grid grid-cols-1 md:grid-cols-3 gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div class="bg-indigo-50 dark:bg-indigo-500/10 p-5 rounded-2xl border border-indigo-100 dark:border-indigo-500/20 text-center">
+                        <div class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Protein</div>
+                        <div id="res-protein" class="text-2xl font-bold text-slate-800 dark:text-white">188g</div>
+                        <div class="text-[10px] text-slate-400 mt-1">4 kcal/g</div>
+                    </div>
+                    <div class="bg-emerald-50 dark:bg-emerald-500/10 p-5 rounded-2xl border border-emerald-100 dark:border-emerald-500/20 text-center">
+                        <div class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Carbs</div>
+                        <div id="res-carbs" class="text-2xl font-bold text-slate-800 dark:text-white">250g</div>
+                        <div class="text-[10px] text-slate-400 mt-1">4 kcal/g</div>
+                    </div>
+                    <div class="bg-amber-50 dark:bg-amber-500/10 p-5 rounded-2xl border border-amber-100 dark:border-amber-500/20 text-center">
+                        <div class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-1">Fats</div>
+                        <div id="res-fats" class="text-2xl font-bold text-slate-800 dark:text-white">83g</div>
+                        <div class="text-[10px] text-slate-400 mt-1">9 kcal/g</div>
+                    </div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-rose-500/30 transition-all active:scale-95 text-xl">
+                    Generate Blueprint
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Mastering Macronutrients</h2>
+            <p>Macronutrients are the foundational elements of any professional nutrition strategy. Our <strong>Macro Blueprint</strong> engine translates your calorie targets into precise gram-weights based on metabolic goals. Pro Tip: Prioritize protein even when cutting to preserve lean muscle tissue.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const calInput = document.getElementById('calories');
+        const goalInput = document.getElementById('goal');
+        const calculateBtn = document.getElementById('calculate-btn');
+        
+        const protEl = document.getElementById('res-protein');
+        const carbEl = document.getElementById('res-carbs');
+        const fatEl = document.getElementById('res-fats');
+
+        function calculate() {
+            const totalCals = parseFloat(calInput.value);
+            const goal = goalInput.value;
+
+            if (isNaN(totalCals)) return;
+
+            let protP = 0.3, carbP = 0.4, fatP = 0.3; // Default Balanced
+            if (goal === 'cutting') { protP = 0.45; carbP = 0.3; fatP = 0.25; }
+            if (goal === 'bulking') { protP = 0.25; carbP = 0.55; fatP = 0.2; }
+            if (goal === 'keto') { protP = 0.25; carbP = 0.05; fatP = 0.7; }
+
+            const pGrams = (totalCals * protP) / 4;
+            const cGrams = (totalCals * carbP) / 4;
+            const fGrams = (totalCals * fatP) / 9;
+
+            protEl.innerText = Math.round(pGrams) + "g";
+            carbEl.innerText = Math.round(cGrams) + "g";
+            fatEl.innerText = Math.round(fGrams) + "g";
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

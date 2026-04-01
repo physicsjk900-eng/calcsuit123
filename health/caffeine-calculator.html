@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caffeine Half-Life Tracker | CalcSuit Health Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-amber-600 p-8 text-white text-center">
+                <i class="fas fa-coffee text-4xl mb-4 text-amber-200 animate-pulse"></i>
+                <h1 class="text-3xl font-bold">Caffeine Pulse</h1>
+                <p class="text-amber-100 mt-2">Track residual levels for better sleep hygiene</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Caffeine Amount (mg)</label>
+                        <input type="number" id="caffeine" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold text-2xl outline-none" value="100">
+                        <div class="text-[9px] text-slate-400 text-center mt-1">(Expresso: 64mg, Coffee: 95mg)</div>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Hours Since Intake</label>
+                        <input type="number" id="hours" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold text-2xl outline-none" value="5">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-amber-50 dark:bg-amber-500/10 rounded-2xl p-6 border border-amber-100 dark:border-amber-500/20 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <h4 class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-1">Residual Caffeine Volume</h4>
+                    <div id="res-val" class="text-5xl font-bold text-slate-800 dark:text-white">50 mg</div>
+                    <div id="res-status" class="text-xs mt-3 text-slate-400 font-medium">Estimated Metabolic Clear-Time: 24 Hours</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-amber-500/30 transition-all active:scale-95 text-xl">
+                    Check Metabolism
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The Half-Life Concept</h2>
+            <p>Our <strong>Caffeine Pulse</strong> engine assumes a standard pharmacological half-life of <span class="font-bold">5 hours</span>. After this duration, approximately 50% of the original dosage remains in the system, potentially disrupting adenosine receptors and sleep cycles indefinitely depending on sensitivity levels.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const caffeineInput = document.getElementById('caffeine');
+        const hoursInput = document.getElementById('hours');
+        const calculateBtn = document.getElementById('calculate-btn');
+        
+        const valEl = document.getElementById('res-val');
+        const statusEl = document.getElementById('res-status');
+
+        function calculate() {
+            const mg = parseFloat(caffeineInput.value);
+            const t = parseFloat(hoursInput.value);
+
+            if (isNaN(mg) || isNaN(t)) return;
+
+            // Half-life formula: N(t) = N0 * (1/2)^(t/h)
+            // h = 5 hours (caffeine standard avg)
+            const residual = mg * Math.pow(0.5, t / 5);
+            
+            valEl.innerText = Math.round(residual) + " mg";
+
+            // Estimation to clear below 5mg (negligible)
+            // 5 = mg * (0.5)^(h/5) => log(5/mg) = (h/5) * log(0.5) => h = 5 * log(5/mg) / log(0.5)
+            let clearTime = 0;
+            if (mg > 5) {
+                clearTime = 5 * Math.log(5 / mg) / Math.log(0.5);
+            }
+            
+            statusEl.innerText = `Estimated Clearance (<5mg): ${Math.max(0, Math.round(clearTime - t))} Hours From Now`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+    </script>
+</body>
+</html>

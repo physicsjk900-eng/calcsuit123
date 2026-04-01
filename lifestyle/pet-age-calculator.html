@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Age Master | CalcSuit Lifestyle Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-indigo-600 p-8 text-white text-center">
+                <i class="fas fa-paw text-4xl mb-4 text-emerald-300"></i>
+                <h1 class="text-3xl font-bold">Pet Age Master</h1>
+                <p class="text-indigo-100 mt-2">Translate pet years into human-equivalent milestones</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Pet Species</label>
+                        <select id="species" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 outline-none font-bold">
+                            <option value="dog-small" selected>Dog (Small / Medium)</option>
+                            <option value="dog-large">Dog (Large / Giant)</option>
+                            <option value="cat">Cat</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Current Age (Years)</label>
+                        <input type="number" id="pet-age" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold text-2xl outline-none" value="5">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-emerald-50 dark:bg-emerald-500/10 rounded-2xl p-6 border border-emerald-100 dark:border-emerald-500/20 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <h4 class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Human Equivalent Age</h4>
+                    <div id="res-human" class="text-5xl font-bold text-slate-800 dark:text-white">36 Years</div>
+                    <div id="res-stage" class="text-xs mt-2 text-slate-400 font-medium">Life Stage: Adult</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-xl">
+                    Run Comparison
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The Metabolism of Aging</h2>
+            <p>Aging is not linear across species. Our <strong>Pet Age Master</strong> uses size-adjusted metabolic curves. While a 1-year-old dog represents roughly 15 human years due to rapid early development, the rate slows and diverges significantly between breeds as they enter maturity.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const speciesInput = document.getElementById('species');
+        const ageInput = document.getElementById('pet-age');
+        const calculateBtn = document.getElementById('calculate-btn');
+        
+        const humanEl = document.getElementById('res-human');
+        const stageEl = document.getElementById('res-stage');
+
+        function calculate() {
+            const species = speciesInput.value;
+            const age = parseFloat(ageInput.value);
+
+            if (isNaN(age) || age < 0) return;
+
+            let humanAge = 0;
+            if (species === 'cat') {
+                if (age <= 1) humanAge = 15;
+                else if (age <= 2) humanAge = 24;
+                else humanAge = 24 + (age - 2) * 4;
+            } else if (species === 'dog-small') {
+                if (age <= 1) humanAge = 15;
+                else if (age <= 2) humanAge = 24;
+                else humanAge = 24 + (age - 2) * 4;
+            } else { // Large Dog
+                if (age <= 1) humanAge = 15;
+                else if (age <= 2) humanAge = 24;
+                else humanAge = 24 + (age - 2) * 7;
+            }
+
+            humanEl.innerText = Math.round(humanAge) + " Years";
+
+            let stage = "Puppy / Kitten";
+            if (humanAge > 18) stage = "Young Adult";
+            if (humanAge > 35) stage = "Adult";
+            if (humanAge > 55) stage = "Senior";
+            if (humanAge > 75) stage = "Geriatric";
+
+            stageEl.innerText = `Life Stage: ${stage}`;
+            stageEl.className = `text-xs mt-2 font-bold ${humanAge > 55 ? 'text-amber-500' : 'text-slate-400'}`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+
+    </script>
+</body>
+</html>

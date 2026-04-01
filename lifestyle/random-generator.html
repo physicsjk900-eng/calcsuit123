@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator | CalcSuit Lifestyle Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-slate-900 p-8 text-white text-center">
+                <i class="fas fa-random text-4xl mb-4 text-indigo-400"></i>
+                <h1 class="text-3xl font-bold uppercase tracking-widest">Entropy Hub</h1>
+                <p class="text-slate-400 mt-2">Professional high-entropy random sequence generator</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Minimum (Min)</label>
+                        <input type="number" id="min-val" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold text-2xl outline-none" value="1">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Maximum (Max)</label>
+                        <input type="number" id="max-val" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold text-2xl outline-none" value="100">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-indigo-50 dark:bg-indigo-500/10 rounded-2xl p-6 border border-indigo-100 dark:border-indigo-500/20 text-center animate-in fade-in zoom-in-95 duration-500">
+                    <h4 class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Generated Value</h4>
+                    <div id="res-val" class="text-6xl font-bold text-slate-800 dark:text-white">--</div>
+                    <div id="res-history" class="text-[10px] mt-4 text-slate-400 font-mono overflow-x-auto whitespace-nowrap scrollbar-hide py-2">History: Start Generating...</div>
+                </div>
+
+                <button id="generate-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-xl tracking-widest">
+                    GENERATE ENTROPY
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Statistical Randomness</h2>
+            <p>Our <strong>Entropy Hub</strong> utilizes pseudo-random algorithmic scattering to ensure unbiased sampling distribution across any specified numerical range. Ideal for probability experiments, lottery simulation, and unbiased decision-making logic cycles.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const minInput = document.getElementById('min-val');
+        const maxInput = document.getElementById('max-val');
+        const generateBtn = document.getElementById('generate-btn');
+        
+        const valEl = document.getElementById('res-val');
+        const historyEl = document.getElementById('res-history');
+
+        let history = [];
+
+        function generate() {
+            const min = parseInt(minInput.value);
+            const max = parseInt(maxInput.value);
+
+            if (isNaN(min) || isNaN(max) || min >= max) return;
+
+            const rand = Math.floor(Math.random() * (max - min + 1)) + min;
+            valEl.innerText = rand;
+
+            history.unshift(rand);
+            if (history.length > 10) history.pop();
+            historyEl.innerText = `History: ${history.join(' | ')}`;
+        }
+
+        generateBtn.addEventListener('click', generate);
+
+    </script>
+</body>
+</html>

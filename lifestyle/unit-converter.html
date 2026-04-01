@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Unit Converter | CalcSuit Lifestyle Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-slate-800 p-8 text-white text-center">
+                <i class="fas fa-exchange-alt text-4xl mb-4 text-indigo-400 animate-spin-slow"></i>
+                <h1 class="text-3xl font-bold uppercase tracking-widest">Unit Master</h1>
+                <p class="text-slate-400 mt-2">Professional high-precision unit transformations</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="flex bg-slate-50 dark:bg-slate-700/50 p-1 rounded-xl gap-1">
+                    <button class="flex-1 py-3 px-4 rounded-lg font-bold text-xs bg-white dark:bg-slate-600 shadow-sm text-indigo-600 dark:text-white" data-cat="length">Length</button>
+                    <button class="flex-1 py-3 px-4 rounded-lg font-bold text-xs text-slate-500 hover:text-slate-700" data-cat="weight">Weight</button>
+                    <button class="flex-1 py-3 px-4 rounded-lg font-bold text-xs text-slate-500 hover:text-slate-700" data-cat="temp">Temp</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">From</label>
+                        <input type="number" id="input-v" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold text-2xl outline-none" value="1">
+                        <select id="u-from" class="w-full bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 outline-none font-bold">
+                            <!-- Units will be injected -->
+                        </select>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">To</label>
+                        <input type="number" id="output-v" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center font-bold text-2xl outline-none" value="1.61" readonly>
+                        <select id="u-to" class="w-full bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 outline-none font-bold">
+                            <!-- Units will be injected -->
+                        </select>
+                    </div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-xl">
+                    Synchronize Units
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The Conversion Standard</h2>
+            <p>Our <strong>Unit Master</strong> engine provides real-time transformations across global standards including SI (Metric) and Imperial systems. Whether performing architectural length audits or precision weight assessments, the CalcSuit database ensures synchronization down to the fourth decimal digit.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const uFrom = document.getElementById('u-from');
+        const uTo = document.getElementById('u-to');
+        const inputV = document.getElementById('input-v');
+        const outputV = document.getElementById('output-v');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const cats = document.querySelectorAll('[data-cat]');
+
+        const unitData = {
+            length: { Meters: 1, Kilometers: 0.001, Miles: 0.000621371, Feet: 3.28084, Inches: 39.3701 },
+            weight: { Grams: 1, Kilograms: 0.001, Pounds: 0.00220462, Ounces: 0.035274, MetricTon: 0.000001 },
+            temp: { Celsius: 'C', Fahrenheit: 'F', Kelvin: 'K' }
+        };
+
+        let currentCat = 'length';
+
+        function updateUnits() {
+            const data = unitData[currentCat];
+            uFrom.innerHTML = uTo.innerHTML = "";
+            Object.keys(data).forEach((u, index) => {
+                const opt1 = new Option(u, u);
+                const opt2 = new Option(u, u);
+                uFrom.add(opt1);
+                uTo.add(opt2);
+            });
+            uTo.selectedIndex = 1;
+            calculate();
+        }
+
+        cats.forEach(c => c.addEventListener('click', () => {
+            currentCat = c.dataset.cat;
+            cats.forEach(btn => btn.className = "flex-1 py-3 px-4 rounded-lg font-bold text-xs text-slate-500 hover:text-slate-700 transition-all");
+            c.className = "flex-1 py-3 px-4 rounded-lg font-bold text-xs bg-white dark:bg-slate-600 shadow-sm text-indigo-600 dark:text-white transition-all";
+            updateUnits();
+        }));
+
+        function calculate() {
+            const val = parseFloat(inputV.value);
+            if (isNaN(val)) return;
+
+            const from = uFrom.value;
+            const to = uTo.value;
+
+            if (currentCat === 'temp') {
+                let celsius = val;
+                if (from === 'Fahrenheit') celsius = (val - 32) * 5/9;
+                if (from === 'Kelvin') celsius = val - 273.15;
+
+                let out = celsius;
+                if (to === 'Fahrenheit') out = (celsius * 9/5) + 32;
+                if (to === 'Kelvin') out = celsius + 273.15;
+                outputV.value = out.toFixed(2);
+            } else {
+                const data = unitData[currentCat];
+                const base = val / data[from];
+                const out = base * data[to];
+                outputV.value = out % 1 === 0 ? out : out.toFixed(4);
+            }
+        }
+
+        [inputV, uFrom, uTo].forEach(el => el.addEventListener('input', calculate));
+        updateUnits();
+
+    </script>
+</body>
+</html>

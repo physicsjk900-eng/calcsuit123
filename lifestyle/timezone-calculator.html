@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Time Synchronization | CalcSuit Lifestyle Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-indigo-700 p-8 text-white text-center">
+                <i class="fas fa-globe-americas text-4xl mb-4 text-indigo-300 animate-spin-slow"></i>
+                <h1 class="text-3xl font-bold uppercase tracking-widest">Temporal Hub</h1>
+                <p class="text-indigo-100 mt-2">Precision global time zone and offset synchronization</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Local Clock -->
+                <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 text-center">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Local System Time</div>
+                    <div id="local-clock" class="text-4xl font-mono font-bold text-indigo-600 dark:text-indigo-400">12:00:00 PM</div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Target Time Zone (UTC)</label>
+                        <select id="tz-offset" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 outline-none font-bold">
+                            <option value="-5">EST (UTC-5)</option>
+                            <option value="0">UTC (Universal)</option>
+                            <option value="1">CET (UTC+1)</option>
+                            <option value="5.5" selected>IST (UTC+5:30)</option>
+                            <option value="8">CST (UTC+8)</option>
+                            <option value="9">JST (UTC+9)</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Input Date/Time</label>
+                        <input type="datetime-local" id="input-dt" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 font-bold outline-none">
+                    </div>
+                </div>
+
+                <div id="result-area" class="bg-indigo-50 dark:bg-indigo-500/10 rounded-2xl p-6 border border-indigo-100 dark:border-indigo-500/20 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <h4 class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Synchronized Target Time</h4>
+                    <div id="res-time" class="text-3xl font-bold text-slate-800 dark:text-white">12:00:00 PM</div>
+                    <div id="res-offset" class="text-[10px] mt-2 text-slate-400 font-medium italic">Difference From Local: +5.5 Hours</div>
+                </div>
+
+                <button id="sync-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-xl">
+                    Coordinate Sync
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The Temporal Engine</h2>
+            <p>Our <strong>Temporal Hub</strong> engine utilizes <strong>UTC (Coordinated Universal Time)</strong> baselines to perform real-time synchronization between disparate geographical horizons. Whether auditing cross-continent meeting times or tracking international release schedules, the CalcSuit engine ensures millisecond-precision offset calculation.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const localClock = document.getElementById('local-clock');
+        const tzInput = document.getElementById('tz-offset');
+        const dtInput = document.getElementById('input-dt');
+        const calculateBtn = document.getElementById('sync-btn');
+        
+        const resTime = document.getElementById('res-time');
+        const resOffset = document.getElementById('res-offset');
+
+        // Real-time clock
+        setInterval(() => {
+            const now = new Date();
+            localClock.innerText = now.toLocaleTimeString();
+        }, 1000);
+
+        // Pre-fill local time
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        dtInput.value = now.toISOString().slice(0, 16);
+
+        function calculate() {
+            const dtRaw = dtInput.value;
+            if (!dtRaw) return;
+
+            const selectedDate = new Date(dtRaw);
+            const targetOffset = parseFloat(tzInput.value);
+
+            // Get local offset in hours
+            const localOffset = -selectedDate.getTimezoneOffset() / 60;
+            const diffHours = targetOffset - localOffset;
+
+            const targetTime = new Date(selectedDate.getTime() + (diffHours * 3600000));
+            
+            resTime.innerText = targetTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            resOffset.innerText = `Difference From Local: ${diffHours >= 0 ? '+' : ''}${diffHours} Hours`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+
+    </script>
+</body>
+</html>

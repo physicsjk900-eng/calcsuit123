@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Pro Converter | CalcSuit Lifestyle Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-amber-600 p-8 text-white text-center">
+                <i class="fas fa-cookie text-4xl mb-4 text-amber-200 animate-spin-slow"></i>
+                <h1 class="text-3xl font-bold">Kitchen Pro</h1>
+                <p class="text-amber-100 mt-2">Precision volume-to-weight culinary conversions</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Input Value</label>
+                        <input type="number" id="input-val" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold outline-none" value="1">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Input Unit</label>
+                        <select id="input-unit" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 outline-none font-bold">
+                            <option value="cup" selected>Cup (US)</option>
+                            <option value="tbsp">Tablespoon (tbsp)</option>
+                            <option value="tsp">Teaspoon (tsp)</option>
+                            <option value="ml">Milliliters (ml)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase">Ingredient Type (For Weight)</label>
+                    <select id="ingredient" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 outline-none font-bold">
+                        <option value="water" selected>Water / Liquid</option>
+                        <option value="flour">All-Purpose Flour</option>
+                        <option value="sugar">Granulated Sugar</option>
+                        <option value="butter">Butter</option>
+                    </select>
+                </div>
+
+                <div id="result-area" class="bg-amber-50 dark:bg-amber-500/10 rounded-2xl p-6 border border-amber-100 dark:border-amber-500/20 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <h4 class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-1">Estimated Net Weight</h4>
+                    <div id="res-weight" class="text-4xl font-bold text-slate-800 dark:text-white">236g</div>
+                    <div id="res-detail" class="text-xs mt-2 text-slate-400 font-medium">8.3 oz</div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-amber-500/30 transition-all active:scale-95 text-xl text-uppercase">
+                    Convert Ingredients
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The Culinary Science</h2>
+            <p>Our <strong>Kitchen Pro</strong> engine accounts for ingredient density variances (<span class="font-bold">Water = 1g/ml</span> vs <span class="font-bold">Flour = ~0.53g/ml</span>). Precision weight measurement is the secret to consistency in high-end pastry and professional culinary arts.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const inputVal = document.getElementById('input-val');
+        const unitInput = document.getElementById('input-unit');
+        const ingInput = document.getElementById('ingredient');
+        const calculateBtn = document.getElementById('calculate-btn');
+        
+        const weightEl = document.getElementById('res-weight');
+        const detailEl = document.getElementById('res-detail');
+
+        function calculate() {
+            const val = parseFloat(inputVal.value);
+            const unit = unitInput.value;
+            const ing = ingInput.value;
+
+            if (isNaN(val)) return;
+
+            // Convert input to ML first
+            let ml = val;
+            if (unit === 'cup') ml = val * 236.588;
+            if (unit === 'tbsp') ml = val * 14.787;
+            if (unit === 'tsp') ml = val * 4.929;
+
+            // Density factors (g per ML)
+            let density = 1; // water
+            if (ing === 'flour') density = 0.529;
+            if (ing === 'sugar') density = 0.845;
+            if (ing === 'butter') density = 0.911;
+
+            const grams = ml * density;
+            const oz = grams / 28.3495;
+
+            weightEl.innerText = Math.round(grams) + "g";
+            detailEl.innerText = oz.toFixed(1) + " oz";
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+
+    </script>
+</body>
+</html>

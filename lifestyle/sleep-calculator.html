@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Cycle Optimizer | CalcSuit Lifestyle Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-indigo-900 p-8 text-white text-center">
+                <i class="fas fa-moon text-4xl mb-4 text-indigo-400 animate-pulse"></i>
+                <h1 class="text-3xl font-bold">Sleep Architect</h1>
+                <p class="text-indigo-200 mt-2">Optimize 90-minute cycles for peak cognitive performance</p>
+            </div>
+            <div class="p-8 space-y-8">
+                <!-- Modes -->
+                <div class="flex bg-slate-50 dark:bg-slate-700/50 p-1 rounded-xl gap-1">
+                    <button id="mode-wake" class="flex-1 py-3 px-4 rounded-lg font-bold text-sm bg-white dark:bg-slate-600 shadow-sm text-indigo-600 dark:text-white transition-all">Wake Up At</button>
+                    <button id="mode-bed" class="flex-1 py-3 px-4 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-700 transition-all">Go to Bed At</button>
+                </div>
+
+                <div class="space-y-4">
+                    <label id="input-label" class="block text-sm font-bold text-slate-500 uppercase tracking-widest text-center">I want to wake up at</label>
+                    <input type="time" id="target-time" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-6 text-3xl font-bold text-center focus:ring-2 focus:ring-indigo-500 outline-none" value="07:00">
+                </div>
+
+                <div id="result-area" class="grid grid-cols-2 md:grid-cols-4 gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <!-- Zones will be injected -->
+                </div>
+
+                <div class="text-center">
+                    <button id="calculate-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-xl">
+                        Optimize Cycles
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The 90-Minute Rule</h2>
+            <p>Our <strong>Sleep Architect</strong> engine utilizes the 90-minute REM (Rapid Eye Movement) cycle principle. Waking up at the end of a cycle, rather than in the middle of deep sleep, prevents sleep inertia and ensures you feel refreshed regardless of total sleep duration.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const wakeBtn = document.getElementById('mode-wake');
+        const bedBtn = document.getElementById('mode-bed');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const timeInput = document.getElementById('target-time');
+        const inputLabel = document.getElementById('input-label');
+        const resultArea = document.getElementById('result-area');
+
+        let mode = "wake";
+
+        wakeBtn.addEventListener('click', () => {
+            mode = "wake";
+            wakeBtn.className = "flex-1 py-3 px-4 rounded-lg font-bold text-sm bg-white dark:bg-slate-600 shadow-sm text-indigo-600 dark:text-white transition-all";
+            bedBtn.className = "flex-1 py-3 px-4 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-700 transition-all";
+            inputLabel.innerText = "I want to wake up at";
+            calculate();
+        });
+
+        bedBtn.addEventListener('click', () => {
+            mode = "bed";
+            bedBtn.className = "flex-1 py-3 px-4 rounded-lg font-bold text-sm bg-white dark:bg-slate-600 shadow-sm text-indigo-600 dark:text-white transition-all";
+            wakeBtn.className = "flex-1 py-3 px-4 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-700 transition-all";
+            inputLabel.innerText = "I want to go to bed at";
+            calculate();
+        });
+
+        function calculate() {
+            const timeVal = timeInput.value;
+            if (!timeVal) return;
+
+            const [hh, mm] = timeVal.split(':').map(Number);
+            const baseDate = new Date();
+            baseDate.setHours(hh, mm, 0, 0);
+
+            resultArea.innerHTML = "";
+
+            // Calculate 4, 5, 6 cycles
+            // Each cycle is 90 mins = 1.5 hours
+            const cycles = [6, 5, 4, 3];
+            
+            cycles.forEach(c => {
+                const diff = c * 90 * (mode === 'wake' ? -1 : 1);
+                const d = new Date(baseDate.getTime() + (diff * 60000));
+                
+                // Add 15 mins to fall asleep if calculating bedtime
+                if (mode === 'wake') d.setMinutes(d.getMinutes() - 14); 
+                else d.setMinutes(d.setMinutes(d.getMinutes() + 14));
+
+                const timeStr = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                const card = document.createElement('div');
+                card.className = `p-4 rounded-xl border border-slate-200 dark:border-slate-700 text-center ${c >= 5 ? 'bg-indigo-50 dark:bg-indigo-500/10' : ''}`;
+                card.innerHTML = `
+                    <div class="text-[9px] font-bold text-slate-400 uppercase mb-1">${c} Cycles</div>
+                    <div class="text-xl font-bold text-slate-800 dark:text-white">${timeStr}</div>
+                `;
+                resultArea.appendChild(card);
+            });
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+
+    </script>
+</body>
+</html>

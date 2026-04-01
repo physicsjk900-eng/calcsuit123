@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
 
             <!-- Desktop Nav -->
-            <nav class="hidden lg:flex space-x-6 h-16" id="desktop-nav">
+            <nav class="hidden lg:flex space-x-6 h-16" id="desktop-nav" role="navigation" aria-label="Main Navigation">
                 ${desktopNavHtml}
             </nav>
 
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     <!-- Mobile Menu Overlay -->
     <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden opacity-0 transition-opacity duration-300">
         <div class="absolute inset-0 cursor-pointer" id="mobile-menu-bg"></div>
-        <div id="mobile-menu-panel" class="absolute top-0 left-0 bottom-0 w-[280px] sm:w-[320px] bg-white dark:bg-slate-900 shadow-2xl transform -translate-x-full transition-transform duration-300 overflow-y-auto flex flex-col border-r border-slate-200 dark:border-slate-800">
+        <div id="mobile-menu-panel" class="absolute top-0 left-0 bottom-0 w-[280px] sm:w-[320px] bg-white dark:bg-slate-900 shadow-2xl transform -translate-x-full transition-transform duration-300 overflow-y-auto flex flex-col border-r border-slate-200 dark:border-slate-800" role="dialog" aria-modal="true" aria-label="Mobile Navigation Menu">
             <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur z-10">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-sm">

@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const authModal = document.getElementById('auth-modal');
     const authModalDialog = document.getElementById('auth-modal-dialog');
     const authForm = document.getElementById('auth-form');
-    
+
     function updateAuthUI() {
         const user = localStorage.getItem('calcSuitUser');
         if (user && authStatusText) {
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         authBtn.addEventListener('click', () => {
             const user = localStorage.getItem('calcSuitUser');
             if (user) {
-                if(confirm(`Log out of ${user}'s profile?`)) {
+                if (confirm(`Log out of ${user}'s profile?`)) {
                     localStorage.removeItem('calcSuitUser');
                     updateAuthUI();
                 }
@@ -46,10 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if(document.getElementById('auth-modal-close')){
+    if (document.getElementById('auth-modal-close')) {
         document.getElementById('auth-modal-close').addEventListener('click', closeAuthModal);
     }
-    
+
     function closeAuthModal() {
         authModalDialog.classList.remove('scale-100', 'opacity-100');
         authModalDialog.classList.add('scale-95', 'opacity-0');
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showToast(title, message, iconStr = 'fa-bell', colorClass = 'text-indigo-500') {
         const container = document.getElementById('toast-container');
-        if(!container) return;
+        if (!container) return;
         const toast = document.createElement('div');
         toast.className = 'bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 p-4 flex items-start gap-4 transform translate-y-[-20px] opacity-0 transition-all duration-300 w-80 pointer-events-auto z-[300]';
         toast.innerHTML = `
@@ -82,22 +82,65 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="flex-1">
                 <h4 class="text-sm font-bold text-slate-800 dark:text-white">${title}</h4>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${message}</p>
+                <button class="mt-2 text-[10px] font-black uppercase tracking-widest text-rose-500 hover:text-rose-600 flex items-center gap-1" onclick="stopRingtone()">
+                    <i class="fas fa-stop"></i> Stop Ringtone
+                </button>
             </div>
-            <button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+            <button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200" onclick="this.parentElement.remove(); stopRingtone();"><i class="fas fa-times"></i></button>
         `;
         container.appendChild(toast);
-        
+
         requestAnimationFrame(() => {
             toast.classList.remove('translate-y-[-20px]', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
         });
-        
+
+        // Trigger Ringtone
+        playRingtone();
+
         setTimeout(() => {
             toast.classList.remove('translate-y-0', 'opacity-100');
             toast.classList.add('translate-y-[-20px]', 'opacity-0');
             setTimeout(() => toast.remove(), 300);
-        }, 5000);
+        }, 30000); // Reminders stay longer for ringtone visibility
     }
+
+    // --- Audio & Ringtone Logic ---
+    const ringtone = document.getElementById('reminder-ringtone');
+    const syncBtn = document.getElementById('btn-sync-audio');
+    let audioUnlocked = false;
+
+    if (syncBtn) {
+        syncBtn.addEventListener('click', () => {
+            if (ringtone) {
+                ringtone.play().then(() => {
+                    ringtone.pause();
+                    ringtone.currentTime = 0;
+                    audioUnlocked = true;
+                    showToast('Sync Successful', 'Audio reminders are now active on this device.', 'fa-check-circle', 'text-emerald-500');
+                    if (Notification.permission !== 'granted') {
+                        Notification.requestPermission();
+                    }
+                    syncBtn.textContent = 'SYNCED';
+                    syncBtn.classList.replace('bg-white', 'bg-emerald-400');
+                    syncBtn.classList.replace('text-indigo-700', 'text-white');
+                }).catch(e => console.error("Audio unlock failed:", e));
+            }
+        });
+    }
+
+    function playRingtone() {
+        if (ringtone && audioUnlocked) {
+            ringtone.play().catch(e => console.log("Ringtone blocked. Need manual Sync."));
+        }
+    }
+
+    window.stopRingtone = function() {
+        if (ringtone) {
+            ringtone.pause();
+            ringtone.currentTime = 0;
+        }
+    };
 
     // State
     const now = new Date();
@@ -126,12 +169,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCancelEdit = document.getElementById('btn-cancel-edit');
     const recurringSelect = document.getElementById('event-recurring');
 
-    if(btnCancelEdit) {
+    if (btnCancelEdit) {
         btnCancelEdit.addEventListener('click', () => {
             editingEventId = null;
-            if(btnSubmitEvent) btnSubmitEvent.textContent = 'Add to Calendar';
+            if (btnSubmitEvent) btnSubmitEvent.textContent = 'Add to Calendar';
             btnCancelEdit.classList.add('hidden');
-            if(recurringSelect) recurringSelect.disabled = false;
+            if (recurringSelect) recurringSelect.disabled = false;
             document.getElementById('event-form').reset();
             document.getElementById('event-date').valueAsDate = new Date();
         });
@@ -156,32 +199,32 @@ document.addEventListener('DOMContentLoaded', () => {
         if (editingEventId) {
             // Update mode
             const index = events.findIndex(ev => ev.id === editingEventId);
-            if(index !== -1) {
+            if (index !== -1) {
                 events[index] = { ...events[index], ...baseEvent };
                 showToast('Event Updated', 'Calendar event has been modified.', 'fa-check', 'text-emerald-500');
             }
             editingEventId = null;
-            if(btnSubmitEvent) btnSubmitEvent.textContent = 'Add to Calendar';
-            if(btnCancelEdit) btnCancelEdit.classList.add('hidden');
-            if(recurringSelect) recurringSelect.disabled = false;
+            if (btnSubmitEvent) btnSubmitEvent.textContent = 'Add to Calendar';
+            if (btnCancelEdit) btnCancelEdit.classList.add('hidden');
+            if (recurringSelect) recurringSelect.disabled = false;
         } else {
             // Create mode (handle recurring)
             const recurringType = recurringSelect ? recurringSelect.value : 'none';
             const baseDate = new Date(baseEvent.date + 'T12:00:00'); // T12 to avoid timezone shifts
             let occurrences = 1;
-            
+
             if (recurringType === 'daily') occurrences = 30;
             if (recurringType === 'weekly') occurrences = 12;
             if (recurringType === 'monthly') occurrences = 12;
 
-            for(let i=0; i < occurrences; i++) {
+            for (let i = 0; i < occurrences; i++) {
                 const newD = new Date(baseDate.getTime());
-                if(recurringType === 'daily') newD.setDate(newD.getDate() + i);
-                if(recurringType === 'weekly') newD.setDate(newD.getDate() + (i * 7));
-                if(recurringType === 'monthly') newD.setMonth(newD.getMonth() + i);
+                if (recurringType === 'daily') newD.setDate(newD.getDate() + i);
+                if (recurringType === 'weekly') newD.setDate(newD.getDate() + (i * 7));
+                if (recurringType === 'monthly') newD.setMonth(newD.getMonth() + i);
 
                 const ds = `${newD.getFullYear()}-${String(newD.getMonth() + 1).padStart(2, '0')}-${String(newD.getDate()).padStart(2, '0')}`;
-                
+
                 events.push({
                     ...baseEvent,
                     id: Date.now().toString() + '-' + Math.floor(Math.random() * 10000) + '-' + i,
@@ -397,7 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dateStr = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, '0')}-${String(targetDate.getDate()).padStart(2, '0')}`;
 
         const dayEvents = events.filter(e => e.date === dateStr);
-        
+
         // Inject current time if it's today
         const isToday = targetDate.toDateString() === new Date().toDateString();
         if (isToday) {
@@ -412,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 color: 'bg-rose-500' // Visual pop
             });
         }
-        
+
         dayEvents.sort((a, b) => (a.start === 'All Day' ? '00:00' : a.start).localeCompare(b.start === 'All Day' ? '00:00' : b.start));
 
         const container = document.createElement('div');
@@ -430,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dayEvents.forEach(ev => {
             const item = document.createElement('div');
             item.className = 'relative pl-8 md:pl-10 cursor-pointer group';
-            
+
             if (ev.isCurrentTimeIndicator) {
                 item.className = 'relative pl-8 md:pl-10 group my-4 py-2 pointer-events-none opacity-80';
                 item.innerHTML = `
@@ -567,7 +610,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // when they are positioned entirely offscreen (-9999px).
             // We temporarily pull it on-screen and behind a white loading overlay.
             const templateEl = document.getElementById('pdf-template');
-            
+
             templateEl.style.left = '0px';
             templateEl.style.top = '0px';
             templateEl.style.zIndex = '100';
@@ -618,24 +661,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnEditEvent = document.getElementById('btn-edit-event');
     let currentTaskOpenId = null;
 
-    window.openTaskDetails = function(ev) {
+    window.openTaskDetails = function (ev) {
         currentTaskOpenId = ev.id;
-        
+
         // Populate modal data
         document.getElementById('tm-title').textContent = ev.title;
         document.getElementById('tm-color').className = `w-12 h-12 rounded-2xl ${ev.color} flex items-center justify-center text-white text-xl shadow-inner shrink-0 mt-0.5`;
-        
+
         const dateObj = new Date(ev.date + 'T00:00:00');
         document.getElementById('tm-date').textContent = dateObj.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-        
+
         const timeStr = ev.start === "All Day" ? "All Day" : [formatTime(ev.start), formatTime(ev.end)].filter(Boolean).join(' - ');
         document.getElementById('tm-time').textContent = timeStr || "No time specified";
-        
+
         const pBadge = document.getElementById('tm-priority');
-        if(ev.priority === 'high') {
+        if (ev.priority === 'high') {
             pBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-100 text-red-700';
             pBadge.textContent = 'High Priority';
-        } else if(ev.priority === 'low') {
+        } else if (ev.priority === 'low') {
             pBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700';
             pBadge.textContent = 'Low Priority';
         } else {
@@ -644,15 +687,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const rmSpan = document.getElementById('tm-reminder');
-        if(ev.reminder && ev.reminder !== 'none') {
-            if(ev.reminder === '1440') rmSpan.textContent = 'Reminder: 1 day before';
+        if (ev.reminder && ev.reminder !== 'none') {
+            if (ev.reminder === '1440') rmSpan.textContent = 'Reminder: 1 day before';
             else rmSpan.textContent = `Reminder: ${ev.reminder} mins before`;
         } else {
             rmSpan.textContent = "No active reminder";
         }
 
         const dtSpan = document.getElementById('tm-details');
-        if(ev.details && ev.details.trim() !== "") {
+        if (ev.details && ev.details.trim() !== "") {
             dtSpan.textContent = ev.details;
             dtSpan.classList.remove('italic', 'opacity-50');
         } else {
@@ -678,14 +721,14 @@ document.addEventListener('DOMContentLoaded', () => {
             currentTaskOpenId = null;
         }, 300);
     }
-    
+
     if (document.getElementById('task-modal-close')) {
         document.getElementById('task-modal-close').addEventListener('click', closeTaskModal);
     }
 
     if (btnDeleteEvent) {
         btnDeleteEvent.addEventListener('click', () => {
-            if(currentTaskOpenId) {
+            if (currentTaskOpenId) {
                 events = events.filter(e => e.id !== currentTaskOpenId);
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
                 renderCalendar();
@@ -697,40 +740,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnEditEvent) {
         btnEditEvent.addEventListener('click', () => {
-            if(currentTaskOpenId) {
+            if (currentTaskOpenId) {
                 const evToEdit = events.find(e => e.id === currentTaskOpenId);
-                if(evToEdit) {
+                if (evToEdit) {
                     // Populate form
                     document.getElementById('event-title').value = evToEdit.title;
                     document.getElementById('event-date').value = evToEdit.date;
                     document.getElementById('event-start').value = evToEdit.start !== "All Day" ? evToEdit.start : "";
                     document.getElementById('event-end').value = evToEdit.end;
-                    
-                    if(document.getElementById('event-priority')) document.getElementById('event-priority').value = evToEdit.priority || "medium";
-                    if(document.getElementById('event-reminder')) document.getElementById('event-reminder').value = evToEdit.reminder || "none";
-                    if(document.getElementById('event-est')) document.getElementById('event-est').value = evToEdit.estTime || "";
-                    if(document.getElementById('event-details')) document.getElementById('event-details').value = evToEdit.details || "";
-                    
+
+                    if (document.getElementById('event-priority')) document.getElementById('event-priority').value = evToEdit.priority || "medium";
+                    if (document.getElementById('event-reminder')) document.getElementById('event-reminder').value = evToEdit.reminder || "none";
+                    if (document.getElementById('event-est')) document.getElementById('event-est').value = evToEdit.estTime || "";
+                    if (document.getElementById('event-details')) document.getElementById('event-details').value = evToEdit.details || "";
+
                     selectedColor = evToEdit.color;
                     document.querySelectorAll('.color-choice').forEach(b => {
                         b.classList.remove('selected');
-                        if(b.getAttribute('data-color') === selectedColor) b.classList.add('selected');
+                        if (b.getAttribute('data-color') === selectedColor) b.classList.add('selected');
                     });
 
                     editingEventId = evToEdit.id;
                     const bse = document.getElementById('btn-submit-event');
-                    if(bse) bse.textContent = 'Update Event';
+                    if (bse) bse.textContent = 'Update Event';
                     const bce = document.getElementById('btn-cancel-edit');
-                    if(bce) bce.classList.remove('hidden');
-                    
+                    if (bce) bce.classList.remove('hidden');
+
                     const rs = document.getElementById('event-recurring');
-                    if(rs) {
+                    if (rs) {
                         rs.value = 'none';
                         rs.disabled = true;
                     }
 
                     closeTaskModal();
-                    
+
                     // Scroll to form nicely
                     const formContainer = document.getElementById('event-form').closest('div').parentElement;
                     formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -744,35 +787,39 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => {
         const _now = new Date();
         let updated = false;
-        
+
         events.forEach(ev => {
-            if (!ev.notified && ev.reminder && ev.reminder !== 'none' && ev.start && ev.start !== "All Day") {
+            if (!ev.notified && ev.start && ev.start !== "All Day") {
                 const evDate = new Date(`${ev.date}T${ev.start}:00`);
                 if (!isNaN(evDate)) {
                     const diffMs = evDate - _now;
                     const diffMins = Math.floor(diffMs / 60000);
-                    const reminderTarget = parseInt(ev.reminder);
                     
+                    // Desktop/Universal: Trigger exactly at 10 minutes or user-defined reminder
+                    const reminderTarget = parseInt(ev.reminder) || 10; 
+
                     if (diffMins >= 0 && diffMins <= reminderTarget) {
-                        showToast(`Upcoming: ${ev.title}`, `Starts in ${diffMins} minutes.`, 'fa-clock', 'text-rose-500');
+                        showToast(`Universal Reminder: ${ev.title}`, `Starts in ${diffMins} minutes. (Desktop Ringtone Active)`, 'fa-bell', 'text-rose-500');
                         ev.notified = true;
                         updated = true;
-                        
-                        // Try native notification if allowed
+
+                        // Try native notification for Mobile (vibration/sound)
                         if (Notification.permission === 'granted') {
-                            new Notification(`Upcoming: ${ev.title}`, { body: `Starts in ${diffMins} minutes.` });
-                        } else if (Notification.permission !== 'denied') {
-                            Notification.requestPermission();
+                            new Notification(`Sync Reminder: ${ev.title}`, { 
+                                body: `Starts in ${diffMins} mins. Check calendar for details.`,
+                                icon: '../favicon.ico',
+                                vibrate: [200, 100, 200]
+                            });
                         }
                     }
                 }
             }
         });
-        
+
         if (updated) {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
         }
-    }, 60000);
+    }, 30000); // Check more frequently (every 30s) for precision
 
     // ==== POMODORO TIMER LITE (Calendar) ====
     let focusInterval = null;
@@ -787,31 +834,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const focusStopBtn = document.getElementById('focus-stop-btn');
     const btnStartFocus = document.getElementById('btn-start-focus');
 
-    if(btnStartFocus && focusOverlay) {
+    if (btnStartFocus && focusOverlay) {
         btnStartFocus.addEventListener('click', () => {
-            if(!currentTaskOpenId) return;
+            if (!currentTaskOpenId) return;
             const task = events.find(e => e.id === currentTaskOpenId);
-            if(!task) return;
-            
+            if (!task) return;
+
             preFocusTimerTask = task;
             document.getElementById('focus-task-title').textContent = task.title;
-            
+
             closeTaskModal();
-            
+
             focusOverlay.classList.remove('hidden');
             focusOverlay.classList.add('flex');
             setTimeout(() => focusOverlay.classList.replace('opacity-0', 'opacity-100'), 10);
-            
+
             let estMins = parseInt(task.estTime) || 25;
             focusTimeLeft = estMins * 60;
             isPaused = false;
             updateFocusDisplay();
-            if(toggleText) toggleText.textContent = "Pause";
-            if(toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-pause group-hover:scale-110 transition-transform"></i> <span id="focus-toggle-text">Pause</span>';
-            
+            if (toggleText) toggleText.textContent = "Pause";
+            if (toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-pause group-hover:scale-110 transition-transform"></i> <span id="focus-toggle-text">Pause</span>';
+
             clearInterval(focusInterval);
             focusInterval = setInterval(() => {
-                if(!isPaused && focusTimeLeft > 0) {
+                if (!isPaused && focusTimeLeft > 0) {
                     focusTimeLeft--;
                     updateFocusDisplay();
                 } else if (focusTimeLeft <= 0) {
@@ -824,36 +871,36 @@ document.addEventListener('DOMContentLoaded', () => {
         function updateFocusDisplay() {
             const m = Math.floor(focusTimeLeft / 60).toString().padStart(2, '0');
             const s = (focusTimeLeft % 60).toString().padStart(2, '0');
-            if(focusDisplay) focusDisplay.textContent = `${m}:${s}`;
+            if (focusDisplay) focusDisplay.textContent = `${m}:${s}`;
             const fts = document.getElementById('focus-timer-status');
-            if(fts) fts.textContent = `${m} Minutes Remaining`;
+            if (fts) fts.textContent = `${m} Minutes Remaining`;
         }
 
-        if(toggleBtn) {
+        if (toggleBtn) {
             toggleBtn.addEventListener('click', () => {
                 isPaused = !isPaused;
                 const tgSpan = document.getElementById('focus-toggle-text');
-                if(isPaused) {
-                    if(tgSpan) tgSpan.textContent = "Resume";
+                if (isPaused) {
+                    if (tgSpan) tgSpan.textContent = "Resume";
                     toggleBtn.firstElementChild.className = "fas fa-play group-hover:scale-110 transition-transform";
                     const fts = document.getElementById('focus-timer-status');
-                    if(fts) fts.textContent = "Timer Paused";
+                    if (fts) fts.textContent = "Timer Paused";
                 } else {
-                    if(tgSpan) tgSpan.textContent = "Pause";
+                    if (tgSpan) tgSpan.textContent = "Pause";
                     toggleBtn.firstElementChild.className = "fas fa-pause group-hover:scale-110 transition-transform";
                     updateFocusDisplay();
                 }
             });
         }
 
-        if(focusStopBtn) {
+        if (focusStopBtn) {
             focusStopBtn.addEventListener('click', () => {
                 finishPomodoro();
             });
         }
 
         const closeBtn = document.getElementById('focus-close-btn');
-        if(closeBtn) {
+        if (closeBtn) {
             closeBtn.addEventListener('click', () => {
                 clearInterval(focusInterval);
                 hideFocusOverlay();
@@ -865,7 +912,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let estMins = preFocusTimerTask ? (parseInt(preFocusTimerTask.estTime) || 25) : 25;
             const elapsedS = (estMins * 60) - focusTimeLeft;
             const elapsedM = Math.round(elapsedS / 60);
-            
+
             showToast('Focus Session complete!', `Completed ${elapsedM} minutes of focus on calendar event.`, 'fa-brain', 'text-indigo-500');
             hideFocusOverlay();
         }

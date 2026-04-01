@@ -16,15 +16,40 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/math/stdev-calculator.html', name: 'Std Dev', icon: '<i class="fas fa-chart-pie"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/log-calculator.html', name: 'Logarithm', icon: '<i class="fas fa-calculator"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/matrix-calculator.html', name: 'Matrix', icon: '<i class="fas fa-border-all"></i>', category: 'Math', colorClass: 'text-sky-600' },
+        { id: '/math/quadratic-calculator.html', name: 'Quadratic Solver', icon: '<i class="fas fa-superscript"></i>', category: 'Math', colorClass: 'text-sky-600' },
+        { id: '/math/probability-calculator.html', name: 'Probability', icon: '<i class="fas fa-dice"></i>', category: 'Math', colorClass: 'text-sky-600' },
+        { id: '/math/gcd-lcm-calculator.html', name: 'GCD & LCM', icon: '<i class="fas fa-layer-group"></i>', category: 'Math', colorClass: 'text-sky-600' },
+        { id: '/math/prime-calculator.html', name: 'Prime Numbers', icon: '<i class="fas fa-list-ol"></i>', category: 'Math', colorClass: 'text-sky-600' },
+        { id: '/math/base-converter.html', name: 'Base Converter', icon: '<i class="fas fa-hashtag"></i>', category: 'Math', colorClass: 'text-sky-600' },
+        { id: '/math/bandwidth-calculator.html', name: 'Bandwidth Hub', icon: '<i class="fas fa-wifi"></i>', category: 'Math', colorClass: 'text-sky-600' },
+        { id: '/math/triangle-calculator.html', name: 'Triangle Pro', icon: '<i class="fas fa-draw-polygon"></i>', category: 'Math', colorClass: 'text-sky-600' },
+        { id: '/math/variance-calculator.html', name: 'Percent Variance', icon: '<i class="fas fa-chart-line"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/health/bmi-calculator.html', name: 'BMI', icon: '<i class="fas fa-weight"></i>', category: 'Health', colorClass: 'text-rose-600' },
         { id: '/health/bmr-calculator.html', name: 'BMR', icon: '<i class="fas fa-bolt"></i>', category: 'Health', colorClass: 'text-rose-600' },
         { id: '/health/calorie-calculator.html', name: 'Calorie', icon: '<i class="fas fa-fire"></i>', category: 'Health', colorClass: 'text-rose-600' },
         { id: '/health/body-fat-calculator.html', name: 'Body Fat', icon: '<i class="fas fa-percentage"></i>', category: 'Health', colorClass: 'text-rose-600' },
         { id: '/health/ideal-weight-calculator.html', name: 'Ideal Weight', icon: '<i class="fas fa-balance-scale"></i>', category: 'Health', colorClass: 'text-rose-600' },
+        { id: '/health/macro-calculator.html', name: 'Macro Blueprint', icon: '<i class="fas fa-utensils"></i>', category: 'Health', colorClass: 'text-rose-600' },
+        { id: '/health/water-intake-calculator.html', name: 'Hydration Master', icon: '<i class="fas fa-tint"></i>', category: 'Health', colorClass: 'text-rose-600' },
+        { id: '/health/heart-rate-calculator.html', name: 'HR Zones', icon: '<i class="fas fa-heartbeat"></i>', category: 'Health', colorClass: 'text-rose-600' },
+        { id: '/health/pregnancy-calculator.html', name: 'Pregnancy Due', icon: '<i class="fas fa-baby"></i>', category: 'Health', colorClass: 'text-rose-600' },
+        { id: '/health/whr-calculator.html', name: 'Waist-to-Hip', icon: '<i class="fas fa-ruler-horizontal"></i>', category: 'Health', colorClass: 'text-rose-600' },
+        { id: '/health/bsa-calculator.html', name: 'Body Surface', icon: '<i class="fas fa-expand-alt"></i>', category: 'Health', colorClass: 'text-rose-600' },
+        { id: '/health/bp-calculator.html', name: 'Blood Pressure', icon: '<i class="fas fa-stethoscope"></i>', category: 'Health', colorClass: 'text-rose-600' },
+        { id: '/health/caffeine-calculator.html', name: 'Caffeine Logic', icon: '<i class="fas fa-coffee"></i>', category: 'Health', colorClass: 'text-rose-600' },
         { id: '/finance/emi-calculator.html', name: 'EMI', icon: '<i class="fas fa-money-bill-wave"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
         { id: '/finance/loan-calculator.html', name: 'Loan Architect', icon: '<i class="fas fa-hand-holding-dollar"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
         { id: '/finance/loan-optimizer.html', name: 'Loan Optimizer', icon: '<i class="fas fa-rocket"></i>', category: 'Financial', colorClass: 'text-amber-500' },
         { id: '/finance/interest-calculator.html', name: 'Interest', icon: '<i class="fas fa-chart-line"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
+        { id: '/finance/compound-interest-calculator.html', name: 'Compound Growth', icon: '<i class="fas fa-chart-line"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
+        { id: '/finance/salary-calculator.html', name: 'Salary Estimator', icon: '<i class="fas fa-wallet"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
+        { id: '/finance/break-even-calculator.html', name: 'Break-Even', icon: '<i class="fas fa-balance-scale-right"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
+        { id: '/finance/margin-calculator.html', name: 'Markup/Margin', icon: '<i class="fas fa-tags"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
+        { id: '/finance/drip-calculator.html', name: 'DRIP Growth', icon: '<i class="fas fa-seedling"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
+        { id: '/finance/tax-calculator.html', name: 'VAT/GST Calc', icon: '<i class="fas fa-file-invoice-dollar"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
+        { id: '/finance/savings-goal-calculator.html', name: 'Savings Goal', icon: '<i class="fas fa-bullseye"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
+        { id: '/finance/credit-card-payoff.html', name: 'Credit Payoff', icon: '<i class="fas fa-credit-card"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
+        { id: '/finance/retirement-calculator.html', name: 'Retirement (FIRE)', icon: '<i class="fas fa-umbrella-beach"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
         { id: '/time/date-diff-calculator.html', name: 'Date Difference', icon: '<i class="far fa-calendar-alt"></i>', category: 'Time & Date', colorClass: 'text-purple-600' },
         { id: '/time/work-hours-calculator.html', name: 'Work Hours', icon: '<i class="far fa-clock"></i>', category: 'Time & Date', colorClass: 'text-purple-600' },
         { id: '/time/time-duration-calculator.html', name: 'Time Duration', icon: '<i class="fas fa-stopwatch"></i>', category: 'Time & Date', colorClass: 'text-purple-600' },
@@ -47,12 +72,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/lifestyle/wedding-budget-calculator.html', name: 'Wedding Budget', icon: '<i class="fas fa-ring"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/lifestyle/party-budget-calculator.html', name: 'Party Budget', icon: '<i class="fas fa-glass-cheers"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/lifestyle/Love-calculator.html', name: 'Love Calculator', icon: '<i class="fas fa-heart"></i>', category: 'Lifestyle', colorClass: 'text-rose-500' },
+        { id: '/lifestyle/sleep-calculator.html', name: 'Sleep Cycle', icon: '<i class="fas fa-bed"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
+        { id: '/lifestyle/kitchen-calculator.html', name: 'Kitchen Pro', icon: '<i class="fas fa-blender"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
+        { id: '/lifestyle/pet-age-calculator.html', name: 'Pet Age Master', icon: '<i class="fas fa-paw"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
+        { id: '/physics/ohms-law-calculator.html', name: 'Ohm’s Law', icon: '<i class="fas fa-bolt"></i>', category: 'Technical', colorClass: 'text-sky-600' },
+        { id: '/lifestyle/unit-converter.html', name: 'Unit Master', icon: '<i class="fas fa-exchange-alt"></i>', category: 'Technical', colorClass: 'text-sky-600' },
+        { id: '/lifestyle/timezone-calculator.html', name: 'Temporal Hub', icon: '<i class="fas fa-globe-americas"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
+        { id: '/lifestyle/fuel-calculator.html', name: 'Fuel Cost Pro', icon: '<i class="fas fa-gas-pump"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
+        { id: '/lifestyle/random-generator.html', name: 'Entropy Hub', icon: '<i class="fas fa-random"></i>', category: 'Technical', colorClass: 'text-sky-600' },
+        { id: '/lifestyle/screen-time-impact.html', name: 'Screen Impact', icon: '<i class="fas fa-mobile-alt"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
+        { id: '/lifestyle/carbon-footprint.html', name: 'CO2 Footprint', icon: '<i class="fas fa-leaf"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
+        { id: '/lifestyle/vacation-planner.html', name: 'Vacation Budget', icon: '<i class="fas fa-plane"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/productivity/task-management-calculator.html', name: 'Task Manager', icon: '<i class="fas fa-tasks"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
         { id: '/productivity/task-calendar-generator.html', name: 'Task Calendar', icon: '<i class="fas fa-calendar-alt"></i>', category: 'Productivity', colorClass: 'text-teal-600' }
     ];
 
     const isLocal = window.location.protocol === 'file:';
-    const innerDirs = ['calculators', 'finance', 'health', 'math', 'time', 'conversion', 'lifestyle', 'business', 'productivity'];
+    const innerDirs = ['calculators', 'finance', 'health', 'math', 'time', 'conversion', 'lifestyle', 'business', 'productivity', 'physics'];
     const depth = window.location.pathname.split('/').reverse().findIndex(p => innerDirs.includes(p));
     const rootPrefix = depth > -1 ? '../' : './';
 
@@ -67,36 +103,48 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Generate Desktop Navigation Items
-    const categories = [...new Set(calculatorConfig.map(c => c.category))].filter(c => c !== 'General');
-    const desktopNavHtml = categories.map(cat => {
-        const items = calculatorConfig.filter(c => c.category === cat);
-        const isActiveCat = items.some(item => item.id === activeId);
+    // Define Suite Configuration for optimized Navigation
+    const suites = [
+        { name: 'Math & Systems', categories: ['Standard', 'Math', 'Technical', 'Physics'], icon: '<i class="fas fa-microchip"></i>' },
+        { name: 'Wealth & Growth', categories: ['Financial', 'Business'], icon: '<i class="fas fa-vault"></i>' },
+        { name: 'Health & Life', categories: ['Health', 'Lifestyle'], icon: '<i class="fas fa-heartbeat"></i>' },
+        { name: 'Utility Hub', categories: ['Time & Date', 'Conversion', 'Productivity'], icon: '<i class="fas fa-tools"></i>' }
+    ];
+
+    // Generate Desktop Navigation Items (Consolidated Suite Model)
+    const desktopNavHtml = suites.map(suite => {
+        const suiteItems = calculatorConfig.filter(c => suite.categories.includes(c.category));
+        const isActiveSuite = suiteItems.some(item => item.id === activeId);
+        
+        // Multi-column optimization for large suites
+        const columnClass = suiteItems.length > 8 ? 'grid-cols-2 w-[480px]' : 'grid-cols-1 w-64';
 
         return `
             <div class="relative group h-full flex items-center">
-                <button class="flex items-center gap-1 font-medium text-sm transition-colors ${isActiveCat ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400'}">
-                    ${cat}
-                    <i class="fas fa-chevron-down text-[10px] opacity-70 group-hover:rotate-180 transition-transform duration-200"></i>
+                <button class="flex items-center gap-2 font-semibold text-[13px] transition-colors ${isActiveSuite ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400'}">
+                    <span class="opacity-60 text-xs">${suite.icon}</span>
+                    ${suite.name}
+                    <i class="fas fa-chevron-down text-[9px] opacity-40 group-hover:rotate-180 transition-transform duration-200"></i>
                 </button>
-                <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-100 dark:border-slate-700 w-64 p-2 grid grid-cols-1 gap-1">
-                        ${items.map(c => {
-            const isItemActive = c.id === activeId;
-            let href = rootPrefix + c.id.replace(/^\//, '');
-            return `
-                                <a href="${href}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${isItemActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400 font-semibold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-indigo-600 dark:hover:text-indigo-400'}">
-                                    <span class="w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center ${isItemActive ? 'text-indigo-600 dark:text-indigo-400' : c.colorClass}">${c.icon}</span>
-                                    ${c.name}
+                <div class="absolute top-full left-0 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-100 dark:border-slate-700 p-2 grid ${columnClass} gap-1">
+                        ${suiteItems.map(c => {
+                            const isItemActive = c.id === activeId;
+                            let href = rootPrefix + c.id.replace(/^\//, '');
+                            return `
+                                <a href="${href}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs transition-colors ${isItemActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-indigo-600 dark:hover:text-indigo-400'}">
+                                    <span class="w-6 h-6 rounded bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center text-[10px] ${isItemActive ? 'text-indigo-600 dark:text-indigo-400' : c.colorClass} shrink-0">${c.icon}</span>
+                                    <span class="truncate">${c.name}</span>
                                 </a>
                             `;
-        }).join('')}
+                        }).join('')}
                     </div>
                 </div>
             </div>
         `;
     }).join('');
 
+    const categories = [...new Set(calculatorConfig.map(c => c.category))].filter(c => c !== 'General');
     const mobileNavHtml = categories.map(cat => {
         const items = calculatorConfig.filter(c => c.category === cat);
         return `
@@ -104,15 +152,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <h4 class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-3 mb-2">${cat}</h4>
                 <div class="space-y-1">
                     ${items.map(c => {
-            const isItemActive = c.id === activeId;
-            let href = rootPrefix + c.id.replace(/^\//, '');
-            return `
+                        const isItemActive = c.id === activeId;
+                        let href = rootPrefix + c.id.replace(/^\//, '');
+                        return `
                             <a href="${href}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${isItemActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50'}">
                                 <span class="w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center ${isItemActive ? 'text-indigo-600 dark:text-indigo-400' : c.colorClass} shrink-0">${c.icon}</span>
                                 <span class="truncate">${c.name}</span>
                             </a>
                         `;
-        }).join('')}
+                    }).join('')}
                 </div>
             </div>
         `;
@@ -122,7 +170,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const headerHtml = `
 <header class="w-full bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 transition-colors duration-300">
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
+        <div class="flex justify-between items-center h-14">
             
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center gap-3">

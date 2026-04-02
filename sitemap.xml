@@ -1,247 +1,247 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://calcsuit.example.com/</loc>
+    <loc>https://calcsuit.com/</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/explore.html</loc>
+    <loc>https://calcsuit.com/explore.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/finance/emi-calculator.html</loc>
+    <loc>https://calcsuit.com/finance/emi-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/finance/loan-calculator.html</loc>
+    <loc>https://calcsuit.com/finance/loan-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/finance/loan-optimizer.html</loc>
+    <loc>https://calcsuit.com/finance/loan-optimizer.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/health/bmi-calculator.html</loc>
+    <loc>https://calcsuit.com/health/bmi-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/math/fraction-calculator.html</loc>
+    <loc>https://calcsuit.com/math/fraction-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/time/work-hours-calculator.html</loc>
+    <loc>https://calcsuit.com/time/work-hours-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/math/quadratic-calculator.html</loc>
+    <loc>https://calcsuit.com/math/quadratic-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/math/probability-calculator.html</loc>
+    <loc>https://calcsuit.com/math/probability-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/math/gcd-lcm-calculator.html</loc>
+    <loc>https://calcsuit.com/math/gcd-lcm-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/math/prime-calculator.html</loc>
+    <loc>https://calcsuit.com/math/prime-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/math/base-converter.html</loc>
+    <loc>https://calcsuit.com/math/base-converter.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/math/bandwidth-calculator.html</loc>
+    <loc>https://calcsuit.com/math/bandwidth-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/math/triangle-calculator.html</loc>
+    <loc>https://calcsuit.com/math/triangle-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/math/variance-calculator.html</loc>
+    <loc>https://calcsuit.com/math/variance-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/finance/compound-interest-calculator.html</loc>
+    <loc>https://calcsuit.com/finance/compound-interest-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/finance/salary-calculator.html</loc>
+    <loc>https://calcsuit.com/finance/salary-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/finance/break-even-calculator.html</loc>
+    <loc>https://calcsuit.com/finance/break-even-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/finance/margin-calculator.html</loc>
+    <loc>https://calcsuit.com/finance/margin-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/finance/drip-calculator.html</loc>
+    <loc>https://calcsuit.com/finance/drip-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/finance/tax-calculator.html</loc>
+    <loc>https://calcsuit.com/finance/tax-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/finance/savings-goal-calculator.html</loc>
+    <loc>https://calcsuit.com/finance/savings-goal-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/finance/credit-card-payoff.html</loc>
+    <loc>https://calcsuit.com/finance/credit-card-payoff.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/finance/retirement-calculator.html</loc>
+    <loc>https://calcsuit.com/finance/retirement-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/health/macro-calculator.html</loc>
+    <loc>https://calcsuit.com/health/macro-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/health/water-intake-calculator.html</loc>
+    <loc>https://calcsuit.com/health/water-intake-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/health/heart-rate-calculator.html</loc>
+    <loc>https://calcsuit.com/health/heart-rate-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/health/pregnancy-calculator.html</loc>
+    <loc>https://calcsuit.com/health/pregnancy-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/health/whr-calculator.html</loc>
+    <loc>https://calcsuit.com/health/whr-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/health/bsa-calculator.html</loc>
+    <loc>https://calcsuit.com/health/bsa-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/health/bp-calculator.html</loc>
+    <loc>https://calcsuit.com/health/bp-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/health/caffeine-calculator.html</loc>
+    <loc>https://calcsuit.com/health/caffeine-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/lifestyle/sleep-calculator.html</loc>
+    <loc>https://calcsuit.com/lifestyle/sleep-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/lifestyle/kitchen-calculator.html</loc>
+    <loc>https://calcsuit.com/lifestyle/kitchen-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/lifestyle/pet-age-calculator.html</loc>
+    <loc>https://calcsuit.com/lifestyle/pet-age-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/physics/ohms-law-calculator.html</loc>
+    <loc>https://calcsuit.com/physics/ohms-law-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/lifestyle/unit-converter.html</loc>
+    <loc>https://calcsuit.com/lifestyle/unit-converter.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/lifestyle/timezone-calculator.html</loc>
+    <loc>https://calcsuit.com/lifestyle/timezone-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/lifestyle/fuel-calculator.html</loc>
+    <loc>https://calcsuit.com/lifestyle/fuel-calculator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.example.com/lifestyle/random-generator.html</loc>
+    <loc>https://calcsuit.com/lifestyle/random-generator.html</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

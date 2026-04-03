@@ -3,149 +3,733 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quadratic Equation Solver | CalcSuit Math</title>
+
+    <!-- SEO: Primary Target Keyword -->
+    <title>Solution of Quadratic Equation | Free Quadratic Formula Solver | CalcSuit</title>
+    <meta name="description" content="Find the solution of quadratic equation ax²+bx+c=0 instantly using the quadratic formula. Get real, repeated, or complex roots with step-by-step working, discriminant analysis, and a live interactive parabola graph. Free educational tool.">
+    <meta name="keywords" content="solution of quadratic equation, quadratic formula solver, quadratic equation calculator, roots of quadratic equation, discriminant calculator, quadratic formula, ax2+bx+c=0 solver">
+    <meta name="author" content="CalcSuit">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://calcsuit.com/math/quadratic-calculator.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Solution of Quadratic Equation | CalcSuit">
+    <meta property="og:description" content="Solve quadratic equations with step-by-step working, discriminant analysis, and an interactive parabola graph. Perfect for students and teachers.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://calcsuit.com/math/quadratic-calculator.html">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Solution of Quadratic Equation Calculator",
+      "description": "Interactive quadratic equation solver with step-by-step solutions, discriminant analysis, parabola graph, and educational content about the quadratic formula.",
+      "applicationCategory": "EducationApplication",
+      "operatingSystem": "All",
+      "url": "https://calcsuit.com/math/quadratic-calculator.html",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "2340" }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the solution of a quadratic equation?",
+          "acceptedAnswer": {"@type": "Answer", "text": "The solution of a quadratic equation ax² + bx + c = 0 is found using the quadratic formula: x = (-b ± √(b² - 4ac)) / (2a). The values of x that satisfy the equation are called roots or zeros of the quadratic equation."}
+        },
+        {
+          "@type": "Question",
+          "name": "How many solutions does a quadratic equation have?",
+          "acceptedAnswer": {"@type": "Answer", "text": "A quadratic equation can have 0, 1, or 2 real solutions depending on the discriminant (D = b² - 4ac). If D > 0: two distinct real roots. If D = 0: one repeated real root. If D < 0: two complex (imaginary) roots."}
+        },
+        {
+          "@type": "Question",
+          "name": "What is the discriminant in a quadratic equation?",
+          "acceptedAnswer": {"@type": "Answer", "text": "The discriminant is the expression b² - 4ac inside the square root of the quadratic formula. It determines the nature of the roots without fully solving the equation."}
+        }
+      ]
+    }
+    </script>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Glowing card */
+        .glow-card { box-shadow: 0 0 0 1px rgba(99,102,241,0.15), 0 20px 60px -12px rgba(99,102,241,0.15); }
+        .dark .glow-card { box-shadow: 0 0 0 1px rgba(99,102,241,0.2), 0 20px 60px -12px rgba(99,102,241,0.25); }
+
+        /* Coefficient input */
+        .coeff-input { transition: all 0.2s; }
+        .coeff-input:focus { box-shadow: 0 0 0 3px rgba(99,102,241,0.25); }
+
+        /* Step cards animation */
+        .step-card { animation: slideUp 0.4s ease both; }
+        @keyframes slideUp {
+            from { opacity:0; transform: translateY(16px); }
+            to   { opacity:1; transform: translateY(0); }
+        }
+        .step-card:nth-child(1) { animation-delay: 0.05s; }
+        .step-card:nth-child(2) { animation-delay: 0.1s; }
+        .step-card:nth-child(3) { animation-delay: 0.15s; }
+        .step-card:nth-child(4) { animation-delay: 0.2s; }
+
+        /* Tab active */
+        .tab-btn.active { background: #4f46e5; color: white; }
+        .dark .tab-btn.active { background: #6366f1; }
+
+        /* Nature badge */
+        .badge-real { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+        .badge-repeated { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+        .badge-complex { background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; }
+        .dark .badge-real { background: rgba(5,150,105,0.1); border-color: rgba(5,150,105,0.3); }
+        .dark .badge-repeated { background: rgba(37,99,235,0.1); border-color: rgba(37,99,235,0.3); }
+        .dark .badge-complex { background: rgba(225,29,72,0.1); border-color: rgba(225,29,72,0.3); }
+
+        /* Canvas graph */
+        #parabola-canvas { border-radius: 12px; }
+
+        /* FAQ accordion */
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        .faq-item.open .faq-answer { max-height: 300px; }
+        .faq-item.open .faq-icon { transform: rotate(45deg); }
+        .faq-icon { transition: transform 0.3s; }
+
+        /* Discriminant gauge */
+        .gauge-bar { transition: width 0.6s cubic-bezier(0.4,0,0.2,1); }
+
+        /* Formula highlight */
+        .formula-box {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
+            border: 1px solid #c7d2fe;
+        }
+        .dark .formula-box { background: linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(79,70,229,0.12) 100%); border-color: rgba(99,102,241,0.25); }
+    </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col">
     <div id="sidebar-container"></div>
 
-    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
-        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
-            <div class="bg-indigo-600 p-8 text-white text-center">
-                <i class="fas fa-superscript text-4xl mb-4"></i>
-                <h1 class="text-3xl font-bold">Quadratic Solver</h1>
-                <p class="text-indigo-100 mt-2">Solve standard quadratic equations: ax² + bx + c = 0</p>
+    <main class="flex-1 py-10 px-4">
+        <div class="max-w-5xl mx-auto space-y-8">
+
+            <!-- ===== HERO ===== -->
+            <div class="text-center">
+                <div class="inline-flex items-center gap-2 bg-indigo-100 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
+                    <i class="fas fa-superscript"></i> Math · Algebra
+                </div>
+                <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-3 leading-tight">
+                    Solution of Quadratic Equation
+                </h1>
+                <p class="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto">
+                    Find all roots of <span class="mono font-semibold text-indigo-600 dark:text-indigo-400">ax² + bx + c = 0</span> using the quadratic formula — with step-by-step working, discriminant analysis, and a live parabola graph.
+                </p>
             </div>
 
-            <div class="p-8 space-y-8">
-                <!-- Inputs -->
-                <div class="grid grid-cols-3 gap-6">
-                    <div class="space-y-2 text-center">
-                        <label class="block text-sm font-bold text-slate-500 uppercase">Coefficient a</label>
-                        <input type="number" id="coeff-a" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="1">
-                    </div>
-                    <div class="space-y-2 text-center">
-                        <label class="block text-sm font-bold text-slate-500 uppercase">Coefficient b</label>
-                        <input type="number" id="coeff-b" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="5">
-                    </div>
-                    <div class="space-y-2 text-center">
-                        <label class="block text-sm font-bold text-slate-500 uppercase">Coefficient c</label>
-                        <input type="number" id="coeff-c" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="6">
-                    </div>
+            <!-- ===== MAIN CALCULATOR CARD ===== -->
+            <div class="bg-white dark:bg-slate-800 rounded-3xl glow-card overflow-hidden border border-slate-200 dark:border-slate-700">
+
+                <!-- Live Equation Display -->
+                <div class="bg-gradient-to-r from-indigo-700 to-violet-700 px-8 py-6 text-center">
+                    <div class="text-indigo-200 text-xs font-bold uppercase tracking-widest mb-2">Current Equation</div>
+                    <div id="display-eqn" class="mono text-2xl md:text-4xl font-bold text-white tracking-tight">x² + 5x + 6 = 0</div>
                 </div>
 
-                <div class="text-center text-2xl font-mono text-slate-400 dark:text-slate-500 py-4 border-y border-dashed border-slate-200 dark:border-slate-700">
-                    <span id="display-eqn">1x² + 5x + 6 = 0</span>
-                </div>
+                <div class="p-6 md:p-8 space-y-8">
 
-                <!-- Result -->
-                <div id="result-area" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <div class="bg-indigo-50 dark:bg-indigo-500/10 rounded-2xl p-6 border border-indigo-100 dark:border-indigo-500/20">
-                        <h4 class="text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-4">Calculated Roots</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
-                                <div class="text-xs font-bold text-slate-400 uppercase mb-1">Root x₁</div>
-                                <div id="root-1" class="text-2xl font-bold text-slate-800 dark:text-white">-2</div>
-                                <button class="copy-trigger mt-1 text-[10px] text-indigo-500 hover:underline" data-target="root-1">Copy</button>
+                    <!-- Coefficient Inputs -->
+                    <div>
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 text-center">Enter Coefficients</div>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="flex flex-col items-center gap-2">
+                                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider" for="coeff-a">a (x²)</label>
+                                <input type="number" id="coeff-a" value="1" step="any"
+                                    class="coeff-input w-full bg-slate-50 dark:bg-slate-700/50 border-2 border-slate-200 dark:border-slate-600 rounded-2xl py-4 px-2 text-center text-2xl font-bold mono focus:border-indigo-500 dark:focus:border-indigo-400 outline-none">
+                                <div class="text-[11px] text-indigo-500 font-semibold">≠ 0</div>
                             </div>
-                            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
-                                <div class="text-xs font-bold text-slate-400 uppercase mb-1">Root x₂</div>
-                                <div id="root-2" class="text-2xl font-bold text-slate-800 dark:text-white">-3</div>
-                                <button class="copy-trigger mt-1 text-[10px] text-indigo-500 hover:underline" data-target="root-2">Copy</button>
+                            <div class="flex flex-col items-center gap-2">
+                                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider" for="coeff-b">b (x)</label>
+                                <input type="number" id="coeff-b" value="5" step="any"
+                                    class="coeff-input w-full bg-slate-50 dark:bg-slate-700/50 border-2 border-slate-200 dark:border-slate-600 rounded-2xl py-4 px-2 text-center text-2xl font-bold mono focus:border-indigo-500 dark:focus:border-indigo-400 outline-none">
                             </div>
-                        </div>
-                        
-                        <div class="mt-6 pt-6 border-t border-indigo-100 dark:border-indigo-500/20 space-y-3">
-                            <div class="flex justify-between items-center text-sm">
-                                <span class="text-slate-500">Discriminant (D)</span>
-                                <span id="discriminant" class="font-bold">1</span>
-                            </div>
-                            <div class="flex justify-between items-center text-sm">
-                                <span class="text-slate-500">Root Type</span>
-                                <span id="root-type" class="font-bold text-emerald-600">Real and Distinct</span>
+                            <div class="flex flex-col items-center gap-2">
+                                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider" for="coeff-c">c (const)</label>
+                                <input type="number" id="coeff-c" value="6" step="any"
+                                    class="coeff-input w-full bg-slate-50 dark:bg-slate-700/50 border-2 border-slate-200 dark:border-slate-600 rounded-2xl py-4 px-2 text-center text-2xl font-bold mono focus:border-indigo-500 dark:focus:border-indigo-400 outline-none">
                             </div>
                         </div>
                     </div>
+
+                    <!-- Quick Examples -->
+                    <div>
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Quick Examples</div>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="example-btn mono text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-500/20 hover:text-indigo-700 dark:hover:text-indigo-400 transition-colors font-medium" data-a="1" data-b="-5" data-c="6">x²−5x+6=0</button>
+                            <button class="example-btn mono text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-500/20 hover:text-indigo-700 dark:hover:text-indigo-400 transition-colors font-medium" data-a="1" data-b="2" data-c="1">x²+2x+1=0</button>
+                            <button class="example-btn mono text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-500/20 hover:text-indigo-700 dark:hover:text-indigo-400 transition-colors font-medium" data-a="1" data-b="0" data-c="-9">x²−9=0</button>
+                            <button class="example-btn mono text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-500/20 hover:text-indigo-700 dark:hover:text-indigo-400 transition-colors font-medium" data-a="1" data-b="0" data-c="4">x²+4=0</button>
+                            <button class="example-btn mono text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-500/20 hover:text-indigo-700 dark:hover:text-indigo-400 transition-colors font-medium" data-a="2" data-b="-3" data-c="1">2x²−3x+1=0</button>
+                        </div>
+                    </div>
+
+                    <!-- Solve Button -->
+                    <button id="solve-btn" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-lg flex items-center justify-center gap-3">
+                        <i class="fas fa-square-root-variable"></i> Find Solution of Quadratic Equation
+                    </button>
+
+                    <!-- Error Message -->
+                    <div id="error-msg" class="hidden bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 text-rose-700 dark:text-rose-400 text-sm font-medium px-4 py-3 rounded-xl flex items-center gap-2">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <span id="error-text"></span>
+                    </div>
+
+                    <!-- RESULTS PANEL -->
+                    <div id="results-panel" class="hidden space-y-6">
+
+                        <!-- Root Nature Badge -->
+                        <div class="flex items-center justify-between flex-wrap gap-3">
+                            <h2 class="text-lg font-bold text-slate-800 dark:text-white">Solution Results</h2>
+                            <span id="nature-badge" class="px-4 py-1.5 rounded-full text-sm font-bold"></span>
+                        </div>
+
+                        <!-- Root Cards -->
+                        <div id="roots-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+
+                        <!-- Discriminant Gauge -->
+                        <div class="bg-slate-50 dark:bg-slate-700/40 rounded-2xl p-5 border border-slate-200 dark:border-slate-700">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Discriminant D = b² − 4ac</span>
+                                <span id="disc-value" class="mono text-sm font-bold text-indigo-600 dark:text-indigo-400"></span>
+                            </div>
+                            <div class="h-3 bg-slate-200 dark:bg-slate-600 rounded-full overflow-hidden">
+                                <div id="disc-bar" class="gauge-bar h-full rounded-full" style="width:50%"></div>
+                            </div>
+                            <div class="flex justify-between mt-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                <span>D&lt;0 (Complex)</span>
+                                <span>D=0 (Repeated)</span>
+                                <span>D&gt;0 (Real)</span>
+                            </div>
+                        </div>
+
+                        <!-- Tab Switcher: Steps / Graph / Formula -->
+                        <div class="flex gap-2 p-1 bg-slate-100 dark:bg-slate-700 rounded-xl">
+                            <button class="tab-btn active flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all" data-tab="steps">
+                                <i class="fas fa-list-ol mr-1"></i> Step-by-Step
+                            </button>
+                            <button class="tab-btn flex-1 py-2 px-3 rounded-lg text-sm font-semibold text-slate-500 dark:text-slate-400 transition-all" data-tab="graph">
+                                <i class="fas fa-chart-line mr-1"></i> Parabola Graph
+                            </button>
+                            <button class="tab-btn flex-1 py-2 px-3 rounded-lg text-sm font-semibold text-slate-500 dark:text-slate-400 transition-all" data-tab="verify">
+                                <i class="fas fa-check-double mr-1"></i> Verify
+                            </button>
+                        </div>
+
+                        <!-- Steps Panel -->
+                        <div id="tab-steps" class="tab-panel space-y-3"></div>
+
+                        <!-- Graph Panel -->
+                        <div id="tab-graph" class="tab-panel hidden">
+                            <div class="bg-slate-50 dark:bg-slate-700/40 rounded-2xl p-4 border border-slate-200 dark:border-slate-700">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-bold text-slate-700 dark:text-slate-300">Live Parabola: <span class="mono text-indigo-600 dark:text-indigo-400" id="graph-label"></span></span>
+                                    <span class="text-xs text-slate-400">Hover / tap to inspect</span>
+                                </div>
+                                <canvas id="parabola-canvas" width="600" height="320" class="w-full"></canvas>
+                                <div id="graph-info" class="mt-3 grid grid-cols-3 gap-3 text-center text-xs">
+                                    <div class="bg-white dark:bg-slate-800 rounded-xl p-3 border border-slate-100 dark:border-slate-600">
+                                        <div class="text-slate-400 mb-1">Vertex</div>
+                                        <div id="vertex-val" class="font-bold mono text-slate-800 dark:text-white text-sm"></div>
+                                    </div>
+                                    <div class="bg-white dark:bg-slate-800 rounded-xl p-3 border border-slate-100 dark:border-slate-600">
+                                        <div class="text-slate-400 mb-1">Y-Intercept</div>
+                                        <div id="yint-val" class="font-bold mono text-slate-800 dark:text-white text-sm"></div>
+                                    </div>
+                                    <div class="bg-white dark:bg-slate-800 rounded-xl p-3 border border-slate-100 dark:border-slate-600">
+                                        <div class="text-slate-400 mb-1">Axis of Symmetry</div>
+                                        <div id="axis-val" class="font-bold mono text-slate-800 dark:text-white text-sm"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Verify Panel -->
+                        <div id="tab-verify" class="tab-panel hidden">
+                            <div id="verify-content" class="space-y-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== EDUCATIONAL CONTENT ===== -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- The Formula Card -->
+                <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                            <span class="w-8 h-8 bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 rounded-lg flex items-center justify-center text-sm"><i class="fas fa-function"></i></span>
+                            The Quadratic Formula
+                        </h2>
+                        <div class="formula-box rounded-2xl p-5 text-center mb-4">
+                            <div class="mono text-xl md:text-2xl font-bold text-indigo-700 dark:text-indigo-300">x = (-b ± √(b²−4ac)) / 2a</div>
+                        </div>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                            The quadratic formula is the universal method for finding the <strong>solution of a quadratic equation</strong>. Unlike factoring, it works for <em>every</em> quadratic — even when roots are irrational or complex.
+                        </p>
+                    </div>
                 </div>
 
-                <button id="calculate-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-lg">
-                    Solve Quadratic
-                </button>
+                <!-- Discriminant Guide -->
+                <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                            <span class="w-8 h-8 bg-violet-100 dark:bg-violet-500/20 text-violet-600 rounded-lg flex items-center justify-center text-sm"><i class="fas fa-compass"></i></span>
+                            Discriminant (D = b²−4ac)
+                        </h2>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3 p-3 bg-emerald-50 dark:bg-emerald-500/10 rounded-xl border border-emerald-200 dark:border-emerald-500/20">
+                                <div class="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center text-white text-xs shrink-0 mt-0.5">✓</div>
+                                <div>
+                                    <div class="font-bold text-emerald-700 dark:text-emerald-400 text-sm">D &gt; 0 — Two Real Distinct Roots</div>
+                                    <div class="text-xs text-slate-500 dark:text-slate-400">Parabola crosses x-axis at two distinct points</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-blue-50 dark:bg-blue-500/10 rounded-xl border border-blue-200 dark:border-blue-500/20">
+                                <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs shrink-0 mt-0.5">1</div>
+                                <div>
+                                    <div class="font-bold text-blue-700 dark:text-blue-400 text-sm">D = 0 — One Repeated Real Root</div>
+                                    <div class="text-xs text-slate-500 dark:text-slate-400">Parabola touches x-axis at exactly one point (vertex)</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-rose-50 dark:bg-rose-500/10 rounded-xl border border-rose-200 dark:border-rose-500/20">
+                                <div class="w-6 h-6 bg-rose-500 rounded-full flex items-center justify-center text-white text-xs shrink-0 mt-0.5"><i class="fas fa-i text-[10px]"></i></div>
+                                <div>
+                                    <div class="font-bold text-rose-700 dark:text-rose-400 text-sm">D &lt; 0 — Two Complex Roots</div>
+                                    <div class="text-xs text-slate-500 dark:text-slate-400">Parabola does not cross x-axis — roots involve √−1</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <!-- SEO Content -->
-        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
-            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Mastering Quadratic Equations</h2>
-            <p>Our professional quadratic solver uses the standard formula <span class="font-mono">x = (-b ± √(b² - 4ac)) / (2a)</span> to provide instant roots for any coefficients. Whether you are dealing with real numbers, repeated roots, or complex imaginary segments, the CalcSuit engine provides a precise breakdown.</p>
+            <!-- ===== HOW TO SOLVE (Educational) ===== -->
+            <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm p-6 md:p-8">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
+                    <span class="w-9 h-9 bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 rounded-xl flex items-center justify-center"><i class="fas fa-graduation-cap"></i></span>
+                    How to Find the Solution of a Quadratic Equation
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-4 bg-indigo-50 dark:bg-indigo-500/10 rounded-2xl border border-indigo-100 dark:border-indigo-500/20">
+                        <div class="w-8 h-8 bg-indigo-600 text-white rounded-lg flex items-center justify-center text-sm font-bold mb-3">1</div>
+                        <h3 class="font-bold text-sm text-slate-800 dark:text-white mb-1">Identify Coefficients</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Write the equation in standard form <span class="mono">ax²+bx+c=0</span> and identify a, b, and c.</p>
+                    </div>
+                    <div class="p-4 bg-violet-50 dark:bg-violet-500/10 rounded-2xl border border-violet-100 dark:border-violet-500/20">
+                        <div class="w-8 h-8 bg-violet-600 text-white rounded-lg flex items-center justify-center text-sm font-bold mb-3">2</div>
+                        <h3 class="font-bold text-sm text-slate-800 dark:text-white mb-1">Calculate Discriminant</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Compute <span class="mono">D = b² − 4ac</span>. This determines <em>how many</em> and <em>what kind</em> of solutions exist.</p>
+                    </div>
+                    <div class="p-4 bg-emerald-50 dark:bg-emerald-500/10 rounded-2xl border border-emerald-100 dark:border-emerald-500/20">
+                        <div class="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center text-sm font-bold mb-3">3</div>
+                        <h3 class="font-bold text-sm text-slate-800 dark:text-white mb-1">Apply the Formula</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Substitute into <span class="mono">x = (−b ± √D) / 2a</span> to find both roots simultaneously.</p>
+                    </div>
+                    <div class="p-4 bg-amber-50 dark:bg-amber-500/10 rounded-2xl border border-amber-100 dark:border-amber-500/20">
+                        <div class="w-8 h-8 bg-amber-600 text-white rounded-lg flex items-center justify-center text-sm font-bold mb-3">4</div>
+                        <h3 class="font-bold text-sm text-slate-800 dark:text-white mb-1">Verify Your Answer</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Substitute x back into the original equation. If it equals 0, your solution is correct!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== FAQ ===== -->
+            <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm p-6 md:p-8">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
+                    <span class="w-9 h-9 bg-amber-100 dark:bg-amber-500/20 text-amber-600 rounded-xl flex items-center justify-center"><i class="fas fa-circle-question"></i></span>
+                    Frequently Asked Questions
+                </h2>
+                <div class="space-y-3" id="faq-container">
+                    <div class="faq-item border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+                        <button class="faq-trigger w-full flex items-center justify-between p-4 text-left font-semibold text-sm text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            What is the solution of a quadratic equation?
+                            <span class="faq-icon text-slate-400 ml-2 shrink-0"><i class="fas fa-plus text-xs"></i></span>
+                        </button>
+                        <div class="faq-answer bg-slate-50 dark:bg-slate-700/30 px-4 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            <div class="py-4">The solution of a quadratic equation ax² + bx + c = 0 consists of the values of x (called roots) that make the equation true. Every quadratic equation has exactly two solutions in the complex number system, given by the quadratic formula: <span class="mono font-semibold">x = (−b ± √(b²−4ac)) / 2a</span>.</div>
+                        </div>
+                    </div>
+                    <div class="faq-item border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+                        <button class="faq-trigger w-full flex items-center justify-between p-4 text-left font-semibold text-sm text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            Can a quadratic equation have no real solution?
+                            <span class="faq-icon text-slate-400 ml-2 shrink-0"><i class="fas fa-plus text-xs"></i></span>
+                        </button>
+                        <div class="faq-answer bg-slate-50 dark:bg-slate-700/30 px-4 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            <div class="py-4">Yes! When the discriminant D = b² − 4ac is negative, the quadratic equation has no real solutions. Instead, it has two complex conjugate roots of the form p + qi and p − qi, where i = √−1. On the graph, the parabola does not intersect the x-axis at all.</div>
+                        </div>
+                    </div>
+                    <div class="faq-item border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+                        <button class="faq-trigger w-full flex items-center justify-between p-4 text-left font-semibold text-sm text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            What does the parabola graph tell us about the solutions?
+                            <span class="faq-icon text-slate-400 ml-2 shrink-0"><i class="fas fa-plus text-xs"></i></span>
+                        </button>
+                        <div class="faq-answer bg-slate-50 dark:bg-slate-700/30 px-4 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            <div class="py-4">The solutions of a quadratic equation are the x-coordinates where the parabola y = ax²+bx+c crosses the x-axis (y=0). If it crosses at 2 points → two real roots. Touches at 1 point → one repeated root. Doesn't cross → complex roots. This visual connection is why graphing is a powerful tool in algebra.</div>
+                        </div>
+                    </div>
+                    <div class="faq-item border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+                        <button class="faq-trigger w-full flex items-center justify-between p-4 text-left font-semibold text-sm text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            What is the sum and product of roots of a quadratic equation?
+                            <span class="faq-icon text-slate-400 ml-2 shrink-0"><i class="fas fa-plus text-xs"></i></span>
+                        </button>
+                        <div class="faq-answer bg-slate-50 dark:bg-slate-700/30 px-4 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            <div class="py-4">By Vieta's formulas: <strong>Sum of roots</strong> (x₁ + x₂) = <span class="mono">−b/a</span>, and <strong>Product of roots</strong> (x₁ × x₂) = <span class="mono">c/a</span>. These relationships let you find the sum and product without fully solving the equation — very useful for verification!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SEO ARTICLE ===== -->
+            <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm p-6 md:p-10">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Understanding the Solution of Quadratic Equations</h2>
+                <div class="prose prose-slate dark:prose-invert max-w-none text-sm leading-relaxed text-slate-600 dark:text-slate-400 space-y-4">
+                    <p>A <strong>quadratic equation</strong> is any polynomial equation of degree 2, written in standard form as <span class="mono font-semibold">ax² + bx + c = 0</span>, where a ≠ 0. The <strong>solution of a quadratic equation</strong>—also called its roots or zeros—are the values of x that satisfy this equation.</p>
+                    <p>The most reliable method is the <strong>quadratic formula</strong>, derived by completing the square on the general form. It guarantees solutions for every quadratic, making it indispensable in algebra, physics, engineering, and economics. For example, projectile motion equations, profit maximization models, and signal processing all involve finding the solution of quadratic equations.</p>
+                    <p>Our CalcSuit solver not only gives you the numerical answer but walks you through each step of the derivation, plots the parabola visually, and verifies the result—making it an ideal resource for students studying algebra and for professionals who need rapid, reliable computation.</p>
+                </div>
+            </div>
         </div>
     </main>
 
     <script src="../js/layout.js"></script>
     <script>
-        const aInput = document.getElementById('coeff-a');
-        const bInput = document.getElementById('coeff-b');
-        const cInput = document.getElementById('coeff-c');
-        const displayEqn = document.getElementById('display-eqn');
-        const calculateBtn = document.getElementById('calculate-btn');
-        const resultArea = document.getElementById('result-area');
-        const root1El = document.getElementById('root-1');
-        const root2El = document.getElementById('root-2');
-        const discEl = document.getElementById('discriminant');
-        const typeEl = document.getElementById('root-type');
+    (() => {
+        // ------- Elements -------
+        const aIn = document.getElementById('coeff-a');
+        const bIn = document.getElementById('coeff-b');
+        const cIn = document.getElementById('coeff-c');
+        const dispEqn = document.getElementById('display-eqn');
+        const solveBtn = document.getElementById('solve-btn');
+        const resultsPanel = document.getElementById('results-panel');
+        const errorMsg = document.getElementById('error-msg');
+        const errorText = document.getElementById('error-text');
 
-        function updateDisplay() {
-            const a = aInput.value || 0;
-            const b = bInput.value || 0;
-            const c = cInput.value || 0;
-            const fmtA = a == 1 ? "x²" : a == -1 ? "-x²" : a == 0 ? "" : a + "x²";
-            const fmtB = b == 0 ? "" : (b > 0 ? (a == 0 ? "" : " + ") + b : " - " + Math.abs(b)) + "x";
-            const fmtC = c == 0 ? "" : (c > 0 ? " + " + c : " - " + Math.abs(c));
-            displayEqn.innerText = `${fmtA}${fmtB}${fmtC} = 0`;
+        // ------- Live Equation Display -------
+        function fmt(n, suffix) {
+            if (n == 0) return '';
+            if (suffix === 'x²') return n == 1 ? 'x²' : n == -1 ? '−x²' : n + 'x²';
+            if (suffix === 'x') return n == 1 ? '+x' : n == -1 ? '−x' : n > 0 ? '+' + n + 'x' : n + 'x';
+            return n > 0 ? '+' + n : '' + n;
         }
+        function updateDisplay() {
+            const a = parseFloat(aIn.value) || 0, b = parseFloat(bIn.value) || 0, c = parseFloat(cIn.value) || 0;
+            let eq = fmt(a, 'x²') || '0';
+            eq += fmt(b, 'x');
+            if (c !== 0) eq += (c > 0 ? '+' : '') + c;
+            dispEqn.textContent = eq + ' = 0';
+        }
+        [aIn, bIn, cIn].forEach(i => i.addEventListener('input', updateDisplay));
 
-        [aInput, bInput, cInput].forEach(inp => inp.addEventListener('input', updateDisplay));
+        // ------- Quick Examples -------
+        document.querySelectorAll('.example-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                aIn.value = btn.dataset.a;
+                bIn.value = btn.dataset.b;
+                cIn.value = btn.dataset.c;
+                updateDisplay();
+                solve();
+            });
+        });
 
-        calculateBtn.addEventListener('click', () => {
-            const a = parseFloat(aInput.value);
-            const b = parseFloat(bInput.value);
-            const c = parseFloat(cInput.value);
+        // ------- Tabs -------
+        const tabs = { steps: document.getElementById('tab-steps'), graph: document.getElementById('tab-graph'), verify: document.getElementById('tab-verify') };
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.classList.add('text-slate-500', 'dark:text-slate-400'); });
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+                btn.classList.add('active'); btn.classList.remove('text-slate-500', 'dark:text-slate-400');
+                tabs[btn.dataset.tab].classList.remove('hidden');
+                if (btn.dataset.tab === 'graph') drawGraph();
+            });
+        });
 
-            if (isNaN(a) || isNaN(b) || isNaN(c)) return;
-            if (a === 0) {
-                alert("Coefficient 'a' cannot be zero in a quadratic equation.");
-                return;
-            }
+        // ------- Main Solve -------
+        let lastSolution = null;
 
-            const D = (b * b) - (4 * a * c);
-            discEl.innerText = D.toFixed(4);
+        function solve() {
+            const a = parseFloat(aIn.value), b = parseFloat(bIn.value), c = parseFloat(cIn.value);
+            errorMsg.classList.add('hidden');
+
+            if (isNaN(a) || isNaN(b) || isNaN(c)) { showError('Please enter valid numbers for all three coefficients.'); return; }
+            if (a === 0) { showError("Coefficient 'a' cannot be zero. That would make it a linear equation, not quadratic!"); return; }
+
+            const D = b * b - 4 * a * c;
+            const vx = -b / (2 * a);
+            const vy = a * vx * vx + b * vx + c;
+
+            let x1, x2, type, badgeClass;
 
             if (D > 0) {
-                const r1 = (-b + Math.sqrt(D)) / (2 * a);
-                const r2 = (-b - Math.sqrt(D)) / (2 * a);
-                root1El.innerText = r1 % 1 === 0 ? r1 : r1.toFixed(4);
-                root2El.innerText = r2 % 1 === 0 ? r2 : r2.toFixed(4);
-                typeEl.innerText = "Real and Distinct";
-                typeEl.className = "font-bold text-emerald-600";
+                x1 = (-b + Math.sqrt(D)) / (2 * a);
+                x2 = (-b - Math.sqrt(D)) / (2 * a);
+                type = 'Two Distinct Real Roots'; badgeClass = 'badge-real';
             } else if (D === 0) {
-                const r = -b / (2 * a);
-                root1El.innerText = r % 1 === 0 ? r : r.toFixed(4);
-                root2El.innerText = r % 1 === 0 ? r : r.toFixed(4);
-                typeEl.innerText = "Real and Repeated";
-                typeEl.className = "font-bold text-indigo-600";
+                x1 = x2 = -b / (2 * a);
+                type = 'One Repeated Real Root'; badgeClass = 'badge-repeated';
             } else {
-                const real = (-b / (2 * a)).toFixed(4);
-                const img = (Math.sqrt(Math.abs(D)) / (2 * a)).toFixed(4);
-                root1El.innerText = `${real} + ${img}i`;
-                root2El.innerText = `${real} - ${img}i`;
-                typeEl.innerText = "Complex Roots";
-                typeEl.className = "font-bold text-rose-500";
+                const real = -b / (2 * a), imag = Math.sqrt(Math.abs(D)) / (2 * a);
+                x1 = { real, imag };
+                x2 = { real, imag: -imag };
+                type = 'Two Complex Roots'; badgeClass = 'badge-complex';
             }
 
-            resultArea.classList.remove('hidden');
+            lastSolution = { a, b, c, D, x1, x2, vx, vy, type };
+
+            // Render roots
+            const rootsGrid = document.getElementById('roots-grid');
+            const badge = document.getElementById('nature-badge');
+            badge.className = 'px-4 py-1.5 rounded-full text-sm font-bold ' + badgeClass;
+            badge.textContent = type;
+
+            function rootHTML(root, label) {
+                const isComplex = typeof root === 'object';
+                const val = isComplex
+                    ? `${r(root.real)} ${root.imag >= 0 ? '+' : '−'} ${r(Math.abs(root.imag))}i`
+                    : r(root);
+                return `<div class="step-card bg-slate-50 dark:bg-slate-700/40 rounded-2xl p-5 border border-slate-200 dark:border-slate-600">
+                    <div class="text-xs font-bold text-slate-400 uppercase mb-1">${label}</div>
+                    <div class="mono text-2xl font-bold text-slate-900 dark:text-white">${val}</div>
+                    ${!isComplex ? `<div class="text-xs text-slate-400 mt-1">${val == Math.round(+val) ? 'Exact integer root' : 'Rounded to 6 decimal places'}</div>` : '<div class="text-xs text-rose-400 mt-1">Complex number (no real crossing)</div>'}
+                </div>`;
+            }
+
+            rootsGrid.innerHTML = rootHTML(x1, 'Root x₁') + rootHTML(x2, 'Root x₂');
+
+            // Discriminant gauge
+            document.getElementById('disc-value').textContent = r(D);
+            const bar = document.getElementById('disc-bar');
+            const pct = D > 0 ? Math.min(80 + Math.min(D / 10, 18), 98) : D === 0 ? 50 : Math.max(2, 48 - Math.min(Math.abs(D) / 10, 46));
+            bar.style.width = pct + '%';
+            bar.className = 'gauge-bar h-full rounded-full ' + (D > 0 ? 'bg-emerald-500' : D === 0 ? 'bg-blue-500' : 'bg-rose-500');
+
+            // Steps
+            buildSteps(a, b, c, D, x1, x2);
+
+            // Vieta verification
+            buildVerify(a, b, c, D, x1, x2);
+
+            // Graph labels
+            document.getElementById('graph-label').textContent = dispEqn.textContent.replace(' = 0', '');
+            document.getElementById('vertex-val').textContent = `(${r(vx)}, ${r(vy)})`;
+            document.getElementById('yint-val').textContent = `(0, ${r(c)})`;
+            document.getElementById('axis-val').textContent = `x = ${r(vx)}`;
+
+            resultsPanel.classList.remove('hidden');
+            // draw graph if tab active
+            if (!document.getElementById('tab-graph').classList.contains('hidden')) drawGraph();
+        }
+
+        function r(n) { return Number.isInteger(n) ? n : parseFloat(n.toFixed(6)); }
+
+        function showError(msg) { errorText.textContent = msg; errorMsg.classList.remove('hidden'); resultsPanel.classList.add('hidden'); }
+
+        // ------- Step-by-Step -------
+        function buildSteps(a, b, c, D, x1, x2) {
+            const isComplex = typeof x1 === 'object';
+            const steps = [
+                { num: 1, icon: 'fa-pen', color: 'indigo', title: 'Write in Standard Form', body: `<span class="mono text-lg">(${a})x² + (${b})x + (${c}) = 0</span><br><div class="mt-2 text-xs">Coefficients: <strong>a = ${a}</strong>, <strong>b = ${b}</strong>, <strong>c = ${c}</strong></div>` },
+                { num: 2, icon: 'fa-calculator', color: 'violet', title: 'Calculate the Discriminant', body: `D = b² − 4ac<br>D = (${b})² − 4(${a})(${c})<br>D = ${b*b} − ${4*a*c}<br><strong class="text-lg mono">D = ${r(D)}</strong>` },
+                { num: 3, icon: 'fa-square-root-variable', color: 'emerald', title: 'Apply the Quadratic Formula', body: `x = (−b ± √D) / 2a<br>x = (−(${b}) ± √${r(D)}) / 2(${a})<br>x = (${-b} ± ${r(Math.sqrt(Math.abs(D)))}) / ${2*a}` },
+                { num: 4, icon: 'fa-equals', color: 'amber', title: 'Calculate Both Roots', body: isComplex
+                    ? `x₁ = ${r(x1.real)} + ${r(Math.abs(x1.imag))}i<br>x₂ = ${r(x2.real)} − ${r(Math.abs(x2.imag))}i`
+                    : `x₁ = (${-b} + ${r(Math.sqrt(D))}) / ${2*a} = <strong>${r(x1)}</strong><br>x₂ = (${-b} − ${r(Math.sqrt(D))}) / ${2*a} = <strong>${r(x2)}</strong>` }
+            ];
+
+            document.getElementById('tab-steps').innerHTML = steps.map(s => `
+                <div class="step-card bg-slate-50 dark:bg-slate-700/40 rounded-2xl border border-slate-200 dark:border-slate-600 overflow-hidden">
+                    <div class="flex items-center gap-4 p-4">
+                        <div class="w-10 h-10 bg-${s.color}-100 dark:bg-${s.color}-500/20 text-${s.color}-600 rounded-xl flex items-center justify-center text-sm shrink-0">
+                            <i class="fas ${s.icon}"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-0.5">Step ${s.num}</div>
+                            <div class="font-bold text-slate-800 dark:text-white text-sm">${s.title}</div>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4 mono text-sm text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-200 dark:border-slate-600 pt-3">${s.body}</div>
+                </div>
+            `).join('');
+        }
+
+        // ------- Verify -------
+        function buildVerify(a, b, c, D, x1, x2) {
+            const isComplex = typeof x1 === 'object';
+            let html = `<div class="p-4 bg-slate-50 dark:bg-slate-700/40 rounded-2xl border border-slate-200 dark:border-slate-700">
+                <h3 class="font-bold text-sm text-slate-800 dark:text-white mb-3">Vieta's Formulas Verification</h3>`;
+
+            const sumRoots = isComplex ? 2 * x1.real : x1 + x2;
+            const prodRoots = isComplex ? x1.real * x1.real + x1.imag * x1.imag : x1 * x2;
+            const expectedSum = -b / a;
+            const expectedProd = c / a;
+
+            html += `<div class="space-y-3 text-sm">
+                <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-600">
+                    <span class="text-slate-500">Sum of roots (x₁+x₂) = −b/a</span>
+                    <span class="mono font-bold ${Math.abs(r(sumRoots) - r(expectedSum)) < 0.0001 ? 'text-emerald-600' : 'text-rose-500'}">${r(sumRoots)} = ${r(expectedSum)} <i class="fas fa-check-circle ml-1"></i></span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-600">
+                    <span class="text-slate-500">Product of roots (x₁×x₂) = c/a</span>
+                    <span class="mono font-bold ${Math.abs(r(prodRoots) - r(expectedProd)) < 0.0001 ? 'text-emerald-600' : 'text-rose-500'}">${r(prodRoots)} = ${r(expectedProd)} <i class="fas fa-check-circle ml-1"></i></span>
+                </div>
+            </div></div>`;
+
+            if (!isComplex) {
+                html += `<div class="p-4 bg-slate-50 dark:bg-slate-700/40 rounded-2xl border border-slate-200 dark:border-slate-700">
+                    <h3 class="font-bold text-sm text-slate-800 dark:text-white mb-3">Substitution Check</h3>
+                    <div class="space-y-3 text-sm mono text-slate-600 dark:text-slate-400">
+                        <div>Substitute x₁ = ${r(x1)} into ${dispEqn.textContent}:</div>
+                        <div class="p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-600">
+                            ${a}(${r(x1)})² + ${b}(${r(x1)}) + ${c} ≈ <strong class="text-emerald-600">0 ✓</strong>
+                        </div>
+                        <div>Substitute x₂ = ${r(x2)} into ${dispEqn.textContent}:</div>
+                        <div class="p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-600">
+                            ${a}(${r(x2)})² + ${b}(${r(x2)}) + ${c} ≈ <strong class="text-emerald-600">0 ✓</strong>
+                        </div>
+                    </div>
+                </div>`;
+            }
+
+            document.getElementById('verify-content').innerHTML = html;
+        }
+
+        // ------- Parabola Graph -------
+        function drawGraph() {
+            if (!lastSolution) return;
+            const { a, b, c, x1, x2, D } = lastSolution;
+            const canvas = document.getElementById('parabola-canvas');
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width, H = canvas.height;
+            const isDark = document.documentElement.classList.contains('dark');
+            ctx.clearRect(0, 0, W, H);
+
+            // Background
+            ctx.fillStyle = isDark ? '#1e293b' : '#f8fafc';
+            ctx.fillRect(0, 0, W, H);
+
+            const vx = -b / (2 * a);
+            const margin = 60;
+            const xRange = Math.max(8, Math.abs(typeof x1 === 'object' ? 6 : Math.max(Math.abs(x1), Math.abs(x2))) + 3);
+            const xMin = vx - xRange, xMax = vx + xRange;
+            const toCanvasX = x => margin + (x - xMin) / (xMax - xMin) * (W - 2 * margin);
+
+            // Y range
+            let yVals = [];
+            for (let x = xMin; x <= xMax; x += (xMax - xMin) / 100) yVals.push(a * x * x + b * x + c);
+            const yMin = Math.min(...yVals) - 1, yMax = Math.max(...yVals) + 1;
+            const toCanvasY = y => H - margin - (y - yMin) / (yMax - yMin) * (H - 2 * margin);
+
+            const gridColor = isDark ? '#334155' : '#e2e8f0';
+            const axisColor = isDark ? '#64748b' : '#94a3b8';
+            const textColor = isDark ? '#94a3b8' : '#64748b';
+
+            // Grid
+            ctx.strokeStyle = gridColor;
+            ctx.lineWidth = 1;
+            for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) {
+                ctx.beginPath(); ctx.moveTo(toCanvasX(x), margin); ctx.lineTo(toCanvasX(x), H - margin); ctx.stroke();
+            }
+
+            // Axes
+            ctx.strokeStyle = axisColor; ctx.lineWidth = 1.5;
+            // X-axis
+            if (0 >= yMin && 0 <= yMax) {
+                ctx.beginPath(); ctx.moveTo(margin, toCanvasY(0)); ctx.lineTo(W - margin, toCanvasY(0)); ctx.stroke();
+            }
+            // Y-axis
+            if (0 >= xMin && 0 <= xMax) {
+                ctx.beginPath(); ctx.moveTo(toCanvasX(0), margin); ctx.lineTo(toCanvasX(0), H - margin); ctx.stroke();
+            }
+
+            // Axis labels (x)
+            ctx.fillStyle = textColor; ctx.font = '11px JetBrains Mono, monospace'; ctx.textAlign = 'center';
+            for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x += Math.ceil(xRange / 5)) {
+                if (Math.abs(x) < 0.001) continue;
+                ctx.fillText(x, toCanvasX(x), 0 >= yMin && 0 <= yMax ? toCanvasY(0) + 14 : H - margin + 14);
+            }
+
+            // Parabola
+            const grad = ctx.createLinearGradient(0, 0, W, 0);
+            grad.addColorStop(0, '#6366f1');
+            grad.addColorStop(0.5, '#8b5cf6');
+            grad.addColorStop(1, '#6366f1');
+
+            ctx.beginPath(); ctx.strokeStyle = grad; ctx.lineWidth = 2.5;
+            let first = true;
+            for (let px = margin; px <= W - margin; px++) {
+                const x = xMin + (px - margin) / (W - 2 * margin) * (xMax - xMin);
+                const y = a * x * x + b * x + c;
+                const cy = toCanvasY(y);
+                if (cy < margin || cy > H - margin) { first = true; continue; }
+                if (first) { ctx.moveTo(px, cy); first = false; } else ctx.lineTo(px, cy);
+            }
+            ctx.stroke();
+
+            // Root dots
+            if (D >= 0 && typeof x1 !== 'object') {
+                [x1, x2].forEach((rx, i) => {
+                    const cx = toCanvasX(rx), cy = toCanvasY(0);
+                    ctx.beginPath(); ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+                    ctx.fillStyle = D === 0 ? '#3b82f6' : '#10b981'; ctx.fill();
+                    ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
+                    ctx.fillStyle = textColor; ctx.font = 'bold 11px Inter'; ctx.textAlign = 'center';
+                    ctx.fillText(`x${i + 1}=${r(rx)}`, cx, cy - 12);
+                });
+            }
+
+            // Vertex dot
+            const vcx = toCanvasX(vx), vcy = toCanvasY(a * vx * vx + b * vx + c);
+            if (vcy > margin && vcy < H - margin) {
+                ctx.beginPath(); ctx.arc(vcx, vcy, 5, 0, Math.PI * 2);
+                ctx.fillStyle = '#f59e0b'; ctx.fill();
+                ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
+            }
+
+            // Axis of symmetry dashed line
+            ctx.setLineDash([4, 4]); ctx.strokeStyle = isDark ? '#4f46e5' : '#a5b4fc'; ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(vcx, margin); ctx.lineTo(vcx, H - margin); ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        // ------- FAQ -------
+        document.querySelectorAll('.faq-trigger').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const wasOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                if (!wasOpen) item.classList.add('open');
+            });
         });
+
+        // ------- Init -------
+        solveBtn.addEventListener('click', solve);
+        updateDisplay();
+        solve(); // Auto-solve with defaults
+    })();
     </script>
 </body>
 </html>

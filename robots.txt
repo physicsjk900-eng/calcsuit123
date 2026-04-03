@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap Location
-Sitemap: https://calcsuit.example.com/sitemap.xml
+Sitemap: https://calcsuit.com/sitemap.xml
 
 # Performance/Crawl delay
 Crawl-delay: 10

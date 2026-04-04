@@ -1,167 +1,231 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMI Calculator | CalcSuit</title>
-    <meta name="description" content="Free online BMI calculator. Calculate Body Mass Index.">
+
+    <!-- SEO Mastery -->
+    <title>BMI Calculator & Body Composition Analyzer | WHO Standards | CalcSuit</title>
+    <meta name="description" content="Calculate your Body Mass Index (BMI) precisely with our professional analyzer. Based on WHO and CDC standards. Includes healthy weight ranges and interactive body composition insights.">
+    <meta name="keywords" content="bmi calculator, body mass index, healthy weight calculator, are you overweight calculator, clinical bmi tool, body composition analyzer usa, who bmi standards">
+    <link rel="canonical" href="https://calcsuit.com/health/bmi-calculator.html">
+
+    <!-- Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Body Composition Analyzer",
+      "applicationCategory": "HealthApplication",
+      "description": "Calculates Body Mass Index (BMI) and provides health category classification based on WHO standards.",
+      "url": "https://calcsuit.com/health/bmi-calculator.html"
+    }
+    </script>
+
+    <!-- Tailwind & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
-                        indigo: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' },
-                        emerald: { 400: '#34d399', 500: '#10b981', 600: '#059669' },
-                        rose: { 100: '#ffe4e6', 200: '#fecdd3', 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 800: '#9f1239', 900: '#881337' }
-                    },
-                    fontFamily: { sans: ['Inter', 'sans-serif'] }
-                }
-            }
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
         }
     </script>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        .bmi-meter { height: 12px; border-radius: 999px; background: linear-gradient(90deg, #38bdf8 0%, #34d399 20%, #fbbf24 40%, #f87171 70%, #ef4444 100%); position: relative; margin: 30px 0; }
+        .bmi-marker { position: absolute; top: -14px; width: 4px; height: 40px; background: #1e293b; border-radius: 2px; transform: translateX(-50%); transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .dark .bmi-marker { background: #f8fafc; }
+        .category-pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .input-group input { font-size: 1.5rem; font-weight: 900; background: transparent; outline: none; text-align: center; width: 100%; }
+        .gender-tab.active { background: #6366f1; color: white; }
+    </style>
 </head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen">
 
-    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
+    <div id="sidebar-container"></div>
+
+    <main class="max-w-7xl mx-auto px-4 py-12 lg:px-10 space-y-12">
         
-        <!-- Calculator Section -->
-        <div id="calc-bmi" class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
-            <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">BMI <span class="text-rose-500 font-light">Calculator</span></h2>
-                    <p class="text-sm text-slate-500 dark:text-slate-400">Body Mass Index Assessment</p>
-                </div>
-                <div class="bg-rose-100/50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-rose-200 dark:border-rose-800/50 shadow-sm self-start sm:self-auto">
-                    <i class="fas fa-weight"></i> Health
+        <!-- Header -->
+        <div class="max-w-3xl space-y-4">
+            <div class="inline-flex items-center gap-2 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-100 dark:border-emerald-500/20">
+                <i class="fas fa-heartbeat"></i> Clinical Health Suite
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight">BMI <span class="text-emerald-500">Analyzer</span></h1>
+            <p class="text-slate-500 dark:text-slate-400 text-lg">Beyond a simple number. Find your health category based on the latest <strong>World Health Organization (WHO)</strong> standards for the US and European adult populations.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            
+            <!-- Left: Inputs -->
+            <div class="lg:col-span-5 space-y-6">
+                <div class="bg-white dark:bg-slate-800 rounded-[35px] border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm space-y-8">
+                    
+                    <div class="flex bg-slate-100 dark:bg-slate-900 rounded-2xl p-1 gap-1">
+                        <button class="gender-tab active flex-1 py-3 rounded-xl font-bold text-sm transition-all" data-gender="male">Male</button>
+                        <button class="gender-tab flex-1 py-3 rounded-xl font-bold text-sm transition-all text-slate-400" data-gender="female">Female</button>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="input-group space-y-2">
+                            <label class="text-[10px] font-black uppercase text-slate-400 tracking-widest block text-center">Height (cm)</label>
+                            <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-100 dark:border-slate-800">
+                                <input type="number" id="height-cm" value="180">
+                            </div>
+                        </div>
+                        <div class="input-group space-y-2">
+                            <label class="text-[10px] font-black uppercase text-slate-400 tracking-widest block text-center">Weight (kg)</label>
+                            <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-100 dark:border-slate-800">
+                                <input type="number" id="weight-kg" value="75">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group space-y-2">
+                        <label class="text-[10px] font-black uppercase text-slate-400 tracking-widest block text-center">Age (Years)</label>
+                        <input type="range" id="age-range" min="18" max="100" value="30" class="w-full accent-emerald-500">
+                        <p class="text-center text-sm font-bold text-slate-500" id="age-val">30 Years</p>
+                    </div>
+
+                    <p class="text-[10px] text-slate-400 italic text-center leading-relaxed">"Note: BMI is a screening tool. It does not account for muscle mass or bone density (e.g. athletes)."</p>
                 </div>
             </div>
 
-            <div class="space-y-6">
-                <!-- Settings -->
-                <div class="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-700/50">
-                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Unit System</label>
-                    <select id="bmi-unit" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-semibold outline-none focus:ring-2 focus:ring-rose-500/20">
-                        <option value="metric">Metric (kg / cm)</option>
-                        <option value="imperial">Imperial (lbs / in)</option>
-                    </select>
+            <!-- Right: Results Visualizer -->
+            <div class="lg:col-span-7 space-y-8">
+                
+                <div class="bg-white dark:bg-slate-800 rounded-[35px] border border-slate-200 dark:border-slate-700 p-8 md:p-12 shadow-sm relative overflow-hidden">
+                    <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-10">
+                        <div class="text-center md:text-left space-y-2">
+                            <p class="text-xs font-black uppercase tracking-widest text-slate-400">Your Current BMI</p>
+                            <div id="res-bmi" class="text-8xl md:text-[120px] leading-none font-black text-emerald-500 drop-shadow-sm">23.1</div>
+                            <div id="cat-pill" class="category-pill bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">Normal Weight</div>
+                        </div>
+                        
+                        <div class="w-full md:w-64 space-y-6">
+                            <div class="space-y-1">
+                                <p class="text-xs font-bold">Ideal Weight Range</p>
+                                <p id="res-ideal-range" class="text-lg font-black text-slate-900 dark:text-white">60.2 kg – 81.3 kg</p>
+                            </div>
+                            <div class="p-5 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
+                                <p class="text-[11px] font-bold text-slate-400 mb-2">Health Perspective</p>
+                                <p id="res-health-desc" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed italic">"You are within a healthy clinical weight range for your height. Maintain a balanced diet and regular exercise."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bmi-meter">
+                        <div id="bmi-marker" class="bmi-marker"></div>
+                    </div>
+                    <div class="flex justify-between text-[9px] font-bold text-slate-400 uppercase tracking-widest px-2">
+                        <span>Underweight</span>
+                        <span>Healthy</span>
+                        <span>Overweight</span>
+                        <span>Obese</span>
+                    </div>
                 </div>
 
-                <!-- Input Grid -->
+                <!-- Deep Educational Content -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Weight</label>
-                        <div class="relative">
-                            <input type="number" id="bmi-weight" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 font-bold text-lg" placeholder="70">
-                            <span id="bmi-weight-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs">kg</span>
-                        </div>
+                    <div class="glass-card p-8 rounded-3xl border-t-4 border-t-blue-400">
+                        <h4 class="font-black text-sm mb-3">Does BMI Measure Fat?</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed"><strong>No.</strong> BMI measures excess weight rather than excess body fat. However, for most adults, BMI is highly correlated with total body fat. It is a vital <strong>preliminary screening tool</strong> for health risks related to chronic heart disease, Type 2 diabetes, and high blood pressure in Western populations.</p>
                     </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Height</label>
-                        <div class="relative">
-                            <input type="number" id="bmi-height" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 font-bold text-lg" placeholder="175">
-                            <span id="bmi-height-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs">cm</span>
-                        </div>
-                    </div>
-                </div>
-
-                <button id="calc-btn-bmi" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-rose-500/25 transition-all active:scale-95">
-                    Calculate BMI
-                </button>
-
-                <!-- Result Area -->
-                <div id="bmi-results-area" class="hidden opacity-0 space-y-4 transition-all duration-500">
-                    <div class="bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-800/50 rounded-2xl p-6">
-                        <span class="text-xs font-bold text-rose-500 uppercase tracking-widest mb-1 block">Your BMI Score</span>
-                        <div class="flex items-baseline gap-3">
-                            <span id="bmi-output-val" class="text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">--</span>
-                            <span id="bmi-output-cat" class="text-lg font-bold text-rose-600 dark:text-rose-400">---</span>
-                        </div>
-                        <!-- BMI Scale -->
-                        <div class="relative mt-8 mb-4">
-                            <!-- Pointer -->
-                            <div id="bmi-pointer" class="absolute top-[-10px] left-0 -translate-x-1/2 transition-all duration-700 ease-out z-10">
-                                <div class="w-3 h-3 bg-slate-800 dark:bg-white rotate-45 mb-1 mx-auto shadow-sm"></div>
-                            </div>
-                            <!-- Bar -->
-                            <div class="w-full bg-slate-200 dark:bg-slate-700 h-3 rounded-full overflow-hidden flex shadow-inner relative">
-                                <div class="h-full bg-blue-400 w-[24.3%] border-r border-white/10" title="Underweight"></div>
-                                <div class="h-full bg-emerald-400 w-[18.6%] border-r border-white/10" title="Healthy"></div>
-                                <div class="h-full bg-orange-400 w-[14.3%] border-r border-white/10" title="Overweight"></div>
-                                <div class="h-full bg-rose-500 w-[42.8%]" title="Obese"></div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between px-1 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                            <span class="w-[24.3%] text-center">Under</span>
-                            <span class="w-[18.6%] text-center">Healthy</span>
-                            <span class="w-[14.3%] text-center">Over</span>
-                            <span class="w-[42.8%] text-center">Obese</span>
-                        </div>
+                    <div class="glass-card p-8 rounded-3xl border-t-4 border-t-amber-400">
+                        <h4 class="font-black text-sm mb-3">Wait, I am a Bodybuilder?</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">If you have high muscle mass (athletes/powerlifters), your BMI may fall into the "Overweight" category even if your body fat is low. In this case, doctors recommend measuring <strong>Waist-to-Hip Ratio</strong> or skinfold thickness for a more accurate health picture.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SEO Content Section -->
-        <div class="w-full max-w-2xl mt-12 space-y-8 pb-20">
-            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
-                <h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">BMI Calculator – Professional Online Tool</h1>
-                <div class="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 space-y-4">
-                    <p>
-                        A <strong>BMI calculator</strong> (Body Mass Index) is a universally recognized screening tool used by healthcare professionals and individuals to quickly assess if a person's body weight is appropriate for their height.
-                    </p>
-                    <p>
-                        Our <strong>free online BMI calculator</strong> provides instant classification into clinical categories including Underweight, Normal, Overweight, and Obese, helping you monitor your health goals with precision.
-                    </p>
-                </div>
-            </section>
-
-            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-                    <i class="fas fa-calculator text-rose-500"></i>
-                    The Mathematical formula
-                </h2>
-                <div class="bg-slate-50 dark:bg-slate-900/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-800">
-                    <p class="text-sm font-mono text-slate-700 dark:text-slate-300 text-center">BMI = Weight (kg) / [Height (m)]²</p>
-                </div>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
-                    BMI is a proxy for body fatness. While it doesn't measure body fat directly, research has shown that BMI is moderately correlated with more direct measures of body fat obtained from skinfold thickness measurements, bioelectrical impedance, underwater weighing, and other methods.
-                </p>
-            </section>
-
-            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">World Health Organization Categories</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="flex justify-between p-3 border-b border-slate-100 dark:border-slate-700 text-sm">
-                        <span class="text-slate-500">Underweight</span>
-                        <span class="font-bold text-blue-500">< 18.5</span>
-                    </div>
-                    <div class="flex justify-between p-3 border-b border-slate-100 dark:border-slate-700 text-sm">
-                        <span class="text-slate-500">Normal Weight</span>
-                        <span class="font-bold text-emerald-500">18.5 – 24.9</span>
-                    </div>
-                    <div class="flex justify-between p-3 border-b border-slate-100 dark:border-slate-700 text-sm">
-                        <span class="text-slate-500">Overweight</span>
-                        <span class="font-bold text-orange-500">25.0 – 29.9</span>
-                    </div>
-                    <div class="flex justify-between p-3 border-b border-slate-100 dark:border-slate-700 text-sm">
-                        <span class="text-slate-500">Obese</span>
-                        <span class="font-bold text-rose-500">> 30.0</span>
-                    </div>
-                </div>
-            </section>
+        <!-- SEO Content / WHO Table -->
+        <div class="max-w-4xl mx-auto space-y-12 pt-12 border-t border-slate-200 dark:border-slate-800">
+            <h2 class="text-3xl font-black text-center">Standard BMI Classifications (WHO)</h2>
+            <div class="overflow-x-auto rounded-3xl border border-slate-100 dark:border-slate-800">
+                <table class="w-full text-left bg-white dark:bg-slate-800">
+                    <thead class="bg-slate-50 dark:bg-slate-900/50 text-xs font-black uppercase tracking-widest text-slate-400">
+                        <tr>
+                            <th class="px-8 py-5">BMI Range</th>
+                            <th class="px-8 py-5">Classification</th>
+                            <th class="px-8 py-5">Health Risk</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr class="border-b border-slate-50 dark:border-slate-800/50"><td class="px-8 py-4 font-bold">Below 18.5</td><td class="px-8 py-4">Underweight</td><td class="px-8 py-4 text-amber-500">Increased risk</td></tr>
+                        <tr class="border-b border-slate-50 dark:border-slate-800/50"><td class="px-8 py-4 font-bold">18.5 – 24.9</td><td class="px-8 py-4">Normal Weight</td><td class="px-8 py-4 text-emerald-500">Optimal</td></tr>
+                        <tr class="border-b border-slate-50 dark:border-slate-800/50"><td class="px-8 py-4 font-bold">25.0 – 29.9</td><td class="px-8 py-4">Overweight</td><td class="px-8 py-4 text-orange-500">Increased risk</td></tr>
+                        <tr><td class="px-8 py-4 font-bold">30.0 and Above</td><td class="px-8 py-4">Obese</td><td class="px-8 py-4 text-rose-500">High risk</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
     </main>
 
     <script src="../js/layout.js"></script>
-    <script src="../js/calculators/core.js"></script>
-    <script src="../js/calculators/bmi.js"></script>
+    <script>
+        const $ = id => document.getElementById(id);
+        
+        function calculate() {
+            const height = parseFloat($('height-cm').value) / 100 || 0;
+            const weight = parseFloat($('weight-kg').value) || 0;
+            const age = $('age-range').value;
+            $('age-val').innerText = age + ' Years';
+
+            if (height === 0) return;
+
+            const bmi = (weight / (height * height)).toFixed(1);
+            $('res-bmi').innerText = bmi;
+
+            // Update categories and visuals
+            let cat = '', color = '', desc = '', markerPos = 0;
+
+            if (bmi < 18.5) {
+                cat = 'Underweight'; color = 'text-sky-500'; bg= 'bg-sky-100 dark:bg-sky-900/30';
+                desc = '"You are currently below the healthy clinical weight range. Consultation with a nutritionist is advised."';
+                markerPos = (bmi / 18.5) * 20;
+            } else if (bmi < 25) {
+                cat = 'Normal Weight'; color = 'text-emerald-500'; bg= 'bg-emerald-100 dark:bg-emerald-900/30';
+                desc = '"You are within a healthy clinical weight range for your height. Maintain your current balanced lifestyle."';
+                markerPos = 20 + ((bmi - 18.5) / 6.5) * 20;
+            } else if (bmi < 30) {
+                cat = 'Overweight'; color = 'text-amber-500'; bg= 'bg-amber-100 dark:bg-amber-900/30';
+                desc = '"You are slightly above the healthy range. Improving activity levels and diet can help lower health risks."';
+                markerPos = 40 + ((bmi - 25) / 5) * 30;
+            } else {
+                cat = 'Obese'; color = 'text-rose-500'; bg= 'bg-rose-100 dark:bg-rose-900/30';
+                desc = '"You are in the obese category. This is associated with higher risks for chronic conditions like diabetes and heart disease."';
+                markerPos = 70 + (Math.min(10, bmi - 30) / 10) * 30;
+            }
+
+            const pill = $('cat-pill');
+            pill.innerText = cat;
+            pill.className = `category-pill ${bg} ${color}`;
+            $('res-bmi').className = `text-8xl md:text-[120px] leading-none font-black ${color} drop-shadow-sm`;
+            $('res-health-desc').innerText = desc;
+            $('bmi-marker').style.left = Math.min(100, Math.max(0, markerPos)) + '%';
+
+            // Ideal Weight Range
+            const minW = (18.5 * (height * height)).toFixed(1);
+            const maxW = (24.9 * (height * height)).toFixed(1);
+            $('res-ideal-range').innerText = `${minW} kg – ${maxW} kg`;
+        }
+
+        [$('height-cm'), $('weight-kg'), $('age-range')].forEach(el => el.addEventListener('input', calculate));
+        
+        document.querySelectorAll('.gender-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.gender-tab').forEach(t => t.classList.remove('active', 'text-slate-400'));
+                tab.classList.add('active');
+                calculate();
+            });
+        });
+
+        calculate();
+    </script>
 </body>
-
-
 </html>

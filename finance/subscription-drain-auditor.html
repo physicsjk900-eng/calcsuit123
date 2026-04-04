@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
+    <title>SaaS Subscription Drain Auditor | Is My Subscription Worth It? | CalcSuit</title>
+    <meta name="description" content="Audit your monthly subscriptions. Calculate how much your Netflix, Spotify, and SaaS subs cost you over 10, 20, and 30 years, including the opportunity cost of investing that money.">
+    <meta name="keywords" content="subscription cost calculator, saas drain auditor, is netflix worth it calculator, how much do i spend on subscriptions, subscription creep auditor, wealth drain tool">
+    <link rel="canonical" href="https://calcsuit.com/finance/subscription-drain-auditor.html">
+
+    <!-- Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "SaaS Subscription Drain Auditor",
+      "description": "Premium tool to track subscription spending and calculate long-term wealth impact and opportunity costs.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "url": "https://calcsuit.com/finance/subscription-drain-auditor.html",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Tailwind & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sub-row { transition: all 0.3s ease; }
+        .sub-row:hover { background: rgba(99, 102, 241, 0.05); }
+        .loss-gradient { background: linear-gradient(135deg, #ef4444 0%, #991b1b 100%); }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen">
+
+    <div id="sidebar-container"></div>
+
+    <main class="max-w-5xl mx-auto px-4 py-12 space-y-12">
+        
+        <!-- Header -->
+        <div class="text-center space-y-4">
+            <div class="inline-flex items-center gap-2 bg-rose-100 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest"><i class="fas fa-eye"></i> Subscription Leak Audit</div>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-tight">The SaaS <span class="text-rose-600 dark:text-rose-400">Subscription</span> Drain</h1>
+            <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto text-lg">Calculate the true "Wealth Drain" of your monthly habits. A $20 subscription isn't $20—it's <strong>thousands</strong> in lost investment potential.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left: Auditor Input -->
+            <div class="lg:col-span-7 space-y-6">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 shadow-sm space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-bold flex items-center gap-3"><i class="fas fa-list text-indigo-500"></i> Audit Your Subs</h2>
+                        <button id="add-sub-btn" class="bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 px-4 py-2 rounded-xl text-xs font-bold hover:bg-indigo-100 transition-all">+ Add Item</button>
+                    </div>
+
+                    <div id="subs-list" class="space-y-4">
+                        <!-- Default Initial Item -->
+                        <div class="sub-row flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-700">
+                            <input type="text" placeholder="e.g. Netflix" class="flex-1 bg-transparent border-none outline-none font-bold text-sm sub-name">
+                            <div class="flex items-center bg-white dark:bg-slate-800 rounded-lg px-2 border border-slate-200 dark:border-slate-600">
+                                <span class="text-xs text-slate-400 mr-1">$</span>
+                                <input type="number" value="15.99" class="w-16 bg-transparent py-2 text-sm font-bold sub-amount outline-none">
+                            </div>
+                            <select class="bg-transparent text-xs font-bold sub-freq outline-none">
+                                <option value="1">Monthly</option>
+                                <option value="12">Yearly</option>
+                            </select>
+                            <button class="remove-sub text-slate-300 hover:text-rose-500 transition-all p-2"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-6 border-t border-slate-100 dark:border-slate-700">
+                        <div class="flex items-center justify-between text-lg font-black italic">
+                            <span class="text-slate-500">Monthly Burn:</span>
+                            <span id="monthly-burn-total" class="text-rose-600 dark:text-rose-400">$15.99</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Opportunity Cost Config -->
+                <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 shadow-sm space-y-4">
+                    <h2 class="text-sm font-bold uppercase tracking-widest text-slate-400">The "What If?" Logic</h2>
+                    <div class="flex items-center justify-between">
+                        <label class="text-sm font-bold">Invested Return Rate (%)</label>
+                        <input type="number" id="return-rate" value="10" class="w-20 bg-slate-50 dark:bg-slate-700 p-2 rounded-lg text-center font-bold outline-none">
+                    </div>
+                    <p class="text-[10px] text-slate-400">10% is the long-term average annual return of the S&P 500 in the USA.</p>
+                </div>
+            </div>
+
+            <!-- Right: The "Wealth Trap" Analysis -->
+            <div class="lg:col-span-5">
+                <div class="sticky top-24 space-y-6">
+                    
+                    <div class="loss-gradient rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden">
+                        <div class="relative z-10 space-y-2">
+                            <p class="text-rose-100 font-bold uppercase tracking-wider text-[10px]">30-Year Wealth Loss</p>
+                            <h3 id="wealth-loss-30" class="text-5xl font-black">$35,420</h3>
+                            <p class="text-xs text-rose-100/70 italic">"This is how much poorer you will be in 30 years if you keep these subscriptions."</p>
+                        </div>
+                        <i class="fas fa-chart-line absolute -bottom-4 -right-4 text-9xl text-white/10"></i>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 shadow-sm">
+                        <h4 class="font-bold mb-6 text-slate-500 text-sm">Long-Term Impact Breakdown</h4>
+                        <div class="space-y-6">
+                            <div class="flex justify-between items-end">
+                                <div class="space-y-1">
+                                    <p class="text-xs text-slate-400">10 Years</p>
+                                    <p id="loss-10" class="text-xl font-bold">$4,860</p>
+                                </div>
+                                <div class="w-24 bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden mb-1">
+                                    <div class="bg-rose-400 h-full w-[15%]"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-end">
+                                <div class="space-y-1">
+                                    <p class="text-xs text-slate-400">20 Years</p>
+                                    <p id="loss-20" class="text-xl font-bold">$12,450</p>
+                                </div>
+                                <div class="w-24 bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden mb-1">
+                                    <div class="bg-rose-500 h-full w-[40%]"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-end">
+                                <div class="space-y-1">
+                                    <p class="text-xs font-bold text-rose-500">Reality Check</p>
+                                    <p class="text-[10px] text-slate-400 italic">"Cancel just two $15 subs = Buy a new car cash in 25 years."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12 border-t border-slate-200 dark:border-slate-800">
+            <div class="space-y-4">
+                <h3 class="text-2xl font-black">Why Subscriptions are "Wealth Killers"</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">
+                    Companies in the USA and Europe have moved away from "One-time purchases" to subscriptions because it exploits a psychological glitch called <strong>Subscription Decay</strong>. Once we stop seeing the price tag as a major expense, we forget that every $10/mo sub is actually a massive withdrawal from our future retirement fund thanks to the power of compound interest.
+                </p>
+            </div>
+            <div class="bg-slate-100 dark:bg-slate-800/80 p-8 rounded-3xl space-y-4 border border-slate-200 dark:border-slate-700">
+                <h4 class="font-bold text-slate-400 uppercase tracking-tighter text-xs">The Auditor's Rule of Thumb</h4>
+                <div class="space-y-3">
+                    <p class="text-sm font-bold italic">"If you haven't used it for 30 days, cancel it. You can always re-subscribe later."</p>
+                    <p class="text-xs text-slate-500">Did you know? Americans spend on average **$219 per month** on subscriptions, which is **$2,628 per year**. Over 20 years, that would be worth over **$150,000** in a diversified investment portfolio.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/layout.js"></script>
+    <script>
+        const subsList = document.getElementById('subs-list');
+        const addSubBtn = document.getElementById('add-sub-btn');
+
+        function calculate() {
+            let monthlyTotal = 0;
+            const amounts = document.querySelectorAll('.sub-amount');
+            const freqs = document.querySelectorAll('.sub-freq');
+            
+            amounts.forEach((amt, i) => {
+                const val = parseFloat(amt.value) || 0;
+                const freq = parseFloat(freqs[i].value);
+                monthlyTotal += (freq === 1) ? val : (val / 12);
+            });
+
+            document.getElementById('monthly-burn-total').innerText = `$${monthlyTotal.toFixed(2)}`;
+
+            const rate = (parseFloat(document.getElementById('return-rate').value) / 100) / 12;
+            const fmt = (n) => `$${Math.round(n).toLocaleString()}`;
+
+            function getFutureValue(months) {
+                if (rate === 0) return monthlyTotal * months;
+                return monthlyTotal * ((Math.pow(1 + rate, months) - 1) / rate);
+            }
+
+            document.getElementById('wealth-loss-30').innerText = fmt(getFutureValue(360));
+            document.getElementById('loss-10').innerText = fmt(getFutureValue(120));
+            document.getElementById('loss-20').innerText = fmt(getFutureValue(240));
+        }
+
+        addSubBtn.addEventListener('click', () => {
+            const div = document.createElement('div');
+            div.className = 'sub-row flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-700';
+            div.innerHTML = `
+                <input type="text" placeholder="Service Name" class="flex-1 bg-transparent border-none outline-none font-bold text-sm sub-name">
+                <div class="flex items-center bg-white dark:bg-slate-800 rounded-lg px-2 border border-slate-200 dark:border-slate-600">
+                    <span class="text-xs text-slate-400 mr-1">$</span>
+                    <input type="number" value="10.00" class="w-16 bg-transparent py-2 text-sm font-bold sub-amount outline-none">
+                </div>
+                <select class="bg-transparent text-xs font-bold sub-freq outline-none">
+                    <option value="1">Monthly</option>
+                    <option value="12">Yearly</option>
+                </select>
+                <button class="remove-sub text-slate-300 hover:text-rose-500 transition-all p-2"><i class="fas fa-trash"></i></button>
+            `;
+            subsList.appendChild(div);
+            attachEvents(div);
+            calculate();
+        });
+
+        function attachEvents(row) {
+            row.querySelector('.sub-amount').addEventListener('input', calculate);
+            row.querySelector('.sub-freq').addEventListener('change', calculate);
+            row.querySelector('.remove-sub').addEventListener('click', () => {
+                row.remove();
+                calculate();
+            });
+        }
+
+        document.getElementById('return-rate').addEventListener('input', calculate);
+        attachEvents(subsList.children[0]);
+        calculate();
+    </script>
+</body>
+</html>

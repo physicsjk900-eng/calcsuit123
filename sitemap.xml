@@ -525,10 +525,27 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calcsuit.com/productivity/circadian-router.html</loc>
+    <loc>https://calcsuit.com/productivity/circadian-rhythm-energy-calculator.html</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
+  <url>
+    <loc>https://calcsuit.com/productivity/commute-cost-calculator.html</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calcsuit.com/finance/subscription-drain-auditor.html</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calcsuit.com/productivity/brand-deal-calculator.html</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
 </urlset>

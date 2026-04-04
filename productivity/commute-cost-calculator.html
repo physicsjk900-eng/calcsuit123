@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO: Targeting "Is my commute worth it" and "Remote vs Office salary calculator" -->
+    <title>Remote Work vs. Office Cost Calculator | Is Your Commute Worth It? | CalcSuit</title>
+    <meta name="description" content="Calculate the true cost of your office commute. Compare remote vs. office salaries by factoring in gas, car depreciation, food, and the opportunity cost of your time. Find your 'True Hourly Rate'.">
+    <meta name="keywords" content="commute cost calculator, is my office commute worth it, remote vs office salary calculator, true cost of working in office, commute time value, work from home savings">
+    <meta name="author" content="CalcSuit">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://calcsuit.com/productivity/commute-cost-calculator.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="True Cost of Commute Calculator | CalcSuit">
+    <meta property="og:description" content="Stop ignoring the hidden costs of your office job. See how much your commute actually costs you in time and money.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://calcsuit.com/productivity/commute-cost-calculator.html">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Remote vs Office Cost Arbitrage Calculator",
+      "description": "Premium tool to calculate the hidden financial and time costs of a daily office commute compared to remote work.",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "All",
+      "url": "https://calcsuit.com/productivity/commute-cost-calculator.html",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Tailwind & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .result-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; transform: translateY(20px); }
+        .result-card.visible { opacity: 1; transform: translateY(0); }
+        .input-accent:focus { box-shadow: 0 0 0 2px #6366f1; border-color: #6366f1; }
+        .currency-symbol::before { content: attr(data-currency); color: #94a3b8; margin-right: 4px; }
+        .gauge-bar { transition: width 1s ease-in-out; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen">
+
+    <div id="sidebar-container"></div>
+
+    <main class="max-w-5xl mx-auto px-4 py-12 space-y-12">
+        
+        <!-- Header -->
+        <div class="text-center space-y-4">
+            <div class="inline-flex items-center gap-2 bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest"><i class="fas fa-home"></i> Remote vs Office Arbitrage</div>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-tight">The "Is My Commute<br>Worth It?" <span class="text-indigo-600 dark:text-indigo-400">Calculator</span></h1>
+            <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">Most people lose <strong>$8,000 – $15,000</strong> a year in hidden office costs. Find out your "True Hourly Rate" after factoring in time, travel, and taxes.</p>
+        </div>
+
+        <!-- Calculator Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left: Inputs -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- Section: Income & Time -->
+                <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 shadow-sm space-y-6">
+                    <h2 class="text-xl font-bold flex items-center gap-3"><i class="fas fa-wallet text-indigo-500"></i> Income & Working Hours</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide">Annual Salary ($/£/€)</label>
+                            <input type="number" id="annual-salary" value="75000" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-4 py-3.5 font-bold focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide">Work Days Per Week</label>
+                            <input type="number" id="work-days" value="5" max="7" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-4 py-3.5 font-bold focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide">Daily Commute Time (Total Mins)</label>
+                            <input type="number" id="commute-mins" value="60" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-4 py-3.5 font-bold focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide">Daily Commute Miles/KM (Round Trip)</label>
+                            <input type="number" id="commute-miles" value="30" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-4 py-3.5 font-bold focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Expenses -->
+                <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 shadow-sm space-y-6">
+                    <h2 class="text-xl font-bold flex items-center gap-3"><i class="fas fa-receipt text-emerald-500"></i> Daily Variable Expenses</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-slate-600 dark:text-slate-400">Coffee/Lunch/Snacks ($ per day)</label>
+                            <input type="number" id="daily-food" value="15" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-4 py-3.5 font-bold focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-slate-600 dark:text-slate-400">Public Transit/Parking ($ per day)</label>
+                            <input type="number" id="daily-transit" value="0" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-4 py-3.5 font-bold focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                    </div>
+                    <div class="p-4 bg-indigo-50 dark:bg-indigo-500/10 rounded-2xl flex items-start gap-4">
+                        <i class="fas fa-info-circle text-indigo-500 mt-1"></i>
+                        <p class="text-xs text-indigo-800 dark:text-indigo-300 leading-relaxed font-medium">
+                            <strong class="block mb-1">Car Ownership Logic:</strong> We use the **IRS Standard Rate ($0.67/mile)** to account for fuel, maintenance, and depreciation. This is more accurate than just counting fuel.
+                        </p>
+                    </div>
+                </div>
+
+                <button id="calculate-btn" class="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-extrabold py-5 rounded-3xl shadow-xl shadow-indigo-500/20 text-xl transition-all transform active:scale-95 flex items-center justify-center gap-3">
+                    <i class="fas fa-bolt"></i> Run Financial Audit
+                </button>
+            </div>
+
+            <!-- Right: Results Dashboard -->
+            <div id="results-panel" class="lg:col-span-5 hidden">
+                <div class="sticky top-24 space-y-6">
+                    
+                    <!-- Result 1: The Verdict -->
+                    <div class="bg-indigo-600 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden result-card">
+                        <div class="relative z-10 space-y-3">
+                            <p class="text-indigo-100 font-bold uppercase tracking-wider text-xs">Annual Commute Tax</p>
+                            <h3 id="annual-loss" class="text-5xl font-black">-$12,450</h3>
+                            <p class="text-sm text-indigo-100/80">That's how much of your "Salary" vanishes into your commute every year.</p>
+                        </div>
+                        <i class="fas fa-road absolute -bottom-4 -right-4 text-9xl text-indigo-500/20"></i>
+                    </div>
+
+                    <!-- Result 2: Hourly Rate -->
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 shadow-sm result-card" style="transition-delay: 100ms">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="font-bold text-slate-500">Rate Comparison</h4>
+                            <span class="bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full text-xs font-bold">Standard vs True</span>
+                        </div>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-400">Advertised Hourly</span>
+                                    <span id="label-advertised" class="font-bold">$36.06/hr</span>
+                                </div>
+                                <div class="w-full bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-slate-300 dark:bg-slate-600 h-full w-full"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="text-indigo-500 font-bold">Your TRUE Hourly</span>
+                                    <span id="label-true" class="font-bold text-indigo-600 dark:text-indigo-400">$29.12/hr</span>
+                                </div>
+                                <div class="w-full bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                                    <div id="true-gauge" class="bg-indigo-500 h-full gauge-bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result 3: Time Lost -->
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 shadow-sm result-card" style="transition-delay: 200ms">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-amber-100 dark:bg-amber-500/10 text-amber-600 flex items-center justify-center rounded-2xl text-2xl">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Time Arbitrage</p>
+                                <h4 id="time-lost" class="text-2xl font-black">260 Hours/Year</h4>
+                                <p class="text-xs text-slate-500">That's 10 full days lost to the road.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Educational Content Section / SEO Optimization -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-12 border-t border-slate-200 dark:border-slate-800">
+            <div class="space-y-6">
+                <h3 class="text-2xl font-extrabold">The "Hidden Salary" Strategy</h3>
+                <p class="text-slate-500 leading-relaxed">
+                    Most workers in the USA and Europe only look at the number on their paystub. But an office job requires an <strong>"Entrance Fee"</strong>. Between gas, insurance, depreciation of your vehicle, and the fact that you aren't paid for the 260+ hours you spend sitting in traffic, the real value of your work changes drastically.
+                </p>
+                <ul class="space-y-3 text-sm font-medium">
+                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-indigo-500"></i> Factor in the IRS Standard Mileage Rate ($0.67/mile)</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-indigo-500"></i> Value your commute time at your full hourly rate</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-indigo-500"></i> Include social costs like work lunches and clothing</li>
+                </ul>
+            </div>
+            <div class="bg-slate-100 dark:bg-slate-800/50 rounded-3xl p-8 space-y-4">
+                <h4 class="font-black uppercase tracking-widest text-xs text-slate-400">Pro Advice</h4>
+                <p class="font-bold text-xl italic text-slate-600 dark:text-slate-300">
+                    "A remote job paying $65,000 is often mathematically superior to an in-office job paying $80,000."
+                </p>
+                <p class="text-sm text-slate-500">
+                    Why? Because the $15k gap is almost entirely eaten by expenses and 250+ hours of unpaid commute time.
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="../js/layout.js"></script>
+    <script>
+        document.getElementById('calculate-btn').addEventListener('click', function() {
+            const salary = parseFloat(document.getElementById('annual-salary').value) || 0;
+            const workDays = parseFloat(document.getElementById('work-days').value) || 0;
+            const commuteMins = parseFloat(document.getElementById('commute-mins').value) || 0;
+            const commuteMiles = parseFloat(document.getElementById('commute-miles').value) || 0;
+            const dailyFood = parseFloat(document.getElementById('daily-food').value) || 0;
+            const dailyTransit = parseFloat(document.getElementById('daily-transit').value) || 0;
+
+            const weeks = 52;
+            const annualWorkDays = workDays * weeks;
+            
+            // Standard Hourly (Assumes 40h week / 2080h year)
+            const standardHourly = salary / 2080;
+
+            // 1. HARD COST: Fuel, Wear, Parking, Food
+            const irsRate = 0.67;
+            const dailyHardCost = (commuteMiles * irsRate) + dailyFood + dailyTransit;
+            const annualHardCost = dailyHardCost * annualWorkDays;
+
+            // 2. TIME COST: Opportunity cost of commute
+            const annualCommuteHours = (commuteMins / 60) * annualWorkDays;
+            const timeCost = annualCommuteHours * standardHourly;
+
+            // 3. TOTAL LOSS
+            const totalAnnualLoss = annualHardCost + timeCost;
+            
+            // 4. TRUE HOURLY RATE
+            // Actual money made (Salary - Hard Costs) / (Work Hours + Commute Hours)
+            const actualEarnings = salary - annualHardCost;
+            const actualTotalHours = 2080 + annualCommuteHours;
+            const trueHourly = actualEarnings / actualTotalHours;
+
+            // UI UPDATES
+            document.getElementById('results-panel').classList.remove('hidden');
+            
+            // Numbers
+            document.getElementById('annual-loss').innerText = `-$${Math.round(totalAnnualLoss).toLocaleString()}`;
+            document.getElementById('label-advertised').innerText = `$${standardHourly.toFixed(2)}/hr`;
+            document.getElementById('label-true').innerText = `$${trueHourly.toFixed(2)}/hr`;
+            document.getElementById('time-lost').innerText = `${Math.round(annualCommuteHours)} Hours/Year`;
+
+            // Gauge
+            const perc = (trueHourly / standardHourly) * 100;
+            setTimeout(() => {
+                document.getElementById('true-gauge').style.width = perc + '%';
+                document.querySelectorAll('.result-card').forEach(c => c.classList.add('visible'));
+            }, 100);
+        });
+    </script>
+</body>
+</html>

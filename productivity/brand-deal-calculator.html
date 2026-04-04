@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Mastery -->
+    <title>Sponsorship Architect | Content Creator Brand Deal Price Tool | CalcSuit</title>
+    <meta name="description" content="Calculate your fair market value for brand deals and sponsorships. Factors in platform CPM, audience engagement, production costs, and usage rights for YouTube, TikTok, and Instagram.">
+    <meta name="keywords" content="brand deal calculator, influencer rate calculator, youtube sponsorship price, tiktok brand deal tool, creator roi calculator, sponsorship revenue planner">
+    <link rel="canonical" href="https://calcsuit.com/productivity/brand-deal-calculator.html">
+
+    <!-- Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Sponsorship Architect",
+      "applicationCategory": "ProductivityApplication",
+      "description": "Calculates fair market pricing for content creator sponsorships based on platform-specific metrics.",
+      "url": "https://calcsuit.com/productivity/brand-deal-calculator.html"
+    }
+    </script>
+
+    <!-- Tailwind & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        .creator-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
+        .platform-btn.active { border-color: #6366f1; background: rgba(99, 102, 241, 0.1); color: #6366f1; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen">
+
+    <div id="sidebar-container"></div>
+
+    <main class="max-w-[1440px] mx-auto px-4 py-12 lg:px-10 space-y-12">
+        
+        <!-- Header -->
+        <div class="max-w-4xl space-y-4">
+            <div class="inline-flex items-center gap-2 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-indigo-100 dark:border-indigo-500/20">
+                <i class="fas fa-video"></i> Creator Economy Suite
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-none">Sponsorship <span class="text-indigo-600">Architect</span></h1>
+            <p class="text-slate-500 dark:text-slate-400 text-lg max-w-2xl">Stop underpricing your influence. Our predictive model helps creators calculate fair pricing for brand deals based on platform dynamics, niche authority, and production effort.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            
+            <!-- Left: Inputs -->
+            <div class="lg:col-span-5 space-y-6">
+                <div class="bg-white dark:bg-slate-800 rounded-[35px] border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm space-y-8">
+                    
+                    <div class="space-y-4">
+                        <label class="text-[10px] font-black uppercase text-slate-400 tracking-widest block">Choose Your Primary Platform</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button class="platform-btn active p-4 rounded-2xl border-2 border-slate-100 dark:border-slate-700 text-xs font-bold flex flex-col items-center gap-2 transition-all hover:border-indigo-400" data-platform="youtube" data-cpm="25">
+                                <i class="fab fa-youtube text-xl text-rose-500"></i> YouTube
+                            </button>
+                            <button class="platform-btn p-4 rounded-2xl border-2 border-slate-100 dark:border-slate-700 text-xs font-bold flex flex-col items-center gap-2 transition-all hover:border-indigo-400" data-platform="tiktok" data-cpm="5">
+                                <i class="fab fa-tiktok text-xl text-slate-900 dark:text-white"></i> TikTok
+                            </button>
+                            <button class="platform-btn p-4 rounded-2xl border-2 border-slate-100 dark:border-slate-700 text-xs font-bold flex flex-col items-center gap-2 transition-all hover:border-indigo-400" data-platform="instagram" data-cpm="15">
+                                <i class="fab fa-instagram text-xl text-fuchsia-500"></i> IG / Reels
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="space-y-2">
+                             <label class="text-[10px] font-black tracking-widest uppercase text-slate-400">Avg. Measured Views (Per Post)</label>
+                             <input type="number" id="views" value="50000" class="w-full bg-slate-50 dark:bg-slate-900 p-5 rounded-2xl border-2 border-slate-100 dark:border-slate-700 text-3xl font-black outline-none focus:border-indigo-500 transition-all">
+                             <p class="text-[10px] text-slate-400 italic">"Use your average views from the last 30 days, NOT your highest viral peak."</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black tracking-widest uppercase text-slate-400">Niche Authority (%)</label>
+                                <select id="niche-mult" class="w-full bg-slate-50 dark:bg-slate-900 p-4 rounded-2xl border-2 border-slate-100 dark:border-slate-700 font-bold text-sm">
+                                    <option value="0.8">Lifestyle / Vlog (Lower CPM)</option>
+                                    <option value="1.0" selected>Entertainment (Avg)</option>
+                                    <option value="1.5">Tech / Business (Mid)</option>
+                                    <option value="2.5">Finance / SaaS (High)</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black tracking-widest uppercase text-slate-400">Production Value</label>
+                                <select id="prod-mult" class="w-full bg-slate-50 dark:bg-slate-900 p-4 rounded-2xl border-2 border-slate-100 dark:border-slate-700 font-bold text-sm">
+                                    <option value="1.0">Standard / Lo-Fi</option>
+                                    <option value="1.3" selected>Edited / Narrative</option>
+                                    <option value="2.0">Cinematic / High Gear</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-100 dark:border-slate-700 space-y-4">
+                             <h4 class="text-[10px] font-black uppercase text-slate-400 tracking-widest">Sponsorship Add-Ons</h4>
+                             <div class="space-y-2">
+                                 <label class="flex items-center gap-3 cursor-pointer p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-transparent hover:border-indigo-200 transition-all">
+                                     <input type="checkbox" id="usage-rights" class="w-5 h-5 accent-indigo-500">
+                                     <div>
+                                         <p class="text-xs font-black">Digital Usage Rights (30 Days)</p>
+                                         <p class="text-[10px] text-slate-400">Allows brand to run your content as an ad.</p>
+                                     </div>
+                                 </label>
+                                 <label class="flex items-center gap-3 cursor-pointer p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-transparent hover:border-indigo-200 transition-all">
+                                     <input type="checkbox" id="exclusivity" class="w-5 h-5 accent-indigo-500">
+                                     <div>
+                                         <p class="text-xs font-black">Category Exclusivity</p>
+                                         <p class="text-[10px] text-slate-400">You won't work with competitors for a term.</p>
+                                     </div>
+                                 </label>
+                             </div>
+                        </div>
+                    </div>
+
+                    <button id="calc-btn" class="w-full bg-indigo-600 border-none text-white font-bold py-5 rounded-[20px] transition-all hover:bg-indigo-700 active:scale-95 shadow-xl shadow-indigo-600/30 flex items-center justify-center gap-2">
+                        <i class="fas fa-briefcase"></i> Generate Quote
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right: Results -->
+            <div class="lg:col-span-7 space-y-8">
+                
+                <div class="creator-gradient rounded-[40px] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden">
+                    <div class="relative z-10 space-y-8">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-2">
+                                <p class="text-[10px] font-black uppercase tracking-[0.3em] text-white/60">Estimated Fair Price</p>
+                                <h3 id="res-price" class="text-7xl md:text-8xl font-black tracking-tighter leading-none">$1,625</h3>
+                                <p id="res-range" class="text-xs font-bold text-white/80 mt-2">Target Range: $1,400 — $2,100</p>
+                            </div>
+                            <div id="res-tag" class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-[10px] font-black uppercase border border-white/20">Market Competitive</div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-6 pt-10 border-t border-white/10">
+                            <div>
+                                <p class="text-[9px] font-bold text-white/50 uppercase mb-1">Base (CPM)</p>
+                                <p id="break-base" class="text-md font-black">$1,250</p>
+                            </div>
+                            <div>
+                                <p class="text-[9px] font-bold text-white/50 uppercase mb-1">Add-ons Fee</p>
+                                <p id="break-addons" class="text-md font-black">$375</p>
+                            </div>
+                            <div>
+                                <p class="text-[9px] font-bold text-white/50 uppercase mb-1">CPE (Effect.)</p>
+                                <p id="break-cpe" class="text-md font-black">$0.03</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Visual decoration -->
+                    <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+                </div>
+
+                <!-- Strategic Insights -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-panel p-8 rounded-[35px] space-y-4">
+                        <h4 class="font-black text-sm flex items-center gap-2"><i class="fas fa-hand-holding-heart text-rose-500"></i> The "Usage Rights" Pitfall</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed italic">"Many creators give away usage rights for free. This is a mistake. When a brand runs your content as an ad, your face becomes their salesman. Standard practice is to charge an extra <strong>20% to 50%</strong> of the base fee for every 30 days of usage."</p>
+                    </div>
+                    <div class="glass-panel p-8 rounded-[35px] space-y-4">
+                        <h4 class="font-black text-sm flex items-center gap-2"><i class="fas fa-chart-pie text-indigo-500"></i> CPM vs Audience Meta</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed italic">"A Finance creator in the USA has a significantly higher value than a Gaming creator in Southeast Asia simply because the <strong>purchasing power</strong> of their audience is higher. Always adjust your base rate upwards if your audience is primarily from 'Tier 1' countries."</p>
+                    </div>
+                </div>
+
+                <!-- Pricing Psychology for Creators -->
+                <div class="bg-indigo-900 rounded-[35px] p-10 text-white space-y-6">
+                    <h3 class="text-2xl font-black">Negotiation Pro-Tips</h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-4">
+                            <div class="shrink-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold">1</div>
+                            <p class="text-sm text-indigo-100"><strong>Bundle Deals:</strong> Instead of one video, pitch a bundle of 3 videos + 2 stories. Brands love predictable inventory and will often pay a premium for a long-term partnership.</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="shrink-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold">2</div>
+                            <p class="text-sm text-indigo-100"><strong>Don't Share Your Price First:</strong> Ask for their budget range and campaign goals first. If they have $10k and your tool says $2k, you just saved $8k in value.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Deep Content -->
+        <div class="max-w-4xl mx-auto py-12 space-y-8 border-t border-slate-200 dark:border-slate-700">
+            <h2 class="text-4xl font-black text-center">How creators price brand deals</h2>
+            <div class="prose prose-slate dark:prose-invert max-w-none space-y-4 text-slate-500">
+                <p>The standard industry model for pricing brand deals is based on **CPM (Cost Per Mille)**, which is the cost per 1,000 views. However, this is just the baseline. A fair price must account for the value of the creator's **niche authority**, the **production quality** of the content, and the **usage rights** granted to the brand.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 my-10">
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-2">Platform Benchmarks (USA/EU)</h4>
+                        <ul class="text-xs space-y-2">
+                             <li><strong>YouTube:</strong> $20 - $35 CPM (Highest engagement)</li>
+                             <li><strong>Instagram:</strong> $10 - $15 CPM (High production)</li>
+                             <li><strong>TikTok:</strong> $3 - $7 CPM (High reach/low intent)</li>
+                        </ul>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-2">Usage Fees</h4>
+                        <ul class="text-xs space-y-2">
+                             <li><strong>Organic Only:</strong> Base Fee</li>
+                             <li><strong>30 Day Ad Rights:</strong> +30% Base</li>
+                             <li><strong>90 Day Ad Rights:</strong> +50% Base</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/layout.js"></script>
+    <script>
+        const $ = id => document.getElementById(id);
+        let currentCpm = 25;
+
+        document.querySelectorAll('.platform-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCpm = parseFloat(btn.dataset.cpm);
+                calculate();
+            });
+        });
+
+        function calculate() {
+            const views = parseFloat($('views').value) || 0;
+            const nicheMult = parseFloat($('niche-mult').value) || 1;
+            const prodMult = parseFloat($('prod-mult').value) || 1;
+            const usage = $('usage-rights').checked;
+            const exclusivity = $('exclusivity').checked;
+
+            // Base Calc
+            const baseFee = (views / 1000) * currentCpm * nicheMult * prodMult;
+            
+            // Add-ons
+            let addOnFee = 0;
+            if (usage) addOnFee += (baseFee * 0.35); // 35% usage fee
+            if (exclusivity) addOnFee += (baseFee * 0.15); // 15% exclusivity fee
+
+            const total = baseFee + addOnFee;
+            const cpe = total / views;
+
+            // UI Update
+            $('res-price').innerText = `$${Math.round(total).toLocaleString()}`;
+            $('res-range').innerText = `Target Range: $${Math.round(total * 0.85).toLocaleString()} — $${Math.round(total * 1.3).toLocaleString()}`;
+            
+            $('break-base').innerText = `$${Math.round(baseFee).toLocaleString()}`;
+            $('break-addons').innerText = `$${Math.round(addOnFee).toLocaleString()}`;
+            $('break-cpe').innerText = `$${cpe.toFixed(2)}`;
+
+            // Quality Label
+            const tag = $('res-tag');
+            if (cpe < 0.02) {
+                tag.innerText = "High Volume Value";
+                tag.className = "bg-emerald-500/20 text-emerald-400 px-4 py-2 rounded-full text-[10px] font-black uppercase border border-emerald-500/20";
+            } else if (cpe > 0.08) {
+                tag.innerText = "Premium Authority";
+                tag.className = "bg-amber-500/20 text-amber-400 px-4 py-2 rounded-full text-[10px] font-black uppercase border border-amber-500/20";
+            } else {
+                tag.innerText = "Market Competitive";
+                tag.className = "bg-white/20 text-white px-4 py-2 rounded-full text-[10px] font-black uppercase border border-white/20";
+            }
+        }
+
+        [$('views'), $('niche-mult'), $('prod-mult'), $('usage-rights'), $('exclusivity')].forEach(el => el.addEventListener('input', calculate));
+        $('calc-btn').addEventListener('click', calculate);
+        
+        calculate();
+    </script>
+</body>
+</html>

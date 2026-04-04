@@ -84,7 +84,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/lifestyle/carbon-footprint.html', name: 'CO2 Footprint', icon: '<i class="fas fa-leaf"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/lifestyle/vacation-planner.html', name: 'Vacation Budget', icon: '<i class="fas fa-plane"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/productivity/task-management-calculator.html', name: 'Task Manager', icon: '<i class="fas fa-tasks"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
-        { id: '/productivity/task-calendar-generator.html', name: 'Task Calendar', icon: '<i class="fas fa-calendar-alt"></i>', category: 'Productivity', colorClass: 'text-teal-600' }
+        { id: '/productivity/task-calendar-generator.html', name: 'Task Calendar', icon: '<i class="fas fa-calendar-alt"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
+        { id: '/productivity/circadian-router.html', name: 'Circadian Router', icon: '<i class="fas fa-brain"></i>', category: 'Productivity', colorClass: 'text-violet-600' }
     ];
 
     const isLocal = window.location.protocol === 'file:';
@@ -115,7 +116,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const desktopNavHtml = suites.map(suite => {
         const suiteItems = calculatorConfig.filter(c => suite.categories.includes(c.category));
         const isActiveSuite = suiteItems.some(item => item.id === activeId);
-        
+
         // Multi-column optimization for large suites
         const columnClass = suiteItems.length > 8 ? 'grid-cols-2 w-[480px]' : 'grid-cols-1 w-64';
 
@@ -129,15 +130,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="absolute top-full left-0 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-100 dark:border-slate-700 p-2 grid ${columnClass} gap-1">
                         ${suiteItems.map(c => {
-                            const isItemActive = c.id === activeId;
-                            let href = rootPrefix + c.id.replace(/^\//, '');
-                            return `
+            const isItemActive = c.id === activeId;
+            let href = rootPrefix + c.id.replace(/^\//, '');
+            return `
                                 <a href="${href}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs transition-colors ${isItemActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-indigo-600 dark:hover:text-indigo-400'}">
                                     <span class="w-6 h-6 rounded bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center text-[10px] ${isItemActive ? 'text-indigo-600 dark:text-indigo-400' : c.colorClass} shrink-0">${c.icon}</span>
                                     <span class="truncate">${c.name}</span>
                                 </a>
                             `;
-                        }).join('')}
+        }).join('')}
                     </div>
                 </div>
             </div>
@@ -152,15 +153,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <h4 class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-3 mb-2">${cat}</h4>
                 <div class="space-y-1">
                     ${items.map(c => {
-                        const isItemActive = c.id === activeId;
-                        let href = rootPrefix + c.id.replace(/^\//, '');
-                        return `
+            const isItemActive = c.id === activeId;
+            let href = rootPrefix + c.id.replace(/^\//, '');
+            return `
                             <a href="${href}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${isItemActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50'}">
                                 <span class="w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center ${isItemActive ? 'text-indigo-600 dark:text-indigo-400' : c.colorClass} shrink-0">${c.icon}</span>
                                 <span class="truncate">${c.name}</span>
                             </a>
                         `;
-                    }).join('')}
+        }).join('')}
                 </div>
             </div>
         `;

@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/finance/savings-goal-calculator.html', name: 'Savings Goal', icon: '<i class="fas fa-bullseye"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
         { id: '/finance/credit-card-payoff.html', name: 'Credit Payoff', icon: '<i class="fas fa-credit-card"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
         { id: '/finance/retirement-calculator.html', name: 'Retirement (FIRE)', icon: '<i class="fas fa-umbrella-beach"></i>', category: 'Financial', colorClass: 'text-emerald-600' },
+        { id: '/finance/subscription-drain-auditor.html', name: 'Subscription Drain Auditor', icon: '<i class="fas fa-eye-slash"></i>', category: 'Financial', colorClass: 'text-rose-600' },
         { id: '/time/date-diff-calculator.html', name: 'Date Difference', icon: '<i class="far fa-calendar-alt"></i>', category: 'Time & Date', colorClass: 'text-purple-600' },
         { id: '/time/work-hours-calculator.html', name: 'Work Hours', icon: '<i class="far fa-clock"></i>', category: 'Time & Date', colorClass: 'text-purple-600' },
         { id: '/time/time-duration-calculator.html', name: 'Time Duration', icon: '<i class="fas fa-stopwatch"></i>', category: 'Time & Date', colorClass: 'text-purple-600' },
@@ -85,7 +86,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/lifestyle/vacation-planner.html', name: 'Vacation Budget', icon: '<i class="fas fa-plane"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/productivity/task-management-calculator.html', name: 'Task Manager', icon: '<i class="fas fa-tasks"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
         { id: '/productivity/task-calendar-generator.html', name: 'Task Calendar', icon: '<i class="fas fa-calendar-alt"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
-        { id: '/productivity/circadian-rhythm-energy-calculator.html', name: 'Circadian Rhythm Energy Calculator', icon: '<i class="fas fa-brain"></i>', category: 'Productivity', colorClass: 'text-violet-600' }
+        { id: '/productivity/circadian-rhythm-energy-calculator.html', name: 'Circadian Rhythm Energy', icon: '<i class="fas fa-brain"></i>', category: 'Productivity', colorClass: 'text-violet-600' },
+        { id: '/productivity/commute-cost-calculator.html', name: 'Commute Cost Arbitrage', icon: '<i class="fas fa-car-side"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
+        { id: '/productivity/brand-deal-calculator.html', name: 'Sponsorship Architect', icon: '<i class="fas fa-hand-holding-usd"></i>', category: 'Productivity', colorClass: 'text-violet-600' }
     ];
 
     const isLocal = window.location.protocol === 'file:';
@@ -112,33 +115,45 @@ document.addEventListener('DOMContentLoaded', async () => {
         { name: 'Utility Hub', categories: ['Time & Date', 'Conversion', 'Productivity'], icon: '<i class="fas fa-tools"></i>' }
     ];
 
-    // Generate Desktop Navigation Items (Consolidated Suite Model)
+    // Generate Desktop Navigation Items (Mega-Menu Model)
     const desktopNavHtml = suites.map(suite => {
         const suiteItems = calculatorConfig.filter(c => suite.categories.includes(c.category));
         const isActiveSuite = suiteItems.some(item => item.id === activeId);
 
-        // Multi-column optimization for large suites
-        const columnClass = suiteItems.length > 8 ? 'grid-cols-2 w-[480px]' : 'grid-cols-1 w-64';
+        // Optimization: Multi-column grid for dense suites (Enterprise look)
+        const columnClass = suiteItems.length > 10 ? 'grid-cols-3 w-[720px]' : (suiteItems.length > 5 ? 'grid-cols-2 w-[480px]' : 'grid-cols-1 w-64');
 
         return `
             <div class="relative group h-full flex items-center">
-                <button class="flex items-center gap-2 font-semibold text-[13px] transition-colors ${isActiveSuite ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400'}">
-                    <span class="opacity-60 text-xs">${suite.icon}</span>
+                <button class="flex items-center gap-2 font-bold text-[13px] transition-all duration-300 py-1 px-3 rounded-lg group-hover:bg-slate-50 dark:group-hover:bg-slate-800/50 ${isActiveSuite ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400'}">
+                    <span class="opacity-70 text-xs">${suite.icon}</span>
                     ${suite.name}
-                    <i class="fas fa-chevron-down text-[9px] opacity-40 group-hover:rotate-180 transition-transform duration-200"></i>
+                    <i class="fas fa-chevron-down text-[8px] opacity-40 group-hover:rotate-180 transition-transform duration-300"></i>
                 </button>
-                <div class="absolute top-full left-0 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-100 dark:border-slate-700 p-2 grid ${columnClass} gap-1">
+                
+                <!-- Mega Dropdown -->
+                <div class="absolute top-full left-0 pt-2 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-slate-100 dark:border-slate-800 p-4 grid ${columnClass} gap-x-6 gap-y-1">
+                        <div class="col-span-full mb-3 pb-2 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center px-2">
+                            <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 italic">${suite.name} Registry</span>
+                            <span class="text-[9px] text-slate-300">${suiteItems.length} Professional Tools</span>
+                        </div>
                         ${suiteItems.map(c => {
-            const isItemActive = c.id === activeId;
-            let href = rootPrefix + c.id.replace(/^\//, '');
-            return `
-                                <a href="${href}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs transition-colors ${isItemActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-indigo-600 dark:hover:text-indigo-400'}">
-                                    <span class="w-6 h-6 rounded bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center text-[10px] ${isItemActive ? 'text-indigo-600 dark:text-indigo-400' : c.colorClass} shrink-0">${c.icon}</span>
+                            const isItemActive = c.id === activeId;
+                            let href = rootPrefix + c.id.replace(/^\//, '');
+                            
+                            // Highlight "Hero" products
+                            const isHero = ['Circadian Rhythm', 'Commute Cost', 'Subscription Drain'].some(h => c.name.includes(h));
+                            const badge = isHero ? '<span class="ml-auto text-[8px] bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 px-1.5 py-0.5 rounded-full font-black tracking-tighter uppercase">Hot</span>' : '';
+
+                            return `
+                                <a href="${href}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-all duration-200 group/link ${isItemActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400'}">
+                                    <span class="w-7 h-7 rounded-lg bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-[10px] ${isItemActive ? 'text-indigo-600 dark:text-indigo-400 shadow-sm border-indigo-100' : c.colorClass + ' opacity-70 group-hover/link:opacity-100 group-hover/link:scale-110 transition-transform'} shrink-0">${c.icon}</span>
                                     <span class="truncate">${c.name}</span>
+                                    ${badge}
                                 </a>
                             `;
-        }).join('')}
+                        }).join('')}
                     </div>
                 </div>
             </div>
@@ -169,9 +184,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 1. Inject SaaS Top Header HTML instead of Sidebar
     const headerHtml = `
-<header class="w-full bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 transition-colors duration-300">
-    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-14">
+<header class="w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-[100] transition-all duration-300">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div class="flex justify-between items-center h-16">
             
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center gap-3">
@@ -241,13 +256,70 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 2. Initialize Theme System
     const htmlElement = document.documentElement;
+
+    // Inject Universal SaaS Look & Feel Logic
+    const headStyle = document.createElement('style');
+    headStyle.textContent = `
+        :root { --p: #6366f1; --p-h: #4f46e5; }
+        body { font-family: 'Inter', sans-serif !important; letter-spacing: -0.01em !important; background-color: #f8fafc !important; }
+        .dark body { background-color: #010409 !important; }
+        
+        /* Modern Container Scaling */
+        .glass-panel, #app-container { 
+            border-radius: 2rem !important; 
+            border: 1px solid rgba(226, 232, 240, 0.8) !important; 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.1) !important; 
+            background: white !important; 
+            transition: all 0.3s ease !important;
+        }
+        .dark .glass-panel, .dark #app-container { 
+            background: #0d1117 !important; 
+            border-color: #21262d !important; 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5) !important;
+        }
+
+        /* SaaS Input Design */
+        input[type="number"], input[type="text"], input[type="time"], select, textarea { 
+            border-radius: 0.75rem !important; 
+            padding: 0.8rem 1rem !important; 
+            border: 1.5px solid #f1f5f9 !important; 
+            transition: all 0.2s ease !important;
+            font-weight: 600 !important;
+            background: #ffffff !important;
+            color: #1e293b !important;
+        }
+        .dark input, .dark select, .dark textarea { 
+            border-color: #30363d !important; 
+            background: #0d1117 !important; 
+            color: #c9d1d9 !important; 
+        }
+        input:focus { border-color: var(--p) !important; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important; }
+
+        /* SaaS Button Refinement */
+        .calc-btn, button[class*="btn-"], button:has(.fas), button:has(.far) { 
+            border-radius: 0.75rem !important; 
+            font-weight: 700 !important; 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            letter-spacing: -0.01em !important;
+        }
+    `;
+    document.head.appendChild(headStyle);
+
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         htmlElement.classList.add('dark');
     } else {
         htmlElement.classList.remove('dark');
     }
 
-    const sidebarContainer = document.getElementById('sidebar-container');
+    let sidebarContainer = document.getElementById('sidebar-container');
+    
+    // Auto-injection fallback if container is missing
+    if (!sidebarContainer) {
+        sidebarContainer = document.createElement('div');
+        sidebarContainer.id = 'sidebar-container';
+        document.body.prepend(sidebarContainer);
+    }
+
     if (sidebarContainer) {
         sidebarContainer.innerHTML = headerHtml;
 
@@ -301,27 +373,50 @@ document.addEventListener('DOMContentLoaded', async () => {
             const term = e.target.value.toLowerCase().trim();
             if (term.length === 0) {
                 searchResults.classList.add('hidden');
+                searchResults.innerHTML = '';
                 return;
             }
 
-            const results = calculatorConfig.filter(c => c.name.toLowerCase().includes(term) || c.category.toLowerCase().includes(term));
+            const results = calculatorConfig.filter(c => 
+                c.name.toLowerCase().includes(term) || 
+                c.category.toLowerCase().includes(term)
+            ).slice(0, 8);
 
             if (results.length > 0) {
-                searchResults.innerHTML = results.map(c => {
-                    let href = rootPrefix + (c.id === '/' ? 'index.html' : c.id.replace(/^\//, ''));
-                    return `
-                        <a href="${href}" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                            <span class="w-8 h-8 rounded bg-slate-100 dark:bg-slate-700 flex items-center justify-center ${c.colorClass} shrink-0">${c.icon}</span>
-                            <div>
-                                <div class="text-sm font-medium text-slate-700 dark:text-slate-200">${c.name}</div>
-                                <div class="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">${c.category}</div>
-                            </div>
-                        </a>
-                    `;
-                }).join('');
+                searchResults.innerHTML = `
+                    <div class="p-2">
+                        <div class="px-3 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 italic mb-2 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center">
+                            <span>Search Results</span>
+                            <span class="text-[9px] bg-slate-50 dark:bg-slate-700 px-2 rounded-full">${results.length} Found</span>
+                        </div>
+                        <div class="grid grid-cols-1 gap-1">
+                            ${results.map(c => {
+                                let href = rootPrefix + (c.id === '/' ? 'index.html' : c.id.replace(/^\//, ''));
+                                return `
+                                    <a href="${href}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-500/10 transition-all group border border-transparent hover:border-indigo-100 dark:hover:border-indigo-500/20">
+                                        <span class="w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-xs ${c.colorClass} shrink-0 group-hover:scale-110 transition-transform shadow-sm">${c.icon}</span>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="text-sm font-bold text-slate-700 dark:text-slate-200 truncate">${c.name}</div>
+                                            <div class="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">${c.category}</div>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-[10px] opacity-0 group-hover:opacity-100 translate-x-[-4px] group-hover:translate-x-0 transition-all text-indigo-400"></i>
+                                    </a>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
                 searchResults.classList.remove('hidden');
             } else {
-                searchResults.innerHTML = `<div class="px-4 py-4 text-sm text-slate-500 text-center">No tools found for "${term}"</div>`;
+                searchResults.innerHTML = `
+                    <div class="p-8 text-center">
+                        <div class="w-12 h-12 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-3 text-slate-300">
+                            <i class="fas fa-search-minus text-xl"></i>
+                        </div>
+                        <p class="text-sm font-bold text-slate-400">No tools found for "${term}"</p>
+                        <p class="text-[10px] text-slate-500 mt-2">Try searching for "tax", "loan", or "commute"</p>
+                    </div>
+                `;
                 searchResults.classList.remove('hidden');
             }
         });

@@ -1,272 +1,73 @@
-/* styles.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+/* Global SaaS Design System — CalcSuit */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-/* Base Styles & Utility overrides */
+:root {
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --emerald: #10b981;
+    --rose: #ef4444;
+}
+
 body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
 }
 
-/* ======================================================== */
-/* 🚀 SAAS STRUCTURAL OVERRIDES                             */
-/* These !important rules force the legacy 30+ floating     */
-/* HTML containers into a professional Top-Nav Full-Bleed   */
-/* architecture without rewriting their individual tags.    */
-/* ======================================================== */
-
-body.bg-mesh, .bg-mesh {
-    background: #f8fafc !important; /* slate-50 */
-    animation: none !important;
+/* Glassmorphism Classes */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.dark body.bg-mesh, .dark .bg-mesh {
-    background: #0f172a !important; /* slate-900 */
-    animation: none !important;
+.dark .glass-panel {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Force `#app-container` to be full-screen, stack items vertically */
-#app-container {
-    max-width: 100% !important;
-    margin: 0 !important;
-    min-height: 100vh !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    border: none !important;
-    flex-direction: column !important; /* Header on top, Main below */
-    background: transparent !important;
-}
-
-/* Force `<main>` to encapsulate the calculator module into a clean B2B Card */
-#app-container main {
-    background: #ffffff !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    max-width: 1200px !important;
-    margin: 2.5rem auto 4rem auto !important;
-    width: calc(100% - 2rem) !important;
-    border: 1px solid #e2e8f0 !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
-    border-radius: 1.5rem !important;
-    position: relative !important;
-}
-
-.dark #app-container main {
-    background: #1e293b !important; /* slate-800 */
-    border-color: #334155 !important;
-}
-
-/* Kill Glassmorphism - Convert to Solid SaaS Cards */
-.glass-panel, .glass-display {
-    background: #ffffff !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    border: 1px solid #e2e8f0 !important;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
-    border-radius: 1rem !important;
-}
-
-.dark .glass-panel, .dark .glass-display {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important;
-}
-
-
-/* ======================================================== */
-/* 🛠️ GLOBAL FORM INPUT STYLING                             */
-/* ======================================================== */
-
-:where(input[type="number"], 
+/* Premium Inputs */
+input[type="number"], 
 input[type="text"], 
-input[type="date"], 
-input[type="time"], 
-input[type="email"], 
 select, 
-textarea,
-.perc-input,
-.date-input) {
-    background: #ffffff;
-    border: 1px solid #cbd5e1;
-    border-radius: 0.5rem;
-    padding: 0.75rem 1rem;
-    outline: none;
+textarea {
     transition: all 0.2s ease;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    color: #1e293b;
-    font-size: 0.95rem;
-    font-weight: 500;
-    width: 100%;
+    outline: none !important;
 }
 
-:where(input:focus, 
-select:focus, 
-textarea:focus, 
-.perc-input:focus,
-.date-input:focus) {
-    border-color: #6366f1;
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+input:focus, 
+select:focus,
+textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
-.dark :where(input, 
-select, 
-textarea,
-.perc-input,
-.date-input) {
-    background: #0f172a;
-    border: 1px solid #334155;
-    color: #f8fafc;
-    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+/* Scrollbar System */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+.dark ::-webkit-scrollbar-thumb { background: #334155; }
+
+/* Interactive Hover States */
+.hover-scale { transition: transform 0.2s; }
+.hover-scale:hover { transform: scale(1.02); }
+
+/* Animation Presets */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.dark :where(input:focus, 
-select:focus, 
-textarea:focus) {
-    border-color: #818cf8;
-    background: #0f172a;
-    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.15);
-}
+.animate-fade-in { animation: fadeInUp 0.5s ease forwards; }
 
-::placeholder {
-    color: #94a3b8;
-    opacity: 1;
-}
-
-.dark ::placeholder {
-    color: #475569;
-}
-
-/* Primary Button Standardization */
-button[type="submit"],
-.btn-primary {
-    background-color: #4f46e5;
+/* Utility Hub Styling */
+.badge-hot {
+    background: linear-gradient(135deg, #ef4444, #f87171);
     color: white;
-    border-radius: 0.5rem;
-    font-weight: 600;
-    border: none;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-}
-
-button[type="submit"]:hover,
-.btn-primary:hover {
-    background-color: #4338ca;
-}
-
-button[type="submit"]:active,
-.btn-primary:active {
-    background-color: #3730a3;
-}
-
-.dark button[type="submit"],
-.dark .btn-primary {
-    background-color: #6366f1;
-}
-.dark button[type="submit"]:hover,
-.dark .btn-primary:hover {
-    background-color: #4f46e5;
-}
-
-
-/* ======================================================== */
-/* 🔢 CALCULATOR KEYPAD STANDARD SAAS                       */
-/* ======================================================== */
-.calc-btn {
-    border-radius: 0.5rem;
-    padding: 1rem 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-    transition: all 0.15s ease;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    color: #334155;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
-}
-
-.calc-btn:hover,
-.calc-btn:focus-visible {
-    background: #f1f5f9;
-    border-color: #cbd5e1;
-    outline: none;
-}
-
-.calc-btn:active {
-    background: #e2e8f0;
-}
-
-.dark .calc-btn {
-    background: #1e293b;
-    border: 1px solid #334155;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.3);
-    color: #f1f5f9;
-}
-
-.dark .calc-btn:hover,
-.dark .calc-btn:focus-visible {
-    background: #334155;
-    border-color: #475569;
-}
-
-.btn-operator {
-    color: #4f46e5;
-    background: #eef2ff;
-    border-color: #e0e7ff;
-}
-
-.btn-operator:hover {
-    background: #e0e7ff;
-    border-color: #c7d2fe;
-}
-
-.dark .btn-operator {
-    color: #818cf8;
-    background: #312e81;
-    border-color: #3730a3;
-}
-
-.dark .btn-operator:hover {
-    background: #3730a3;
-}
-
-
-/* Scrollbar Customization */
-.hide-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-.hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 999px;
-}
-.dark .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #475569;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
-}
-
-/* Date Pickers */
-::-webkit-calendar-picker-indicator {
-    filter: opacity(0.5);
-    cursor: pointer;
-}
-
-.dark ::-webkit-calendar-picker-indicator {
-    filter: invert(1) opacity(0.6);
+    padding: 2px 6px;
+    border-radius: 99px;
+    font-size: 9px;
+    font-weight: 900;
+    text-transform: uppercase;
 }

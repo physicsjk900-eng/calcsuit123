@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/lifestyle/vacation-planner.html', name: 'Vacation Budget', icon: '<i class="fas fa-plane"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/productivity/task-management-calculator.html', name: 'Task Manager', icon: '<i class="fas fa-tasks"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
         { id: '/productivity/task-calendar-generator.html', name: 'Task Calendar', icon: '<i class="fas fa-calendar-alt"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
-        { id: '/productivity/circadian-router.html', name: 'Circadian Router', icon: '<i class="fas fa-brain"></i>', category: 'Productivity', colorClass: 'text-violet-600' }
+        { id: '/productivity/circadian-rhythm-energy-calculator.html', name: 'Circadian Rhythm Energy Calculator', icon: '<i class="fas fa-brain"></i>', category: 'Productivity', colorClass: 'text-violet-600' }
     ];
 
     const isLocal = window.location.protocol === 'file:';

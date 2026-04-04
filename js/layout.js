@@ -88,6 +88,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/productivity/task-calendar-generator.html', name: 'Task Calendar', icon: '<i class="fas fa-calendar-alt"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
         { id: '/productivity/circadian-rhythm-energy-calculator.html', name: 'Circadian Rhythm Energy', icon: '<i class="fas fa-brain"></i>', category: 'Productivity', colorClass: 'text-violet-600' },
         { id: '/productivity/commute-cost-calculator.html', name: 'Commute Cost Arbitrage', icon: '<i class="fas fa-car-side"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
+        { id: '/productivity/neural-task-architect.html', name: 'Neural Task Architect', icon: '<i class="fas fa-microchip"></i>', category: 'Productivity', colorClass: 'text-violet-600' },
         { id: '/productivity/brand-deal-calculator.html', name: 'Sponsorship Architect', icon: '<i class="fas fa-hand-holding-usd"></i>', category: 'Productivity', colorClass: 'text-violet-600' }
     ];
 
@@ -254,6 +255,86 @@ document.addEventListener('DOMContentLoaded', async () => {
 </header>
     `;
 
+    const footerHtml = `
+<footer class="w-full bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 mt-32 relative overflow-hidden transition-all duration-300">
+    <!-- Decorative Authority Strip -->
+    <div class="h-1 bg-gradient-to-r from-indigo-500 via-emerald-500 to-indigo-500 opacity-50"></div>
+    
+    <div class="max-w-[1440px] mx-auto px-6 py-20 lg:px-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+            
+            <!-- Column 1: Brand & Bio -->
+            <div class="space-y-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-sm">
+                        <i class="fas fa-calculator text-xs"></i>
+                    </div>
+                    <span class="text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white">Calc<span class="text-indigo-600 dark:text-indigo-400">Suit</span></span>
+                </div>
+                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                    The gold standard for high-precision online modeling and biological energy architecture. CalcSuit professional tools are engineered for speed, accuracy, and enterprise-grade authority.
+                </p>
+                <!-- Authority Badge -->
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 group">
+                    <i class="fas fa-shield-check text-emerald-500 text-xs"></i>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Precision Guaranteed &mdash; 95+ Engines</span>
+                </div>
+            </div>
+
+            <!-- Column 2: Ecosystem Quick Links -->
+            <div class="space-y-6">
+                <h5 class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Suite Ecosystem</h5>
+                <nav class="flex flex-col gap-3">
+                    <a href="${rootPrefix}index.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
+                        <i class="fas fa-chevron-right text-[8px] opacity-40"></i> Financial Tools
+                    </a>
+                    <a href="${rootPrefix}explore.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
+                        <i class="fas fa-chevron-right text-[8px] opacity-40"></i> Full Directory
+                    </a>
+                    <a href="${rootPrefix}productivity/neural-task-architect.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
+                        <i class="fas fa-chevron-right text-[8px] opacity-40"></i> AI Task Architecture
+                    </a>
+                    <a href="${rootPrefix}sitemap.xml" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
+                        <i class="fas fa-chevron-right text-[8px] opacity-40"></i> Google Index Sitemap
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Column 3: Legal & Trust -->
+            <div class="space-y-6">
+                <h5 class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Legal Authority</h5>
+                <nav class="flex flex-col gap-3">
+                    <a href="${rootPrefix}privacy.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
+                        <i class="fas fa-lock text-[10px] opacity-40"></i> Data Privacy Console
+                    </a>
+                    <a href="${rootPrefix}terms.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
+                        <i class="fas fa-file-contract text-[10px] opacity-40"></i> Enterprise Terms
+                    </a>
+                    <a href="${rootPrefix}about.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
+                        <i class="fas fa-info-circle text-[10px] opacity-40"></i> About the Project
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Column 4: Authority Score -->
+            <div class="space-y-8 lg:text-right flex flex-col lg:items-end justify-between">
+                <div class="space-y-4">
+                    <h5 class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">CALCSUIT AUTHORITY</h5>
+                    <div class="flex lg:justify-end gap-3">
+                         <a href="#" class="w-9 h-9 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 border border-slate-100 dark:border-slate-800 transition-all"><i class="fab fa-twitter"></i></a>
+                         <a href="#" class="w-9 h-9 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 border border-slate-100 dark:border-slate-800 transition-all"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="pt-6 border-t border-slate-50 dark:border-slate-800 w-full">
+                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">&copy; 2026 CALCSUIT ENTERPRISE</p>
+                    <p class="text-[9px] font-medium text-slate-300 dark:text-slate-600 mt-2 italic leading-relaxed">Decision Intelligence Architecture engineered with pride.<br/>Validated Global Standards Compliant.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+    `;
+
     // 2. Initialize Theme System
     const htmlElement = document.documentElement;
 
@@ -322,6 +403,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (sidebarContainer) {
         sidebarContainer.innerHTML = headerHtml;
+        
+        // Inject Footer globally
+        document.body.insertAdjacentHTML('beforeend', footerHtml);
 
         const themeToggleBtn = document.getElementById('theme-toggle');
         if (themeToggleBtn) {

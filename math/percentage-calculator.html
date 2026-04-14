@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
+    <title>Percentage Multi-Tool | Change, Discount, & Tip Calculator | CalcSuit</title>
+    <meta name="description" content="Calculate percentage increase, decrease, discount, and tip instantly. The ultimate interactive percentage calculator for US and EU markets. Quick, accurate, and professional.">
+    <meta name="keywords" content="percentage calculator, percent off calculator, percentage change calculator, tip calculator online, percent increase calculator, discount calculator usa">
+    <link rel="canonical" href="https://calcsuit.com/math/percentage-calculator.html">
+
+    <!-- Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Percentage Multi-Tool",
+      "applicationCategory": "MathApplication",
+      "description": "Calculates various percentage-based values including change, growth, and discounts.",
+      "url": "https://calcsuit.com/math/percentage-calculator.html"
+    }
+    </script>
+
+    <!-- Tailwind & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        .mode-tab.active { background: #6366f1; color: white; border-color: #6366f1; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2); }
+        .perc-input { font-weight: 900; font-family: 'Inter', sans-serif; text-align: center; }
+        .perc-input:focus { border-color: #6366f1; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen transition-colors">
+
+    <div id="sidebar-container"></div>
+
+    <main class="max-w-6xl mx-auto px-4 py-12 space-y-12 lg:px-8">
+        
+        <!-- Header -->
+        <div class="text-center space-y-4">
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-tight">Percentage <span class="text-indigo-600 dark:text-indigo-400">Multi-Tool</span></h1>
+            <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto text-lg font-medium">The fastest, most versatile percentage engine for shopping, finance, and math.</p>
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="flex flex-wrap justify-center gap-3">
+            <button class="mode-tab active px-6 py-2.5 rounded-full border border-slate-200 dark:border-slate-800 text-sm font-bold transition-all" data-mode="change"> % Change</button>
+            <button class="mode-tab px-6 py-2.5 rounded-full border border-slate-200 dark:border-slate-800 text-sm font-bold transition-all" data-mode="discount"> % Discount</button>
+            <button class="mode-tab px-6 py-2.5 rounded-full border border-slate-200 dark:border-slate-800 text-sm font-bold transition-all" data-mode="what-is"> What is % of X?</button>
+            <button class="mode-tab px-6 py-2.5 rounded-full border border-slate-200 dark:border-slate-800 text-sm font-bold transition-all" data-mode="tip"> Tip & Split</button>
+        </div>
+
+        <!-- Main Workspace -->
+        <div class="bg-white dark:bg-slate-800 rounded-[40px] border border-slate-200 dark:border-slate-700 p-8 md:p-14 shadow-sm max-w-3xl mx-auto">
+            
+            <div id="workspace-content" class="space-y-10">
+                <!-- Content will be injected based on mode -->
+            </div>
+
+            <!-- Global Result -->
+            <div class="mt-14 pt-10 border-t border-slate-100 dark:border-slate-700 text-center space-y-4">
+                <p id="res-label" class="text-xs font-black uppercase tracking-widest text-slate-400">Calculated Result</p>
+                <div id="res-value" class="text-6xl md:text-8xl font-black text-indigo-600 dark:text-indigo-400">$0.00</div>
+                <div id="res-desc" class="text-sm text-slate-400 font-medium italic">Ready to compute. Enter values above.</div>
+            </div>
+        </div>
+
+        <!-- Educational/SEO Footer Content -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12 items-center">
+            <div class="space-y-6">
+                <h2 class="text-3xl font-black">Mastering the Percent</h2>
+                <p class="text-slate-500 leading-relaxed italic">"Whether you're shopping in London or analyzing stocks in New York, percentages are the universal language of change. A common mistake is calculating percentage increase vs. decrease—decreasing a value by 50% and then increasing it by 50% does <strong>NOT</strong> get you back to the start. You'd actually need a 100% increase to recover from a 50% drop."</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800">
+                        <h4 class="font-bold text-xs uppercase mb-2">Math Pro Hint</h4>
+                        <p class="text-[11px] text-indigo-600 dark:text-indigo-400">"X% of Y is always equal to Y% of X. Hard to do 8% of 25? Try 25% of 8. It's 2!"</p>
+                    </div>
+                    <div class="p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border border-emerald-100 dark:border-emerald-800">
+                        <h4 class="font-bold text-xs uppercase mb-2">Tip Economy</h4>
+                        <p class="text-[11px] text-emerald-600 dark:text-emerald-400">Standard tipping in the USA is 15-20%. In the EU, it's often 5-10% or just rounding up.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-slate-50 dark:bg-slate-800/50 p-10 rounded-3xl space-y-6">
+                <h3 class="text-xl font-bold flex items-center gap-2"><i class="fas fa-question-circle text-indigo-500"></i> Percentage FAQ</h3>
+                <div class="space-y-4 text-sm">
+                    <div>
+                        <p class="font-bold">How do I calculate a discount?</p>
+                        <p class="text-slate-500">Subtract the percentage from 100%, convert it to a decimal, and multiply it by the original price. Or just use our % Discount mode above.</p>
+                    </div>
+                    <div>
+                        <p class="font-bold">What is percentage change?</p>
+                        <p class="text-slate-500">Take the (New Value - Old Value) / Old Value. Multiply by 100. This tells you the positive or negative shift relative to the starting point.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/layout.js"></script>
+    <script>
+        const ws = document.getElementById('workspace-content');
+        const resValue = document.getElementById('res-value');
+        const resLabel = document.getElementById('res-label');
+        const resDesc = document.getElementById('res-desc');
+        let currentMode = 'change';
+
+        const modes = {
+            'change': {
+                label: 'Percentage Change',
+                html: `
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-8 text-center md:text-left">
+                        <div class="flex-1 space-y-4">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Old Value (Starting)</label>
+                            <input type="number" id="v1" value="100" class="perc-input w-full bg-slate-50 dark:bg-slate-900 py-6 px-4 rounded-3xl border-2 border-slate-100 dark:border-slate-700 text-5xl outline-none transition-all">
+                        </div>
+                        <div class="text-indigo-500 text-3xl font-black italic"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flex-1 space-y-4">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">New Value (Final)</label>
+                            <input type="number" id="v2" value="150" class="perc-input w-full bg-slate-50 dark:bg-slate-900 py-6 px-4 rounded-3xl border-2 border-slate-100 dark:border-slate-700 text-5xl outline-none transition-all">
+                        </div>
+                    </div>
+                `,
+                calc: () => {
+                    const v1 = parseFloat(document.getElementById('v1').value) || 0;
+                    const v2 = parseFloat(document.getElementById('v2').value) || 0;
+                    if (v1 === 0) return { val: '0', desc: 'Starting value cannot be 0' };
+                    const diff = ((v2 - v1) / v1) * 100;
+                    return { 
+                        val: `${diff > 0 ? '+' : ''}${diff.toFixed(2)}%`, 
+                        desc: `The value ${diff > 0 ? 'increased' : 'decreased'} by ${Math.abs(diff).toFixed(2)}%`
+                    };
+                }
+            },
+            'discount': {
+                label: 'Discount & Savings',
+                html: `
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                        <div class="flex-1 space-y-4">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Original Price ($)</label>
+                            <input type="number" id="v1" value="80" class="perc-input w-full bg-slate-50 dark:bg-slate-900 py-6 px-4 rounded-3xl border-2 border-slate-100 dark:border-slate-700 text-5xl outline-none transition-all">
+                        </div>
+                        <div class="text-slate-300 font-black text-3xl">-</div>
+                        <div class="flex-1 space-y-4">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Discount Percentage (%)</label>
+                            <input type="number" id="v2" value="20" class="perc-input w-full bg-slate-50 dark:bg-slate-900 py-6 px-4 rounded-3xl border-2 border-slate-100 dark:border-slate-700 text-5xl outline-none transition-all">
+                        </div>
+                    </div>
+                `,
+                calc: () => {
+                    const price = parseFloat(document.getElementById('v1').value) || 0;
+                    const disc = parseFloat(document.getElementById('v2').value) || 0;
+                    const savings = (disc / 100) * price;
+                    const final = price - savings;
+                    return { val: `$${final.toFixed(2)}`, desc: `You save $${savings.toFixed(2)} at ${disc}% off.` };
+                }
+            },
+            'what-is': {
+                label: 'Quick % Calculation',
+                html: `
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                        <div class="flex-1 space-y-4">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">What is (%)</label>
+                            <input type="number" id="v1" value="15" class="perc-input w-full bg-slate-50 dark:bg-slate-900 py-6 px-4 rounded-3xl border-2 border-slate-100 dark:border-slate-700 text-5xl outline-none transition-all">
+                        </div>
+                        <div class="text-slate-300 font-black text-3xl">of</div>
+                        <div class="flex-1 space-y-4">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">The Amount (X)</label>
+                            <input type="number" id="v2" value="400" class="perc-input w-full bg-slate-50 dark:bg-slate-900 py-6 px-4 rounded-3xl border-2 border-slate-100 dark:border-slate-700 text-5xl outline-none transition-all">
+                        </div>
+                    </div>
+                `,
+                calc: () => {
+                    const perc = parseFloat(document.getElementById('v1').value) || 0;
+                    const amt = parseFloat(document.getElementById('v2').value) || 0;
+                    const res = (perc / 100) * amt;
+                    return { val: res.toFixed(2), desc: `Result: ${perc}% of ${amt} is ${res.toFixed(2)}` };
+                }
+            },
+            'tip': {
+                label: 'Tip & Split',
+                html: `
+                    <div class="space-y-8">
+                        <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                            <div class="flex-1 space-y-4">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Bill Amount ($)</label>
+                                <input type="number" id="v1" value="120" class="perc-input w-full bg-slate-50 dark:border-slate-750 py-4 px-4 rounded-3xl border-2 border-slate-100 dark:border-slate-700 text-4xl outline-none transition-all">
+                            </div>
+                            <div class="flex-1 space-y-4">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Tip (%)</label>
+                                <input type="number" id="v2" value="18" class="perc-input w-full bg-slate-50 dark:border-slate-750 py-4 px-4 rounded-3xl border-2 border-slate-100 dark:border-slate-700 text-4xl outline-none transition-all">
+                            </div>
+                        </div>
+                        <div class="space-y-4 max-w-xs mx-auto text-center">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Split Between (People)</label>
+                            <input type="number" id="v3" value="1" class="perc-input w-full bg-slate-50 dark:border-slate-750 py-4 px-4 rounded-3xl border-2 border-slate-100 dark:border-slate-700 text-4xl outline-none transition-all">
+                        </div>
+                    </div>
+                `,
+                calc: () => {
+                    const bill = parseFloat(document.getElementById('v1').value) || 0;
+                    const tipPerc = parseFloat(document.getElementById('v2').value) || 0;
+                    const split = Math.max(1, parseInt(document.getElementById('v3')?.value || 1));
+                    const tipAmt = (tipPerc / 100) * bill;
+                    const total = bill + tipAmt;
+                    const perPerson = total / split;
+                    return { val: `$${perPerson.toFixed(2)}`, desc: `Total bill is $${total.toFixed(2)} ($${tipAmt.toFixed(2)} tip). $${perPerson.toFixed(2)} per person.` };
+                }
+            }
+        };
+
+        function renderMode(modeKey) {
+            currentMode = modeKey;
+            const m = modes[modeKey];
+            ws.innerHTML = m.html;
+            resLabel.innerText = m.label;
+            
+            // Attach Events
+            const inputs = ws.querySelectorAll('input');
+            inputs.forEach(i => i.addEventListener('input', runCalc));
+            runCalc();
+        }
+
+        function runCalc() {
+            const m = modes[currentMode];
+            const res = m.calc();
+            resValue.innerText = res.val;
+            resDesc.innerText = res.desc;
+        }
+
+        document.querySelectorAll('.mode-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                renderMode(tab.dataset.mode);
+            });
+        });
+
+        renderMode('change');
+    </script>
+</body>
+</html>

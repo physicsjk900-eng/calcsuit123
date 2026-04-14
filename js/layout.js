@@ -140,21 +140,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <span class="text-[9px] text-slate-300">${suiteItems.length} Professional Tools</span>
                         </div>
                         ${suiteItems.map(c => {
-                            const isItemActive = c.id === activeId;
-                            let href = rootPrefix + c.id.replace(/^\//, '');
-                            
-                            // Highlight "Hero" products
-                            const isHero = ['Circadian Rhythm', 'Commute Cost', 'Subscription Drain'].some(h => c.name.includes(h));
-                            const badge = isHero ? '<span class="ml-auto text-[8px] bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 px-1.5 py-0.5 rounded-full font-black tracking-tighter uppercase">Hot</span>' : '';
+            const isItemActive = c.id === activeId;
+            let href = rootPrefix + c.id.replace(/^\//, '');
 
-                            return `
+            // Highlight "Hero" products
+            const isHero = ['Circadian Rhythm', 'Commute Cost', 'Subscription Drain'].some(h => c.name.includes(h));
+            const badge = isHero ? '<span class="ml-auto text-[8px] bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 px-1.5 py-0.5 rounded-full font-black tracking-tighter uppercase">Hot</span>' : '';
+
+            return `
                                 <a href="${href}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-all duration-200 group/link ${isItemActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400'}">
                                     <span class="w-7 h-7 rounded-lg bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-[10px] ${isItemActive ? 'text-indigo-600 dark:text-indigo-400 shadow-sm border-indigo-100' : c.colorClass + ' opacity-70 group-hover/link:opacity-100 group-hover/link:scale-110 transition-transform'} shrink-0">${c.icon}</span>
                                     <span class="truncate">${c.name}</span>
                                     ${badge}
                                 </a>
                             `;
-                        }).join('')}
+        }).join('')}
                     </div>
                 </div>
             </div>
@@ -393,7 +393,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     let sidebarContainer = document.getElementById('sidebar-container');
-    
+
     // Auto-injection fallback if container is missing
     if (!sidebarContainer) {
         sidebarContainer = document.createElement('div');
@@ -403,7 +403,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (sidebarContainer) {
         sidebarContainer.innerHTML = headerHtml;
-        
+
         // Inject Footer globally
         document.body.insertAdjacentHTML('beforeend', footerHtml);
 
@@ -461,8 +461,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            const results = calculatorConfig.filter(c => 
-                c.name.toLowerCase().includes(term) || 
+            const results = calculatorConfig.filter(c =>
+                c.name.toLowerCase().includes(term) ||
                 c.category.toLowerCase().includes(term)
             ).slice(0, 8);
 
@@ -475,8 +475,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </div>
                         <div class="grid grid-cols-1 gap-1">
                             ${results.map(c => {
-                                let href = rootPrefix + (c.id === '/' ? 'index.html' : c.id.replace(/^\//, ''));
-                                return `
+                    let href = rootPrefix + (c.id === '/' ? 'index.html' : c.id.replace(/^\//, ''));
+                    return `
                                     <a href="${href}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-500/10 transition-all group border border-transparent hover:border-indigo-100 dark:hover:border-indigo-500/20">
                                         <span class="w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-xs ${c.colorClass} shrink-0 group-hover:scale-110 transition-transform shadow-sm">${c.icon}</span>
                                         <div class="flex-1 min-w-0">
@@ -486,7 +486,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                         <i class="fas fa-chevron-right text-[10px] opacity-0 group-hover:opacity-100 translate-x-[-4px] group-hover:translate-x-0 transition-all text-indigo-400"></i>
                                     </a>
                                 `;
-                            }).join('')}
+                }).join('')}
                         </div>
                     </div>
                 `;

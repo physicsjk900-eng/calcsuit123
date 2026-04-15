@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vacation Budget Planner | CalcSuit Lifestyle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <div id="sidebar-container"></div>
+
+    <main class="flex-1 items-center justify-start pt-8 pb-20 px-4 sm:px-6 lg:px-8">
+        <div id="app-container" class="m-auto glass-panel w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden flex flex-col relative z-10 transition-all duration-300 border border-slate-200 dark:border-slate-700">
+            
+            <div class="bg-sky-600 p-8 text-white relative overflow-hidden group">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700"></div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <i class="fas fa-plane-departure text-4xl mb-3 text-sky-200"></i>
+                    <h1 class="text-3xl font-black uppercase tracking-widest text-center">Vacation Budget Pro</h1>
+                    <p class="text-sky-100 text-sm mt-1 opacity-80">Precision travel expense architecture</p>
+                </div>
+            </div>
+
+            <div class="p-6 md:p-10 space-y-8">
+                <!-- Input Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Transport -->
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                            <i class="fas fa-ticket-alt"></i> Flights / Transport
+                        </label>
+                        <div class="relative group">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-sky-500 transition-colors">$</span>
+                            <input type="number" id="vac-flights" value="500" class="w-full bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-100 dark:border-slate-700 rounded-2xl py-4 pl-10 pr-4 text-2xl font-bold outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Accommodation -->
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                            <i class="fas fa-hotel"></i> Stay Total
+                        </label>
+                        <div class="relative group">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-sky-500 transition-colors">$</span>
+                            <input type="number" id="vac-stay" value="800" class="w-full bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-100 dark:border-slate-700 rounded-2xl py-4 pl-10 pr-4 text-2xl font-bold outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Daily Expenses -->
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                            <i class="fas fa-utensils"></i> Daily Food/Exp (avg)
+                        </label>
+                        <div class="relative group">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-sky-500 transition-colors">$</span>
+                            <input type="number" id="vac-daily" value="50" class="w-full bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-100 dark:border-slate-700 rounded-2xl py-4 pl-10 pr-4 text-2xl font-bold outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Duration -->
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                            <i class="fas fa-calendar-day"></i> Trip Duration (Days)
+                        </label>
+                        <div class="relative group">
+                            <input type="number" id="vac-days" value="7" class="w-full bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-100 dark:border-slate-700 rounded-2xl py-4 px-6 text-2xl font-bold outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all text-center">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activities -->
+                <div class="space-y-3">
+                    <label class="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                        <i class="fas fa-camera"></i> Activities & Shopping
+                    </label>
+                    <div class="relative group">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-sky-500 transition-colors">$</span>
+                        <input type="number" id="vac-activities" value="200" class="w-full bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-100 dark:border-slate-700 rounded-2xl py-4 pl-10 pr-4 text-2xl font-bold outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all">
+                    </div>
+                </div>
+
+                <!-- Result Area -->
+                <div id="vac-results" class="bg-sky-50 dark:bg-sky-900/20 rounded-[2.5rem] p-10 border-2 border-sky-100 dark:border-sky-800/50 text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <h2 class="text-xs font-black uppercase tracking-[0.3em] text-sky-600 dark:text-sky-400 mb-2">Total Estimated Budget</h2>
+                    <div id="vac-total" class="text-6xl font-black text-slate-900 dark:text-white">$0.00</div>
+                    <div class="mt-4 flex justify-center gap-4">
+                        <div class="px-4 py-1.5 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 text-[10px] font-bold text-slate-500">
+                            DAILY AVG: <span id="vac-avg-res" class="text-sky-600">$0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <button id="vac-clear" class="flex items-center gap-2 px-6 py-2.5 rounded-full text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all text-xs font-bold uppercase tracking-widest group">
+                        <i class="fas fa-redo-alt group-hover:rotate-180 transition-transform duration-500"></i>
+                        Reset Planner
+                    </button>
+                </div>
+            </div>
+
+            <!-- SEO Content -->
+            <div class="border-t border-slate-100 dark:border-slate-800 p-10 bg-slate-50/50 dark:bg-slate-900/50">
+                <article class="prose dark:prose-invert max-w-none">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Plan Your Perfect Trip Within Budget</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                        A vacation is meant for relaxation, but poor financial planning can lead to post-trip stress. Our <strong>Vacation Budget Pro</strong> is designed to help you architect a precise financial blueprint for your next adventure. By segmenting fixed costs like flights and stay from variable daily expenditures, you get a realistic view of your total investment.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                                <i class="fas fa-check-circle text-emerald-500"></i> Smart Segmentation
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-2">Separate your core travel costs from your daily lifestyle choices for better control.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                                <i class="fas fa-check-circle text-emerald-500"></i> Daily Burn Rate
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-2">Understand your daily liquidity requirements to avoid credit over-utilization while abroad.</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/layout.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = ['vac-flights', 'vac-stay', 'vac-daily', 'vac-days', 'vac-activities'];
+            const totalEl = document.getElementById('vac-total');
+            const avgEl = document.getElementById('vac-avg-res');
+            const clearBtn = document.getElementById('vac-clear');
+
+            const calculate = () => {
+                const vals = inputs.map(id => parseFloat(document.getElementById(id).value) || 0);
+                const [flights, stay, daily, days, activities] = vals;
+
+                const total = flights + stay + (daily * days) + activities;
+                const dailyAvg = days > 0 ? (total / days) : 0;
+
+                const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+                totalEl.innerText = fmt.format(total);
+                avgEl.innerText = fmt.format(dailyAvg);
+            };
+
+            inputs.forEach(id => {
+                document.getElementById(id).addEventListener('input', calculate);
+            });
+
+            clearBtn.addEventListener('click', () => {
+                inputs.forEach(id => {
+                    document.getElementById(id).value = id === 'vac-days' ? 7 : (id === 'vac-daily' ? 50 : 0);
+                });
+                calculate();
+            });
+
+            calculate();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Time Impact Tracker | CalcSuit Lifestyle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <div id="sidebar-container"></div>
+
+    <main class="flex-1 items-center justify-start pt-8 pb-20 px-4 sm:px-6 lg:px-8">
+        <div id="app-container" class="m-auto glass-panel w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden flex flex-col relative z-10 transition-all duration-300 border border-slate-200 dark:border-slate-700">
+            
+            <div class="bg-indigo-600 p-8 text-white relative overflow-hidden group">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700"></div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <i class="fas fa-mobile-alt text-4xl mb-3 text-indigo-200"></i>
+                    <h1 class="text-3xl font-black uppercase tracking-widest text-center">Neural Optimization</h1>
+                    <p class="text-indigo-100 text-sm mt-1 opacity-80">Analyze digital immersion impact</p>
+                </div>
+            </div>
+
+            <div class="p-6 md:p-10 space-y-8">
+                <!-- Input Section -->
+                <div class="flex flex-col items-center gap-8">
+                    <div class="w-full max-w-sm space-y-4">
+                        <label class="flex items-center justify-between text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">
+                            <span>Daily Smartphone Usage</span>
+                            <span id="screen-val-display" class="text-indigo-500 font-black text-sm">5 Hours</span>
+                        </label>
+                        <input type="range" id="screen-hours" min="0" max="18" step="0.5" value="5" class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                        <div class="flex justify-between text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                            <span>0H</span>
+                            <span>9H</span>
+                            <span>18H</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                        <button class="screen-tag active p-4 rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 font-bold transition-all text-sm flex items-center gap-3 hover:border-indigo-500" data-value="work">
+                            <i class="fas fa-briefcase opacity-50"></i> Productivity Focus
+                        </button>
+                        <button class="screen-tag p-4 rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 font-bold transition-all text-sm flex items-center gap-3 hover:border-indigo-500" data-value="social">
+                            <i class="fas fa-users opacity-50"></i> Social / Infinite Scroll
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Result Area -->
+                <div id="screen-results" class="bg-indigo-50 dark:bg-indigo-900/20 rounded-[2.5rem] p-10 border-2 border-indigo-100 dark:border-indigo-800/50 transition-all duration-700">
+                    <div class="text-center mb-8">
+                        <h2 class="text-xs font-black uppercase tracking-[0.3em] text-indigo-600 dark:text-indigo-400 mb-2">Immersion Metrics</h2>
+                        <div id="screen-status" class="text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">MODERATE USAGE</div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center">
+                            <i class="fas fa-eye text-rose-500 mb-3 opacity-80"></i>
+                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Eye Fatigue</div>
+                            <div id="res-eye" class="text-lg font-bold text-slate-800 dark:text-slate-200">MEDIUM</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center">
+                            <i class="fas fa-moon text-blue-500 mb-3 opacity-80"></i>
+                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Sleep Impact</div>
+                            <div id="res-sleep" class="text-lg font-bold text-slate-800 dark:text-slate-200">MINIMAL</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center">
+                            <i class="fas fa-brain text-purple-500 mb-3 opacity-80"></i>
+                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Dopamine Baseline</div>
+                            <div id="res-dopamine" class="text-lg font-bold text-slate-800 dark:text-slate-200">BALANCED</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Content -->
+            <div class="border-t border-slate-100 dark:border-slate-800 p-10 bg-slate-50/50 dark:bg-slate-900/50">
+                <article class="prose dark:prose-invert max-w-none">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Mastering Your Digital Attention Economy</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                        In the age of infinite connectivity, our attention is the most valuable currency. Excessive screen time is linked to digital eye strain, disruption of circadian rhythms via blue light exposure, and a shift in baseline dopamine levels. Our <strong>Screen Impact Tracker</strong> uses neuro-efficiency modeling to estimate how your digital habits influence your biological systems.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                                <i class="fas fa-bolt text-indigo-500"></i> The 20-20-20 Rule
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-2">Every 20 minutes, look at something 20 feet away for 20 seconds to reset ocular focus and reduce strain.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                                <i class="fas fa-shield-alt text-indigo-500"></i> Blue Light Hygiene
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-2">Stop all screen usage 90 minutes before sleep to allow natural melatonin production to initiate.</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/layout.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const rangeInput = document.getElementById('screen-hours');
+            const display = document.getElementById('screen-val-display');
+            const statusEl = document.getElementById('screen-status');
+            const eyeEl = document.getElementById('res-eye');
+            const sleepEl = document.getElementById('res-sleep');
+            const dopamineEl = document.getElementById('res-dopamine');
+            const tags = document.querySelectorAll('.screen-tag');
+
+            let activeTag = 'work';
+
+            tags.forEach(t => {
+                t.addEventListener('click', () => {
+                    tags.forEach(btn => {
+                        btn.classList.remove('active', 'border-indigo-500', 'bg-indigo-50', 'dark:bg-indigo-900/20', 'text-indigo-700', 'dark:text-indigo-400');
+                        btn.classList.add('border-slate-100', 'dark:border-slate-800', 'text-slate-500', 'dark:text-slate-400');
+                    });
+                    t.classList.add('active', 'border-indigo-500', 'bg-indigo-50', 'dark:bg-indigo-900/20', 'text-indigo-700', 'dark:text-indigo-400');
+                    t.classList.remove('border-slate-100', 'dark:border-slate-800', 'text-slate-500', 'dark:text-slate-400');
+                    activeTag = t.dataset.value;
+                    calculate();
+                });
+            });
+
+            const calculate = () => {
+                const hours = parseFloat(rangeInput.value);
+                display.innerText = `${hours} Hours`;
+
+                if (hours <= 2) {
+                    statusEl.innerText = "DIGITAL ZEN";
+                    eyeEl.innerText = "LOW";
+                    sleepEl.innerText = "NONE";
+                    dopamineEl.innerText = "OPTIMAL";
+                } else if (hours <= 5) {
+                    statusEl.innerText = "BALANCED USAGE";
+                    eyeEl.innerText = "MILD";
+                    sleepEl.innerText = "LOW";
+                    dopamineEl.innerText = "HEALTHY";
+                } else if (hours <= 8) {
+                    statusEl.innerText = "HEAVY IMMERSION";
+                    eyeEl.innerText = "MODERATE";
+                    sleepEl.innerText = "SIGNIFICANT";
+                    dopamineEl.innerText = activeTag === 'social' ? "SKEWED" : "BALANCED";
+                } else {
+                    statusEl.innerText = "CRITICAL OVERLOAD";
+                    eyeEl.innerText = "SEVERE";
+                    sleepEl.innerText = "CRITICAL";
+                    dopamineEl.innerText = "DEPLETED";
+                }
+            };
+
+            rangeInput.addEventListener('input', calculate);
+            calculate();
+        });
+    </script>
+    <style>
+        .screen-tag.active { border-color: #6366f1 !important; background-color: rgba(99, 102, 241, 0.05) !important; color: #4f46e5 !important; }
+        .dark .screen-tag.active { background-color: rgba(99, 102, 241, 0.1) !important; color: #818cf8 !important; }
+    </style>
+</body>
+</html>

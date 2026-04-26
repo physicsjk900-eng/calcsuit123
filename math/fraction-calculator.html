@@ -4,221 +4,481 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fraction Calculator | CalcSuit</title>
-    <meta name="description"
-        content="Free online fraction calculator. Add, subtract, multiply, and divide fractions easily.">
-    <!-- Tailwind CSS -->
+    <title>Fraction Study Hub & visualizer | CalcSuit Math Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .timer-bar { transition: width 1s linear; }
+        .accordion-content { transition: max-height 0.3s ease-out, padding 0.3s ease; max-height: 0; overflow: hidden; padding: 0 1rem; }
+        .accordion-content.open { max-height: 1000px; padding: 1rem; }
+        
+        /* Interactive Fraction specific */
+        .frac-input { text-align: center; font-weight: 900; background: transparent; outline: none; transition: all 0.2s;}
+        .frac-input:focus { color: #0ea5e9; transform: scale(1.1); }
+        .frac-line { height: 4px; border-radius: 2px; }
+        
+        .pie-chart {
+            width: 120px; height: 120px; border-radius: 50%;
+            background: #e2e8f0;
+            position: relative;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dark .pie-chart { background: #334155; }
+        
+        /* Game shake animation */
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
+        .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
+    </style>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200 overflow-x-hidden">
+    <div id="sidebar-container"></div>
+    
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20 w-full relative">
+        
+        <!-- 1. The Core Calculator & Visualizer -->
+        <div class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden mb-12">
+            <div class="bg-sky-600 p-8 text-white text-center relative overflow-hidden">
+                <i class="fas fa-chart-pie text-5xl mb-4 opacity-90 drop-shadow-md"></i>
+                <h1 class="text-4xl font-extrabold tracking-tight">Fraction Architect</h1>
+                <p class="text-sky-100 mt-2 font-medium tracking-wide">Visualize, Compute, and Master Fractions live.</p>
+            </div>
+            
+            <div class="p-8">
+                <!-- Calculator UI -->
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-12 bg-slate-50 dark:bg-slate-900/50 p-8 rounded-3xl shadow-inner border border-slate-100 dark:border-slate-700">
+                    
+                    <!-- Fraction 1 -->
+                    <div class="flex flex-col items-center group">
+                        <input type="number" id="n1" class="frac-input w-20 text-4xl text-slate-800 dark:text-white" value="1" placeholder="Num">
+                        <div class="frac-line w-24 bg-sky-500 my-2 shadow-[0_0_10px_rgba(14,165,233,0.5)] group-hover:scale-110 transition-transform"></div>
+                        <input type="number" id="d1" class="frac-input w-20 text-4xl text-slate-800 dark:text-white" value="2" placeholder="Den">
+                    </div>
+
+                    <!-- Operator -->
+                    <select id="op" class="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-600 rounded-2xl text-4xl font-black py-2 px-4 text-sky-600 dark:text-sky-400 outline-none focus:ring-4 focus:ring-sky-500/20 shadow-lg cursor-pointer transform hover:scale-105 transition-all">
+                        <option value="+">+</option>
+                        <option value="-">−</option>
+                        <option value="*">×</option>
+                        <option value="/">÷</option>
+                    </select>
+
+                    <!-- Fraction 2 -->
+                    <div class="flex flex-col items-center group">
+                        <input type="number" id="n2" class="frac-input w-20 text-4xl text-slate-800 dark:text-white" value="1" placeholder="Num">
+                        <div class="frac-line w-24 bg-indigo-500 my-2 shadow-[0_0_10px_rgba(99,102,241,0.5)] group-hover:scale-110 transition-transform"></div>
+                        <input type="number" id="d2" class="frac-input w-20 text-4xl text-slate-800 dark:text-white" value="4" placeholder="Den">
+                    </div>
+
+                    <div class="text-5xl font-light text-slate-300 dark:text-slate-600 mx-2">=</div>
+
+                    <!-- Result -->
+                    <div class="flex flex-col items-center p-6 bg-white dark:bg-slate-800 border-2 border-emerald-100 dark:border-emerald-900/30 rounded-2xl shadow-xl min-w-[120px]" id="result-box">
+                        <div class="text-4xl font-black text-emerald-600 dark:text-emerald-400" id="rn">3</div>
+                        <div class="frac-line w-full bg-emerald-500/30 dark:bg-emerald-500/50 my-2" id="r-line"></div>
+                        <div class="text-4xl font-black text-emerald-600 dark:text-emerald-400" id="rd">4</div>
+                    </div>
+                </div>
+
+                <!-- Visualizer -->
+                <div class="border-t border-slate-100 dark:border-slate-700 pt-8" id="visualizer-section">
+                    <h3 class="text-center font-bold text-xl mb-6"><i class="fas fa-eye text-sky-500 mr-2"></i> Real-time Proportion Visualizer</h3>
+                    
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
+                        <!-- Chart 1 -->
+                        <div class="flex flex-col items-center">
+                            <div class="pie-chart shadow-[0_0_30px_rgba(14,165,233,0.3)] border-4 border-white dark:border-slate-800" id="pie1" style="background: conic-gradient(#0ea5e9 0% 50%, transparent 50% 100%)"></div>
+                            <span class="mt-4 text-sm font-bold text-slate-500" id="lbl1">1/2</span>
+                        </div>
+                        
+                        <div class="text-2xl font-black text-slate-300 dark:text-slate-600" id="op-lbl">+</div>
+                        
+                        <!-- Chart 2 -->
+                        <div class="flex flex-col items-center">
+                            <div class="pie-chart shadow-[0_0_30px_rgba(99,102,241,0.3)] border-4 border-white dark:border-slate-800" id="pie2" style="background: conic-gradient(#6366f1 0% 25%, transparent 25% 100%)"></div>
+                            <span class="mt-4 text-sm font-bold text-slate-500" id="lbl2">1/4</span>
+                        </div>
+                        
+                        <div class="text-3xl font-light text-slate-300 dark:text-slate-600">=</div>
+                        
+                        <!-- Chart Result -->
+                        <div class="flex flex-col items-center">
+                            <div class="pie-chart shadow-[0_0_30px_rgba(16,185,129,0.3)] border-4 border-white dark:border-slate-800 transform scale-110" id="pieR" style="background: conic-gradient(#10b981 0% 75%, transparent 75% 100%)"></div>
+                            <span class="mt-4 text-sm font-black text-emerald-600 dark:text-emerald-500" id="lblR">3/4</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. "Fraction Frenzy" Mini Game Module -->
+        <div class="w-full max-w-4xl bg-gradient-to-br from-slate-900 to-sky-900 border border-sky-500/30 rounded-3xl shadow-[0_0_50px_rgba(14,165,233,0.2)] overflow-hidden mb-12 relative text-white">
+             <!-- Background pattern -->
+             <div class="absolute inset-0 opacity-[0.02]" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 24px 24px;"></div>
+             
+             <div class="p-10 relative z-10">
+                 <div class="flex justify-between items-start mb-8">
+                     <div>
+                         <h2 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-sky-400 mb-2">
+                             <i class="fas fa-meteor text-emerald-400 mr-2"></i> Fraction Frenzy
+                         </h2>
+                         <p class="text-sky-200/70 font-medium tracking-wide">Brain Training: Simplify the fraction mentally before time runs out!</p>
+                     </div>
+                     <div class="bg-slate-950/80 border border-sky-500/50 rounded-2xl p-4 text-center min-w-[120px] shadow-inner backdrop-blur-md">
+                         <div class="text-[10px] uppercase tracking-widest text-sky-400 font-black mb-1">SCORE</div>
+                         <div class="text-4xl font-black text-white" id="game-score">0</div>
+                     </div>
+                 </div>
+
+                 <!-- Game Start Screen -->
+                 <div id="game-intro" class="text-center py-10 bg-slate-950/40 rounded-2xl border border-sky-500/20 backdrop-blur-sm">
+                     <p class="mb-8 text-xl font-medium text-slate-300">Simplify 60 seconds of rapid fractions.</p>
+                     <button id="game-start-btn" class="bg-gradient-to-r from-emerald-500 to-sky-600 hover:from-emerald-400 hover:to-sky-500 px-10 py-5 rounded-full font-black text-2xl shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-all transform hover:scale-105 active:scale-95 text-white tracking-widest">
+                         START SPRINT
+                     </button>
+                 </div>
+
+                 <!-- Gameplay Screen -->
+                 <div id="game-play" class="hidden">
+                     <div class="w-full bg-slate-800/80 rounded-full h-3 mb-8 overflow-hidden shadow-inner border border-slate-700">
+                         <div id="game-timer-bar" class="timer-bar bg-gradient-to-r from-rose-400 to-amber-400 h-3 rounded-full" style="width: 100%"></div>
+                     </div>
+                     
+                     <div class="text-center py-6">
+                         <h3 class="text-sky-400 font-bold tracking-widest uppercase mb-4 text-sm">Simplify This File:</h3>
+                         <div class="inline-flex flex-col items-center bg-slate-950/80 border-2 border-emerald-500/50 rounded-3xl px-12 py-6 shadow-[0_0_40px_rgba(16,185,129,0.2)]">
+                             <div class="text-6xl font-black text-white" id="g-num">8</div>
+                             <div class="w-full h-2 bg-emerald-500/50 my-3 rounded"></div>
+                             <div class="text-6xl font-black text-white" id="g-den">12</div>
+                         </div>
+                     </div>
+                     
+                     <div class="mt-8 flex gap-4 max-w-md mx-auto items-center">
+                         <input type="number" id="game-ans-num" class="w-24 bg-slate-900/50 border-2 border-sky-500/50 focus:border-emerald-400 rounded-2xl py-4 text-center text-3xl font-black text-white outline-none" placeholder="N">
+                         <span class="text-3xl font-light text-slate-500">/</span>
+                         <input type="number" id="game-ans-den" class="w-24 bg-slate-900/50 border-2 border-sky-500/50 focus:border-emerald-400 rounded-2xl py-4 text-center text-3xl font-black text-white outline-none" placeholder="D">
+                         <button id="game-submit-btn" class="ml-auto bg-emerald-500 hover:bg-emerald-400 aspect-square w-16 rounded-2xl font-bold text-2xl shadow-lg transition-transform active:scale-90 flex items-center justify-center"><i class="fas fa-check"></i></button>
+                     </div>
+                     
+                     <!-- Feedback -->
+                     <div id="game-feedback" class="text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300">Great job!</div>
+                 </div>
+
+                 <!-- Game Over Screen -->
+                 <div id="game-out" class="hidden text-center py-10 bg-slate-900/80 rounded-2xl backdrop-blur-md border border-slate-700">
+                     <h2 class="text-5xl font-black text-white mb-4">Time's Up!</h2>
+                     <p class="text-2xl text-slate-300 mb-8">Final Score: <span id="game-final-score" class="text-emerald-400 font-bold">0</span></p>
+                     <button id="game-restart-btn" class="bg-sky-600 hover:bg-sky-500 px-8 py-4 rounded-xl font-bold text-lg text-white shadow-lg"><i class="fas fa-redo mr-2"></i> Play Again</button>
+                 </div>
+             </div>
+        </div>
+
+        <!-- 3. Interactive Educational Manual -->
+        <div class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden text-slate-700 dark:text-slate-300">
+            <div class="bg-slate-100 dark:bg-slate-800/80 p-8 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white"><i class="fas fa-book-open text-sky-600 mr-2"></i> Study Guide & Manual</h2>
+                    <p class="text-sm mt-1 font-medium">Master the concepts behind fractional geometry and addition.</p>
+                </div>
+            </div>
+            
+            <div class="divide-y divide-slate-100 dark:divide-slate-700">
+                <!-- Lesson 1 -->
+                <div class="accordion-item">
+                    <button class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span class="text-sky-500 mr-2">01.</span> Anatomy of a Fraction</span>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content bg-slate-50 dark:bg-slate-900/30 text-sm leading-relaxed">
+                        <p class="mb-4">Fractions represent a part of a whole or, more generally, any number of equal parts. When spoken in everyday English, a fraction describes how many parts of a certain size there are, for example, one-half, eight-fifths, three-quarters.</p>
+                        <h4 class="font-bold mb-2">The Components:</h4>
+                        <ul class="list-disc ml-6 mb-4 space-y-2">
+                            <li><strong>Numerator (Top Number):</strong> Indicates how many parts are selected.</li>
+                            <li><strong>Denominator (Bottom Number):</strong> Indicates how many total parts equal a whole object. It cannot be zero.</li>
+                            <li><strong>Fraction Bar (Vinculum):</strong> The line separating the two figures, mathematically signifying division.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Lesson 2 -->
+                <div class="accordion-item">
+                    <button class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span class="text-emerald-500 mr-2">02.</span> Adding and Subtracting Fractions</span>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content bg-slate-50 dark:bg-slate-900/30 text-sm leading-relaxed">
+                        <p class="mb-4">To add or subtract fractions, they must share the same denominator (a <i>Common Denominator</i>). You cannot add thirds to quarters directly!</p>
+                        <h4 class="font-bold mb-2">The Process:</h4>
+                        <p class="mb-2 border-l-4 border-emerald-500 pl-4 py-1 italic bg-emerald-50 dark:bg-emerald-900/20 rounded-r">Find the easiest common denominator by multiplying the two denominators together (e.g., 3 and 4 becomes 12). Then scale the numerators accordingly.</p>
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-lg mt-4 border border-slate-200 dark:border-slate-700 shadow-sm text-center font-mono">
+                            Example: 1/2 + 2/3 <br>
+                            Convert: (1×3)/(2×3) + (2×2)/(3×2) <br>
+                            = 3/6 + 4/6 <br>
+                            = 7/6
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson 3 -->
+                <div class="accordion-item">
+                    <button class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span class="text-amber-500 mr-2">03.</span> Multiplying & Dividing Fractions</span>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content bg-slate-50 dark:bg-slate-900/30 text-sm leading-relaxed">
+                        <h4 class="font-bold mb-2 text-sky-600">Multiplication:</h4>
+                        <p class="mb-4">Unlike addition, you DO NOT need common denominators. Just multiply straight across: Numerator × Numerator and Denominator × Denominator.</p>
+                        
+                        <h4 class="font-bold mb-2 text-indigo-600 mt-4">Division (Keep-Change-Flip):</h4>
+                        <p class="mb-4">When dividing fractions, remember the rhyme "Keep, Change, Flip." Keep the first fraction, change division to multiplication, and flip the second fraction (use its reciprocal).</p>
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-lg mt-4 border border-slate-200 dark:border-slate-700 shadow-sm font-mono text-center">
+                            1/2 ÷ 3/4 = 1/2 × 4/3 = 4/6 = 2/3
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/layout.js"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
-                        indigo: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' },
-                        emerald: { 400: '#34d399', 500: '#10b981', 600: '#059669' },
-                        sky: { 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' }
-                    },
-                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+        /* =========================================
+           1. CORE CALCULATOR & VISUALIZER LOGIC
+        ========================================= */
+        const inN1 = document.getElementById('n1');
+        const inD1 = document.getElementById('d1');
+        const inN2 = document.getElementById('n2');
+        const inD2 = document.getElementById('d2');
+        const inOp = document.getElementById('op');
+        
+        const outRn = document.getElementById('rn');
+        const outRd = document.getElementById('rd');
+        const outLine = document.getElementById('r-line');
+        
+        const pie1 = document.getElementById('pie1');
+        const pie2 = document.getElementById('pie2');
+        const pieR = document.getElementById('pieR');
+        
+        const lbl1 = document.getElementById('lbl1');
+        const lbl2 = document.getElementById('lbl2');
+        const lblR = document.getElementById('lblR');
+        const opLbl = document.getElementById('op-lbl');
+
+        function gcd(a, b) {
+            a = Math.abs(a); b = Math.abs(b);
+            while (b) { [a, b] = [b, a % b]; }
+            return a;
+        }
+
+        function simplify(n, d) {
+            if (d === 0) return [0, 0];
+            const g = gcd(n, d);
+            let sn = n / g; let sd = d / g;
+            if (sd < 0) { sn = -sn; sd = -sd; }
+            return [sn, sd];
+        }
+
+        function getConicCSS(n, d, color) {
+            if (d === 0 || isNaN(n) || isNaN(d)) return `conic-gradient(transparent 0% 100%)`;
+            let pct = (Math.abs(n) / Math.abs(d)) * 100;
+            // Cap at 100% for visual sanity if improper fraction
+            if (pct > 100) pct = 100; 
+            return `conic-gradient(${color} 0% ${pct}%, transparent ${pct}% 100%)`;
+        }
+
+        function calculateFraction() {
+            const n1 = parseInt(inN1.value); const d1 = parseInt(inD1.value);
+            const n2 = parseInt(inN2.value); const d2 = parseInt(inD2.value);
+            const op = inOp.value;
+
+            if (isNaN(n1) || isNaN(d1) || isNaN(n2) || isNaN(d2) || d1 === 0 || d2 === 0) {
+                outRn.innerText = '?'; outRd.innerText = '?';
+                return;
+            }
+
+            let rn = 0, rd = 1;
+            if (op === '+') { rn = n1 * d2 + n2 * d1; rd = d1 * d2; }
+            else if (op === '-') { rn = n1 * d2 - n2 * d1; rd = d1 * d2; }
+            else if (op === '*') { rn = n1 * n2; rd = d1 * d2; }
+            else if (op === '/') { rn = n1 * d2; rd = d1 * n2; }
+
+            const [sNum, sDen] = simplify(rn, rd);
+            
+            if (sDen === 1) {
+                outRn.innerText = sNum; outRd.innerText = ""; outLine.style.display = "none";
+            } else {
+                outRn.innerText = sNum; outRd.innerText = sDen; outLine.style.display = "block";
+            }
+
+            // Update Visualizer Labels
+            lbl1.innerText = `${n1}/${d1}`;
+            lbl2.innerText = `${n2}/${d2}`;
+            lblR.innerText = sDen === 1 ? `${sNum}` : `${sNum}/${sDen}`;
+            opLbl.innerText = op === '*' ? '×' : op === '/' ? '÷' : op;
+
+            // Update Pies
+            pie1.style.background = getConicCSS(n1, d1, '#0ea5e9'); // sky-500
+            pie2.style.background = getConicCSS(n2, d2, '#6366f1'); // indigo-500
+            pieR.style.background = getConicCSS(sNum, sDen, '#10b981'); // emerald-500
+        }
+
+        [inN1, inD1, inN2, inD2, inOp].forEach(el => {
+            el.addEventListener('input', calculateFraction);
+            el.addEventListener('change', calculateFraction);
+        });
+
+        // Init
+        calculateFraction();
+
+
+        /* =========================================
+           2. FACTOR FRENZY GAME LOGIC
+        ========================================= */
+        let gameScore = 0;
+        let timeLeft = 60;
+        let gameInterval;
+        let cSn = 0, cSd = 1; // Current correct simplified answer
+        let isGameRunning = false;
+
+        const elIntro = document.getElementById('game-intro');
+        const elPlay = document.getElementById('game-play');
+        const elOut = document.getElementById('game-out');
+        const elScore = document.getElementById('game-score');
+        
+        const gNum = document.getElementById('g-num');
+        const gDen = document.getElementById('g-den');
+        const ansN = document.getElementById('game-ans-num');
+        const ansD = document.getElementById('game-ans-den');
+        
+        const btnSubmitGame = document.getElementById('game-submit-btn');
+        const elTimerBar = document.getElementById('game-timer-bar');
+        const elFeedback = document.getElementById('game-feedback');
+        const finalScore = document.getElementById('game-final-score');
+
+        function generateQuestion() {
+            // Pick a base simplified fraction that isn't whole
+            const bases = [[1,2], [1,3], [2,3], [1,4], [3,4], [1,5], [2,5], [3,5], [4,5], [1,6], [5,6], [1,8], [3,8]];
+            const b = bases[Math.floor(Math.random() * bases.length)];
+            
+            cSn = b[0];
+            cSd = b[1];
+
+            // Multiply by a random scalar to make it unsimplified
+            const scalar = Math.floor(Math.random() * 8) + 2; 
+            
+            gNum.innerText = cSn * scalar;
+            gDen.innerText = cSd * scalar;
+
+            ansN.value = '';
+            ansD.value = '';
+            ansN.focus();
+        }
+
+        function startGame() {
+            gameScore = 0;
+            timeLeft = 60;
+            elScore.innerText = gameScore;
+            elTimerBar.style.width = '100%';
+            
+            elIntro.classList.add('hidden');
+            elOut.classList.add('hidden');
+            elPlay.classList.remove('hidden');
+            isGameRunning = true;
+            
+            generateQuestion();
+            
+            // Timer
+            clearInterval(gameInterval);
+            let startTime = Date.now();
+            gameInterval = setInterval(() => {
+                let elapsed = (Date.now() - startTime) / 1000;
+                timeLeft = 60 - elapsed;
+                let pct = (timeLeft / 60) * 100;
+                if(pct<0) pct=0;
+                
+                elTimerBar.style.width = `${pct}%`;
+                
+                if (timeLeft <= 0) endGame();
+            }, 100);
+        }
+
+        function endGame() {
+            clearInterval(gameInterval);
+            isGameRunning = false;
+            elPlay.classList.add('hidden');
+            elOut.classList.remove('hidden');
+            finalScore.innerText = gameScore;
+        }
+
+        function checkAnswer() {
+            if (!isGameRunning) return;
+            const un = parseInt(ansN.value);
+            const ud = parseInt(ansD.value);
+            
+            // If the base implicitly has d=1 and user provides none? For our bases d is always > 1.
+            if (isNaN(un) || isNaN(ud)) return;
+
+            if (un === cSn && ud === cSd) {
+                const bonus = Math.floor(timeLeft * 1.5);
+                const pts = 50 + bonus;
+                gameScore += pts;
+                elScore.innerText = gameScore;
+                
+                elFeedback.innerText = `Perfect! +${pts}`;
+                elFeedback.className = "text-center font-bold text-xl mt-6 h-8 text-emerald-400";
+                setTimeout(()=>{ if(isGameRunning) elFeedback.className="text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300"}, 600);
+                
+                generateQuestion();
+            } else {
+                gameScore = Math.max(0, gameScore - 20);
+                elScore.innerText = gameScore;
+                
+                elFeedback.innerText = `Nope! Try again -20`;
+                elFeedback.className = "text-center font-bold text-xl mt-6 h-8 text-rose-500 animate-shake";
+                setTimeout(()=>{ if(isGameRunning) elFeedback.className="text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300"}, 600);
+                
+                ansN.value = ''; ansD.value = ''; ansN.focus();
+            }
+        }
+
+        document.getElementById('game-start-btn').addEventListener('click', startGame);
+        document.getElementById('game-restart-btn').addEventListener('click', startGame);
+        btnSubmitGame.addEventListener('click', checkAnswer);
+        
+        // Auto-focus move from N to D on Enter/Slash
+        ansN.addEventListener('keypress', (e) => {
+            if(e.key === 'Enter' || e.key === '/') {
+                e.preventDefault();
+                ansD.focus();
+            }
+        });
+        ansD.addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') checkAnswer();
+        });
+
+
+        /* =========================================
+           3. MANUAL LOGIC
+        ========================================= */
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            document.querySelectorAll('.accordion-content').forEach(c => {
+                if(c !== content && c.classList.contains('open')) {
+                    c.classList.remove('open');
+                    c.previousElementSibling.querySelector('i').classList.remove('rotate-180');
                 }
+            });
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                icon.classList.remove('rotate-180');
+            } else {
+                content.classList.add('open');
+                icon.classList.add('rotate-180');
             }
         }
     </script>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-
-<body
-    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
-
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-
-
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
-
-            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2
-                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
-                            Fraction Calc</h2>
-                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Add, subtract, multiply, and divide
-                            fractions easily.</p>
-                    </div>
-                </div>
-
-                <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
-                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
-                        <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-2">
-
-                            <!-- Fraction 1 -->
-                            <div class="flex flex-col items-center gap-2">
-                                <input type="number" id="frac-num1"
-                                    class="perc-input w-20 text-center font-bold text-xl py-2" placeholder="Num">
-                                <div class="w-full h-1 bg-slate-300 dark:bg-slate-600 rounded"></div>
-                                <input type="number" id="frac-den1"
-                                    class="perc-input w-20 text-center font-bold text-xl py-2" placeholder="Den">
-                            </div>
-
-                            <!-- Operator -->
-                            <div class="flex flex-col items-center justify-center">
-                                <select id="frac-op"
-                                    class="perc-input bg-white/50 dark:bg-slate-800/50 cursor-pointer text-2xl font-bold py-2 px-3 appearance-none text-center rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-sky-400">
-                                    <option value="+">+</option>
-                                    <option value="-">-</option>
-                                    <option value="*">×</option>
-                                    <option value="/">÷</option>
-                                </select>
-                            </div>
-
-                            <!-- Fraction 2 -->
-                            <div class="flex flex-col items-center gap-2">
-                                <input type="number" id="frac-num2"
-                                    class="perc-input w-20 text-center font-bold text-xl py-2" placeholder="Num">
-                                <div class="w-full h-1 bg-slate-300 dark:bg-slate-600 rounded"></div>
-                                <input type="number" id="frac-den2"
-                                    class="perc-input w-20 text-center font-bold text-xl py-2" placeholder="Den">
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div id="frac-results-area"
-                        class="hidden opacity-0 flex items-center justify-center gap-6 mt-4 transition-all duration-500">
-                        <div class="text-4xl font-light text-slate-400">=</div>
-                        <div
-                            class="glass-display p-6 sm:px-12 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30 flex items-center justify-center min-h-[140px] min-w-[140px]">
-                            <button
-                                class="copy-trigger absolute top-3 right-3 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                                data-target="frac-res-value"><i class="fas fa-copy"></i></button>
-                            <div class="text-sky-600 dark:text-sky-400" id="frac-res-value">
-                                <!-- Result injected here via JS -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </main>
-    </div>
-    <br>
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
-
-            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <header>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
-                        Fraction Calculator – Add, Subtract, Multiply, and Divide Fractions Easily
-                    </h1>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        A fraction calculator is a powerful online tool that helps you quickly perform calculations with
-                        fractions. Our free online fraction calculator allows you to add, subtract, multiply, and divide
-                        fractions easily, providing accurate results in seconds.
-                    </p>
-                </header>
-                <br>
-
-                <div class="intro-section">
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        Fractions are commonly used in mathematics, education, cooking measurements, engineering
-                        calculations, and many everyday tasks. Instead of solving fraction problems manually, you can
-                        use this fraction math calculator to perform calculations quickly and accurately. Whether you
-                        are a student, teacher, or professional, this tool simplifies your workflow.
-                    </p>
-                </div>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a Fraction
-                        Calculator?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        A fraction calculator is an online math tool designed to perform operations involving fractions
-                        (parts of a whole written as numerator/denominator).
-                    </p>
-
-
-                    [Image of a fraction showing numerator and denominator]
-
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6 mt-4">
-                        <li><strong>Fraction Addition:</strong> Automatically finds common denominators.</li>
-                        <li><strong>Fraction Subtraction:</strong> Quickly finds the difference between two values.</li>
-                        <li><strong>Fraction Multiplication:</strong> Multiplies numerators and denominators instantly.
-                        </li>
-                        <li><strong>Fraction Division:</strong> Handles the reciprocal "flip and multiply" process
-                            automatically.</li>
-                        <li><strong>Fraction Simplification:</strong> Reduces results to their lowest terms.</li>
-                    </ul>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Features of Our
-                        Fraction Calculator</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Multiple Operations</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Perform addition, subtraction,
-                                multiplication, and division in one unified tool.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Automatic Simplification</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">No need to manually reduce fractions;
-                                the tool provides the simplest form automatically.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Instant Accuracy</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Eliminate manual errors when working
-                                with large numbers or complex denominators.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Device Compatible</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Fully responsive design works
-                                perfectly on smartphones, tablets, and desktops.</p>
-                        </div>
-                    </div>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
-                        Fraction Calculator</h2>
-                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
-                        <li>Enter the first fraction (numerator and denominator).</li>
-                        <li>Select the operation: <strong>+ , − , × , or ÷</strong>.</li>
-                        <li>Enter the second fraction.</li>
-                        <li>Click the <strong>Calculate</strong> button.</li>
-                        <li>Instantly view the result and its simplified form.</li>
-                    </ol>
-                </section>
-                <br>
-
-                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Solve fraction problems
-                        instantly!</h2>
-                    <p class="text-slate-500 dark:text-slate-400">
-                        Try the online fraction calculator today to make your math homework or professional measurements
-                        easy and efficient.
-                    </p>
-                </section>
-
-                <footer>
-                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
-                        &copy; 2026 Fraction Calculator Tool. All rights reserved.
-                    </p>
-                </footer>
-            </div>
-        </main>
-    </div>
-
-    <!-- Core Layout injection -->
-    <script src="../js/layout.js"></script>
-    <script src="../js/calculators/fraction.js"></script>
 </body>
-
 </html>

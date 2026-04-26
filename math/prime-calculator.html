@@ -1,64 +1,149 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime Number Explorer | CalcSuit Math Suite</title>
+    <title>Prime Study Hub | CalcSuit Math Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .timer-bar { transition: width 1s linear; }
+        .accordion-content { transition: max-height 0.3s ease-out, padding 0.3s ease; max-height: 0; overflow: hidden; padding: 0 1rem; }
+        .accordion-content.open { max-height: 1000px; padding: 1rem; }
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
+        .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
+    </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200 overflow-x-hidden">
     <div id="sidebar-container"></div>
-    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
-        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
-            <div class="bg-indigo-900 p-8 text-white text-center">
-                <i class="fas fa-list-ol text-4xl mb-4 text-indigo-400"></i>
-                <h1 class="text-3xl font-bold">Prime Number Explorer</h1>
-                <p class="text-indigo-200 mt-2">Check primality and generate prime sequences</p>
+    
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20 w-full relative">
+        
+        <!-- 1. The Core Calculator -->
+        <div class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden mb-12">
+            <div class="bg-indigo-600 p-8 text-white text-center relative overflow-hidden">
+                <i class="fas fa-list-ol text-5xl mb-4 opacity-90 drop-shadow-md"></i>
+                <h1 class="text-4xl font-extrabold tracking-tight">Prime Architect</h1>
+                <p class="text-indigo-100 mt-2 font-medium tracking-wide">Test primality and visualize the Sieve of Eratosthenes.</p>
             </div>
+            
             <div class="p-8 space-y-10">
-                <!-- Check Single Prime -->
                 <div class="space-y-4">
-                    <label class="block text-sm font-bold text-slate-500 uppercase tracking-widest">Test Individual Number</label>
+                    <label class="block text-sm font-bold text-slate-500 uppercase tracking-widest">Test Single Number</label>
                     <div class="flex gap-4">
-                        <input type="number" id="prime-check-input" class="flex-1 bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-6 text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Enter number..." value="101">
-                        <button id="check-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 rounded-xl transition-all shadow-lg active:scale-95">Check</button>
+                        <input type="number" id="prime-check-input" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl py-4 px-6 text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Enter number..." value="101">
+                        <button id="check-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 rounded-xl transition-all shadow-lg active:scale-95 text-xl">Check</button>
                     </div>
-                    <div id="prime-status" class="text-center py-4 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 font-bold text-xl hidden"></div>
+                    <div id="prime-status" class="text-center py-4 rounded-xl border border-dashed font-bold text-xl hidden"></div>
                 </div>
 
-                <div class="h-px bg-slate-100 dark:bg-slate-700"></div>
-
-                <!-- Range Generator -->
-                <div class="space-y-4">
-                    <label class="block text-sm font-bold text-slate-500 uppercase tracking-widest">Generate Prime Range</label>
+                <div class="space-y-4 pt-8 border-t border-slate-200 dark:border-slate-700">
+                    <label class="block text-sm font-bold text-slate-500 uppercase tracking-widest">Generate Prime Sequence</label>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="space-y-1">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">Start</span>
-                            <input type="number" id="range-start" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="1">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">Start Target</span>
+                            <input type="number" id="range-start" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-center font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="1">
                         </div>
                         <div class="space-y-1">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">End</span>
-                            <input type="number" id="range-end" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="100">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">End Limit</span>
+                            <input type="number" id="range-end" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-center font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="100">
                         </div>
                     </div>
-                    <button id="generate-btn" class="w-full bg-slate-900 dark:bg-slate-200 dark:text-slate-900 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-all">Generate Sequence</button>
-                    <div id="range-results" class="max-h-48 overflow-y-auto bg-slate-50 dark:bg-slate-900/50 rounded-xl p-4 font-mono text-sm leading-8 hidden border border-slate-200 dark:border-slate-700"></div>
+                    <button id="generate-btn" class="w-full bg-indigo-500 hover:bg-indigo-400 text-white font-black py-4 rounded-xl shadow-lg active:scale-95 transition-all outline-none">Generate Sequence <i class="fas fa-arrow-right ml-2"></i></button>
+                    <div id="range-results" class="max-h-48 overflow-y-auto bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 font-mono text-sm leading-8 hidden"></div>
                 </div>
             </div>
         </div>
-        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
-            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The Science of Primes</h2>
-            <p>Our Prime Explorer uses optimized square-root division checks and the <strong>Sieve of Eratosthenes</strong> to generate sequences. Prime numbers are the fundamental building blocks of number theory and cryptographic security.</p>
+
+        <!-- 2. "Prime Panic" Mini Game Module -->
+        <div class="w-full max-w-4xl bg-gradient-to-br from-indigo-900 to-violet-950 border border-indigo-500/30 rounded-3xl shadow-[0_0_50px_rgba(99,102,241,0.2)] overflow-hidden mb-12 relative text-white">
+             <div class="p-10 relative z-10">
+                 <div class="flex justify-between items-start mb-8">
+                     <div>
+                         <h2 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400 mb-2">
+                             <i class="fas fa-ghost text-sky-400 mr-2"></i> Prime Panic
+                         </h2>
+                         <p class="text-indigo-200/70 font-medium tracking-wide">Identify if the falling number is Prime or Composite!</p>
+                     </div>
+                     <div class="bg-indigo-950/80 border border-indigo-500/50 rounded-2xl p-4 text-center min-w-[120px]">
+                         <div class="text-[10px] uppercase tracking-widest text-indigo-400 font-black mb-1">SCORE</div>
+                         <div class="text-4xl font-black text-white" id="game-score">0</div>
+                     </div>
+                 </div>
+
+                 <div id="game-intro" class="text-center py-10 bg-indigo-950/40 rounded-2xl border border-indigo-500/20 backdrop-blur-sm">
+                     <p class="mb-8 text-xl font-medium text-slate-300">Survive 60 seconds of rapid primality testing.</p>
+                     <button id="game-start-btn" class="bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-400 hover:to-violet-500 px-10 py-5 rounded-full font-black text-2xl shadow-lg transition-transform hover:scale-105 active:scale-95 text-white tracking-widest">
+                         START SPRINT
+                     </button>
+                 </div>
+
+                 <div id="game-play" class="hidden">
+                     <div class="w-full bg-slate-800/80 rounded-full h-3 mb-8 overflow-hidden">
+                         <div id="game-timer-bar" class="timer-bar bg-gradient-to-r from-emerald-400 to-indigo-400 h-3 rounded-full" style="width: 100%"></div>
+                     </div>
+                     <div class="text-center py-6">
+                         <h3 class="text-sky-400 font-bold tracking-widest uppercase mb-4 text-sm">Is this number prime?</h3>
+                         <div class="inline-block bg-indigo-950/80 border-2 border-indigo-500/50 rounded-3xl px-12 py-8 shadow-inner">
+                             <div class="text-6xl font-black text-white" id="g-num">47</div>
+                         </div>
+                     </div>
+                     <div class="mt-8 flex gap-4 max-w-sm mx-auto items-center">
+                         <button class="g-btn flex-1 bg-emerald-600 hover:bg-emerald-500 rounded-2xl py-4 font-black text-2xl shadow-lg border border-emerald-400/50" data-val="true">PRIME</button>
+                         <button class="g-btn flex-1 bg-rose-600 hover:bg-rose-500 rounded-2xl py-4 font-black text-2xl shadow-lg border border-rose-400/50" data-val="false">COMPOSITE</button>
+                     </div>
+                     <div id="game-feedback" class="text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300">Perfect! +50</div>
+                 </div>
+
+                 <div id="game-out" class="hidden text-center py-10 bg-slate-900/80 rounded-2xl border border-slate-700">
+                     <h2 class="text-5xl font-black text-white mb-4">Time's Up!</h2>
+                     <p class="text-2xl text-slate-300 mb-8">Final Score: <span id="game-final-score" class="text-sky-400 font-bold">0</span></p>
+                     <button id="game-restart-btn" class="bg-indigo-600 hover:bg-indigo-500 px-8 py-4 rounded-xl font-bold text-lg text-white shadow-lg"><i class="fas fa-redo mr-2"></i> Play Again</button>
+                 </div>
+             </div>
+        </div>
+
+        <!-- 3. Interactive Educational Manual -->
+        <div class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden text-slate-700 dark:text-slate-300">
+            <div class="bg-slate-100 dark:bg-slate-800/80 p-8 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white"><i class="fas fa-book-open text-indigo-600 mr-2"></i> Math Study Guide</h2>
+                    <p class="text-sm mt-1 font-medium">Master the concepts behind prime numbers.</p>
+                </div>
+            </div>
+            <div class="divide-y divide-slate-100 dark:divide-slate-700">
+                <div class="accordion-item">
+                    <button class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span class="text-indigo-500 mr-2">01.</span> What is a Prime Number?</span>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content bg-slate-50 dark:bg-slate-900/30 text-sm leading-relaxed">
+                        <p class="mb-4">A prime number is a whole number greater than 1 whose only divisors are 1 and itself. For example, 2, 3, 5, 7, 11, etc. </p>
+                        <p class="mb-4 border-l-4 border-indigo-500 pl-4 py-1 italic bg-indigo-50 dark:bg-indigo-900/20">The number 1 is not considered prime. The number 2 is the ONLY even prime number!</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span class="text-sky-500 mr-2">02.</span> Encryption & Security</span>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content bg-slate-50 dark:bg-slate-900/30 text-sm leading-relaxed">
+                        <p class="mb-4">Prime numbers are the fundamental building blocks of modern internet security. Algorithms like RSA rely on the mathematical difficulty of factoring extremely large numbers into their prime components. It's easy for a computer to multiply two massive prime numbers together, but exceptionally difficult to "un-multiply" them back into primes without the key.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
+
     <script src="../js/layout.js"></script>
     <script>
+        /* 1. Calculator Logic */
         const checkBtn = document.getElementById('check-btn');
         const checkInput = document.getElementById('prime-check-input');
         const statusEl = document.getElementById('prime-status');
-
         const generateBtn = document.getElementById('generate-btn');
         const rangeStart = document.getElementById('range-start');
         const rangeEnd = document.getElementById('range-end');
@@ -78,24 +163,74 @@
             const val = parseInt(checkInput.value);
             if (isNaN(val)) return;
             const res = isPrime(val);
-            statusEl.innerText = res ? `${val} is a Prime Number!` : `${val} is not a Prime Number.`;
-            statusEl.className = `text-center py-4 rounded-xl border border-dashed font-bold text-xl ${res ? 'border-emerald-500 text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10' : 'border-rose-500 text-rose-500 bg-rose-50 dark:bg-rose-500/10'}`;
+            statusEl.innerText = res ? val + " is a Prime Number!" : val + " is NOT Prime.";
+            statusEl.className = "text-center py-4 rounded-xl border border-dashed font-bold text-xl " + (res ? 'border-emerald-500 text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10' : 'border-rose-500 text-rose-500 bg-rose-50 dark:bg-rose-500/10');
             statusEl.classList.remove('hidden');
         });
 
         generateBtn.addEventListener('click', () => {
-            const start = Math.max(1, parseInt(rangeStart.value));
-            const end = Math.min(10000, parseInt(rangeEnd.value));
+            const start = Math.max(1, parseInt(rangeStart.value)); const end = Math.min(10000, parseInt(rangeEnd.value));
             if (isNaN(start) || isNaN(end) || start > end) return;
-
             const primes = [];
-            for (let i = start; i <= end; i++) {
-                if (isPrime(i)) primes.push(i);
-            }
-
-            rangeResults.innerHTML = primes.length > 0 ? primes.map(p => `<span class="inline-block px-2 py-1 m-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-indigo-600 dark:text-indigo-400 font-bold">${p}</span>`).join('') : '<div class="text-center text-slate-400">No primes found in this range.</div>';
+            for (let i = start; i <= end; i++) { if (isPrime(i)) primes.push(i); }
+            rangeResults.innerHTML = primes.length > 0 ? primes.map(p => '<span class="inline-block px-2 py-1 m-1 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-md text-indigo-600 dark:text-indigo-400 font-bold">' + p + '</span>').join('') : '<div class="text-center text-slate-400">No primes found.</div>';
             rangeResults.classList.remove('hidden');
         });
+
+        /* 2. Game Logic */
+        let score=0, time=60, intv, isRunning=false;
+        let isPrimeAns = false;
+        
+        function formatQ() {
+            const num = Math.floor(Math.random() * 200) + 2; 
+            isPrimeAns = isPrime(num);
+            document.getElementById('g-num').innerText = num;
+        }
+
+        document.querySelectorAll('.g-btn').forEach(b => {
+             b.addEventListener('click', function() {
+                  if(!isRunning)return;
+                  const guess = this.dataset.val === 'true';
+                  if(guess === isPrimeAns) { score+= 50; document.getElementById('game-feedback').innerText='Genius! +50'; document.getElementById('game-feedback').className="text-center font-bold text-xl mt-6 h-8 text-emerald-400"; }
+                  else { score=Math.max(0,score-20); document.getElementById('game-feedback').innerText='Wrong! -20'; document.getElementById('game-feedback').className="text-center font-bold text-xl mt-6 h-8 text-rose-500 animate-shake"; }
+                  document.getElementById('game-score').innerText=score;
+                  setTimeout(()=>{if(isRunning)document.getElementById('game-feedback').className="text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300"}, 600);
+                  formatQ();
+             });
+        });
+
+        function startGame() {
+            score=0; time=60; document.getElementById('game-score').innerText=score;
+            document.getElementById('game-intro').classList.add('hidden');
+            document.getElementById('game-out').classList.add('hidden');
+            document.getElementById('game-play').classList.remove('hidden');
+            isRunning = true; formatQ();
+            
+            clearInterval(intv);
+            let st = Date.now();
+            intv = setInterval(()=>{
+                time = 60 - ((Date.now()-st)/1000);
+                document.getElementById('game-timer-bar').style.width = Math.max(0,(time/60)*100) + '%';
+                if(time<=0) {
+                    isRunning=false; clearInterval(intv);
+                    document.getElementById('game-play').classList.add('hidden');
+                    document.getElementById('game-out').classList.remove('hidden');
+                    document.getElementById('game-final-score').innerText=score;
+                }
+            }, 100);
+        }
+        document.getElementById('game-start-btn')?.addEventListener('click', startGame);
+        document.getElementById('game-restart-btn')?.addEventListener('click', startGame);
+
+        /* 3. Accordion Logic */
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            document.querySelectorAll('.accordion-content').forEach(c => {
+                if(c !== content && c.classList.contains('open')) { c.classList.remove('open'); c.previousElementSibling.querySelector('i').classList.remove('rotate-180'); }
+            });
+            content.classList.toggle('open');
+            btn.querySelector('i').classList.toggle('rotate-180');
+        }
     </script>
 </body>
 </html>

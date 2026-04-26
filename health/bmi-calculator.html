@@ -1,231 +1,271 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- SEO Mastery -->
-    <title>BMI Calculator & Body Composition Analyzer | WHO Standards | CalcSuit</title>
-    <meta name="description" content="Calculate your Body Mass Index (BMI) precisely with our professional analyzer. Based on WHO and CDC standards. Includes healthy weight ranges and interactive body composition insights.">
-    <meta name="keywords" content="bmi calculator, body mass index, healthy weight calculator, are you overweight calculator, clinical bmi tool, body composition analyzer usa, who bmi standards">
-    <link rel="canonical" href="https://calcsuit.com/health/bmi-calculator.html">
-
-    <!-- Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Body Composition Analyzer",
-      "applicationCategory": "HealthApplication",
-      "description": "Calculates Body Mass Index (BMI) and provides health category classification based on WHO standards.",
-      "url": "https://calcsuit.com/health/bmi-calculator.html"
-    }
-    </script>
-
-    <!-- Tailwind & Fonts -->
+    <title>BMI Health Hub | CalcSuit Biology Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
-        }
-    </script>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
     <style>
-        .bmi-meter { height: 12px; border-radius: 999px; background: linear-gradient(90deg, #38bdf8 0%, #34d399 20%, #fbbf24 40%, #f87171 70%, #ef4444 100%); position: relative; margin: 30px 0; }
-        .bmi-marker { position: absolute; top: -14px; width: 4px; height: 40px; background: #1e293b; border-radius: 2px; transform: translateX(-50%); transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .dark .bmi-marker { background: #f8fafc; }
-        .category-pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
-        .input-group input { font-size: 1.5rem; font-weight: 900; background: transparent; outline: none; text-align: center; width: 100%; }
-        .gender-tab.active { background: #6366f1; color: white; }
+        .timer-bar { transition: width 1s linear; }
+        .accordion-content { transition: max-height 0.3s ease-out, padding 0.3s ease; max-height: 0; overflow: hidden; padding: 0 1rem; }
+        .accordion-content.open { max-height: 1000px; padding: 1rem; }
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
+        .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
+        
+        .bmi-marker { transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen">
 
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200 overflow-x-hidden">
     <div id="sidebar-container"></div>
-
-    <main class="max-w-7xl mx-auto px-4 py-12 lg:px-10 space-y-12">
+    
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20 w-full relative">
         
-        <!-- Header -->
-        <div class="max-w-3xl space-y-4">
-            <div class="inline-flex items-center gap-2 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-100 dark:border-emerald-500/20">
-                <i class="fas fa-heartbeat"></i> Clinical Health Suite
+        <!-- 1. The Core Calculator -->
+        <div class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden mb-12">
+            <div class="bg-emerald-600 p-8 text-white text-center relative overflow-hidden">
+                <i class="fas fa-weight-scale text-5xl mb-4 opacity-90 drop-shadow-md"></i>
+                <h1 class="text-4xl font-extrabold tracking-tight">BMI Dashboard</h1>
+                <p class="text-emerald-100 mt-2 font-medium tracking-wide">Visualize your Body Mass Index and understand your weight category.</p>
             </div>
-            <h1 class="text-5xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight">BMI <span class="text-emerald-500">Analyzer</span></h1>
-            <p class="text-slate-500 dark:text-slate-400 text-lg">Beyond a simple number. Find your health category based on the latest <strong>World Health Organization (WHO)</strong> standards for the US and European adult populations.</p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             
-            <!-- Left: Inputs -->
-            <div class="lg:col-span-5 space-y-6">
-                <div class="bg-white dark:bg-slate-800 rounded-[35px] border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm space-y-8">
-                    
-                    <div class="flex bg-slate-100 dark:bg-slate-900 rounded-2xl p-1 gap-1">
-                        <button class="gender-tab active flex-1 py-3 rounded-xl font-bold text-sm transition-all" data-gender="male">Male</button>
-                        <button class="gender-tab flex-1 py-3 rounded-xl font-bold text-sm transition-all text-slate-400" data-gender="female">Female</button>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="input-group space-y-2">
-                            <label class="text-[10px] font-black uppercase text-slate-400 tracking-widest block text-center">Height (cm)</label>
-                            <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-100 dark:border-slate-800">
-                                <input type="number" id="height-cm" value="180">
-                            </div>
-                        </div>
-                        <div class="input-group space-y-2">
-                            <label class="text-[10px] font-black uppercase text-slate-400 tracking-widest block text-center">Weight (kg)</label>
-                            <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-100 dark:border-slate-800">
-                                <input type="number" id="weight-kg" value="75">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="input-group space-y-2">
-                        <label class="text-[10px] font-black uppercase text-slate-400 tracking-widest block text-center">Age (Years)</label>
-                        <input type="range" id="age-range" min="18" max="100" value="30" class="w-full accent-emerald-500">
-                        <p class="text-center text-sm font-bold text-slate-500" id="age-val">30 Years</p>
-                    </div>
-
-                    <p class="text-[10px] text-slate-400 italic text-center leading-relaxed">"Note: BMI is a screening tool. It does not account for muscle mass or bone density (e.g. athletes)."</p>
-                </div>
-            </div>
-
-            <!-- Right: Results Visualizer -->
-            <div class="lg:col-span-7 space-y-8">
-                
-                <div class="bg-white dark:bg-slate-800 rounded-[35px] border border-slate-200 dark:border-slate-700 p-8 md:p-12 shadow-sm relative overflow-hidden">
-                    <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-10">
-                        <div class="text-center md:text-left space-y-2">
-                            <p class="text-xs font-black uppercase tracking-widest text-slate-400">Your Current BMI</p>
-                            <div id="res-bmi" class="text-8xl md:text-[120px] leading-none font-black text-emerald-500 drop-shadow-sm">23.1</div>
-                            <div id="cat-pill" class="category-pill bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">Normal Weight</div>
-                        </div>
+            <div class="p-8 space-y-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Inputs -->
+                    <div class="space-y-6">
+                        <label class="block text-sm font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200 dark:border-slate-700 pb-2">Your Statistics</label>
                         
-                        <div class="w-full md:w-64 space-y-6">
-                            <div class="space-y-1">
-                                <p class="text-xs font-bold">Ideal Weight Range</p>
-                                <p id="res-ideal-range" class="text-lg font-black text-slate-900 dark:text-white">60.2 kg – 81.3 kg</p>
-                            </div>
-                            <div class="p-5 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
-                                <p class="text-[11px] font-bold text-slate-400 mb-2">Health Perspective</p>
-                                <p id="res-health-desc" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed italic">"You are within a healthy clinical weight range for your height. Maintain a balanced diet and regular exercise."</p>
-                            </div>
+                        <div class="space-y-2">
+                            <span class="text-xs font-bold text-slate-400 uppercase">Height (inches)</span>
+                            <input type="number" id="bmi-h" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 font-bold focus:ring-2 focus:ring-emerald-500 outline-none" value="68">
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-xs font-bold text-slate-400 uppercase">Weight (lbs)</span>
+                            <input type="number" id="bmi-w" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 font-bold focus:ring-2 focus:ring-emerald-500 outline-none" value="150">
                         </div>
                     </div>
 
-                    <div class="bmi-meter">
-                        <div id="bmi-marker" class="bmi-marker"></div>
-                    </div>
-                    <div class="flex justify-between text-[9px] font-bold text-slate-400 uppercase tracking-widest px-2">
-                        <span>Underweight</span>
-                        <span>Healthy</span>
-                        <span>Overweight</span>
-                        <span>Obese</span>
+                    <!-- Display -->
+                    <div class="bg-slate-50 dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center text-center shadow-inner relative">
+                        <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Current BMI</h4>
+                        <div class="text-6xl font-black mb-4" id="res-val">22.8</div>
+                        <div class="inline-block px-4 py-1 rounded-full text-sm font-black uppercase tracking-widest text-white transition-colors" id="res-badge" style="background-color: #10b981;">Normal</div>
                     </div>
                 </div>
 
-                <!-- Deep Educational Content -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="glass-card p-8 rounded-3xl border-t-4 border-t-blue-400">
-                        <h4 class="font-black text-sm mb-3">Does BMI Measure Fat?</h4>
-                        <p class="text-xs text-slate-500 leading-relaxed"><strong>No.</strong> BMI measures excess weight rather than excess body fat. However, for most adults, BMI is highly correlated with total body fat. It is a vital <strong>preliminary screening tool</strong> for health risks related to chronic heart disease, Type 2 diabetes, and high blood pressure in Western populations.</p>
+                <!-- Visualizer Scale -->
+                <div class="pt-8 border-t border-slate-200 dark:border-slate-700">
+                    <h3 class="text-center font-bold text-xl mb-6"><i class="fas fa-ruler-horizontal text-emerald-500 mr-2"></i> Clinical Mass Visualizer</h3>
+                    <div class="relative w-full h-8 rounded-full overflow-hidden flex border-2 border-slate-200 dark:border-slate-700 shadow-inner">
+                        <div class="h-full bg-sky-400" style="width: 20%;" title="Underweight"></div>
+                        <div class="h-full bg-emerald-400" style="width: 30%;" title="Normal"></div>
+                        <div class="h-full bg-amber-400" style="width: 25%;" title="Overweight"></div>
+                        <div class="h-full bg-rose-500" style="width: 25%;" title="Obese"></div>
                     </div>
-                    <div class="glass-card p-8 rounded-3xl border-t-4 border-t-amber-400">
-                        <h4 class="font-black text-sm mb-3">Wait, I am a Bodybuilder?</h4>
-                        <p class="text-xs text-slate-500 leading-relaxed">If you have high muscle mass (athletes/powerlifters), your BMI may fall into the "Overweight" category even if your body fat is low. In this case, doctors recommend measuring <strong>Waist-to-Hip Ratio</strong> or skinfold thickness for a more accurate health picture.</p>
+                    <!-- The indicator -->
+                    <div class="relative w-full h-4">
+                        <div id="bmi-marker" class="bmi-marker absolute w-2 h-6 bg-slate-950 dark:bg-white rounded-full -top-1" style="left: 45%; margin-left: -4px;"></div>
+                    </div>
+                    <div class="flex justify-between text-[10px] uppercase font-bold text-slate-400 mt-2 px-2">
+                        <span>10</span>
+                        <span>18.5</span>
+                        <span>25</span>
+                        <span>30</span>
+                        <span>40+</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SEO Content / WHO Table -->
-        <div class="max-w-4xl mx-auto space-y-12 pt-12 border-t border-slate-200 dark:border-slate-800">
-            <h2 class="text-3xl font-black text-center">Standard BMI Classifications (WHO)</h2>
-            <div class="overflow-x-auto rounded-3xl border border-slate-100 dark:border-slate-800">
-                <table class="w-full text-left bg-white dark:bg-slate-800">
-                    <thead class="bg-slate-50 dark:bg-slate-900/50 text-xs font-black uppercase tracking-widest text-slate-400">
-                        <tr>
-                            <th class="px-8 py-5">BMI Range</th>
-                            <th class="px-8 py-5">Classification</th>
-                            <th class="px-8 py-5">Health Risk</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-sm">
-                        <tr class="border-b border-slate-50 dark:border-slate-800/50"><td class="px-8 py-4 font-bold">Below 18.5</td><td class="px-8 py-4">Underweight</td><td class="px-8 py-4 text-amber-500">Increased risk</td></tr>
-                        <tr class="border-b border-slate-50 dark:border-slate-800/50"><td class="px-8 py-4 font-bold">18.5 – 24.9</td><td class="px-8 py-4">Normal Weight</td><td class="px-8 py-4 text-emerald-500">Optimal</td></tr>
-                        <tr class="border-b border-slate-50 dark:border-slate-800/50"><td class="px-8 py-4 font-bold">25.0 – 29.9</td><td class="px-8 py-4">Overweight</td><td class="px-8 py-4 text-orange-500">Increased risk</td></tr>
-                        <tr><td class="px-8 py-4 font-bold">30.0 and Above</td><td class="px-8 py-4">Obese</td><td class="px-8 py-4 text-rose-500">High risk</td></tr>
-                    </tbody>
-                </table>
-            </div>
+        <!-- 2. "BMI Estimator" Mini Game Module -->
+        <div class="w-full max-w-4xl bg-gradient-to-br from-emerald-900 to-slate-900 border border-emerald-500/30 rounded-3xl shadow-[0_0_50px_rgba(16,185,129,0.2)] overflow-hidden mb-12 relative text-white">
+             <div class="p-10 relative z-10">
+                 <div class="flex justify-between items-start mb-8">
+                     <div>
+                         <h2 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 mb-2">
+                             <i class="fas fa-weight-scale text-emerald-400 mr-2"></i> BMI Estimator
+                         </h2>
+                         <p class="text-emerald-200/70 font-medium tracking-wide">Brain Training: Guess the clinical BMI category based on randomized stats!</p>
+                     </div>
+                     <div class="bg-slate-950/80 border border-emerald-500/50 rounded-2xl p-4 text-center min-w-[120px]">
+                         <div class="text-[10px] uppercase tracking-widest text-emerald-400 font-black mb-1">SCORE</div>
+                         <div class="text-4xl font-black text-white" id="game-score">0</div>
+                     </div>
+                 </div>
+
+                 <div id="game-intro" class="text-center py-10 bg-slate-900/40 rounded-2xl border border-emerald-500/20 backdrop-blur-sm">
+                     <p class="mb-8 text-xl font-medium text-slate-300">Survive 60 seconds of rapid biological categorization.</p>
+                     <button id="game-start-btn" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 px-10 py-5 rounded-full font-black text-2xl shadow-lg transition-transform hover:scale-105 active:scale-95 text-white tracking-widest">
+                         START SPRINT
+                     </button>
+                 </div>
+
+                 <div id="game-play" class="hidden">
+                     <div class="w-full bg-slate-800/80 rounded-full h-3 mb-8 overflow-hidden">
+                         <div id="game-timer-bar" class="timer-bar bg-gradient-to-r from-emerald-400 to-teal-400 h-3 rounded-full" style="width: 100%"></div>
+                     </div>
+                     
+                     <div class="grid grid-cols-2 gap-4 mb-6">
+                         <div class="bg-slate-950/50 p-6 border border-emerald-500/30 rounded-2xl text-center"><div class="text-sm font-bold text-emerald-400 uppercase tracking-widest mb-2">Weight</div><div class="text-4xl font-black" id="g-w">180 lbs</div></div>
+                         <div class="bg-slate-950/50 p-6 border border-emerald-500/30 rounded-2xl text-center"><div class="text-sm font-bold text-emerald-400 uppercase tracking-widest mb-2">Height</div><div class="text-4xl font-black" id="g-h">5ft 10in</div></div>
+                     </div>
+
+                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto items-center mt-8">
+                         <button class="g-btn bg-slate-800 hover:bg-sky-500 border border-slate-700 rounded-2xl py-4 font-black shadow-lg transition-colors border-b-4 hover:scale-105" data-val="1">Underweight</button>
+                         <button class="g-btn bg-slate-800 hover:bg-emerald-500 border border-slate-700 rounded-2xl py-4 font-black shadow-lg transition-colors border-b-4 hover:scale-105" data-val="2">Normal</button>
+                         <button class="g-btn bg-slate-800 hover:bg-amber-500 border border-slate-700 rounded-2xl py-4 font-black shadow-lg transition-colors border-b-4 hover:scale-105" data-val="3">Overweight</button>
+                         <button class="g-btn bg-slate-800 hover:bg-rose-500 border border-slate-700 rounded-2xl py-4 font-black shadow-lg transition-colors border-b-4 hover:scale-105" data-val="4">Obese</button>
+                     </div>
+                     
+                     <div id="game-feedback" class="text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300">Perfect! +50</div>
+                 </div>
+
+                 <div id="game-out" class="hidden text-center py-10 bg-slate-900/80 rounded-2xl border border-slate-700">
+                     <h2 class="text-5xl font-black text-white mb-4">Time's Up!</h2>
+                     <p class="text-2xl text-slate-300 mb-8">Final Score: <span id="game-final-score" class="text-emerald-400 font-bold">0</span></p>
+                     <button id="game-restart-btn" class="bg-emerald-600 hover:bg-emerald-500 px-8 py-4 rounded-xl font-bold text-lg text-white shadow-lg"><i class="fas fa-redo mr-2"></i> Play Again</button>
+                 </div>
+             </div>
         </div>
 
+        <!-- 3. Interactive Educational Manual -->
+        <div class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden text-slate-700 dark:text-slate-300">
+            <div class="bg-slate-100 dark:bg-slate-800/80 p-8 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white"><i class="fas fa-book-open text-emerald-600 mr-2"></i> Health Study Guide</h2>
+                    <p class="text-sm mt-1 font-medium">Master the concepts behind the Body Mass Index.</p>
+                </div>
+            </div>
+            <div class="divide-y divide-slate-100 dark:divide-slate-700">
+                <div class="accordion-item">
+                    <button class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span class="text-emerald-500 mr-2">01.</span> What is BMI?</span>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content bg-slate-50 dark:bg-slate-900/30 text-sm leading-relaxed">
+                        <p class="mb-4">The Body Mass Index (BMI) maps your weight to your height. It's a widely used clinical screening tool to roughly categorize an adult into underweight, normal weight, overweight, or obese ranges.</p>
+                        <p class="mb-4 border-l-4 border-emerald-500 pl-4 py-1 italic bg-emerald-50 dark:bg-emerald-900/20">The formula in imperial units is: <code>[Weight (lbs) / Height (in)²] × 703</code>.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span class="text-amber-500 mr-2">02.</span> Limitations of BMI</span>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content bg-slate-50 dark:bg-slate-900/30 text-sm leading-relaxed">
+                        <p class="mb-4">While extremely useful for population studies and general screening, BMI is NOT a diagnostic tool for individual health. Why? Because it completely ignores <strong>Body Composition</strong> (muscle vs. fat).</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li>Bodybuilders and athletes often have an "Obese" BMI due to high muscle density.</li>
+                            <li>Elderly individuals may have a "Normal" BMI but unhealthy levels of visceral body fat.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <script src="../js/layout.js"></script>
     <script>
-        const $ = id => document.getElementById(id);
+        /* 1. Calculator Logic */
+        const uH = document.getElementById('bmi-h');
+        const uW = document.getElementById('bmi-w');
+        const rV = document.getElementById('res-val');
+        const rB = document.getElementById('res-badge');
+        const mkr = document.getElementById('bmi-marker');
+
+        function updateCalc() {
+            const h = parseFloat(uH.value);
+            const w = parseFloat(uW.value);
+            if(isNaN(h) || isNaN(w) || h===0) return;
+            
+            const bmi = (w / (h*h)) * 703;
+            rV.innerText = bmi.toFixed(1);
+            
+            let color = '';
+            let text = '';
+            let pct = 0;
+            
+            if(bmi < 18.5) { text='Underweight'; color='#38bdf8'; pct=(bmi/18.5)*20; }
+            else if(bmi < 25) { text='Normal'; color='#10b981'; pct=20 + ((bmi-18.5)/6.5)*30; }
+            else if(bmi < 30) { text='Overweight'; color='#fbbf24'; pct=50 + ((bmi-25)/5)*25; }
+            else { text='Obese'; color='#f43f5e'; pct=75 + Math.min(25, ((bmi-30)/10)*25); }
+            
+            rB.style.backgroundColor = color;
+            rB.innerText = text;
+            rV.style.color = color;
+            
+            mkr.style.left = Math.max(0, Math.min(100, pct)) + '%';
+        }
+        [uH, uW].forEach(i => i.addEventListener('input', updateCalc));
+        updateCalc();
+
+        /* 2. Game Logic */
+        let score=0, time=60, intv, isRunning=false;
+        let ansC = '2';
         
-        function calculate() {
-            const height = parseFloat($('height-cm').value) / 100 || 0;
-            const weight = parseFloat($('weight-kg').value) || 0;
-            const age = $('age-range').value;
-            $('age-val').innerText = age + ' Years';
-
-            if (height === 0) return;
-
-            const bmi = (weight / (height * height)).toFixed(1);
-            $('res-bmi').innerText = bmi;
-
-            // Update categories and visuals
-            let cat = '', color = '', desc = '', markerPos = 0;
-
-            if (bmi < 18.5) {
-                cat = 'Underweight'; color = 'text-sky-500'; bg= 'bg-sky-100 dark:bg-sky-900/30';
-                desc = '"You are currently below the healthy clinical weight range. Consultation with a nutritionist is advised."';
-                markerPos = (bmi / 18.5) * 20;
-            } else if (bmi < 25) {
-                cat = 'Normal Weight'; color = 'text-emerald-500'; bg= 'bg-emerald-100 dark:bg-emerald-900/30';
-                desc = '"You are within a healthy clinical weight range for your height. Maintain your current balanced lifestyle."';
-                markerPos = 20 + ((bmi - 18.5) / 6.5) * 20;
-            } else if (bmi < 30) {
-                cat = 'Overweight'; color = 'text-amber-500'; bg= 'bg-amber-100 dark:bg-amber-900/30';
-                desc = '"You are slightly above the healthy range. Improving activity levels and diet can help lower health risks."';
-                markerPos = 40 + ((bmi - 25) / 5) * 30;
-            } else {
-                cat = 'Obese'; color = 'text-rose-500'; bg= 'bg-rose-100 dark:bg-rose-900/30';
-                desc = '"You are in the obese category. This is associated with higher risks for chronic conditions like diabetes and heart disease."';
-                markerPos = 70 + (Math.min(10, bmi - 30) / 10) * 30;
-            }
-
-            const pill = $('cat-pill');
-            pill.innerText = cat;
-            pill.className = `category-pill ${bg} ${color}`;
-            $('res-bmi').className = `text-8xl md:text-[120px] leading-none font-black ${color} drop-shadow-sm`;
-            $('res-health-desc').innerText = desc;
-            $('bmi-marker').style.left = Math.min(100, Math.max(0, markerPos)) + '%';
-
-            // Ideal Weight Range
-            const minW = (18.5 * (height * height)).toFixed(1);
-            const maxW = (24.9 * (height * height)).toFixed(1);
-            $('res-ideal-range').innerText = `${minW} kg – ${maxW} kg`;
+        function formatQ() {
+            const hInches = 60 + Math.floor(Math.random()*16); // 5ft to 6ft 4in
+            // Generate a random multiplier that dictates category somewhat predictably
+            const multi = 0.8 + Math.random()*1.2; // roughly underweight to obese multiplier
+            const wLbs = Math.floor( (multi * 22 * (hInches*hInches)) / 703 ); 
+            
+            document.getElementById('g-h').innerText = Math.floor(hInches/12) + 'ft ' + (hInches%12) + 'in';
+            document.getElementById('g-w').innerText = wLbs + ' lbs';
+            
+            const bmi = (wLbs / (hInches * hInches)) * 703;
+            if(bmi < 18.5) ansC='1';
+            else if(bmi < 25) ansC='2';
+            else if(bmi < 30) ansC='3';
+            else ansC='4';
         }
 
-        [$('height-cm'), $('weight-kg'), $('age-range')].forEach(el => el.addEventListener('input', calculate));
-        
-        document.querySelectorAll('.gender-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.gender-tab').forEach(t => t.classList.remove('active', 'text-slate-400'));
-                tab.classList.add('active');
-                calculate();
-            });
+        document.querySelectorAll('.g-btn').forEach(b => {
+             b.addEventListener('click', function() {
+                  if(!isRunning)return;
+                  const guess = this.dataset.val;
+                  if(guess === ansC) { score+= 50; document.getElementById('game-feedback').innerText='Perfect Diagnosis! +50'; document.getElementById('game-feedback').className="text-center font-bold text-xl mt-6 h-8 text-emerald-400"; }
+                  else { score=Math.max(0,score-20); document.getElementById('game-feedback').innerText='Wrong Category! -20'; document.getElementById('game-feedback').className="text-center font-bold text-xl mt-6 h-8 text-rose-500 animate-shake"; }
+                  document.getElementById('game-score').innerText=score;
+                  setTimeout(()=>{if(isRunning)document.getElementById('game-feedback').className="text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300"}, 600);
+                  formatQ();
+             });
         });
 
-        calculate();
+        function startGame() {
+            score=0; time=60; document.getElementById('game-score').innerText=score;
+            document.getElementById('game-intro').classList.add('hidden');
+            document.getElementById('game-out').classList.add('hidden');
+            document.getElementById('game-play').classList.remove('hidden');
+            isRunning = true; formatQ();
+            
+            clearInterval(intv);
+            let st = Date.now();
+            intv = setInterval(()=>{
+                time = 60 - ((Date.now()-st)/1000);
+                document.getElementById('game-timer-bar').style.width = Math.max(0,(time/60)*100) + '%';
+                if(time<=0) {
+                    isRunning=false; clearInterval(intv);
+                    document.getElementById('game-play').classList.add('hidden');
+                    document.getElementById('game-out').classList.remove('hidden');
+                    document.getElementById('game-final-score').innerText=score;
+                }
+            }, 100);
+        }
+        document.getElementById('game-start-btn')?.addEventListener('click', startGame);
+        document.getElementById('game-restart-btn')?.addEventListener('click', startGame);
+
+        /* 3. Accordion Logic */
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            document.querySelectorAll('.accordion-content').forEach(c => {
+                if(c !== content && c.classList.contains('open')) { c.classList.remove('open'); c.previousElementSibling.querySelector('i').classList.remove('rotate-180'); }
+            });
+            content.classList.toggle('open');
+            btn.querySelector('i').classList.toggle('rotate-180');
+        }
     </script>
 </body>
 </html>

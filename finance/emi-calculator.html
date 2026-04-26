@@ -4,266 +4,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMI Calculator | CalcSuit</title>
-    <meta name="description"
-        content="Free online EMI calculator. Calculate Equated Monthly Installment for home or car loans. Fast, accurate, and includes educational breakdown.">
-    <link rel="canonical" href="https://calcsuit.com/finance/emi-calculator.html" />
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="EMI Calculator | CalcSuit Professional Tools">
-    <meta property="og:description" content="Calculate your loan EMIs instantly with our professional-grade calculator.">
-    <meta property="og:url" content="https://calcsuit.com/finance/emi-calculator.html">
-    <meta name="twitter:card" content="summary">
-
-    <!-- Structured Data: JSON-LD -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [{
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://calcsuit.com/"
-      },{
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Finance",
-        "item": "https://calcsuit.com/explore.html?cat=Financial"
-      },{
-        "@type": "ListItem",
-        "position": 3,
-        "name": "EMI Calculator",
-        "item": "https://calcsuit.com/finance/emi-calculator.html"
-      }]
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "CalcSuit EMI Calculator",
-      "operatingSystem": "All",
-      "applicationCategory": "FinanceApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "Can I pay off my loan early?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Most modern loans allow prepayment, but some include 'prepayment penalties.' Check your loan agreement before making large extra payments."
-        }
-      }, {
-        "@type": "Question",
-        "name": "Fixed vs. Floating Rates?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Fixed rates stay the same throughout the tenure, offering stability. Floating rates change with market conditions, which can be cheaper or more expensive over time."
-        }
-      }]
-    }
-    </script>
+    <title>EMI Finance Hub & Optimizer | CalcSuit Finance Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
-                        indigo: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' },
-                        emerald: { 400: '#34d399', 500: '#10b981', 600: '#059669' }
-                    },
-                    fontFamily: { sans: ['Inter', 'sans-serif'] }
-                }
-            }
-        }
-    </script>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        .timer-bar { transition: width 1s linear; }
+        .accordion-content { transition: max-height 0.3s ease-out, padding 0.3s ease; max-height: 0; overflow: hidden; padding: 0 1rem; }
+        .accordion-content.open { max-height: 1000px; padding: 1rem; }
+        
+        .fin-input { background: transparent; outline: none; transition: all 0.2s;}
+        .fin-input:focus { box-shadow: 0 0 0 3px rgba(16,185,129,0.2) }
+        
+        /* Bar chart */
+        .amort-bar { transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
+        .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
+    </style>
 </head>
 
-<body
-    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
-
-    <div id="toast"
-        class="fixed top-6 right-6 bg-emerald-500 text-white px-5 py-3 rounded-xl shadow-2xl transform transition-transform duration-300 translate-x-[200%] flex items-center gap-3 z-50 font-medium">
-        <i class="fas fa-check-circle text-xl"></i><span>Copied to clipboard!</span>
-    </div>
-
-    <div id="sidebar-container" class="contents"></div>
-
-    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200 overflow-x-hidden">
+    <div id="sidebar-container"></div>
+    
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20 w-full relative">
         
-        <!-- Calculator Card -->
-        <div id="calc-emi" class="w-full max-w-3xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
-            <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">EMI <span class="text-emerald-500 font-light">Calculator</span></h2>
-                    <p class="text-sm text-slate-500 dark:text-slate-400">Equated Monthly Installment Planner</p>
-                </div>
-                <div class="bg-emerald-100/50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-emerald-200 dark:border-emerald-800/50 shadow-sm self-start sm:self-auto uppercase tracking-tighter">
-                    <i class="fas fa-hand-holding-dollar"></i> Finance Suite
-                </div>
+        <!-- 1. The Core Calculator & Visualizer -->
+        <div class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden mb-12">
+            <div class="bg-emerald-600 p-8 text-white text-center relative overflow-hidden">
+                <i class="fas fa-hand-holding-dollar text-5xl mb-4 opacity-90 drop-shadow-md"></i>
+                <h1 class="text-4xl font-extrabold tracking-tight">EMI Finance Hub</h1>
+                <p class="text-emerald-100 mt-2 font-medium tracking-wide">Visualize loan amortization and master your debt.</p>
             </div>
-
-            <div class="space-y-6">
-                <!-- Input Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="group">
-                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-emerald-500 transition-colors">Principal Amount</label>
-                        <div class="relative">
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
-                            <input type="number" id="emi-principal" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl pl-10 pr-4 py-4 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-bold text-xl" placeholder="100000" oninput="calculateEMI()">
-                        </div>
-                    </div>
-                    <div class="group">
-                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-emerald-500 transition-colors">Annual Interest Rate</label>
-                        <div class="relative">
-                            <input type="number" id="emi-rate" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 pr-12 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-bold text-xl" placeholder="7.5" step="0.1" oninput="calculateEMI()">
-                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group">
-                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-emerald-500 transition-colors">Loan Tenure</label>
-                    <div class="flex gap-3">
-                        <input type="number" id="emi-tenure" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-bold text-xl" placeholder="5" oninput="calculateEMI()">
-                        <select id="emi-tenure-type" class="w-32 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 outline-none focus:ring-2 focus:ring-emerald-500/20 font-bold text-sm cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" onchange="calculateEMI()">
-                            <option value="years">Years</option>
-                            <option value="months">Months</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Results Area -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
-                    <div class="bg-emerald-50/50 dark:bg-emerald-900/10 p-6 rounded-3xl border border-emerald-100 dark:border-emerald-800/30 text-center relative group overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <h4 class="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-2">Monthly EMI</h4>
-                        <div id="emi-res-monthly" class="text-3xl font-black text-slate-900 dark:text-white tracking-tighter">&mdash;</div>
-                    </div>
-                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-100 dark:border-slate-800/50 text-center relative group">
-                        <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Total Interest</h4>
-                        <div id="emi-res-interest" class="text-2xl font-bold text-slate-700 dark:text-slate-300 tracking-tight">&mdash;</div>
-                    </div>
-                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-100 dark:border-slate-800/50 text-center relative group">
-                        <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Total Payable</h4>
-                        <div id="emi-res-total" class="text-2xl font-bold text-slate-700 dark:text-slate-300 tracking-tight">&mdash;</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Educational Content Section -->
-        <div class="w-full max-w-4xl mt-16 space-y-12 pb-24">
             
-            <!-- Introduction -->
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6">
-                    <h1 class="text-4xl font-black text-slate-900 dark:text-white leading-tight"> Master Your 
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">Loan Repayments</span>
-                    </h1>
-                    <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                        An <strong>EMI (Equated Monthly Installment)</strong> is more than just a number—it's the heartbeat of your financial planning. Whether you're eyeing a dream home or a new car, our calculator provides the clarity you need to borrow with confidence.
-                    </p>
-                    <div class="flex flex-wrap gap-4">
-                        <div class="px-4 py-2 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-full text-xs font-bold border border-emerald-100 dark:border-emerald-800">No Hidden Math</div>
-                        <div class="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-bold border border-indigo-100 dark:border-indigo-800">Instant Breakdown</div>
-                    </div>
-                </div>
-                <div class="bg-slate-100 dark:bg-slate-800/50 rounded-4xl p-8 border border-slate-200 dark:border-slate-700 rotate-2 hover:rotate-0 transition-transform duration-500">
-                    <div class="space-y-4">
-                        <div class="h-4 w-3/4 bg-slate-200 dark:bg-slate-700 rounded-full animate-pulse"></div>
-                        <div class="h-4 w-1/2 bg-slate-200 dark:bg-slate-700 rounded-full animate-pulse opacity-60"></div>
-                        <div class="pt-8">
-                            <div class="text-sm font-black text-emerald-500 uppercase tracking-widest mb-2">The Standard Formula</div>
-                            <div class="p-6 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 font-serif text-lg text-center overflow-x-auto">
-                                $$EMI = [P \times R \times (1+R)^n] \div [(1+R)^n – 1]$$
+            <div class="p-8 space-y-8 bg-slate-50 dark:bg-slate-900/10">
+                <!-- Calc section -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="col-span-1 md:col-span-2 bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Loan Amount ($)</label>
+                            <input type="number" id="emi-p" class="fin-input w-full border-2 border-slate-200 dark:border-slate-600 rounded-xl px-4 py-3 text-2xl font-black focus:border-emerald-500" value="100000">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Interest Rate (%)</label>
+                                <input type="number" id="emi-r" class="fin-input w-full border-2 border-slate-200 dark:border-slate-600 rounded-xl px-4 py-3 text-xl font-bold focus:border-emerald-500" value="7.5" step="0.1">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Tenure (Years)</label>
+                                <input type="number" id="emi-t" class="fin-input w-full border-2 border-slate-200 dark:border-slate-600 rounded-xl px-4 py-3 text-xl font-bold focus:border-emerald-500" value="5">
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            <!-- Key Concepts -->
-            <section class="bg-white dark:bg-slate-800 rounded-4xl border border-slate-200 dark:border-slate-700 p-8 md:p-12 shadow-sm">
-                <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-8 text-center">Breaking Down the Components</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <div class="space-y-4">
-                        <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-500 rounded-2xl flex items-center justify-center text-2xl mx-auto"><i class="fas fa-vault"></i></div>
-                        <h3 class="font-bold text-slate-900 dark:text-white">Principal (P)</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">The raw amount you borrow before interest is added. Lowering your principal with a down payment significantly reduces total interest.</p>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-500 rounded-2xl flex items-center justify-center text-2xl mx-auto"><i class="fas fa-chart-line"></i></div>
-                        <h3 class="font-bold text-slate-900 dark:text-white">Rate (R)</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">The cost of borrowing, usually expressed as an Annual Percentage Rate (APR). Even a 0.5% difference can save thousands over long tenures.</p>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="w-16 h-16 bg-rose-100 dark:bg-rose-900/30 text-rose-500 rounded-2xl flex items-center justify-center text-2xl mx-auto"><i class="fas fa-calendar-alt"></i></div>
-                        <h3 class="font-bold text-slate-900 dark:text-white">Tenure (n)</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">The duration of the loan. While longer tenures lower your monthly EMI, they drastically increase the total interest you pay over time.</p>
+                    
+                    <div class="col-span-1 bg-gradient-to-br from-emerald-500 to-teal-600 p-6 rounded-2xl shadow-lg relative flex flex-col items-center justify-center text-white">
+                        <h4 class="text-xs font-black uppercase tracking-widest text-emerald-100 mb-2">Monthly EMI</h4>
+                        <div class="text-4xl font-black drop-shadow-md mb-4" id="res-emi">$0</div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-emerald-200 mb-1">Total Payable</h4>
+                        <div class="text-xl font-medium" id="res-total">$0</div>
                     </div>
                 </div>
-            </section>
 
-            <!-- Borrowing Strategies -->
-            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="md:col-span-2 bg-gradient-to-br from-slate-900 to-slate-800 rounded-4xl p-10 text-white relative overflow-hidden">
-                    <div class="relative z-10">
-                        <h3 class="text-2xl font-bold mb-4">Pro Strategy: The 20/4/10 Rule</h3>
-                        <p class="text-slate-300 mb-6 max-w-lg leading-relaxed">Financial experts recommend this rule for car buying: Put down <strong>20%</strong>, limit the tenure to <strong>4 years</strong>, and keep your total monthly transportation costs below <strong>10%</strong> of your gross income.</p>
-                        <ul class="space-y-3 text-sm text-slate-300">
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500"></i> Reduces risk of "underwater" loans</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500"></i> Minimizes total interest wastage</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500"></i> Protects your monthly cash flow</li>
+                <!-- Visualizer -->
+                <div class="border-t border-slate-200 dark:border-slate-700 pt-8" id="visualizer-section">
+                    <h3 class="text-center font-bold text-xl mb-6"><i class="fas fa-chart-column text-emerald-500 mr-2"></i> Principal vs Interest Visualizer</h3>
+                    <div class="flex items-end justify-center w-full h-48 gap-4 px-4 border-b-2 border-slate-200 dark:border-slate-700 pb-2 relative">
+                        <!-- BG markers -->
+                        <div class="absolute inset-x-0 bottom-1/2 border-t border-slate-200 dark:border-slate-700 border-dashed"></div>
+                        
+                        <div class="w-1/3 flex flex-col items-center gap-2 z-10">
+                            <div id="bar-p" class="amort-bar w-full bg-slate-300 dark:bg-slate-600 rounded-t-xl" style="height:50%"></div>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Principal</span>
+                        </div>
+                        <div class="w-1/3 flex flex-col items-center gap-2 z-10">
+                            <div id="bar-i" class="amort-bar w-full bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.5)] rounded-t-xl" style="height:50%"></div>
+                            <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Est. Interest</span>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4 text-sm font-medium text-slate-500">
+                        Interest pushes total payment to: <span class="font-bold text-emerald-600 dark:text-emerald-400" id="res-ratio">--%</span> of Principal.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. "Budget Balancer" Mini Game Module -->
+        <div class="w-full max-w-4xl bg-gradient-to-br from-slate-900 to-emerald-950 border border-emerald-500/30 rounded-3xl shadow-[0_0_50px_rgba(16,185,129,0.2)] overflow-hidden mb-12 relative text-white">
+             <div class="absolute inset-0 opacity-[0.03]" style="background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%); background-size: 20px 20px;"></div>
+             
+             <div class="p-10 relative z-10">
+                 <div class="flex justify-between items-start mb-8">
+                     <div>
+                         <h2 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 mb-2">
+                             <i class="fas fa-balance-scale text-emerald-400 mr-2"></i> EMI Estimator Matrix
+                         </h2>
+                         <p class="text-emerald-200/70 font-medium tracking-wide">Brain Training: Can you estimate the monthly EMI within 10%?</p>
+                     </div>
+                     <div class="bg-emerald-950/80 border border-emerald-500/50 rounded-2xl p-4 text-center min-w-[120px] shadow-inner backdrop-blur-md">
+                         <div class="text-[10px] uppercase tracking-widest text-emerald-400 font-black mb-1">SCORE</div>
+                         <div class="text-4xl font-black text-white" id="game-score">0</div>
+                     </div>
+                 </div>
+
+                 <div id="game-intro" class="text-center py-10 bg-emerald-950/40 rounded-2xl border border-emerald-500/20 backdrop-blur-sm">
+                     <p class="mb-8 text-xl font-medium text-slate-300">Survive 60 seconds of rapid loan estimation.</p>
+                     <button id="game-start-btn" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 px-10 py-5 rounded-full font-black text-2xl shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-all transform hover:scale-105 active:scale-95 text-white tracking-widest">
+                         START SPRINT
+                     </button>
+                 </div>
+
+                 <div id="game-play" class="hidden">
+                     <div class="w-full bg-slate-800/80 rounded-full h-3 mb-8 overflow-hidden shadow-inner border border-slate-700">
+                         <div id="game-timer-bar" class="timer-bar bg-gradient-to-r from-rose-400 to-amber-400 h-3 rounded-full" style="width: 100%"></div>
+                     </div>
+                     <div class="grid grid-cols-3 gap-4 mb-6">
+                         <div class="bg-slate-900/50 p-4 border border-emerald-500/30 rounded-xl text-center"><div class="text-xs text-slate-400">Principal</div><div class="text-2xl font-black" id="g-p">$10,000</div></div>
+                         <div class="bg-slate-900/50 p-4 border border-emerald-500/30 rounded-xl text-center"><div class="text-xs text-slate-400">Interest</div><div class="text-2xl font-black" id="g-r">5%</div></div>
+                         <div class="bg-slate-900/50 p-4 border border-emerald-500/30 rounded-xl text-center"><div class="text-xs text-slate-400">Tenure</div><div class="text-2xl font-black" id="g-t">2 Yrs</div></div>
+                     </div>
+                     <div class="flex gap-4 max-w-md mx-auto items-center">
+                         <div class="text-4xl text-emerald-500 font-bold">$</div>
+                         <input type="number" id="game-ans" class="flex-1 bg-slate-900/50 border-2 border-emerald-500/50 focus:border-teal-400 rounded-2xl py-4 flex-grow px-6 text-center text-4xl font-black text-white outline-none" placeholder="Est. Monthly EMI">
+                         <button id="game-submit-btn" class="bg-teal-500 hover:bg-teal-400 aspect-square w-16 rounded-2xl font-bold text-2xl shadow-lg transition-transform active:scale-90 flex items-center justify-center"><i class="fas fa-check"></i></button>
+                     </div>
+                     <div id="game-feedback" class="text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300">Exact! +100</div>
+                 </div>
+
+                 <div id="game-out" class="hidden text-center py-10 bg-slate-900/80 rounded-2xl backdrop-blur-md border border-slate-700">
+                     <h2 class="text-5xl font-black text-white mb-4">Time's Up!</h2>
+                     <p class="text-2xl text-slate-300 mb-8">Final Score: <span id="game-final-score" class="text-emerald-400 font-bold">0</span></p>
+                     <button id="game-restart-btn" class="bg-teal-600 hover:bg-teal-500 px-8 py-4 rounded-xl font-bold text-lg text-white shadow-lg"><i class="fas fa-redo mr-2"></i> Play Again</button>
+                 </div>
+             </div>
+        </div>
+
+        <!-- 3. Interactive Educational Manual -->
+        <div class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden text-slate-700 dark:text-slate-300">
+            <div class="bg-slate-100 dark:bg-slate-800/80 p-8 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white"><i class="fas fa-book-open text-emerald-600 mr-2"></i> Financial Study Guide</h2>
+                    <p class="text-sm mt-1 font-medium">Understand the mechanics of Equated Monthly Installments.</p>
+                </div>
+            </div>
+            <div class="divide-y divide-slate-100 dark:divide-slate-700">
+                <div class="accordion-item">
+                    <button class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span class="text-emerald-500 mr-2">01.</span> What is an EMI?</span>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content bg-slate-50 dark:bg-slate-900/30 text-sm leading-relaxed">
+                        <p class="mb-4"><strong>Equated Monthly Installment (EMI)</strong> is a fixed payment made by a borrower to a lender at a specified date each calendar month. EMIs apply to both interest and principal each month, so over a specified number of years, the loan is paid off in full.</p>
+                        <div class="p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-center mb-4">
+                            $$E = P \times r \times \frac{(1+r)^n}{(1+r)^n - 1}$$
+                        </div>
+                        <p>Where E is EMI, P is Principal Loan Amount, r is monthly interest rate, and n is duration in months.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span class="text-teal-500 mr-2">02.</span> Fixed vs Floating Rates</span>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content bg-slate-50 dark:bg-slate-900/30 text-sm leading-relaxed">
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>Fixed Interest:</strong> The rate stays the exact same for the entire loan duration. Highly predictable, but usually starts higher than floating rates.</li>
+                            <li><strong>Floating Interest:</strong> The rate is tied to an index or base rate. It can fluctuate, meaning your EMI (or loan tenure) will change over time depending on the broader economy.</li>
                         </ul>
                     </div>
-                    <i class="fas fa-lightbulb absolute bottom-[-20px] right-[-20px] text-emerald-500/10 text-[200px] -rotate-12"></i>
                 </div>
-                <div class="bg-emerald-500 rounded-4xl p-10 text-white flex flex-col justify-center text-center">
-                    <div class="text-6xl font-black mb-4">0%</div>
-                    <h3 class="text-xl font-bold mb-2 uppercase tracking-wide">Hidden Fees</h3>
-                    <p class="text-emerald-100 text-sm">Our tool is strictly client-side. Your financial data never leaves your device.</p>
-                </div>
-            </section>
-
-            <!-- FAQ -->
-            <section class="space-y-8">
-                <h2 class="text-3xl font-black text-slate-900 dark:text-white text-center">Frequently Asked Questions</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-6 bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-2">Can I pay off my loan early?</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Most modern loans allow prepayment, but some include "prepayment penalties." Check your loan agreement before making large extra payments.</p>
-                    </div>
-                    <div class="p-6 bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm transition-all hover:border-emerald-500/50">
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-2">Fixed vs. Floating Rates?</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Fixed rates stay the same throughout the tenure, offering stability. Floating rates change with market conditions, which can be cheaper or more expensive over time.</p>
-                    </div>
-                </div>
-            </section>
-
+            </div>
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../js/layout.js"></script>
-    <script src="../js/calculators/core.js"></script>
-    <script src="../js/calculators/emi.js"></script>
-</body>
+    <script>
+        const inP=document.getElementById('emi-p');
+        const inR=document.getElementById('emi-r');
+        const inT=document.getElementById('emi-t');
+        
+        function calcActualEmi(p, rateAnnual, years) {
+            const rBase = parseFloat(rateAnnual);
+            if (p===0 || rBase===0 || years===0) return {emi:0, tot:0, int:0};
+            
+            const r = rBase / 12 / 100; // monthly interest limit
+            const n = years * 12; // months
+            
+            const emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            const total = emi * n;
+            return { emi, tot: total, int: total - p };
+        }
 
+        function updateAll() {
+            const p = parseFloat(inP.value) || 0;
+            const r = parseFloat(inR.value) || 0;
+            const t = parseFloat(inT.value) || 0;
+            
+            const res = calcActualEmi(p,r,t);
+            
+            document.getElementById('res-emi').innerText = `$${Math.round(res.emi).toLocaleString()}`;
+            document.getElementById('res-total').innerText = `$${Math.round(res.tot).toLocaleString()}`;
+            
+            const pBar = document.getElementById('bar-p');
+            const iBar = document.getElementById('bar-i');
+            
+            if (res.tot > 0) {
+                const pPct = (p / res.tot) * 100;
+                const iPct = (res.int / res.tot) * 100;
+                pBar.style.height = `${pPct}%`;
+                iBar.style.height = `${iPct}%`;
+                document.getElementById('res-ratio').innerText = `${((res.tot / p) * 100).toFixed(0)}%`;
+            } else {
+                pBar.style.height = `50%`; iBar.style.height = `50%`;
+            }
+        }
+        
+        [inP, inR, inT].forEach(e => e.addEventListener('input', updateAll));
+        updateAll();
+
+        /* GAME */
+        let score=0, time=60, intv, ansC=0, isRunning=false;
+        const eAns=document.getElementById('game-ans'), gP=document.getElementById('g-p'), gR=document.getElementById('g-r'), gT=document.getElementById('g-t'), eSc=document.getElementById('game-score'), eFb=document.getElementById('game-feedback');
+
+        function formatQ() {
+            const pv = [5000, 10000, 20000, 50000, 100000][Math.floor(Math.random()*5)];
+            const rv = [2, 5, 8, 10, 12][Math.floor(Math.random()*5)];
+            const tv = [1, 2, 5, 10, 30][Math.floor(Math.random()*5)]; // years
+            
+            gP.innerText = `$${pv.toLocaleString()}`;
+            gR.innerText = `${rv}%`;
+            gT.innerText = `${tv} Yrs`;
+            
+            ansC = calcActualEmi(pv, rv, tv).emi;
+            eAns.value=''; eAns.focus();
+        }
+
+        function startGame() {
+            score=0; time=60; eSc.innerText=score;
+            document.getElementById('game-intro').classList.add('hidden');
+            document.getElementById('game-out').classList.add('hidden');
+            document.getElementById('game-play').classList.remove('hidden');
+            isRunning = true; formatQ();
+            
+            clearInterval(intv);
+            let st = Date.now();
+            intv = setInterval(()=>{
+                time = 60 - ((Date.now()-st)/1000);
+                document.getElementById('game-timer-bar').style.width = `${Math.max(0,(time/60)*100)}%`;
+                if(time<=0) {
+                    isRunning=false; clearInterval(intv);
+                    document.getElementById('game-play').classList.add('hidden');
+                    document.getElementById('game-out').classList.remove('hidden');
+                    document.getElementById('game-final-score').innerText=score;
+                }
+            }, 100);
+        }
+
+        function submitG() {
+            if(!isRunning)return;
+            const u = parseFloat(eAns.value); if(isNaN(u))return;
+            
+            // 15% tolerance
+            const diff = Math.abs(u - ansC) / ansC;
+            if(diff <= 0.15) { 
+                const points = diff <= 0.05 ? 150 : 100;
+                score+=points; eFb.innerText= diff <= 0.05 ? `Bullseye! +${points}` : `Close enough! +${points}`; 
+                eFb.className="text-center font-bold text-xl mt-6 h-8 text-emerald-400"; 
+            }
+            else { 
+                score=Math.max(0,score-20); eFb.innerText=`Too far! Was $${Math.round(ansC)}`; 
+                eFb.className="text-center font-bold text-xl mt-6 h-8 text-rose-500 animate-shake"; eAns.value=''; eAns.focus(); return;
+            }
+            eSc.innerText=score; setTimeout(()=>{if(isRunning)eFb.className="text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300"}, 1000);
+            formatQ();
+        }
+
+        document.getElementById('game-start-btn').addEventListener('click', startGame);
+        document.getElementById('game-restart-btn').addEventListener('click', startGame);
+        document.getElementById('game-submit-btn').addEventListener('click', submitG);
+        eAns.addEventListener('keypress', e=>{if(e.key==='Enter')submitG()});
+
+        /* ACCORDION */
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            document.querySelectorAll('.accordion-content').forEach(c => {
+                if(c !== content && c.classList.contains('open')) { c.classList.remove('open'); c.previousElementSibling.querySelector('i').classList.remove('rotate-180'); }
+            });
+            content.classList.toggle('open');
+            btn.querySelector('i').classList.toggle('rotate-180');
+        }
+        if(window.MathJax) { MathJax.typeset(); }
+    </script>
+</body>
 </html>

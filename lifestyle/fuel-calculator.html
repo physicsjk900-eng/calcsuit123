@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Cost Pro | CalcSuit Lifestyle Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body
+    class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+    <div id="sidebar-container"></div>
+    <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
+        <div
+            class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="bg-amber-600 p-8 text-white text-center">
+                <i class="fas fa-gas-pump text-4xl mb-4 text-amber-200 animate-pulse"></i>
+                <h1 class="text-3xl font-bold uppercase tracking-wider">Fuel Cost Pro</h1>
+                <p class="text-amber-100 mt-2">Precision trip expense and efficiency tracker</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Trip Distance
+                            (km/mi)</label>
+                        <input type="number" id="distance"
+                            class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold text-2xl outline-none"
+                            value="100">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Fuel Efficiency</label>
+                        <input type="number" id="efficiency"
+                            class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold text-2xl outline-none"
+                            value="15">
+                        <div class="text-[9px] text-slate-400 text-center mt-1">(Select Unit Below)</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Efficiency Unit</label>
+                        <select id="eff-unit"
+                            class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 outline-none font-bold">
+                            <option value="kpl" selected>km/L</option>
+                            <option value="mpg">MPG (US)</option>
+                            <option value="l100">L/100km</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase">Price per Liter/Gallon
+                            ($)</label>
+                        <input type="number" id="price"
+                            class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 text-center font-bold text-2xl outline-none"
+                            value="1.5">
+                    </div>
+                </div>
+
+                <div id="result-area"
+                    class="bg-amber-50 dark:bg-amber-500/10 rounded-2xl p-6 border border-amber-100 dark:border-amber-500/20 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <h4 class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-1">
+                        Estimated Trip Cost</h4>
+                    <div id="res-cost" class="text-4xl font-bold text-slate-800 dark:text-white">$10.00</div>
+                    <div id="res-total-fuel" class="text-xs mt-2 text-slate-400 font-medium">Total Fuel Required: 6.67L
+                    </div>
+                </div>
+
+                <button id="calculate-btn"
+                    class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-amber-500/30 transition-all active:scale-95 text-xl">
+                    Calculate Expense
+                </button>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">The Efficiency Equation</h2>
+            <p>Our <strong>Fuel Cost Pro</strong> engine calculates real-time logistics expenses by cross-referencing
+                trip distance against vehicle-specific fuel economy metrics. For <span class="font-bold">L/100km</span>
+                users, the engine automatically extracts the decimal consumption rate to ensure precision down to the
+                last drop.</p>
+        </div>
+    </main>
+    <script src="../js/layout.js"></script>
+    <script>
+        const distInput = document.getElementById('distance');
+        const effInput = document.getElementById('efficiency');
+        const effUnit = document.getElementById('eff-unit');
+        const priceInput = document.getElementById('price');
+        const calculateBtn = document.getElementById('calculate-btn');
+
+        const costEl = document.getElementById('res-cost');
+        const fuelEl = document.getElementById('res-total-fuel');
+
+        function calculate() {
+            const dist = parseFloat(distInput.value);
+            const effValue = parseFloat(effInput.value);
+            const unit = effUnit.value;
+            const price = parseFloat(priceInput.value);
+
+            if (isNaN(dist) || isNaN(effValue) || isNaN(price) || effValue <= 0) return;
+
+            let fuelRequired = 0;
+            if (unit === 'kpl') {
+                fuelRequired = dist / effValue;
+            } else if (unit === 'mpg') {
+                fuelRequired = dist / effValue; // distance assumes miles for MPG
+            } else { // L/100km
+                fuelRequired = (dist / 100) * effValue;
+            }
+
+            const totalCost = fuelRequired * price;
+
+            const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+            costEl.innerText = fmt.format(totalCost);
+            fuelEl.innerText = `Total Fuel Required: ${fuelRequired.toFixed(2)}${unit === 'mpg' ? ' Gallons' : 'L'}`;
+        }
+
+        calculateBtn.addEventListener('click', calculate);
+        calculate();
+
+    </script>
+</body>
+
+</html>

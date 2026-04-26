@@ -226,33 +226,31 @@ document.addEventListener('DOMContentLoaded', async () => {
                     class="w-8 h-8 rounded-md flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors"
                     aria-label="Toggle Dark Mode">
                     <i class="fas fa-moon text-sm dark:hidden"></i>
-                    <i class="fas fa-sun text-sm hidden dark:block"></i>
                 </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 cursor-pointer" id="mobile-menu-bg"></div>
-        <div id="mobile-menu-panel" class="absolute top-0 left-0 bottom-0 w-[280px] sm:w-[320px] bg-white dark:bg-slate-900 shadow-2xl transform -translate-x-full transition-transform duration-300 overflow-y-auto flex flex-col border-r border-slate-200 dark:border-slate-800" role="dialog" aria-modal="true" aria-label="Mobile Navigation Menu">
-            <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur z-10">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-sm">
-                        <i class="fas fa-calculator text-xs"></i>
-                    </div>
-                    <span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Calc<span class="text-indigo-600 dark:text-indigo-400">Suit</span></span>
-                </div>
-                <button id="mobile-menu-close" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-rose-500 transition-colors rounded-full bg-slate-100 dark:bg-slate-800">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="p-4 flex-1 pb-12">
-                ${mobileNavHtml}
             </div>
         </div>
     </div>
 </header>
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 cursor-pointer" id="mobile-menu-bg"></div>
+    <div id="mobile-menu-panel" class="absolute top-0 left-0 bottom-0 w-[280px] sm:w-[320px] bg-white dark:bg-slate-900 shadow-2xl transform -translate-x-full transition-transform duration-300 overflow-y-auto flex flex-col border-r border-slate-200 dark:border-slate-800" role="dialog" aria-modal="true" aria-label="Mobile Navigation Menu">
+        <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur z-10">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-sm">
+                    <i class="fas fa-calculator text-xs"></i>
+                </div>
+                <span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Calc<span class="text-indigo-600 dark:text-indigo-400">Suit</span></span>
+            </div>
+            <button id="mobile-menu-close" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-rose-500 transition-colors rounded-full bg-slate-100 dark:bg-slate-800">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="p-4 flex-1 pb-12">
+            ${mobileNavHtml}
+        </div>
+    </div>
+</div>
     `;
 
     const footerHtml = `

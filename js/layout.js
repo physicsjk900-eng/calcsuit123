@@ -303,13 +303,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <h5 class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Legal Authority</h5>
                 <nav class="flex flex-col gap-3">
                     <a href="${rootPrefix}privacy.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
-                        <i class="fas fa-lock text-[10px] opacity-40"></i> Data Privacy Console
+                        <i class="fas fa-lock text-[10px] opacity-40"></i> Privacy Policy
                     </a>
                     <a href="${rootPrefix}terms.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
-                        <i class="fas fa-file-contract text-[10px] opacity-40"></i> Enterprise Terms
+                        <i class="fas fa-file-contract text-[10px] opacity-40"></i> Terms & Conditions
                     </a>
                     <a href="${rootPrefix}about.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
-                        <i class="fas fa-info-circle text-[10px] opacity-40"></i> About the Project
+                        <i class="fas fa-info-circle text-[10px] opacity-40"></i> About Us
                     </a>
                 </nav>
             </div>

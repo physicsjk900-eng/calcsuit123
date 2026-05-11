@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="light">
 
 <head>
@@ -26,99 +26,162 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .accordion-content {
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 1rem;
+        }
+
+        .accordion-content.open {
+            max-height: 1000px;
+            padding: 1rem;
+        }
+    </style>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
 </head>
 
-    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
-        
-        <!-- Calculator Section -->
-        <div id="calc-age" class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
-            <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Age <span class="text-indigo-500 font-light">Calculator</span></h2>
-                    <p class="text-sm text-slate-500 dark:text-slate-400">Precise Date & Birthday Analysis</p>
-                </div>
-                <div class="bg-indigo-100/50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-indigo-200 dark:border-indigo-800/50 shadow-sm self-start sm:self-auto">
-                    <i class="fas fa-calendar-alt"></i> Productivity
-                </div>
+<main id="app-container"
+    class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
+
+    <!-- Calculator Section -->
+    <div id="calc-age"
+        class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Age <span
+                        class="text-indigo-500 font-light">Calculator</span></h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Precise Date & Birthday Analysis</p>
             </div>
-
-            <div class="space-y-6">
-                <!-- Input Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
-                            <i class="fas fa-cake-candles text-indigo-400"></i> Date of Birth
-                        </label>
-                        <input type="date" id="dob-input" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-500/20 font-bold">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
-                            <i class="fas fa-calendar-day text-emerald-400"></i> Calculate at Date
-                        </label>
-                        <input type="date" id="target-date-input" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-500/20 font-bold">
-                    </div>
-                </div>
-
-                <button onclick="calculateAge()" class="w-full bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-indigo-500/25 transition-all active:scale-95">
-                    Calculate Age
-                </button>
-
-                <!-- Results -->
-                <div id="age-results" class="hidden opacity-0 space-y-4 transition-all duration-500">
-                    <div class="grid grid-cols-3 gap-3">
-                        <div class="bg-indigo-50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-800/50 rounded-2xl p-4 text-center">
-                            <span id="res-years" class="text-3xl font-extrabold text-indigo-600 tracking-tight">--</span>
-                            <span class="block text-[10px] font-bold text-slate-400 uppercase mt-1">Years</span>
-                        </div>
-                        <div class="bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-800/50 rounded-2xl p-4 text-center">
-                            <span id="res-months" class="text-3xl font-extrabold text-emerald-600 tracking-tight">--</span>
-                            <span class="block text-[10px] font-bold text-slate-400 uppercase mt-1">Months</span>
-                        </div>
-                        <div class="bg-sky-50 dark:bg-sky-900/10 border border-sky-100 dark:border-sky-800/50 rounded-2xl p-4 text-center">
-                            <span id="res-days" class="text-3xl font-extrabold text-sky-600 tracking-tight">--</span>
-                            <span class="block text-[10px] font-bold text-slate-400 uppercase mt-1">Days</span>
-                        </div>
-                    </div>
-
-                    <div class="bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-800/50 rounded-2xl p-6 flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-bold text-amber-600 uppercase tracking-widest block mb-1">Next Birthday</span>
-                            <div id="res-next-bd" class="text-xl font-bold text-slate-700 dark:text-slate-200">-- days to go</div>
-                        </div>
-                        <span class="text-3xl">🎉</span>
-                    </div>
-                </div>
+            <div
+                class="bg-indigo-100/50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-indigo-200 dark:border-indigo-800/50 shadow-sm self-start sm:self-auto">
+                <i class="fas fa-calendar-alt"></i> Productivity
             </div>
         </div>
 
-        <!-- SEO Content Section -->
-        <div class="w-full max-w-2xl mt-12 space-y-8 pb-20">
-            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
-                <h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Age Calculator – Calculate Exactly How Old You Are</h1>
+        <div class="space-y-6">
+            <!-- Input Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label
+                        class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
+                        <i class="fas fa-cake-candles text-indigo-400"></i> Date of Birth
+                    </label>
+                    <input type="date" id="dob-input"
+                        class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-500/20 font-bold">
+                </div>
+                <div>
+                    <label
+                        class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
+                        <i class="fas fa-calendar-day text-emerald-400"></i> Calculate at Date
+                    </label>
+                    <input type="date" id="target-date-input"
+                        class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-500/20 font-bold">
+                </div>
+            </div>
+
+            <button onclick="calculateAge()"
+                class="w-full bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-indigo-500/25 transition-all active:scale-95">
+                Calculate Age
+            </button>
+
+            <!-- Results -->
+            <div id="age-results" class="hidden opacity-0 space-y-4 transition-all duration-500">
+                <div class="grid grid-cols-3 gap-3">
+                    <div
+                        class="bg-indigo-50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-800/50 rounded-2xl p-4 text-center">
+                        <span id="res-years" class="text-3xl font-extrabold text-indigo-600 tracking-tight">--</span>
+                        <span class="block text-[10px] font-bold text-slate-400 uppercase mt-1">Years</span>
+                    </div>
+                    <div
+                        class="bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-800/50 rounded-2xl p-4 text-center">
+                        <span id="res-months" class="text-3xl font-extrabold text-emerald-600 tracking-tight">--</span>
+                        <span class="block text-[10px] font-bold text-slate-400 uppercase mt-1">Months</span>
+                    </div>
+                    <div
+                        class="bg-sky-50 dark:bg-sky-900/10 border border-sky-100 dark:border-sky-800/50 rounded-2xl p-4 text-center">
+                        <span id="res-days" class="text-3xl font-extrabold text-sky-600 tracking-tight">--</span>
+                        <span class="block text-[10px] font-bold text-slate-400 uppercase mt-1">Days</span>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-800/50 rounded-2xl p-6 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-amber-600 uppercase tracking-widest block mb-1">Next
+                            Birthday</span>
+                        <div id="res-next-bd" class="text-xl font-bold text-slate-700 dark:text-slate-200">-- days to go
+                        </div>
+                    </div>
+                    <span class="text-3xl">🎉</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+
+    <!-- Generic Game Module Module -->
+    <div
+        class="w-full max-w-4xl bg-gradient-to-br from-indigo-900 to-slate-900 border border-indigo-500/30 rounded-3xl shadow-xl overflow-hidden mb-12 relative text-white">
+        <div class="p-10 text-center relative z-10">
+            <h2 class="text-3xl font-black mb-4">
+                <i class="fas fa-brain text-sky-500 mr-2"></i> Knowledge Check Mini-Game
+            </h2>
+            <p class="text-slate-300 font-medium mb-8">This module will be upgraded with a custom interactive
+                brain-training game specific to this tool!</p>
+            <button
+                class="bg-white/10 hover:bg-white/20 px-8 py-3 rounded-full font-bold text-white shadow-lg backdrop-blur-sm transition-colors cursor-not-allowed">
+                COMING SOON
+            </button>
+        </div>
+    </div>
+
+    <div
+        class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden text-slate-700 dark:text-slate-300 mb-20">
+
+        <div>
+            <section
+                class="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
+                <h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Age Calculator – Calculate
+                    Exactly How Old You Are</h1>
                 <div class="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 space-y-4">
                     <p>
-                        Our **Age Calculator** is a precision tool designed to determine your exact age in years, months, and days. Whether you're curious about your chronological age or need to calculate the difference between two specific dates, our tool provides instant, leap-year-aware results.
+                        Our **Age Calculator** is a precision tool designed to determine your exact age in years,
+                        months, and days. Whether you're curious about your chronological age or need to calculate
+                        the difference between two specific dates, our tool provides instant, leap-year-aware
+                        results.
                     </p>
                     <p>
-                        Beyond simple years, we break down your life journey into **months and days**, giving you a detailed perspective on the time that has passed since your birth.
+                        Beyond simple years, we break down your life journey into **months and days**, giving you a
+                        detailed perspective on the time that has passed since your birth.
                     </p>
                 </div>
             </section>
 
-            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
+            <section
+                class="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
                 <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
                     <i class="fas fa-gift text-indigo-500"></i>
                     Birthday Countdown
                 </h2>
                 <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-                    Never miss a celebration again. Our tool automatically calculates the **remaining days until your next birthday**, acting as a personal countdown timer for your special day.
+                    Never miss a celebration again. Our tool automatically calculates the **remaining days until
+                    your next birthday**, acting as a personal countdown timer for your special day.
                 </p>
-                <div class="bg-indigo-50 dark:bg-indigo-900/10 p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/40 text-sm">
-                    <span class="font-bold text-indigo-600 dark:text-indigo-400 hover:underline cursor-help" title="Did you know? Every 4 years includes an extra day (Feb 29) which we account for.">Pro Tip:</span> Our algorithm accounts for leap years and the varying lengths of months to ensure 100% mathematical accuracy.
+                <div class="bg-indigo-50 dark:bg-indigo-900/10 p-5 border-indigo-100 dark:border-indigo-800/40 text-sm">
+                    <span class="font-bold text-indigo-600 dark:text-indigo-400 hover:underline cursor-help"
+                        title="Did you know? Every 4 years includes an extra day (Feb 29) which we account for.">Pro
+                        Tip:</span> Our algorithm accounts for leap years and the varying lengths of months to
+                    ensure 100% mathematical accuracy.
                 </div>
             </section>
 
-            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
+            <section
+                class="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 p-8 md:p-10 shadow-sm transition-all hover:shadow-md">
                 <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Common Use Cases</h2>
                 <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-600 dark:text-slate-400">
                     <li class="flex items-start gap-3">
@@ -140,11 +203,121 @@
                 </ul>
             </section>
         </div>
-    </main>
 
-    <script src="../js/layout.js"></script>
-    <script src="../js/calculators/core.js"></script>
-    <script src="../js/calculators/age.js"></script>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- SEO Deep Dive Content for Age Calculator -->
+    <div class="w-full max-w-4xl mt-12 mb-20 prose prose-slate dark:prose-invert lg:prose-lg mx-auto px-4">
+        <hr class="border-slate-200 dark:border-slate-700 mb-12">
+
+        <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-6">Comprehensive Guide to Chronological Age
+            Calculation</h2>
+
+        <p class="text-slate-600 dark:text-slate-400">
+            Have you ever asked yourself, "How many days have I been alive?" or "Exactly how old am I in months?" While
+            most people track their age by years, our **online age calculator** provides a much more granular view of
+            your life timeline. Understanding your **chronological age** is essential for everything from medical
+            records and legal documentation to simply satisfying your own curiosity about your life milestones.
+        </p>
+
+        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mt-8 mb-4">How Our Age Calculation Logic Works</h3>
+        <p class="text-slate-600 dark:text-slate-400">
+            Calculating age seems simple on the surface, but the math behind the scenes is surprisingly complex due to
+            the irregularities of the Gregorian calendar. Our tool utilizes a precise algorithm that accounts for:
+        </p>
+        <ul class="list-disc pl-6 space-y-2 text-slate-600 dark:text-slate-400">
+            <li><strong>Leap Year Compensation:</strong> Not every year has 365 days. By accounting for February 29th
+                every four years, we ensure that your total day count is 100% accurate.</li>
+            <li><strong>Varying Month Lengths:</strong> Since months range from 28 to 31 days, our tool precisely
+                calculates the "remainder" days when moving between your birth date and the current date.</li>
+            <li><strong>Date of Birth (DOB) Relativity:</strong> We allow you to set a custom "Calculate at Date," which
+                is perfect for historical research or planning for future retirement milestones.</li>
+        </ul>
+
+        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mt-8 mb-4">Why Accuracy Matters in Age Calculation
+        </h3>
+        <p class="text-slate-600 dark:text-slate-400">
+            Precision is vital in several professional and personal contexts. Here are a few scenarios where a basic
+            guess isn't enough:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
+            <div
+                class="p-5 bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800/50">
+                <h4 class="font-bold text-indigo-600 dark:text-indigo-400">Education & Enrollment</h4>
+                <p class="text-sm">Schools often have strict cutoff dates for enrollment. Parents use our tool to verify
+                    if a child will be exactly five years old by the start of the academic term.</p>
+            </div>
+            <div
+                class="p-5 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border border-emerald-100 dark:border-emerald-800/50">
+                <h4 class="font-bold text-emerald-600 dark:text-emerald-400">Medical Records</h4>
+                <p class="text-sm">Pediatricians and veterinarians often require age in weeks or months for vaccination
+                    schedules and developmental tracking.</p>
+            </div>
+        </div>
+
+        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mt-8 mb-4">The Psychology of the Birthday Countdown
+        </h3>
+        <p class="text-slate-600 dark:text-slate-400">
+            Our **next birthday countdown** feature is designed for more than just fun. Psychologically, humans are
+            wired to celebrate milestones. Whether you are looking forward to a "big" birthday (like 18, 21, or 50) or
+            tracking a friend's special day, knowing the exact days remaining helps with event planning and travel
+            arrangements.
+        </p>
+
+        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mt-8 mb-4">Frequently Asked Questions (FAQ)</h3>
+        <div class="space-y-4 text-slate-600 dark:text-slate-400">
+            <div>
+                <p class="font-bold text-slate-800 dark:text-white">Can I calculate the age of a historical figure?</p>
+                <p>Yes. By adjusting the "Calculate at Date" field, you can determine how old a person was at the time
+                    of a specific historical event, such as the signing of a treaty or their retirement.</p>
+            </div>
+            <div>
+                <p class="font-bold text-slate-800 dark:text-white">Does this tool support international date formats?
+                </p>
+                <p>Our input uses the standard HTML5 date picker which adapts to your browser settings, ensuring that
+                    Day/Month/Year or Month/Day/Year formats are handled correctly based on your location.</p>
+            </div>
+            <div>
+                <p class="font-bold text-slate-800 dark:text-white">Is my data private?</p>
+                <p>Absolutely. Our Age Calculator runs entirely on the "client-side" (your browser). We do not store or
+                    transmit your birth date to any servers, making this a 100% private and secure utility.</p>
+            </div>
+        </div>
+
+        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mt-8 mb-4">Beyond Years: The Beauty of Time</h3>
+        <p class="text-slate-600 dark:text-slate-400">
+            Time is our most precious resource. Seeing your age broken down into months and days can provide a fresh
+            perspective on your personal growth. Our goal at **CalcSuit** is to provide tools that are not only
+            functional but also insightful. We invite you to use this tool for insurance applications, visa paperwork,
+            or just as a way to see how long you've been part of this world.
+        </p>
+
+        <p
+            class="text-slate-500 dark:text-slate-500 italic text-sm mt-8 border-t border-slate-200 dark:border-slate-800 pt-4">
+            Keywords: Age Calculator, Chronological Age, Birthday Countdown, Leap Year Calculator, Online Age Tool,
+            Precise Age in Months, Calculate Age from DOB.
+        </p>
+    </div>
+</main>
+
+<script src="../js/layout.js"></script>
+<script src="../js/calculators/core.js"></script>
+<script src="../js/calculators/age.js"></script>
+
+<script>
+    function toggleAccordion(btn) {
+        const content = btn.nextElementSibling;
+        document.querySelectorAll('.accordion-content').forEach(c => {
+            if (c !== content && c.classList.contains('open')) { c.classList.remove('open'); c.previousElementSibling.querySelector('i').classList.remove('rotate-180'); }
+        });
+        content.classList.toggle('open');
+        btn.querySelector('i').classList.toggle('rotate-180');
+    }
+</script>
 </body>
 
 

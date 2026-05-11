@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="light">
 
 <head>
@@ -7,8 +7,12 @@
     <title>Square Root Calculator | CalcSuit</title>
     <meta name="description"
         content="Free online square root calculator. Find the square root of any number instantly.">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax for LaTeX Rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -23,188 +27,335 @@
             }
         }
     </script>
+
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at top right, #0ea5e9, #6366f1, #a855f7);
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+    </style>
+
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
 </head>
 
-<body
-    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+<main
+    class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col items-center p-4 sm:p-6 lg:p-8">
 
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
-            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2
-                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
-                            Square Root Calc</h2>
-                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate the principal square root
-                            of any real number.</p>
-                    </div>
-                </div>
-
-                <div class="max-w-xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
-                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
-                        <div class="flex items-center gap-4">
-                            <i class="fas fa-square-root-variable text-4xl text-sky-500 ml-2"></i>
-                            <div class="flex-1 relative">
-                                <span
-                                    class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-lg">x
-                                    =</span>
-                                <input type="number" id="sqrt-input"
-                                    class="perc-input w-full pl-12 text-2xl font-bold py-3" placeholder="25">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="sqrt-results-area"
-                        class="hidden opacity-0 flex flex-col items-center justify-center gap-4 mt-4 transition-all duration-500">
-                        <div class="text-4xl font-light text-slate-400">=</div>
-                        <div
-                            class="glass-display w-full p-8 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30">
-                            <button
-                                class="copy-trigger absolute top-3 right-3 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                                data-target="sqrt-res-value"><i class="fas fa-copy"></i></button>
-                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2">Principal
-                                Root</div>
-                            <div class="text-5xl font-bold text-sky-600 dark:text-sky-400 break-all"
-                                id="sqrt-res-value">&mdash;</div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </main>
+    <!-- Hero Section -->
+    <div class="w-full max-w-5xl mb-12 text-center mt-8">
+        <span
+            class="px-4 py-1.5 rounded-full bg-sky-100 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 text-xs font-bold uppercase tracking-widest mb-4 inline-block">Arithmetic
+            Suite</span>
+        <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
+            Simplifying Square Root Calculator <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-indigo-600">Realtime
+                Visualizer</span>
+        </h1>
+        <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            Calculate the principal square root of any real number instantly with our high-precision algorithm.
+        </p>
     </div>
-    <br>
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
 
-            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <header>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
-                        Square Root Calculator – Calculate the Principal Square Root of Any Real Number
-                    </h1>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        A square root calculator is a simple yet powerful tool that helps you quickly find the principal
-                        square root of any real number. Our free online square root calculator allows you to calculate
-                        square roots instantly without performing complex manual calculations.
-                    </p>
-                </header>
-                <br>
+    <!-- Main Calculator Card -->
+    <div class="w-full max-w-4xl glass-card rounded-[2.5rem] shadow-2xl overflow-hidden mb-16">
+        <div class="hero-gradient p-10 text-white text-center relative">
+            <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                <svg width="100%" height="100%">
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1" />
+                    </pattern>
+                    <rect width="100%" height="100%" fill="url(#grid)" />
+                </svg>
+            </div>
+            <i class="fas fa-square-root-variable text-6xl mb-4 floating"></i>
+            <h2 class="text-3xl font-extrabold">Online Square Root Calculator</h2>
+        </div>
 
-                <div class="intro-section">
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        Square roots are commonly used in mathematics, algebra, geometry, engineering, and scientific
-                        calculations. Instead of solving square root problems by hand, you can use this square root
-                        calculator online to get accurate results in seconds.
-                    </p>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        Whether you are a student solving math homework, a teacher verifying solutions, or a
-                        professional working with numbers, this sqrt calculator provides fast and reliable results.
-                    </p>
-                </div>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a Square
-                        Root?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        The square root of a number is a value that, when multiplied by itself, produces the original
-                        number. For example:
-                    </p>
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6 mb-4">
-                        <li>√4 = 2 (2 × 2 = 4)</li>
-                        <li>√9 = 3 (3 × 3 = 9)</li>
-                        <li>√16 = 4 (4 × 4 = 16)</li>
-                    </ul>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        The principal square root refers to the non-negative square root of a number. Using an online
-                        square root calculator, you can easily find the square root of any real number without doing
-                        manual calculations.
-                    </p>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a Square
-                        Root Calculator?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        A square root calculator is an online math tool that calculates the square root of a number
-                        automatically. With a sqrt calculator online, you can:
-                    </p>
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
-                        <li>Calculate the square root of any number</li>
-                        <li>Find the principal square root quickly</li>
-                        <li>Solve algebra and geometry problems</li>
-                        <li>Verify square root calculations</li>
-                    </ul>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
-                        an Online Square Root Calculator</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Instant Results</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">The calculator computes square roots
-                                instantly, saving time and effort.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Highly Accurate</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">A digital square root calculator
-                                ensures precise results, avoiding manual errors.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Completely free to use on smartphones,
-                                tablets, laptops, and desktops.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Universal Use</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Perfect for students, teachers,
-                                engineers, and scientists.</p>
+        <div class="p-8 md:p-12">
+            <div class="max-w-xl mx-auto w-full">
+                <!-- Input Area -->
+                <div
+                    class="glass-card p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400 bg-white/50 dark:bg-slate-800/50">
+                    <div class="flex items-center gap-4">
+                        <div class="flex-1 relative">
+                            <span
+                                class="absolute left-0 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-2xl">√</span>
+                            <input type="number" id="sqrt-input"
+                                class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-sky-500 outline-none pl-12 text-3xl font-bold py-3 transition-colors"
+                                placeholder="25">
                         </div>
                     </div>
-                </section>
-                <br>
+                </div>
 
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
-                        Square Root Calculator</h2>
-                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
-                        <li>Enter the number you want to calculate.</li>
-                        <li>Click the <strong>Calculate</strong> button.</li>
-                        <li>Instantly view the principal square root result.</li>
-                    </ol>
-                </section>
-                <br>
-
-                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Simplify your math today!</h2>
-                    <p class="text-slate-500 dark:text-slate-400">
-                        Try the square root calculator today and get accurate principal square roots in seconds.
-                    </p>
-                </section>
-
-                <footer>
-                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
-                        &copy; 2026 Square Root Calculator Tool. All rights reserved.
-                    </p>
-                </footer>
+                <!-- Results Area -->
+                <div id="sqrt-results-area"
+                    class="hidden opacity-0 flex flex-col items-center justify-center gap-4 mt-8 transition-all duration-500">
+                    <div class="text-4xl font-light text-slate-300">=</div>
+                    <div
+                        class="glass-card w-full p-8 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30 bg-white dark:bg-slate-800">
+                        <button
+                            class="copy-trigger absolute top-4 right-4 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                            data-target="sqrt-res-value">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2">Principal Root
+                        </div>
+                        <div class="text-5xl font-black text-sky-600 dark:text-sky-400 break-all" id="sqrt-res-value">
+                            &mdash;</div>
+                    </div>
+                </div>
             </div>
-        </main>
+        </div>
     </div>
+
+    <!-- SEO & Content Section -->
+    <section
+        class="w-full max-w-4xl prose dark:prose-invert bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] shadow-xl border border-slate-200 dark:border-slate-800">
+        <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Square Root Calculator – Comprehensive Guide
+        </h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-8">
+            A square root calculator is a simple yet powerful tool that helps you quickly find the principal square root
+            of any real number. Our free online tool allows you to calculate square roots instantly without performing
+            complex manual calculations.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div>
+                <h3 class="text-xl font-bold text-sky-600 mb-4">What Is a Square Root?</h3>
+                <p class="text-sm">The square root of a number is a value that, when multiplied by itself, produces the
+                    original number. For example:</p>
+                <ul class="text-sm space-y-2 mt-4">
+                    <li>\(\sqrt{4} = 2\) because \(2 \times 2 = 4\)</li>
+                    <li>\(\sqrt{9} = 3\) because \(3 \times 3 = 9\)</li>
+                    <li>\(\sqrt{16} = 4\) because \(4 \times 4 = 16\)</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold text-indigo-600 mb-4">Why Use This Tool?</h3>
+                <p class="text-sm">Square roots are essential in algebra, geometry, and engineering. Instead of solving
+                    by hand using the long division method, this online sqrt calculator provides reliable results for
+                    students and professionals alike.</p>
+            </div>
+        </div>
+
+        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Benefits of Our Calculator</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+            <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700">
+                <h4 class="font-bold mb-1">Instant Results</h4>
+                <p class="text-xs text-slate-500">Computes square roots instantly, saving time and effort.</p>
+            </div>
+            <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700">
+                <h4 class="font-bold mb-1">Highly Accurate</h4>
+                <p class="text-xs text-slate-500">Ensures precise results, avoiding manual errors.</p>
+            </div>
+            <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700">
+                <h4 class="font-bold mb-1">Free & Accessible</h4>
+                <p class="text-xs text-slate-500">Optimized for smartphones, tablets, and desktops.</p>
+            </div>
+            <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700">
+                <h4 class="font-bold mb-1">Universal Use</h4>
+                <p class="text-xs text-slate-500">Perfect for students, teachers, and engineers.</p>
+            </div>
+        </div>
+
+        <div
+            class="bg-sky-50 dark:bg-sky-900/20 p-8 rounded-3xl text-center border border-sky-100 dark:border-sky-900/30">
+            <h3 class="text-xl font-bold text-sky-700 dark:text-sky-400 mb-2">Simplify your math today!</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">
+                Try the square root calculator today and get accurate principal square roots in seconds.
+            </p>
+        </div>
+    </section>
+
+    <!-- Extensive SEO Content Section -->
+    <section
+        class="w-full max-w-4xl mt-16 prose prose-slate dark:prose-invert max-w-none border-t border-slate-200 dark:border-slate-800 pt-12">
+        <h2 class="text-4xl font-black text-slate-900 dark:text-white mb-8">The Definitive Guide to Square Roots and
+            Radicals</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 leading-relaxed text-slate-600 dark:text-slate-400">
+            <div>
+                <h3 class="text-xl font-bold text-sky-600 mb-4">Understanding the Principal Square Root</h3>
+                <p>
+                    In mathematics, the <strong>principal square root</strong> is the non-negative result of the square
+                    root function. While the equation \(x^2 = 25\) has two solutions \(5\) and \(-5\), the notation
+                    \(\sqrt{25}\) specifically refers to the positive root, which is \(5\).
+                </p>
+                <p>
+                    Our <strong>online square root calculator</strong> is programmed to provide this principal value
+                    instantly. This is crucial in geometry, where the length of a side (such as the hypotenuse of a
+                    triangle) can never be negative.
+                </p>
+
+                <h3 class="text-xl font-bold text-sky-600 mt-8 mb-4">Perfect Squares vs. Irrational Numbers</h3>
+                <p>
+                    Not all square roots result in clean whole numbers. Numbers like \(1, 4, 9, 16, 25\) and \(36\) are
+                    known as <strong>perfect squares</strong> because their roots are integers. However, the square root
+                    of \(2\) or \(10\) results in an <strong>irrational number</strong>.
+                </p>
+                <p>
+                    $$\sqrt{2} \approx 1.41421356...$$
+                </p>
+                <p>
+                    These numbers have decimals that never end and never repeat. Our tool uses high-precision
+                    floating-point arithmetic to give you the most accurate decimal approximation for these complex
+                    values.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-indigo-600 mb-4">The Algebra of Radicals</h3>
+                <p>
+                    When working with square roots in algebra, you often encounter <strong>radical expressions</strong>.
+                    There are three fundamental rules you should know:
+                </p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li><strong>Product Property:</strong> \(\sqrt{ab} = \sqrt{a} \cdot \sqrt{b}\)</li>
+                    <li><strong>Quotient Property:</strong> \(\sqrt{\frac{a}{b}} = \frac{\sqrt{a}}{\sqrt{b}}\)
+                    </li>
+                    <li><strong>Zero Property:</strong> \(\sqrt{0} = 0\)</li>
+                </ul>
+                <p class="mt-4">
+                    Mastering these properties allows you to simplify radicals without a calculator. For instance,
+                    \(\sqrt{50}\) can be simplified to \(\sqrt{25 \cdot 2}\), which equals \(5\sqrt{2}\).
+                </p>
+
+                <h3 class="text-xl font-bold text-indigo-600 mt-8 mb-4">Newton’s Method: How It Works</h3>
+                <p>
+                    Have you ever wondered how a computer calculates a square root? Most modern systems use an algorithm
+                    called **Newton’s Method** (or the Babylonian method). It starts with a guess and repeatedly refines
+                    it using the formula:
+                </p>
+                <p class="bg-slate-100 dark:bg-slate-900 p-4 rounded-lg font-mono text-center">
+                    \(x_{n+1} = \frac{1}{2}(x_n + \frac{S}{x_n})\)
+                </p>
+                <p class="text-xs text-center mt-2 italic">Where \(S\) is the number you want to root.</p>
+            </div>
+        </div>
+
+        <!-- Deep Dive Technical Section -->
+        <div
+            class="mt-12 bg-slate-50 dark:bg-slate-900/50 p-8 rounded-[2rem] border border-slate-200 dark:border-slate-700">
+            <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Real-World Applications of Square Roots
+            </h3>
+            <p class="mb-6">
+                The square root is not just a theoretical concept; it is a vital part of the world around us. Here are
+                several industries that rely on our <strong>sqrt calculator</strong> logic daily:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div class="space-y-2">
+                    <h4 class="font-bold text-sky-500">Architecture</h4>
+                    <p class="text-sm">Using the <strong>Pythagorean Theorem</strong> (\(a^2 + b^2 = c^2\)) to calculate
+                        the diagonal length of rooms and roof pitches.</p>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="font-bold text-indigo-500">Physics</h4>
+                    <p class="text-sm">Determining the <strong>velocity</strong> of a falling object \(v = \sqrt{2gh}\)
+                        or the period of a pendulum.</p>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="font-bold text-emerald-500">Statistics</h4>
+                    <p class="text-sm">Calculating the <strong>Standard Deviation</strong>, which is the square root of
+                        the variance, to measure data consistency.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Square Root Table for SEO -->
+        <div class="mt-16">
+            <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 text-center">Common Square Roots Table
+            </h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-slate-300 dark:border-slate-700">
+                            <th class="py-3 px-4 text-sky-600 font-bold">Number (\(x\))</th>
+                            <th class="py-3 px-4 text-sky-600 font-bold">Square Root (\(\sqrt{x}\))</th>
+                            <th class="py-3 px-4 text-sky-600 font-bold">Type</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr class="border-b border-slate-100 dark:border-slate-800">
+                            <td class="py-3 px-4">\(1\)</td>
+                            <td class="py-3 px-4">\(1\)</td>
+                            <td class="py-3 px-4 italic text-slate-400">Perfect Square</td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800">
+                            <td class="py-3 px-4">\(2\)</td>
+                            <td class="py-3 px-4">\(1.4142\)</td>
+                            <td class="py-3 px-4 italic text-slate-400">Irrational</td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800">
+                            <td class="py-3 px-4">\(144\)</td>
+                            <td class="py-3 px-4">\(12\)</td>
+                            <td class="py-3 px-4 italic text-slate-400">Perfect Square</td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800">
+                            <td class="py-3 px-4">\(169\)</td>
+                            <td class="py-3 px-4">\(13\)</td>
+                            <td class="py-3 px-4 italic text-slate-400">Perfect Square</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-16 text-center">
+            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Frequently Asked Questions (FAQ)</h3>
+            <div class="space-y-6 text-left max-w-3xl mx-auto">
+                <details
+                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm cursor-pointer border border-slate-200 dark:border-slate-700">
+                    <summary class="font-bold">Can you find the square root of a negative number?</summary>
+                    <p class="mt-2 text-sm">In the set of real numbers, you cannot take the square root of a negative
+                        number. However, in advanced mathematics, we use <strong>imaginary numbers</strong> where
+                        $$\sqrt{-1} = i$$.</p>
+                </details>
+                <details
+                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm cursor-pointer border border-slate-200 dark:border-slate-700">
+                    <summary class="font-bold">How many decimal places does this calculator provide?</summary>
+                    <p class="mt-2 text-sm">Our <strong>precision square root tool</strong> provides results up to 10
+                        decimal places, ensuring accuracy for most scientific and architectural requirements.</p>
+                </details>
+            </div>
+        </div>
+    </section>
 
     <script src="../js/layout.js"></script>
     <script src="../js/calculators/squareroot.js"></script>
+</main>
 </body>
 
 </html>

@@ -1,13 +1,18 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exponent Calculator | CalcSuit</title>
-    <meta name="description" content="Free online exponent calculator. Calculate x to the power of y.">
+    <meta name="description"
+        content="Free online exponent calculator. Calculate x to the power of y with instant results and step-by-step math rules.">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax for LaTeX Rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -22,186 +27,343 @@
             }
         }
     </script>
+
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at top right, #0ea5e9, #6366f1, #a855f7);
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+    </style>
+
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
 </head>
 
-<body
-    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+<main
+    class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col items-center p-4 sm:p-6 lg:p-8">
 
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+    <!-- Hero Section -->
+    <div class="w-full max-w-5xl mb-12 text-center mt-8">
+        <span
+            class="px-4 py-1.5 rounded-full bg-sky-100 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 text-xs font-bold uppercase tracking-widest mb-4 inline-block">Algebraic
+            Suite</span>
+        <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
+            Exponent <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-indigo-600">Architect</span>
+        </h1>
+        <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            Solve complex exponential expressions and power functions instantly with our high-performance mathematical
+            engine.
+        </p>
+    </div>
 
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
-            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2
-                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
-                            Exponent Calc</h2>
-                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate base <span
-                                class="font-serif italic font-semibold">x</span> raised to the power of <span
-                                class="font-serif italic font-semibold">y</span>.</p>
-                    </div>
-                </div>
+    <!-- Main Calculator Card -->
+    <div class="w-full max-w-4xl glass-card rounded-[2.5rem] shadow-2xl overflow-hidden mb-16">
+        <div class="hero-gradient p-10 text-white text-center relative">
+            <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                <svg width="100%" height="100%">
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1" />
+                    </pattern>
+                    <rect width="100%" height="100%" fill="url(#grid)" />
+                </svg>
+            </div>
+            <i class="fas fa-superscript text-6xl mb-4 floating"></i>
+            <h2 class="text-3xl font-extrabold">Advanced Exponent Calculator</h2>
+        </div>
 
-                <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
-                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-2">
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Base
-                                    (x)</label>
-                                <input type="number" id="exp-base" class="perc-input w-full font-bold text-xl py-3"
-                                    placeholder="2">
-                            </div>
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Exponent
-                                    (y)</label>
-                                <input type="number" id="exp-power" class="perc-input w-full font-bold text-xl py-3"
-                                    placeholder="8">
-                            </div>
+        <div class="p-8 md:p-12">
+            <div class="max-w-xl mx-auto w-full">
+                <!-- Input Area -->
+                <div
+                    class="glass-card p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400 bg-white/50 dark:bg-slate-800/50">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-4">
+                        <div class="relative">
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Base
+                                x </label>
+                            <input type="number" id="exp-base"
+                                class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-sky-500 outline-none text-2xl font-bold py-2 transition-all"
+                                placeholder="2">
                         </div>
-                        <div class="mt-6 flex justify-center">
+                        <div class="relative">
+                            <label
+                                class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Exponent
+                                y </label>
+                            <input type="number" id="exp-power"
+                                class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-sky-500 outline-none text-2xl font-bold py-2 transition-all"
+                                placeholder="8">
+                        </div>
+                    </div>
+                    <div class="mt-8 flex justify-center">
+                        <div class="bg-slate-100 dark:bg-slate-900 px-6 py-3 rounded-2xl">
                             <span class="text-4xl font-serif italic font-bold text-sky-500" id="exp-visualizer">x<sup
                                     class="text-2xl text-sky-400 ml-1">y</sup></span>
                         </div>
                     </div>
+                </div>
 
-                    <div id="exp-results-area"
-                        class="hidden opacity-0 flex flex-col items-center justify-center gap-4 mt-4 transition-all duration-500">
-                        <div class="text-4xl font-light text-slate-400">=</div>
+                <!-- Results Area -->
+                <div id="exp-results-area"
+                    class="hidden opacity-0 flex flex-col items-center justify-center gap-4 mt-8 transition-all duration-500">
+                    <div class="text-4xl font-light text-slate-300">=</div>
+                    <div
+                        class="glass-card w-full p-8 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30 bg-white dark:bg-slate-800">
+                        <button
+                            class="copy-trigger absolute top-4 right-4 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                            data-target="exp-res-value">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2">Calculated
+                            Power</div>
+                        <div class="text-5xl font-black text-sky-600 dark:text-sky-400 break-all" id="exp-res-value">
+                            &mdash;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO & EDUCATIONAL SECTION (LATEX COMPLIANT) -->
+    <section
+        class="w-full max-w-4xl bg-white dark:bg-slate-900 p-8 md:p-16 rounded-[3rem] shadow-xl border border-slate-200 dark:border-slate-800">
+        <article class="prose prose-slate dark:prose-invert max-w-none">
+
+            <header class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
+                    Mastering Exponents: <span class="text-sky-500">The Ultimate Guide</span>
+                </h2>
+                <div class="h-1.5 w-24 bg-gradient-to-r from-sky-500 to-indigo-600 mx-auto rounded-full"></div>
+            </header>
+
+            <!-- Section 1: Fundamental Concept -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-4">1. What is an Exponent? (The Basics)
+                </h3>
+                <p class="text-lg leading-relaxed">
+                    An <strong>exponent</strong> (also known as a "power" or "index") is a mathematical shorthand that
+                    tells you how many times to multiply a number by itself. When you see a notation like \(b^n\), you
+                    are looking at two distinct parts:
+                </p>
+                <ul class="list-none space-y-4 my-6">
+                    <li class="flex items-start gap-3">
+                        <span class="bg-sky-100 text-sky-600 px-3 py-1 rounded-lg font-bold">Base (\(b\))</span>
+                        <span>The actual number being multiplied.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-lg font-bold">Exponent
+                            (\(n\))</span>
+                        <span>The number of times the base appears in the multiplication.</span>
+                    </li>
+                </ul>
+                <div class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border-l-4 border-sky-400 italic">
+                    "If the exponent is a positive integer, it represents <strong>repeated multiplication</strong>. For
+                    example, \(5^3\) isn't \(5 \times 3\), it is \(5 \times 5 \times 5 = 125\)."
+                </div>
+            </div>
+
+            <!-- Section 2: The 7 Laws of Exponents -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">2. The 7 Essential Laws of Exponents
+                </h3>
+                <p>To use an <strong>exponent calculator</strong> effectively, you must understand the rules that allow
+                    you to simplify complex expressions. Here is a breakdown of the laws every student should know:</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <div
+                        class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        <h4 class="font-bold text-indigo-500 mb-2">Product of Powers</h4>
+                        <p class="text-sm mb-2">When multiplying two powers with the same base, add the exponents.</p>
+                        <p class="text-sky-500 font-bold">$$a^m \cdot a^n = a^{m+n}$$</p>
+                        <p class="text-xs mt-2 text-slate-400">Example: \(2^3 \cdot 2^2 = 2^5 = 32\)</p>
+                    </div>
+
+                    <div
+                        class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        <h4 class="font-bold text-indigo-500 mb-2">Quotient of Powers</h4>
+                        <p class="text-sm mb-2">When dividing two powers with the same base, subtract the exponents.</p>
+                        <p class="text-sky-500 font-bold">$$\frac{a^m}{a^n} = a^{m-n}$$</p>
+                        <p class="text-xs mt-2 text-slate-400">Example: \(5^6 / 5^4 = 5^2 = 25\)</p>
+                    </div>
+
+                    <div
+                        class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        <h4 class="font-bold text-indigo-500 mb-2">Power of a Power</h4>
+                        <p class="text-sm mb-2">When raising a power to another power, multiply the exponents.</p>
+                        <p class="text-sky-500 font-bold">$$(a^m)^n = a^{m \cdot n}$$</p>
+                        <p class="text-xs mt-2 text-slate-400">Example: \((3^2)^3 = 3^6 = 729\)</p>
+                    </div>
+
+                    <div
+                        class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        <h4 class="font-bold text-indigo-500 mb-2">Power of a Product</h4>
+                        <p class="text-sm mb-2">Distribute the power to every base inside the parentheses.</p>
+                        <p class="text-sky-500 font-bold">$$(ab)^n = a^n b^n$$</p>
+                        <p class="text-xs mt-2 text-slate-400">Example: \((2x)^3 = 8x^3\)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Special Cases (Negative & Zero) -->
+            <div
+                class="mb-12 bg-indigo-50 dark:bg-indigo-900/10 p-8 rounded-[2rem] border border-indigo-100 dark:border-indigo-900/30">
+                <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-4">3. The Zero and Negative
+                    Exponent Mystery</h3>
+                <p>Two of the most confusing concepts for math students are **Zero** and **Negative** exponents. Here is
+                    the simple explanation:</p>
+
+                <div class="space-y-6 mt-6">
+                    <div class="flex gap-4">
                         <div
-                            class="glass-display w-full p-8 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30">
-                            <button
-                                class="copy-trigger absolute top-3 right-3 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                                data-target="exp-res-value"><i class="fas fa-copy"></i></button>
-                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2">Result
-                            </div>
-                            <div class="text-5xl font-bold text-sky-600 dark:text-sky-400 break-all" id="exp-res-value">
-                                &mdash;</div>
+                            class="flex-shrink-0 w-12 h-12 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-sm font-bold text-indigo-500">
+                            0</div>
+                        <div>
+                            <h4 class="font-bold">The Zero Rule: \(a^0 = 1\)</h4>
+                            <p class="text-sm">Any number (except zero) raised to the power of zero is always 1. Why?
+                                Because as you decrease powers (dividing by the base), \(a^1 / a = a^{1-1} = 1\).</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-sm font-bold text-indigo-500">
+                            -1</div>
+                        <div>
+                            <h4 class="font-bold">The Negative Rule: \(a^{-n} = 1/a^n\)</h4>
+                            <p class="text-sm">A negative exponent is just a way of saying "the reciprocal." It flips
+                                the base to the bottom of a fraction.</p>
                         </div>
                     </div>
                 </div>
-
             </div>
-        </main>
-    </div>
-    <br>
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
 
-            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <header>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
-                        Exponent Calculator – Calculate Base x Raised to the Power of y
-                    </h1>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        An exponent calculator is a powerful online tool that helps you quickly calculate numbers raised
-                        to a specific power. Our free online exponent calculator allows you to easily compute base x
-                        raised to the power of y, providing instant and accurate results.
-                    </p>
-                </header>
-                <br>
+            <!-- Section 4: Teaching Example / Step-by-Step -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">4. Step-by-Step Teaching Example</h3>
+                <p class="mb-6">Let's solve a complex expression that you might enter into our <strong>power
+                        calculator</strong>: </p>
+                <div class="bg-slate-900 text-slate-100 p-8 rounded-3xl font-mono text-sm shadow-2xl">
+                    <p class="text-sky-400 mb-4"># Problem: Simplify (2³ × 2⁴) / 2²</p>
+                    <p class="mb-2"><span class="text-indigo-400">Step 1:</span> Apply Product Rule to the top.</p>
+                    <p class="ml-4 mb-4">2³ × 2⁴ = 2^(3+4) = <span class="text-emerald-400">2⁷</span></p>
 
-                <div class="intro-section">
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        Exponents are widely used in mathematics, algebra, science, engineering, and computer science.
-                        Instead of performing complicated exponent calculations manually, you can use this power
-                        calculator online to solve exponential expressions quickly and efficiently.
-                    </p>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        Whether you are a student learning exponents, a teacher verifying calculations, or a
-                        professional working with mathematical formulas, this exponent calculator tool makes exponent
-                        calculations simple and reliable.
-                    </p>
+                    <p class="mb-2"><span class="text-indigo-400">Step 2:</span> Apply Quotient Rule.</p>
+                    <p class="ml-4 mb-4">2⁷ / 2² = 2^(7-2) = <span class="text-emerald-400">2⁵</span></p>
+
+                    <p class="mb-2"><span class="text-indigo-400">Step 3:</span> Final Calculation.</p>
+                    <p class="ml-4">2 × 2 × 2 × 2 × 2 = <span class="text-sky-400 text-xl font-bold">32</span></p>
                 </div>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is an
-                        Exponent?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        An exponent represents how many times a number (called the base) is multiplied by itself. It is
-                        written in the form: <strong>xʸ</strong>
-                    </p>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-2">Where:</p>
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6 mb-4">
-                        <li><strong>x</strong> is the base number</li>
-                        <li><strong>y</strong> is the exponent or power</li>
-                    </ul>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-2">Examples:</p>
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
-                        <li>2³ = 2 × 2 × 2 = 8</li>
-                        <li>5² = 5 × 5 = 25</li>
-                        <li>10⁴ = 10 × 10 × 10 × 10 = 10,000</li>
-                    </ul>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Benefits of Using
-                        an Online Exponent Calculator</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Instant Results</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">The calculator computes exponential
-                                values instantly without manual multiplication.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Highly Accurate</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Avoid manual mistakes with larger
-                                powers; our tool ensures precise mathematical results.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Completely free to use with no
-                                registration required on any modern device.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Multi-Purpose</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Perfect for algebra, scientific
-                                research, computer science, and financial growth calculations.</p>
-                        </div>
-                    </div>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
-                        Exponent Calculator</h2>
-                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
-                        <li>Enter the base number (<strong>x</strong>).</li>
-                        <li>Enter the exponent value (<strong>y</strong>).</li>
-                        <li>Click the <strong>Calculate</strong> button.</li>
-                        <li>Instantly view the result of x raised to the power of y.</li>
-                    </ol>
-                </section>
-                <br>
-
-                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Simplify your calculations!</h2>
-                    <p class="text-slate-500 dark:text-slate-400">
-                        Start using the exponent calculator online today and solve complex power expressions in seconds.
-                    </p>
-                </section>
-
-                <footer>
-                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
-                        &copy; 2026 Exponent Calculator Tool. All rights reserved.
-                    </p>
-                </footer>
             </div>
-        </main>
-    </div>
 
+            <!-- Section 5: Real World Word Problems -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">5. Real-World Exponential Growth</h3>
+                <p>Exponents aren't just for textbooks. They describe how the world grows and changes. Here are two
+                    classic examples:</p>
+
+                <div class="space-y-8 mt-8">
+                    <div class="relative pl-8 border-l-2 border-slate-200 dark:border-slate-700">
+                        <div class="absolute -left-[9px] top-0 w-4 h-4 bg-sky-500 rounded-full"></div>
+                        <h4 class="font-bold text-lg mb-2">The Legend of the Chessboard (Exponential Growth)</h4>
+                        <p class="text-sm italic">
+                            A king offered a reward to a wise man. The man asked for 1 grain of rice on the first square
+                            of a chessboard, 2 on the second, 4 on the third, and so on—doubling every time.
+                            By the 64th square, the amount is \(2^{63}\) grains of rice. This is over <strong>9
+                                quintillion grains</strong>, more rice than exists on Earth!
+                        </p>
+                    </div>
+
+                    <div class="relative pl-8 border-l-2 border-slate-200 dark:border-slate-700">
+                        <div class="absolute -left-[9px] top-0 w-4 h-4 bg-indigo-500 rounded-full"></div>
+                        <h4 class="font-bold text-lg mb-2">Compound Interest in Finance</h4>
+                        <p class="text-sm italic">
+                            If you invest \$1,000 at a 10% annual interest rate, the formula is \(1000 \times
+                            (1.10)^t\).
+                            After 10 years, you have \(1000 \times 2.59 = \$2,593\). After 40 years, the exponent makes
+                            it jump to over \$45,000!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="mt-16">
+                <h3 class="text-3xl font-black text-center mb-10">Frequently Asked Questions</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div
+                        class="p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <h5 class="font-bold mb-2">Can an exponent be a decimal?</h5>
+                        <p class="text-xs text-slate-500">Yes! These are called <strong>fractional exponents</strong>.
+                            For example, \(x^{0.5}\) is the same as the square root of \(x\).</p>
+                    </div>
+                    <div
+                        class="p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <h5 class="font-bold mb-2">What is \(0\) to the power of \(0\)?</h5>
+                        <p class="text-xs text-slate-500">In most contexts, \(0^0\) is considered "undefined" or an
+                            indeterminate form, though in some areas of discrete math, it is defined as 1.</p>
+                    </div>
+                    <div
+                        class="p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <h5 class="font-bold mb-2">Is a negative base allowed?</h5>
+                        <p class="text-xs text-slate-500">Yes. \((-2)^3 = -8\). However, \((-2)^2 = 4\). If the exponent
+                            is even, the result is positive. If odd, it stays negative.</p>
+                    </div>
+                    <div
+                        class="p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <h5 class="font-bold mb-2">What is the difference between \(x^2\) and \(2x\)?</h5>
+                        <p class="text-xs text-slate-500">\(2x\) is multiplication (doubling), while \(x^2\) is an
+                            exponent (squaring). As \(x\) gets larger, \(x^2\) grows much faster than \(2x\).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final SEO Summary -->
+            <div class="mt-16 p-8 bg-slate-950 text-slate-400 rounded-[2.5rem] text-sm leading-relaxed">
+                <p>
+                    Our <strong>exponent calculator</strong> is more than just a simple math tool; it is a gateway to
+                    understanding the language of growth and decay. Whether you are calculating <strong>scientific
+                        notation</strong>, simplifying <strong>polynomial exponents</strong>, or modeling
+                    <strong>population growth</strong>, our tool provides the precision you need. We support large
+                    number calculations and decimal exponents to ensure that teachers, students, and engineers have
+                    access to free, reliable mathematical resources. Explore the laws of exponents today and simplify
+                    your homework in seconds.
+                </p>
+            </div>
+
+        </article>
+    </section>
     <script src="../js/layout.js"></script>
     <script src="../js/calculators/exponent.js"></script>
-</body>
+</main>
 
 </html>

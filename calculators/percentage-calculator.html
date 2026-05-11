@@ -28,187 +28,456 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
-        
-        <!-- Calculator Section -->
-        <div id="calc-percentage" class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
-            <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Percentage <span class="text-indigo-500 font-light">Calculator</span></h2>
-                    <p class="text-sm text-slate-500 dark:text-slate-400">Proportions, Increases & Differences</p>
-                </div>
-                <div class="bg-indigo-100/50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-indigo-200 dark:border-indigo-800/50 shadow-sm self-start sm:self-auto">
-                    <i class="fas fa-percent"></i> Math
-                </div>
+<main id="app-container"
+    class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
+
+    <!-- Calculator Section -->
+    <div id="calc-percentage"
+        class="w-full max-w-5xl xl:max-w-6xl bg-white dark:bg-slate-800 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Percentage <span
+                        class="text-indigo-500 font-light">Calculator</span></h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Let's find percentage difference between two
+                    numbers, percentage of increase or decrease between two numbers, and much more!</p>
             </div>
-
-            <div class="space-y-8">
-                <!-- Calc 1: What is X% of Y? -->
-                <div class="bg-slate-50 dark:bg-slate-900/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4">
-                    <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2 uppercase tracking-wider">
-                        <span class="w-6 h-6 rounded-full bg-indigo-500 text-white flex items-center justify-center text-[10px]">1</span>
-                        Value Finder
-                    </h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Percentage (%)</label>
-                            <input type="number" id="perc1-x" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-500/20 font-bold" placeholder="20" oninput="calcPerc1()">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Of Value</label>
-                            <input type="number" id="perc1-y" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-500/20 font-bold" placeholder="150" oninput="calcPerc1()">
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between pt-2">
-                        <span class="text-sm text-slate-500 font-medium font-inter">Resulting Value</span>
-                        <span id="perc1-res" class="text-2xl font-black text-indigo-600 dark:text-indigo-400 tracking-tight">--</span>
-                    </div>
-                </div>
-
-                <!-- Calc 2: X is what % of Y? -->
-                <div class="bg-slate-50 dark:bg-slate-900/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4">
-                    <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2 uppercase tracking-wider">
-                        <span class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">2</span>
-                        Ratio Finder
-                    </h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Value X</label>
-                            <input type="number" id="perc2-x" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500/20 font-bold" placeholder="40" oninput="calcPerc2()">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Total value Y</label>
-                            <input type="number" id="perc2-y" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500/20 font-bold" placeholder="200" oninput="calcPerc2()">
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between pt-2">
-                        <span class="text-sm text-slate-500 font-medium font-inter">X is what % of Y</span>
-                        <span id="perc2-res" class="text-2xl font-black text-emerald-600 dark:text-emerald-400 tracking-tight">--%</span>
-                    </div>
-                </div>
-
-                <!-- Calc 3: Percent Increase/Decrease -->
-                <div class="bg-slate-50 dark:bg-slate-900/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4">
-                    <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2 uppercase tracking-wider">
-                        <span class="w-6 h-6 rounded-full bg-rose-500 text-white flex items-center justify-center text-[10px]">3</span>
-                        Growth Finder
-                    </h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Initial Value</label>
-                            <input type="number" id="perc3-x" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 font-bold" placeholder="100" oninput="calcPerc3()">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Final Value</label>
-                            <input type="number" id="perc3-y" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 font-bold" placeholder="150" oninput="calcPerc3()">
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between pt-2">
-                        <span class="text-sm text-slate-500 font-medium font-inter">Percentage Change</span>
-                        <span id="perc3-res" class="text-2xl font-black text-rose-600 dark:text-rose-400 tracking-tight">--%</span>
-                    </div>
-                </div>
+            <div
+                class="bg-indigo-100/50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-indigo-200 dark:border-indigo-800/50 shadow-sm self-start sm:self-auto">
+                <i class="fas fa-percent"></i> Math
             </div>
         </div>
 
-        <!-- SEO Content Section -->
-        <div class="w-full max-w-4xl mt-12 space-y-12 pb-20">
-            <!-- Learning Concept -->
-            <section class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-8 md:p-12 shadow-sm">
-                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-8">Understanding Percentages</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div class="space-y-6">
-                        <div class="prose dark:prose-invert">
-                            <p class="text-slate-600 dark:text-slate-400 italic">
-                                A **percentage (%)** literally means "per hundred." It is a way of expressing a number as a fraction of 100.
-                            </p>
-                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mt-8 mb-4">The Universal Formula</h3>
-                            <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/50">
-                                $$ \text{Result} = \frac{\text{Percentage}}{100} \times \text{Whole} $$
-                            </div>
-                        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+            <!-- Calc 1: What is X% of Y? -->
+            <div
+                class="bg-slate-50 dark:bg-slate-900/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4 flex flex-col h-full">
+                <h3
+                    class="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2 uppercase tracking-wider">
+                    <span
+                        class="w-6 h-6 shrink-0 rounded-full bg-indigo-500 text-white flex items-center justify-center text-[10px]">1</span>
+                    Calculate percentage of a number
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400"> Let's find what is X percent of Y ? </p>
+                <div class="grid grid-cols-2 lg:grid-cols-1 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Percentage (%)</label>
+                        <input type="number" id="perc1-x"
+                            class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-500/20 font-bold transition-all"
+                            placeholder="20" oninput="calcPerc1()">
                     </div>
-                    <div class="bg-indigo-50/50 dark:bg-indigo-900/10 p-8 rounded-3xl border border-indigo-100/50 dark:border-indigo-800/30">
-                        <h4 class="font-bold text-indigo-900 dark:text-indigo-400 mb-4 flex items-center gap-2">
-                            <i class="fas fa-lightbulb"></i> Pro Tip: Retail Math
-                        </h4>
-                        <p class="text-sm text-indigo-800/80 dark:text-indigo-300 leading-relaxed mb-4">
-                            To find a 20% discount quickly in your head, divide the price by 10 and then multiply by 2.
-                        </p>
-                        <div class="bg-white/80 dark:bg-slate-900/80 p-4 rounded-xl text-xs font-mono text-slate-600 dark:text-slate-400">
-                             $150 / 10 = $15<br>
-                             $15 * 2 = $30 (Discount)<br>
-                             $150 - $30 = $120 (Final Price)
-                        </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Of Number</label>
+                        <input type="number" id="perc1-y"
+                            class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-500/20 font-bold transition-all"
+                            placeholder="150" oninput="calcPerc1()">
                     </div>
                 </div>
-            </section>
+                <div
+                    class="flex items-center justify-between pt-4 mt-auto border-t border-slate-200 dark:border-slate-700">
+                    <span class="text-xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Resulting
+                        Value</span>
+                    <span id="perc1-res"
+                        class="text-2xl font-black text-indigo-600 dark:text-indigo-400 tracking-tight">--</span>
+                </div>
+            </div>
 
-            <!-- Real World Cases -->
-            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 rounded-2xl flex items-center justify-center text-indigo-600 mb-4">
-                        <i class="fas fa-tags"></i>
+            <!-- Calc 2: X is what % of Y? -->
+            <div
+                class="bg-slate-50 dark:bg-slate-900/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4 flex flex-col h-full">
+                <h3
+                    class="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2 uppercase tracking-wider">
+                    <span
+                        class="w-6 h-6 shrink-0 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">2</span>
+                    Calculate X as a percentage of Y
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400"> Let's find X is what percent of Y ? </p>
+                <div class="grid grid-cols-2 lg:grid-cols-1 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Value X</label>
+                        <input type="number" id="perc2-x"
+                            class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500/20 font-bold transition-all"
+                            placeholder="40" oninput="calcPerc2()">
                     </div>
-                    <h3 class="font-bold text-slate-900 dark:text-white mb-2">Shopping Discounts</h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400">Calculate exactly how much you're saving during seasonal sales or with coupon codes.</p>
-                </div>
-                <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center text-emerald-600 mb-4">
-                        <i class="fas fa-chart-line"></i>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Total value Y</label>
+                        <input type="number" id="perc2-y"
+                            class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500/20 font-bold transition-all"
+                            placeholder="200" oninput="calcPerc2()">
                     </div>
-                    <h3 class="font-bold text-slate-900 dark:text-white mb-2">Business Growth</h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400">Analyze year-over-year revenue growth or profit margin changes effortlessly.</p>
                 </div>
-                <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="w-12 h-12 bg-rose-100 dark:bg-rose-900/30 rounded-2xl flex items-center justify-center text-rose-600 mb-4">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h3 class="font-bold text-slate-900 dark:text-white mb-2">Tax & Interest</h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400">Determine VAT, GST, or simple interest rates for your financial planning.</p>
+                <div
+                    class="flex items-center justify-between pt-4 mt-auto border-t border-slate-200 dark:border-slate-700">
+                    <span class="text-xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">X is <span
+                            id="perc2-res"
+                            class="text-2xl font-black text-emerald-600 dark:text-emerald-400 tracking-tight">--%</span>
+                        percent of Y</span>
                 </div>
-            </section>
+            </div>
 
-            <!-- Visual Guide -->
-            <section class="bg-slate-900 text-white rounded-3xl p-8 md:p-12 overflow-hidden relative">
-                <div class="relative z-10 flex flex-col md:flex-row items-center gap-12">
-                    <div class="flex-1 space-y-6">
-                        <h2 class="text-2xl font-bold">Visualizing Part-to-Whole Relationships</h2>
-                        <p class="text-slate-400 leading-relaxed">
-                            Percentages are essential because they map complex numbers to a standardized scale of 1 to 100. This makes it intuitive to understand proportions, even when dealing with very large datasets.
-                        </p>
-                        <div class="flex gap-4">
-                            <div class="p-3 bg-white/10 rounded-xl text-center flex-1">
-                                <span class="block text-2xl font-bold">1/2</span>
-                                <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">50%</span>
-                            </div>
-                            <div class="p-3 bg-white/10 rounded-xl text-center flex-1">
-                                <span class="block text-2xl font-bold">1/4</span>
-                                <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">25%</span>
-                            </div>
-                            <div class="p-3 bg-white/10 rounded-xl text-center flex-1">
-                                <span class="block text-2xl font-bold">3/4</span>
-                                <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">75%</span>
-                            </div>
-                        </div>
+            <!-- Calc 3: Percent Increase/Decrease -->
+            <div
+                class="bg-slate-50 dark:bg-slate-900/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4 flex flex-col h-full">
+                <h3
+                    class="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2 uppercase tracking-wider">
+                    <span
+                        class="w-6 h-6 shrink-0 rounded-full bg-rose-500 text-white flex items-center justify-center text-[10px]">3</span>
+                    Percentage of Change
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400"> Let's calculate Percentage of change by our
+                    percentage change calculator </p>
+                <div class="grid grid-cols-2 lg:grid-cols-1 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Initial Value</label>
+                        <input type="number" id="perc3-x"
+                            class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 font-bold transition-all"
+                            placeholder="100" oninput="calcPerc3()">
                     </div>
-                    <div class="w-full md:w-1/3 aspect-square bg-gradient-to-br from-indigo-500 to-emerald-500 rounded-full flex items-center justify-center shadow-2xl relative">
-                        <div class="absolute inset-4 rounded-full border-4 border-white/20 border-dashed animate-spin-slow"></div>
-                        <span class="text-4xl font-black italic">100%</span>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Final Value</label>
+                        <input type="number" id="perc3-y"
+                            class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/20 font-bold transition-all"
+                            placeholder="150" oninput="calcPerc3()">
                     </div>
                 </div>
-            </section>
+                <div
+                    class="flex items-center justify-between pt-4 mt-auto border-t border-slate-200 dark:border-slate-700">
+                    <span class="text-xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Percentage
+                        Change</span>
+                    <span id="perc3-res"
+                        class="text-2xl font-black text-rose-600 dark:text-rose-400 tracking-tight">--%</span>
+                </div>
+            </div>
         </div>
-    </main>
+    </div>
 
-    <script src="../js/layout.js"></script>
-    <script src="../js/calculators/core.js"></script>
-    <script src="../js/calculators/percentage.js"></script>
-</body>
+    <!-- Advertisement Section -->
+    <div class="w-full max-w-5xl xl:max-w-6xl mt-12 mb-4">
+        <div
+            class="bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-2xl flex flex-col items-center justify-center p-6 text-center shadow-inner relative overflow-hidden group transition-colors">
+            <span
+                class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-3">Advertisement</span>
 
-    <script src="../js/layout.js"></script>
-    <script src="../js/calculators/core.js"></script>
-    <script src="../js/calculators/percentage.js"></script>
+            <!-- Ad Placeholder / Google AdSense Code Goes Here -->
+            <div
+                class="w-full max-w-[728px] h-[90px] bg-white dark:bg-slate-900/80 rounded-xl flex flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-700/80 relative">
+                <i class="fas fa-ad text-slate-300 dark:text-slate-600 text-2xl mb-1"></i>
+                <p class="text-slate-400 dark:text-slate-500 text-xs font-medium">Your Ad Here (728x90)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <article class="w-full max-w-5xl xl:max-w-6xl mt-12 space-y-16 pb-20 px-4 sm:px-0">
+
+        <!-- Intro & Image -->
+        <section
+            class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-6 md:p-12 shadow-sm flex flex-col lg:flex-row gap-12 items-center overflow-hidden relative">
+            <div
+                class="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none">
+            </div>
+
+            <div class="flex-1 space-y-6 relative z-10">
+                <header>
+                    <h2
+                        class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+                        A No-Nonsense Guide to Figuring Out Percentages</h2>
+                    <p class="text-lg text-slate-500 dark:text-slate-400 mt-4 leading-relaxed font-medium">
+                        Ever tried wrapping your head around a massive set of numbers, only to realize the raw data
+                        doesn't actually tell you much? That's exactly where percentages come in. They take messy,
+                        complicated fractions and flatten them out onto a simple 0-to-100 scale. Instead of comparing a
+                        $500 profit from a $5,000 budget against a $10,000 return on a $200,000 investment, you just
+                        look at the rates: 10% versus 5%. Suddenly, the smaller investment actually looks a whole lot
+                        better.
+                    </p>
+                </header>
+                <div class="prose prose-lg dark:prose-invert text-slate-600 dark:text-slate-300">
+                    <p>
+                        The term itself comes from the Latin <em>per centum</em>—literally meaning "by the hundred."
+                        It's essentially the math world's ultimate equalizer. Whether you're trying to figure out how
+                        much you'll actually save during a Black Friday sale, calculating a tip at dinner, or tracking a
+                        startup's month-over-month revenue growth, getting comfortable with these calculations is a
+                        total game changer.
+                    </p>
+                    <p>
+                        Our tools are built to handle the heavy lifting so you don't have to pull out a scratchpad. But
+                        understanding the mechanics behind them gives you a serious edge in life. Let's break down
+                        exactly how these formulas actually work in the real world.
+                    </p>
+                </div>
+            </div>
+            <div
+                class="w-full lg:w-5/12 aspect-[4/3] relative rounded-2xl overflow-hidden shadow-2xl border border-slate-100 dark:border-slate-700 group">
+                <div
+                    class="absolute inset-0 bg-indigo-500/20 group-hover:bg-transparent transition-colors duration-500 z-10">
+                </div>
+                <img src="../images/seo_percentage.png"
+                    alt="Visualizing business data and math logic using a vibrant percentage sign"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 relative z-0">
+            </div>
+        </section>
+
+        <!-- Learning & Applications Grid -->
+        <section class="space-y-10 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-12 px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">How the Math
+                    Actually Works</h2>
+                <p class="text-lg text-slate-500 dark:text-slate-400 mt-4">Curious about what's happening behind the
+                    scenes when you hit calculate? Here’s a look at the simple formulas powering our tools and when
+                    you'd actually want to use them.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Calc 1 Details -->
+                <div
+                    class="bg-indigo-50/60 dark:bg-indigo-900/10 p-8 rounded-3xl border border-indigo-100 dark:border-indigo-800/30 hover:-translate-y-1 transition-transform duration-300">
+                    <div
+                        class="w-14 h-14 bg-indigo-500 rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-indigo-500/30 transform rotate-3">
+                        <i class="fas fa-calculator text-2xl -rotate-3"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">1. Finding a Value from a
+                        Percentage</h3>
+                    <div
+                        class="prose prose-sm dark:prose-invert text-slate-600 dark:text-slate-400 space-y-4 leading-relaxed">
+                        <p><strong>What it does:</strong> Here, you're basically trying to answer one simple question:
+                            "What exactly is X% of Y?". To do this manually, you'd take your percentage, turn it into a
+                            decimal by dividing by 100, and then multiply that by your total amount.</p>
+                        <div
+                            class="bg-white/60 dark:bg-slate-900/50 p-4 rounded-xl border border-indigo-100 dark:border-indigo-800 font-mono text-xs text-indigo-700 dark:text-indigo-300">
+                            Value = (Percentage ÷ 100) × Total Number
+                        </div>
+                        <p><strong>When you'd use it:</strong> Let's say you're staring at an $850 TV that's currently
+                            marked 25% off. By running 25% of 850 through the calculator, you quickly figure out you're
+                            saving exactly $212.50. It’s the same exact math you use when figuring out an 18% restaurant
+                            tip or estimating local sales tax on groceries.</p>
+                    </div>
+                </div>
+
+                <!-- Calc 2 Details -->
+                <div
+                    class="bg-emerald-50/60 dark:bg-emerald-900/10 p-8 rounded-3xl border border-emerald-100 dark:border-emerald-800/30 hover:-translate-y-1 transition-transform duration-300">
+                    <div
+                        class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-emerald-500/30 transform -rotate-3">
+                        <i class="fas fa-balance-scale text-2xl rotate-3"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">2. Figuring Out the Percentage
+                        from Two Numbers</h3>
+                    <div
+                        class="prose prose-sm dark:prose-invert text-slate-600 dark:text-slate-400 space-y-4 leading-relaxed">
+                        <p><strong>What it does:</strong> This flips the script. Now you're asking: "X is what percent
+                            of Y?". You're trying to find the exact proportion one number makes up of a larger total.
+                        </p>
+                        <div
+                            class="bg-white/60 dark:bg-slate-900/50 p-4 rounded-xl border border-emerald-100 dark:border-emerald-800 font-mono text-xs text-emerald-700 dark:text-emerald-300">
+                            Percentage = (Part ÷ Whole) × 100
+                        </div>
+                        <p><strong>When you'd use it:</strong> Think about exam scores or business market share. If you
+                            nailed 68 out of 85 possible points on a final test, dividing 68 by 85 gives you 0.8.
+                            Multiply that by 100, and you've got a solid 80%. Corporate analysts do the exact same
+                            thing—just with billions of dollars instead of test scores—to figure out how much of an
+                            industry they actually control.</p>
+                    </div>
+                </div>
+
+                <!-- Calc 3 Details -->
+                <div
+                    class="bg-rose-50/60 dark:bg-rose-900/10 p-8 rounded-3xl border border-rose-100 dark:border-rose-800/30 hover:-translate-y-1 transition-transform duration-300">
+                    <div
+                        class="w-14 h-14 bg-rose-500 rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-rose-500/30 transform rotate-3">
+                        <i class="fas fa-chart-line text-2xl -rotate-3"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">3. Tracking Percentage Change</h3>
+                    <div
+                        class="prose prose-sm dark:prose-invert text-slate-600 dark:text-slate-400 space-y-4 leading-relaxed">
+                        <p><strong>What it does:</strong> Whenever things grow or shrink over time, you need to track
+                            the variance. A positive result means things are going up (an increase), while a negative
+                            drop means a decrease.</p>
+                        <div
+                            class="bg-white/60 dark:bg-slate-900/50 p-4 rounded-xl border border-rose-100 dark:border-rose-800 font-mono text-xs text-rose-700 dark:text-rose-300">
+                            Change = ((Final - Initial) ÷ |Initial|) × 100
+                        </div>
+                        <p><strong>When you'd use it:</strong> This is the bread and butter of investing and business
+                            analytics. Did your website traffic jump from 25,000 visitors last month to 35,000 this
+                            month? That’s a massive 40% spike. Did a crypto portfolio slide from $15,000 down to
+                            $12,000? That’s a 20% hit. Knowing these numbers is critical for evaluating momentum.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Visualizer -->
+        <section
+            class="bg-slate-900 dark:bg-slate-950 text-white rounded-3xl p-8 md:p-12 overflow-hidden shadow-2xl border border-slate-800 relative z-10">
+            <!-- Decorative background elements -->
+            <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl -ml-20 -mb-20"></div>
+
+            <div class="flex flex-col lg:flex-row gap-12 relative z-10">
+                <div class="flex-1 space-y-8">
+                    <h2 class="text-3xl md:text-4xl font-bold tracking-tight">See It in Action</h2>
+                    <p class="text-slate-400 leading-relaxed text-lg">
+                        Staring at raw numbers can only get you so far. Sometimes you just need to see it. Our fluid
+                        chart below represents part-to-whole relationships dynamically. Grab the slider, drag it around,
+                        and watch how the visualization shifts in real-time.
+                    </p>
+
+                    <div class="bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-700 shadow-inner">
+                        <label class="block text-sm font-bold text-slate-300 uppercase tracking-widest mb-6">Current
+                            Value: <span id="interactive-lbl"
+                                class="text-emerald-400 text-3xl font-black ml-3 font-mono">65%</span></label>
+                        <input type="range" min="0" max="100" value="65" id="interactive-slider"
+                            class="w-full h-3 bg-slate-900 rounded-lg appearance-none cursor-pointer border border-slate-700 accent-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-500/20 transition-all">
+                        <div class="flex justify-between text-xs text-slate-500 font-bold mt-4 px-1">
+                            <span>0%</span>
+                            <span>25%</span>
+                            <span>50%</span>
+                            <span>75%</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800/30 rounded-xl p-5 border border-slate-700/50 flex gap-4 items-start">
+                        <i class="fas fa-info-circle text-sky-400 mt-1"></i>
+                        <p class="text-sm text-slate-400 leading-relaxed">Notice how the color temperature naturally
+                            shifts? It runs from cool blues at the low end, ramps up to warm greens in the middle, and
+                            heats up to fiery oranges as you push toward 100%.</p>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2 flex flex-col justify-center items-center py-8">
+                    <!-- The Interactive Fluid Container -->
+                    <div class="w-full max-w-[280px] md:max-w-sm aspect-square bg-slate-900 rounded-full border-[12px] border-slate-800 relative overflow-hidden shadow-[0_0_80px_rgba(16,185,129,0.15)] flex items-end justify-center transition-shadow duration-300"
+                        id="interactive-container">
+                        <!-- Fluid Level -->
+                        <div id="interactive-fill"
+                            class="w-full bg-gradient-to-t from-emerald-600 to-emerald-400 transition-all duration-300 ease-out flex items-center justify-center relative shadow-[0_0_40px_rgba(52,211,153,0.4)]"
+                            style="height: 65%;">
+                            <!-- Bubbles/Texture -->
+                            <div
+                                class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4yKSIvPjwvc3ZnPg==')] opacity-40 mix-blend-overlay">
+                            </div>
+                            <!-- Wave effect -->
+                            <div class="absolute top-0 left-0 w-full h-4 bg-gradient-to-b from-white/20 to-transparent">
+                            </div>
+                        </div>
+
+                        <!-- Center Text Overlay -->
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                            <span id="interactive-center-text"
+                                class="text-6xl md:text-7xl font-black text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)] font-mono tracking-tighter">65%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const slider = document.getElementById('interactive-slider');
+                    const fill = document.getElementById('interactive-fill');
+                    const lbl = document.getElementById('interactive-lbl');
+                    const centerText = document.getElementById('interactive-center-text');
+                    const container = document.getElementById('interactive-container');
+
+                    if (slider && fill) {
+                        slider.addEventListener('input', (e) => {
+                            const val = parseInt(e.target.value);
+                            fill.style.height = `${val}%`;
+                            lbl.textContent = `${val}%`;
+                            centerText.textContent = `${val}%`;
+
+                            // Dynamic Color System
+                            if (val < 35) {
+                                fill.className = "w-full bg-gradient-to-t from-sky-600 to-sky-400 transition-all duration-300 ease-out relative shadow-[0_0_40px_rgba(56,189,248,0.4)]";
+                                container.style.boxShadow = "0 0 80px rgba(56,189,248,0.15)";
+                            }
+                            else if (val < 75) {
+                                fill.className = "w-full bg-gradient-to-t from-emerald-600 to-emerald-400 transition-all duration-300 ease-out relative shadow-[0_0_40px_rgba(52,211,153,0.4)]";
+                                container.style.boxShadow = "0 0 80px rgba(16,185,129,0.15)";
+                            }
+                            else {
+                                fill.className = "w-full bg-gradient-to-t from-rose-600 to-rose-400 transition-all duration-300 ease-out relative shadow-[0_0_40px_rgba(251,113,133,0.4)]";
+                                container.style.boxShadow = "0 0 80px rgba(225,29,72,0.15)";
+                            }
+                        });
+                    }
+                });
+            </script>
+        </section>
+
+        <hr class="border-slate-100 dark:border-slate-700/50 my-16 relative z-10">
+
+        <!-- Related Calculators Internal Linking -->
+        <section class="relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-12 px-4">
+                <h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Explore Related Tools</h3>
+                <p class="text-lg text-slate-500 dark:text-slate-400 mt-4">Need to take your math further? Check out these other popular calculators that handle percentages, rates, and proportions.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Link 1 -->
+                <a href="../finance/margin-calculator.html" class="bg-white dark:bg-slate-900/40 p-6 rounded-2xl border border-slate-200 dark:border-slate-700/80 hover:border-indigo-500 dark:hover:border-indigo-500 hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center text-center">
+                    <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-tags text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">Margin Calculator</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Calculate profit margins, markup percentages, and sales revenue easily.</p>
+                </a>
+                
+                <!-- Link 2 -->
+                <a href="../math/ratio-calculator.html" class="bg-white dark:bg-slate-900/40 p-6 rounded-2xl border border-slate-200 dark:border-slate-700/80 hover:border-emerald-500 dark:hover:border-emerald-500 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center text-center">
+                    <div class="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-divide text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">Ratio Calculator</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Simplify ratios, find missing values, and scale proportions up or down.</p>
+                </a>
+                
+                <!-- Link 3 -->
+                <a href="../finance/tax-calculator.html" class="bg-white dark:bg-slate-900/40 p-6 rounded-2xl border border-slate-200 dark:border-slate-700/80 hover:border-rose-500 dark:hover:border-rose-500 hover:shadow-xl hover:shadow-rose-500/10 hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center text-center">
+                    <div class="w-12 h-12 bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-file-invoice-dollar text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">Tax Calculator</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Apply sales tax percentages or calculate pre-tax amounts instantly.</p>
+                </a>
+                
+                <!-- Link 4 -->
+                <a href="../finance/compound-interest-calculator.html" class="bg-white dark:bg-slate-900/40 p-6 rounded-2xl border border-slate-200 dark:border-slate-700/80 hover:border-sky-500 dark:hover:border-sky-500 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center text-center">
+                    <div class="w-12 h-12 bg-sky-50 dark:bg-sky-900/20 text-sky-600 dark:text-sky-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-chart-area text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">Compound Interest</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">See how exponential percentage growth affects investments over time.</p>
+                </a>
+            </div>
+        </section>
+
+        <hr class="border-slate-100 dark:border-slate-700/50 my-16 relative z-10">
+
+        <!-- Summary & Conclusion -->
+        <section
+            class="bg-slate-50 dark:bg-slate-800/40 rounded-3xl border border-slate-200 dark:border-slate-700 p-10 md:p-14 shadow-sm text-center max-w-5xl mx-auto relative z-10">
+            <div
+                class="w-16 h-16 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md border border-slate-100 dark:border-slate-700">
+                <i class="fas fa-check-double text-2xl text-emerald-500"></i>
+            </div>
+            <h3 class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-6">Why Accuracy Actually
+                Matters</h3>
+            <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-lg max-w-3xl mx-auto">
+                It’s easy to guess or do back-of-the-napkin math, but when you're managing household budgets, tracking
+                key performance indicators for a business, or analyzing research data, "close enough" usually doesn't
+                cut it. A minor calculation error can completely warp a financial projection or mess up a data set.
+                <br><br>
+                That’s exactly why we built this suite. Bookmark our <strong>Percentage Calculator</strong> page so
+                you've always got a fast, reliable, and completely accurate set of tools right in your pocket—no matter
+                if you're on a laptop or checking numbers on your phone.
+            </p>
+        </section>
+    </article>
+</main>
+
+<script src="../js/layout.js"></script>
+<script src="../js/calculators/core.js"></script>
+<script src="../js/calculators/percentage.js"></script>
 </body>
 
 </html>

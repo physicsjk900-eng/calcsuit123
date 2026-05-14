@@ -256,6 +256,48 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
     }
 
+    // --- Helper: Cookie Consent Initialization ---
+    function initCookieConsent() {
+        if (localStorage.getItem('cookie-consent')) return;
+
+        const consentHtml = `
+            <div id="cookie-consent-banner" class="fixed bottom-6 left-6 right-6 md:left-auto md:max-w-md z-[100] transform translate-y-20 opacity-0 transition-all duration-700 ease-out">
+                <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 p-6 rounded-[2rem] shadow-2xl shadow-indigo-500/10">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-500 text-white flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/20">
+                            <i class="fas fa-cookie-bite text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-black text-slate-800 dark:text-white uppercase tracking-wider">Privacy & Compliance</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">We use essential cookies to optimize your calculation experience and analyze site traffic for performance improvements.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button id="accept-cookies" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3 rounded-xl transition-all shadow-lg shadow-indigo-500/20">Accept All</button>
+                        <button id="deny-cookies" class="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold py-3 rounded-xl transition-all">Deny</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', consentHtml);
+        
+        const banner = document.getElementById('cookie-consent-banner');
+        setTimeout(() => {
+            if (banner) banner.classList.remove('translate-y-20', 'opacity-0');
+        }, 1000);
+
+        const handleConsent = (choice) => {
+            localStorage.setItem('cookie-consent', choice);
+            if (banner) banner.classList.add('translate-y-20', 'opacity-0');
+            setTimeout(() => { if (banner) banner.remove(); }, 700);
+        };
+
+        const acceptBtn = document.getElementById('accept-cookies');
+        const denyBtn = document.getElementById('deny-cookies');
+        if (acceptBtn) acceptBtn.addEventListener('click', () => handleConsent('accepted'));
+        if (denyBtn) denyBtn.addEventListener('click', () => handleConsent('denied'));
+    }
+
     // Define Suite Configuration for optimized Navigation
     const suites = [
         { name: 'Math & Systems', categories: ['Standard', 'Math', 'Technical', 'Physics'], icon: '<i class="fas fa-microchip"></i>' },
@@ -567,6 +609,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ${generateToC()}
             `);
         }
+
+        initCookieConsent();
 
         const themeToggleBtn = document.getElementById('theme-toggle');
         if (themeToggleBtn) {

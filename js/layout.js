@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/math/matrix-calculator.html', name: 'Matrix', icon: '<i class="fas fa-border-all"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/quadratic-calculator.html', name: 'Quadratic Solver', icon: '<i class="fas fa-superscript"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/probability-calculator.html', name: 'Probability', icon: '<i class="fas fa-dice"></i>', category: 'Math', colorClass: 'text-sky-600' },
-        { id: '/math/gcd-lcm-calculator.html', name: 'GCD & LCM', icon: '<i class="fas fa-layer-group"></i>', category: 'Math', colorClass: 'text-sky-600' },
+        /* { id: '/math/gcd-lcm-calculator.html', name: 'GCD & LCM', icon: '<i class="fas fa-layer-group"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/prime-calculator.html', name: 'Prime Numbers', icon: '<i class="fas fa-list-ol"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/base-converter.html', name: 'Base Converter', icon: '<i class="fas fa-hashtag"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/bandwidth-calculator.html', name: 'Bandwidth Hub', icon: '<i class="fas fa-wifi"></i>', category: 'Math', colorClass: 'text-sky-600' },
@@ -83,13 +83,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/lifestyle/random-generator.html', name: 'Entropy Hub', icon: '<i class="fas fa-random"></i>', category: 'Technical', colorClass: 'text-sky-600' },
         { id: '/lifestyle/screen-time-impact.html', name: 'Screen Impact', icon: '<i class="fas fa-mobile-alt"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/lifestyle/carbon-footprint.html', name: 'CO2 Footprint', icon: '<i class="fas fa-leaf"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
-        { id: '/lifestyle/vacation-planner.html', name: 'Vacation Budget', icon: '<i class="fas fa-plane"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
+        { id: '/lifestyle/vacation-planner.html', name: 'Vacation Budget', icon: '<i class="fas fa-plane"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' }, */
         { id: '/productivity/task-management-calculator.html', name: 'Task Manager', icon: '<i class="fas fa-tasks"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
         { id: '/productivity/task-calendar-generator.html', name: 'Task Calendar', icon: '<i class="fas fa-calendar-alt"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
-        { id: '/productivity/circadian-rhythm-energy-calculator.html', name: 'Circadian Rhythm Energy', icon: '<i class="fas fa-brain"></i>', category: 'Productivity', colorClass: 'text-violet-600' },
+        /* { id: '/productivity/circadian-rhythm-energy-calculator.html', name: 'Circadian Rhythm Energy', icon: '<i class="fas fa-brain"></i>', category: 'Productivity', colorClass: 'text-violet-600' },
         { id: '/productivity/commute-cost-calculator.html', name: 'Commute Cost Arbitrage', icon: '<i class="fas fa-car-side"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
         { id: '/productivity/neural-task-architect.html', name: 'Neural Task Architect', icon: '<i class="fas fa-microchip"></i>', category: 'Productivity', colorClass: 'text-violet-600' },
-        { id: '/productivity/brand-deal-calculator.html', name: 'Sponsorship Architect', icon: '<i class="fas fa-hand-holding-usd"></i>', category: 'Productivity', colorClass: 'text-violet-600' }
+        { id: '/productivity/brand-deal-calculator.html', name: 'Sponsorship Architect', icon: '<i class="fas fa-hand-holding-usd"></i>', category: 'Productivity', colorClass: 'text-violet-600' }*/
     ];
 
     const isLocal = window.location.protocol === 'file:';
@@ -111,8 +111,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Define Suite Configuration for optimized Navigation
     const suites = [
         { name: 'Math & Systems', categories: ['Standard', 'Math', 'Technical', 'Physics'], icon: '<i class="fas fa-microchip"></i>' },
-        { name: 'Wealth & Growth', categories: ['Financial', 'Business'], icon: '<i class="fas fa-vault"></i>' },
-        { name: 'Health & Life', categories: ['Health', 'Lifestyle'], icon: '<i class="fas fa-heartbeat"></i>' },
+        /* { name: 'Wealth & Growth', categories: ['Financial', 'Business'], icon: '<i class="fas fa-vault"></i>' },
+        { name: 'Health & Life', categories: ['Health', 'Lifestyle'], icon: '<i class="fas fa-heartbeat"></i>' }, */
         { name: 'Utility Hub', categories: ['Time & Date', 'Conversion', 'Productivity'], icon: '<i class="fas fa-tools"></i>' }
     ];
 
@@ -316,13 +316,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             <!-- Column 4: Authority Score -->
             <div class="space-y-8 lg:text-right flex flex-col lg:items-end justify-between">
-                <div class="space-y-4">
+                <!-- <div class="space-y-4">
                     <h5 class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">CALCSUIT AUTHORITY</h5>
                     <div class="flex lg:justify-end gap-3">
                          <a href="#" class="w-9 h-9 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 border border-slate-100 dark:border-slate-800 transition-all"><i class="fab fa-twitter"></i></a>
                          <a href="#" class="w-9 h-9 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 border border-slate-100 dark:border-slate-800 transition-all"><i class="fab fa-github"></i></a>
                     </div>
-                </div>
+                </div> -->
                 <div class="pt-6 border-t border-slate-50 dark:border-slate-800 w-full">
                     <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">&copy; 2026 CALCSUIT ENTERPRISE</p>
                     <p class="text-[9px] font-medium text-slate-300 dark:text-slate-600 mt-2 italic leading-relaxed">Decision Intelligence Architecture engineered with pride.<br/>Validated Global Standards Compliant.</p>

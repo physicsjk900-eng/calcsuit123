@@ -84,13 +84,13 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
+  <!-- <url>
     <loc>https://calcsuit.com/math/gcd-lcm-calculator.html</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
+  </url> -->
+  <!-- <url>
     <loc>https://calcsuit.com/math/prime-calculator.html</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
@@ -119,7 +119,7 @@
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
+  </url> -->
   <url>
     <loc>https://calcsuit.com/math/stdev-calculator.html</loc>
     <lastmod>2026-04-03</lastmod>
@@ -163,7 +163,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- ===== Finance ===== -->
+  <!-- ===== Finance ===== 
   <url>
     <loc>https://calcsuit.com/finance/emi-calculator.html</loc>
     <lastmod>2026-04-03</lastmod>
@@ -249,7 +249,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- ===== Health ===== -->
+  ===== Health =====
   <url>
     <loc>https://calcsuit.com/health/bmi-calculator.html</loc>
     <lastmod>2026-04-03</lastmod>
@@ -329,7 +329,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- ===== Lifestyle ===== -->
+   ===== Lifestyle ===== 
   <url>
     <loc>https://calcsuit.com/lifestyle/Love-calculator.html</loc>
     <lastmod>2026-04-03</lastmod>
@@ -415,7 +415,7 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- ===== Conversions ===== -->
+  ===== Conversions ===== 
   <url>
     <loc>https://calcsuit.com/conversion/length-converter.html</loc>
     <lastmod>2026-04-03</lastmod>
@@ -471,7 +471,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- ===== Time & Date ===== -->
+  ===== Time & Date ===== 
   <url>
     <loc>https://calcsuit.com/time/date-diff-calculator.html</loc>
     <lastmod>2026-04-03</lastmod>
@@ -503,15 +503,15 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- ===== Physics ===== -->
+  ===== Physics ===== 
   <url>
     <loc>https://calcsuit.com/physics/ohms-law-calculator.html</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
+  </url> -->
 
-  <!-- ===== Productivity ===== -->
+  <!--===== Productivity ===== -->
   <url>
     <loc>https://calcsuit.com/productivity/task-management-calculator.html</loc>
     <lastmod>2026-04-03</lastmod>
@@ -524,7 +524,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
+  <!-- <url>
     <loc>https://calcsuit.com/productivity/circadian-rhythm-energy-calculator.html</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -553,5 +553,5 @@
     <lastmod>2026-04-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
-  </url>
+  </url> -->
 </urlset>

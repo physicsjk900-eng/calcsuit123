@@ -46,6 +46,7 @@
             background-color: #0f172a;
         }
     </style>
+    <link rel="icon" type="image/png" href="./images/favicon.png">
 </head>
 
 <body class="bg-mesh text-slate-800 dark:text-slate-200 p-4 sm:p-8 min-h-screen">
@@ -131,23 +132,78 @@
             </section>
 
             <section>
-                <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-3">6. Children's Information</h3>
-                <p>
-                    Another part of our priority is adding protection for children while using the internet. We
-                    encourage parents and guardians
-                    to observe, participate in, and/or monitor and guide their online activity. CalcSuit does not
-                    knowingly collect any
-                    Personal Identifiable Information from children under the age of 13.
-                </p>
-            </section>
+                <section>
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-3">6. Local Processing & Data
+                        Minimization</h3>
+                    <p class="mb-4">
+                        A cornerstone of the <strong>CalcSuit</strong> philosophy is <strong>Local-First
+                            Processing</strong>. Unlike traditional web applications that send your sensitive data (such
+                        as financial details or health metrics) to a remote server for processing, our calculators are
+                        designed to execute logic directly within your browser's JavaScript engine.
+                    </p>
+                    <p>
+                        This means that when you calculate your mortgage or track your metabolic rate, the "math"
+                        happens on your device. This architectural choice significantly minimizes the risk of data
+                        interception and ensures that your sensitive inputs never even touch our servers. We only
+                        collect anonymized telemetry to improve tool performance and identify bugs.
+                    </p>
+                </section>
 
-            <section>
-                <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-3">7. Consent</h3>
-                <p>
-                    By using our website, you hereby consent to our Privacy Policy and agree to its Terms and
-                    Conditions.
-                </p>
-            </section>
+                <section>
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-3">7. User Data Rights & Global
+                        Standards</h3>
+                    <p class="mb-4">
+                        While CalcSuit is a global platform, we align our privacy practices with the most stringent
+                        international standards, including the General Data Protection Regulation (GDPR) in the European
+                        Union and the California Consumer Privacy Act (CCPA). We believe that privacy is a fundamental
+                        human right, not just a legal requirement.
+                    </p>
+                    <ul class="list-disc ml-6 space-y-3">
+                        <li><strong>Right to be Forgotten:</strong> Since we do not maintain persistent user profiles or
+                            store personal input data, you are essentially "forgotten" the moment you close your browser
+                            tab.</li>
+                        <li><strong>Right to Data Portability:</strong> Many of our tools include "Download as CSV" or
+                            "Copy to Clipboard" features, allowing you to take your results wherever you need them
+                            without friction.</li>
+                        <li><strong>Transparency:</strong> We are committed to notifying our users of any significant
+                            changes to our processing logic or third-party partnerships through updates to this policy.
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-3">8. Third-Party Integrations &
+                        Security</h3>
+                    <p class="mb-4">
+                        To maintain our platform as a free resource, we partner with industry-leading advertising and
+                        analytics providers. These partners may use non-personally identifiable information (such as
+                        your browser type or time of visit) to serve relevant content.
+                    </p>
+                    <p>
+                        We vet every third-party script for security and performance. Our site is delivered over a
+                        secure, encrypted HTTPS connection, ensuring that the integrity of the tools you use is never
+                        compromised by man-in-the-middle attacks.
+                    </p>
+                </section>
+
+                <section>
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-3">9. Children's Information</h3>
+                    <p>
+                        Another part of our priority is adding protection for children while using the internet. We
+                        encourage parents and guardians
+                        to observe, participate in, and/or monitor and guide their online activity. CalcSuit does not
+                        knowingly collect any
+                        Personal Identifiable Information from children under the age of 13.
+                    </p>
+                </section>
+
+                <section>
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-3">7. Consent</h3>
+                    <p>
+                        By using our website, you hereby consent to our Privacy Policy and agree to its Terms and
+                        Conditions.
+                    </p>
+                </section>
 
         </div>
 
@@ -157,6 +213,9 @@
             </a>
         </footer>
     </div>
+
+    <!-- Initialize Core Scripts -->
+    <script src="js/layout.js"></script>
 </body>
 
 </html>

@@ -125,17 +125,108 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
     }
 
+    // --- Helper: Generate Category Navigator (Dynamic & Visual) ---
+    function generateCategoryNavigator() {
+        if (activeId === '/' || !currentTool) return '';
+        
+        // Only show categories that have at least one active tool
+        const activeCategories = [...new Set(calculatorConfig.map(c => c.category))];
+        
+        const allCats = [
+            { name: 'Standard', icon: '<i class="fas fa-equals"></i>', color: 'text-indigo-500' },
+            { name: 'Math', icon: '<i class="fas fa-divide"></i>', color: 'text-sky-500' },
+            { name: 'Financial', icon: '<i class="fas fa-wallet"></i>', color: 'text-emerald-500' },
+            { name: 'Health', icon: '<i class="fas fa-heartbeat"></i>', color: 'text-rose-500' },
+            { name: 'Time & Date', icon: '<i class="far fa-calendar-alt"></i>', color: 'text-purple-500' },
+            { name: 'Conversion', icon: '<i class="fas fa-exchange-alt"></i>', color: 'text-amber-500' },
+            { name: 'Productivity', icon: '<i class="fas fa-tasks"></i>', color: 'text-teal-500' }
+        ];
+
+        const cats = allCats.filter(c => activeCategories.includes(c.name));
+
+        return `
+            <div class="w-full max-w-5xl mx-auto mb-10 px-4">
+                <div class="flex items-center gap-3 overflow-x-auto pb-4 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+                    ${cats.map(c => {
+            const isActive = currentTool && currentTool.category === c.name;
+            return `
+                            <a href="${rootPrefix}index.html?cat=${c.name}" class="flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${isActive ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-500/30' : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-indigo-500'}">
+                                <span class="${isActive ? 'text-white' : c.color} text-xs">${c.icon}</span>
+                                <span class="text-xs font-bold whitespace-nowrap">${c.name}</span>
+                            </a>
+                        `;
+        }).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    // --- Helper: Table of Contents Generator (Internal Navigation) ---
+    function generateToC() {
+        const article = document.querySelector('article');
+        if (!article) return '';
+        
+        const headings = Array.from(article.querySelectorAll('h2, h3')).slice(0, 8);
+        if (headings.length < 2) return '';
+
+        return `
+            <div class="hidden xl:block fixed right-10 top-32 w-64 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
+                    <i class="fas fa-list-ul text-indigo-500"></i> Page Navigation
+                </h4>
+                <nav class="space-y-3">
+                    ${headings.map((h, i) => {
+                        const id = `toc-${i}`;
+                        h.id = id;
+                        const isH2 = h.tagName === 'H2';
+                        return `
+                            <a href="#${id}" class="block text-[11px] font-bold ${isH2 ? 'text-slate-700 dark:text-slate-200' : 'text-slate-400 pl-4'} hover:text-indigo-500 transition-colors leading-tight">
+                                ${h.innerText}
+                            </a>
+                        `;
+                    }).join('')}
+                </nav>
+            </div>
+        `;
+    }
+
     // --- Helper: Generate Related Tools ---
     function generateRelatedTools() {
         if (activeId === '/' || !currentTool) return '';
+        
+        const categoryTools = calculatorConfig.filter(c => c.category === currentTool.category && c.id !== '/');
+        const currentIndex = categoryTools.findIndex(c => c.id === activeId);
+        
+        const prevTool = currentIndex > 0 ? categoryTools[currentIndex - 1] : categoryTools[categoryTools.length - 1];
+        const nextTool = currentIndex < categoryTools.length - 1 ? categoryTools[currentIndex + 1] : categoryTools[0];
+
         const related = calculatorConfig
             .filter(c => c.category === currentTool.category && c.id !== activeId && c.id !== '/')
-            .sort(() => 0.5 - Math.random()) // Randomize slightly for variety
+            .sort(() => 0.5 - Math.random())
             .slice(0, 4);
 
-        if (related.length === 0) return '';
-
         return `
+            <!-- Next/Prev Subtle Nav -->
+            <div class="w-full max-w-5xl mx-auto mb-12 px-4">
+                <div class="flex justify-between items-center gap-4 py-6 border-y border-slate-100 dark:border-slate-800">
+                    <a href="${rootPrefix}${prevTool.id.replace(/^\//, '')}" class="flex items-center gap-3 text-slate-400 hover:text-indigo-500 transition-colors group">
+                        <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
+                        <div class="hidden sm:block">
+                            <div class="text-[9px] font-black uppercase tracking-[0.2em] opacity-50">Previous</div>
+                            <div class="text-[11px] font-bold text-slate-700 dark:text-slate-300">${prevTool.name}</div>
+                        </div>
+                    </a>
+                    <div class="h-8 w-px bg-slate-100 dark:bg-slate-800 hidden sm:block"></div>
+                    <a href="${rootPrefix}${nextTool.id.replace(/^\//, '')}" class="flex items-center gap-3 text-slate-400 hover:text-indigo-500 transition-colors group text-right">
+                        <div class="hidden sm:block">
+                            <div class="text-[9px] font-black uppercase tracking-[0.2em] opacity-50">Next</div>
+                            <div class="text-[11px] font-bold text-slate-700 dark:text-slate-300">${nextTool.name}</div>
+                        </div>
+                        <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+
             <div class="w-full max-w-5xl mx-auto mt-16 mb-12 px-4">
                 <div class="flex items-center justify-between mb-8">
                     <h3 class="text-xl font-extrabold text-slate-800 dark:text-white flex items-center gap-3">
@@ -144,11 +235,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </span>
                         Other ${currentTool.category} Tools
                     </h3>
-                    <a href="${rootPrefix}index.html" class="text-xs font-bold text-indigo-500 hover:underline">View All Tools &rarr;</a>
+                    <a href="${rootPrefix}index.html" class="text-xs font-bold text-indigo-500 hover:underline">View All &rarr;</a>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     ${related.map(r => `
-                        <a href="${rootPrefix}${r.id.replace(/^\//, '')}" class="group bg-white dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all shadow-sm hover:shadow-xl hover:-translate-y-1">
+                        <a href="${rootPrefix}${r.id.replace(/^\//, '')}" class="group bg-white dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all shadow-sm hover:shadow-xl">
                             <div class="flex flex-col gap-4">
                                 <div class="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center ${r.colorClass} group-hover:scale-110 transition-transform">
                                     ${r.icon}
@@ -346,8 +437,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <a href="${rootPrefix}explore.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
                         <i class="fas fa-chevron-right text-[8px] opacity-40"></i> Full Directory
                     </a>
-                    <a href="${rootPrefix}productivity/neural-task-architect.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
-                        <i class="fas fa-chevron-right text-[8px] opacity-40"></i> AI Task Architecture
+                    <a href="${rootPrefix}productivity/task-management-calculator.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
+                        <i class="fas fa-chevron-right text-[8px] opacity-40"></i> Task Management Hub
                     </a>
                     <a href="${rootPrefix}sitemap.xml" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
                         <i class="fas fa-chevron-right text-[8px] opacity-40"></i> Google Index Sitemap
@@ -467,8 +558,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Inject Breadcrumbs if #app-container exists
         const appContainer = document.getElementById('app-container');
         if (appContainer) {
-            appContainer.insertAdjacentHTML('beforebegin', generateBreadcrumbs());
-            appContainer.insertAdjacentHTML('afterend', generateRelatedTools());
+            appContainer.insertAdjacentHTML('beforebegin', `
+                ${generateBreadcrumbs()}
+                ${generateCategoryNavigator()}
+            `);
+            appContainer.insertAdjacentHTML('afterend', `
+                ${generateRelatedTools()}
+                ${generateToC()}
+            `);
         }
 
         const themeToggleBtn = document.getElementById('theme-toggle');
@@ -700,6 +797,78 @@ document.addEventListener('DOMContentLoaded', async () => {
             autoDisplay: false
         }, 'custom-translate-container');
     };
+
+    // 8. Cookie Consent
+    function initCookieConsent() {
+        if (localStorage.getItem('cookie-consent-accepted')) return;
+
+        const consentHtml = `
+            <div id="cookie-consent" class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-6 rounded-[2rem] z-[300] flex flex-col md:flex-row items-center gap-6 transform translate-y-20 opacity-0 transition-all duration-700">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center shrink-0">
+                    <i class="fas fa-cookie-bite text-2xl"></i>
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <h4 class="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Privacy Notice</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        We use cookies to optimize your experience and analyze traffic. By using our tools, you agree to our <a href="${rootPrefix}privacy.html" class="text-indigo-500 font-bold hover:underline">Privacy Policy</a>.
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <button id="deny-cookies" class="flex-1 md:flex-none px-6 py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-black uppercase tracking-widest rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
+                        Deny
+                    </button>
+                    <button id="accept-cookies" class="flex-1 md:flex-none px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-indigo-500/20">
+                        Accept
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', consentHtml);
+        const banner = document.getElementById('cookie-consent');
+
+        setTimeout(() => {
+            banner.classList.remove('translate-y-20', 'opacity-0');
+        }, 1000);
+
+        document.getElementById('accept-cookies').addEventListener('click', () => {
+            banner.classList.add('translate-y-20', 'opacity-0');
+            localStorage.setItem('cookie-consent-accepted', 'true');
+            setTimeout(() => banner.remove(), 700);
+        });
+
+        document.getElementById('deny-cookies').addEventListener('click', () => {
+            banner.classList.add('translate-y-20', 'opacity-0');
+            localStorage.setItem('cookie-consent-accepted', 'false'); // Remember choice to not annoy user
+            setTimeout(() => banner.remove(), 700);
+        });
+    }
+    initCookieConsent();
+
+    // 9. Visual Sidebar Switcher (Internal Linking Boost)
+    function initVisualSwitcher() {
+        if (activeId === '/') return;
+
+        const topTools = calculatorConfig.filter(c => c.id !== '/' && c.id !== activeId).slice(0, 5);
+        const switcherHtml = `
+            <div class="fixed left-6 top-1/2 -translate-y-1/2 z-[90] hidden xl:flex flex-col gap-3 group">
+                <div class="mb-2 px-3 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Quick Switch</div>
+                ${topTools.map(t => `
+                    <a href="${rootPrefix}${t.id.replace(/^\//, '')}" class="w-12 h-12 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-center ${t.colorClass} shadow-sm hover:shadow-xl hover:scale-110 hover:border-indigo-500 transition-all group/item relative">
+                        ${t.icon}
+                        <div class="absolute left-full ml-4 px-3 py-1.5 bg-slate-900 text-white text-[10px] font-bold rounded-lg opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all whitespace-nowrap shadow-xl">
+                            ${t.name}
+                        </div>
+                    </a>
+                `).join('')}
+                <a href="${rootPrefix}index.html" class="w-12 h-12 bg-indigo-600 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/20 hover:scale-110 transition-all mt-4">
+                    <i class="fas fa-th-large text-xs"></i>
+                </a>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', switcherHtml);
+    }
+    initVisualSwitcher();
 
     const gtScript = document.createElement('script');
     gtScript.type = 'text/javascript';

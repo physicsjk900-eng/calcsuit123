@@ -101,12 +101,69 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.calculatorConfig = calculatorConfig;
     window.rootPrefix = rootPrefix;
 
+    const currentPath = window.location.pathname;
     let activeId = '/';
     calculatorConfig.forEach(calc => {
-        if (calc.id !== '/' && window.location.pathname.includes(calc.id.replace(/^\//, ''))) {
+        if (calc.id !== '/' && currentPath.includes(calc.id.replace(/^\//, ''))) {
             activeId = calc.id;
         }
     });
+
+    const currentTool = calculatorConfig.find(c => c.id === activeId);
+
+    // --- Helper: Generate Breadcrumbs ---
+    function generateBreadcrumbs() {
+        if (activeId === '/' || !currentTool) return '';
+        return `
+            <nav class="w-full max-w-5xl mx-auto mb-6 px-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                <a href="${rootPrefix}index.html" class="hover:text-indigo-500 transition-colors">Home</a>
+                <i class="fas fa-chevron-right text-[8px] opacity-30"></i>
+                <span class="text-slate-300">${currentTool.category}</span>
+                <i class="fas fa-chevron-right text-[8px] opacity-30"></i>
+                <span class="text-indigo-500">${currentTool.name}</span>
+            </nav>
+        `;
+    }
+
+    // --- Helper: Generate Related Tools ---
+    function generateRelatedTools() {
+        if (activeId === '/' || !currentTool) return '';
+        const related = calculatorConfig
+            .filter(c => c.category === currentTool.category && c.id !== activeId && c.id !== '/')
+            .sort(() => 0.5 - Math.random()) // Randomize slightly for variety
+            .slice(0, 4);
+
+        if (related.length === 0) return '';
+
+        return `
+            <div class="w-full max-w-5xl mx-auto mt-16 mb-12 px-4">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-xl font-extrabold text-slate-800 dark:text-white flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-indigo-500 text-white flex items-center justify-center text-xs shadow-lg shadow-indigo-500/20">
+                            <i class="fas fa-layer-group"></i>
+                        </span>
+                        Other ${currentTool.category} Tools
+                    </h3>
+                    <a href="${rootPrefix}index.html" class="text-xs font-bold text-indigo-500 hover:underline">View All Tools &rarr;</a>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    ${related.map(r => `
+                        <a href="${rootPrefix}${r.id.replace(/^\//, '')}" class="group bg-white dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all shadow-sm hover:shadow-xl hover:-translate-y-1">
+                            <div class="flex flex-col gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center ${r.colorClass} group-hover:scale-110 transition-transform">
+                                    ${r.icon}
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-sm font-black text-slate-800 dark:text-white mb-1">${r.name}</div>
+                                    <div class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">${r.category}</div>
+                                </div>
+                            </div>
+                        </a>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
 
     // Define Suite Configuration for optimized Navigation
     const suites = [
@@ -275,7 +332,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <!-- Authority Badge -->
                 <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 group">
                     <i class="fas fa-shield-check text-emerald-500 text-xs"></i>
-                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Precision Guaranteed &mdash; 15+ Engines</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Precision Guaranteed &mdash; 95+ Engines</span>
                 </div>
             </div>
 
@@ -283,18 +340,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="space-y-6">
                 <h5 class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Suite Ecosystem</h5>
                 <nav class="flex flex-col gap-3">
-                    <!-- <a href="${rootPrefix}index.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
+                    <a href="${rootPrefix}index.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
                         <i class="fas fa-chevron-right text-[8px] opacity-40"></i> Financial Tools
-                    </a> -->
+                    </a>
                     <a href="${rootPrefix}explore.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
                         <i class="fas fa-chevron-right text-[8px] opacity-40"></i> Full Directory
                     </a>
-                    <!-- <a href="${rootPrefix}productivity/neural-task-architect.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
+                    <a href="${rootPrefix}productivity/neural-task-architect.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
                         <i class="fas fa-chevron-right text-[8px] opacity-40"></i> AI Task Architecture
                     </a>
                     <a href="${rootPrefix}sitemap.xml" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
                         <i class="fas fa-chevron-right text-[8px] opacity-40"></i> Google Index Sitemap
-                    </a> -->
+                    </a>
                 </nav>
             </div>
 
@@ -403,7 +460,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         sidebarContainer.innerHTML = headerHtml;
 
         // Inject Footer globally
+        const existingFooter = document.querySelector('footer');
+        if (existingFooter) existingFooter.remove();
         document.body.insertAdjacentHTML('beforeend', footerHtml);
+
+        // Inject Breadcrumbs if #app-container exists
+        const appContainer = document.getElementById('app-container');
+        if (appContainer) {
+            appContainer.insertAdjacentHTML('beforebegin', generateBreadcrumbs());
+            appContainer.insertAdjacentHTML('afterend', generateRelatedTools());
+        }
 
         const themeToggleBtn = document.getElementById('theme-toggle');
         if (themeToggleBtn) {

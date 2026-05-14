@@ -128,10 +128,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- Helper: Generate Category Navigator (Dynamic & Visual) ---
     function generateCategoryNavigator() {
         if (activeId === '/' || !currentTool) return '';
-        
+
         // Only show categories that have at least one active tool
         const activeCategories = [...new Set(calculatorConfig.map(c => c.category))];
-        
+
         const allCats = [
             { name: 'Standard', icon: '<i class="fas fa-equals"></i>', color: 'text-indigo-500' },
             { name: 'Math', icon: '<i class="fas fa-divide"></i>', color: 'text-sky-500' },
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function generateToC() {
         const article = document.querySelector('article');
         if (!article) return '';
-        
+
         const headings = Array.from(article.querySelectorAll('h2, h3')).slice(0, 8);
         if (headings.length < 2) return '';
 
@@ -176,15 +176,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </h4>
                 <nav class="space-y-3">
                     ${headings.map((h, i) => {
-                        const id = `toc-${i}`;
-                        h.id = id;
-                        const isH2 = h.tagName === 'H2';
-                        return `
+            const id = `toc-${i}`;
+            h.id = id;
+            const isH2 = h.tagName === 'H2';
+            return `
                             <a href="#${id}" class="block text-[11px] font-bold ${isH2 ? 'text-slate-700 dark:text-slate-200' : 'text-slate-400 pl-4'} hover:text-indigo-500 transition-colors leading-tight">
                                 ${h.innerText}
                             </a>
                         `;
-                    }).join('')}
+        }).join('')}
                 </nav>
             </div>
         `;
@@ -193,10 +193,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- Helper: Generate Related Tools ---
     function generateRelatedTools() {
         if (activeId === '/' || !currentTool) return '';
-        
+
         const categoryTools = calculatorConfig.filter(c => c.category === currentTool.category && c.id !== '/');
         const currentIndex = categoryTools.findIndex(c => c.id === activeId);
-        
+
         const prevTool = currentIndex > 0 ? categoryTools[currentIndex - 1] : categoryTools[categoryTools.length - 1];
         const nextTool = currentIndex < categoryTools.length - 1 ? categoryTools[currentIndex + 1] : categoryTools[0];
 
@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
         `;
         document.body.insertAdjacentHTML('beforeend', consentHtml);
-        
+
         const banner = document.getElementById('cookie-consent-banner');
         setTimeout(() => {
             if (banner) banner.classList.remove('translate-y-20', 'opacity-0');
@@ -296,6 +296,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         const denyBtn = document.getElementById('deny-cookies');
         if (acceptBtn) acceptBtn.addEventListener('click', () => handleConsent('accepted'));
         if (denyBtn) denyBtn.addEventListener('click', () => handleConsent('denied'));
+    }
+
+    // --- Helper: Google Analytics Initialization ---
+    function initAnalytics() {
+        const gaId = 'G-TWGM5ZWN6X';
+        if (window.gtagInitialized) return;
+        window.gtagInitialized = true;
+        const script1 = document.createElement('script');
+        script1.async = true;
+        script1.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+        document.head.appendChild(script1);
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', gaId);
+    }
+
+    // --- Helper: Dynamic Security Hardening (CSP Fallback) ---
+    function initSecurityHardening() {
+        if (!document.querySelector('meta[http-equiv="Content-Security-Policy"]')) {
+            const csp = document.createElement('meta');
+            csp.httpEquiv = "Content-Security-Policy";
+            csp.content = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://pagead2.googlesyndication.com; connect-src 'self' https://www.google-analytics.com https://pagead2.googlesyndication.com; frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.google.com;";
+            document.head.appendChild(csp);
+        }
     }
 
     // Define Suite Configuration for optimized Navigation
@@ -611,6 +636,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         initCookieConsent();
+        initSecurityHardening();
 
         const themeToggleBtn = document.getElementById('theme-toggle');
         if (themeToggleBtn) {

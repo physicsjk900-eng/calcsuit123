@@ -359,7 +359,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <!-- Right Actions -->
             <div class="flex items-center gap-2 sm:gap-4">
                 <div class="relative hidden sm:block w-48 xl:w-64">
-                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"><i class="fas fa-search text-xs"></i></span>
+                    <span class="absolute left-0 top-1/2 -translate-y-1/2 text-slate-400"><i class="fas fa-search text-xs"></i></span>
                     <input type="text" id="calc-search"
                         class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 pl-9 pr-4 text-sm text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all outline-none"
                         placeholder="Search tools...">

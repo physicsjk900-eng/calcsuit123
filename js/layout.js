@@ -561,11 +561,29 @@ document.addEventListener('DOMContentLoaded', async () => {
             img { max-width: 100%; height: auto; border-radius: 1rem; }
             .no-scrollbar::-webkit-scrollbar { display: none; }
             .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            
+            /* Enhanced Prose Readability */
+            .prose { 
+                max-width: 85ch !important; 
+                margin-left: auto; 
+                margin-right: auto;
+                line-height: 1.8 !important;
+                color: #334155 !important; /* slate-700 */
+            }
+            .dark .prose { color: #cbd5e1 !important; /* slate-300 */ }
+            
+            .prose p { margin-bottom: 1.75em !important; font-size: 1.05rem !important; }
+            .prose h2 { margin-top: 2.5em !important; margin-bottom: 1em !important; font-weight: 800 !important; tracking: -0.02em !important; }
+            .prose h3 { margin-top: 2em !important; margin-bottom: 0.8em !important; font-weight: 700 !important; }
+            .prose strong { color: #1e293b !important; font-weight: 700 !important; }
+            .dark .prose strong { color: #f8fafc !important; }
+            
             @media (max-width: 640px) {
                 h1 { font-size: 1.875rem !important; line-height: 2.25rem !important; }
                 h2 { font-size: 1.5rem !important; line-height: 2rem !important; }
-                .prose p { font-size: 1rem !important; line-height: 1.625rem !important; }
+                .prose p { font-size: 1rem !important; line-height: 1.7 !important; }
             }
+            
             .back-to-top {
                 position: fixed; bottom: 2rem; right: 2rem;
                 background: #4f46e5; color: white;

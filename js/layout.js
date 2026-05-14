@@ -261,20 +261,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (localStorage.getItem('cookie-consent')) return;
 
         const consentHtml = `
-            <div id="cookie-consent-banner" class="fixed bottom-6 left-6 right-6 md:left-auto md:max-w-md z-[100] transform translate-y-20 opacity-0 transition-all duration-700 ease-out">
-                <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 p-6 rounded-[2rem] shadow-2xl shadow-indigo-500/10">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div class="w-12 h-12 rounded-2xl bg-indigo-500 text-white flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/20">
-                            <i class="fas fa-cookie-bite text-xl"></i>
+            <div id="cookie-consent-banner" class="fixed bottom-0 left-0 right-0 p-4 md:p-0 md:bottom-6 md:right-6 md:left-auto md:max-w-md z-[100] transform translate-y-full opacity-0 transition-all duration-700 ease-out">
+                <div class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-slate-200 dark:border-slate-800 p-5 md:p-6 rounded-3xl md:rounded-[2rem] shadow-2xl shadow-indigo-500/20">
+                    <div class="flex items-start gap-4 mb-5">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-indigo-500 text-white flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/20">
+                            <i class="fas fa-cookie-bite text-lg md:text-xl"></i>
                         </div>
-                        <div>
-                            <h4 class="text-sm font-black text-slate-800 dark:text-white uppercase tracking-wider">Privacy & Compliance</h4>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">We use essential cookies to optimize your calculation experience and analyze site traffic for performance improvements.</p>
+                        <div class="flex-1">
+                            <h4 class="text-xs md:text-sm font-black text-slate-800 dark:text-white uppercase tracking-wider">Privacy & Compliance</h4>
+                            <p class="text-[11px] md:text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">We use essential cookies to optimize your calculation experience and analyze site traffic.</p>
                         </div>
                     </div>
-                    <div class="flex gap-3">
-                        <button id="accept-cookies" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3 rounded-xl transition-all shadow-lg shadow-indigo-500/20">Accept All</button>
-                        <button id="deny-cookies" class="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold py-3 rounded-xl transition-all">Deny</button>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button id="accept-cookies" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-indigo-500/25 active:scale-95">Accept All</button>
+                        <button id="deny-cookies" class="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold py-3.5 rounded-xl transition-all active:scale-95">Deny</button>
                     </div>
                 </div>
             </div>
@@ -283,12 +283,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const banner = document.getElementById('cookie-consent-banner');
         setTimeout(() => {
-            if (banner) banner.classList.remove('translate-y-20', 'opacity-0');
+            if (banner) banner.classList.remove('translate-y-full', 'opacity-0');
         }, 1000);
 
         const handleConsent = (choice) => {
             localStorage.setItem('cookie-consent', choice);
-            if (banner) banner.classList.add('translate-y-20', 'opacity-0');
+            if (banner) banner.classList.add('translate-y-full', 'opacity-0');
             setTimeout(() => { if (banner) banner.remove(); }, 700);
         };
 
@@ -636,6 +636,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         initCookieConsent();
+        initAnalytics();
         initSecurityHardening();
 
         const themeToggleBtn = document.getElementById('theme-toggle');

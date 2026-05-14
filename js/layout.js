@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <!-- Authority Badge -->
                 <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 group">
                     <i class="fas fa-shield-check text-emerald-500 text-xs"></i>
-                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Precision Guaranteed &mdash; 95+ Engines</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Precision Guaranteed &mdash; 15+ Engines</span>
                 </div>
             </div>
 
@@ -283,18 +283,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="space-y-6">
                 <h5 class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Suite Ecosystem</h5>
                 <nav class="flex flex-col gap-3">
-                    <a href="${rootPrefix}index.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
+                    <!-- <a href="${rootPrefix}index.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
                         <i class="fas fa-chevron-right text-[8px] opacity-40"></i> Financial Tools
-                    </a>
+                    </a> -->
                     <a href="${rootPrefix}explore.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
                         <i class="fas fa-chevron-right text-[8px] opacity-40"></i> Full Directory
                     </a>
-                    <a href="${rootPrefix}productivity/neural-task-architect.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
+                    <!-- <a href="${rootPrefix}productivity/neural-task-architect.html" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
                         <i class="fas fa-chevron-right text-[8px] opacity-40"></i> AI Task Architecture
                     </a>
                     <a href="${rootPrefix}sitemap.xml" class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2">
                         <i class="fas fa-chevron-right text-[8px] opacity-40"></i> Google Index Sitemap
-                    </a>
+                    </a> -->
                 </nav>
             </div>
 

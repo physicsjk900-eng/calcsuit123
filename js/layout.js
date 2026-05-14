@@ -161,34 +161,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
     }
 
-    // --- Helper: Table of Contents Generator (Internal Navigation) ---
-    function generateToC() {
-        const article = document.querySelector('article');
-        if (!article) return '';
 
-        const headings = Array.from(article.querySelectorAll('h2, h3')).slice(0, 8);
-        if (headings.length < 2) return '';
-
-        return `
-            <div class="hidden xl:block fixed right-10 top-32 w-64 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
-                <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
-                    <i class="fas fa-list-ul text-indigo-500"></i> Page Navigation
-                </h4>
-                <nav class="space-y-3">
-                    ${headings.map((h, i) => {
-            const id = `toc-${i}`;
-            h.id = id;
-            const isH2 = h.tagName === 'H2';
-            return `
-                            <a href="#${id}" class="block text-[11px] font-bold ${isH2 ? 'text-slate-700 dark:text-slate-200' : 'text-slate-400 pl-4'} hover:text-indigo-500 transition-colors leading-tight">
-                                ${h.innerText}
-                            </a>
-                        `;
-        }).join('')}
-                </nav>
-            </div>
-        `;
-    }
 
     // --- Helper: Generate Related Tools ---
     function generateRelatedTools() {
@@ -257,46 +230,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // --- Helper: Cookie Consent Initialization ---
-    function initCookieConsent() {
-        if (localStorage.getItem('cookie-consent')) return;
 
-        const consentHtml = `
-            <div id="cookie-consent-banner" class="fixed bottom-0 left-0 right-0 p-4 md:p-0 md:bottom-6 md:right-6 md:left-auto md:max-w-md z-[9999] transform translate-y-full opacity-0 transition-all duration-700 ease-out pointer-events-none">
-                <div class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-slate-200 dark:border-slate-800 p-5 md:p-6 rounded-3xl md:rounded-[2rem] shadow-2xl shadow-indigo-500/20 pointer-events-auto">
-                    <div class="flex items-start gap-4 mb-5">
-                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-indigo-500 text-white flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/20">
-                            <i class="fas fa-cookie-bite text-lg md:text-xl"></i>
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="text-xs md:text-sm font-black text-slate-800 dark:text-white uppercase tracking-wider">Privacy & Compliance</h4>
-                            <p class="text-[11px] md:text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">We use essential cookies to optimize your calculation experience and analyze site traffic.</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <button id="accept-cookies" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-indigo-500/25 active:scale-95">Accept All</button>
-                        <button id="deny-cookies" class="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold py-3.5 rounded-xl transition-all active:scale-95">Deny</button>
-                    </div>
-                </div>
-            </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', consentHtml);
-
-        const banner = document.getElementById('cookie-consent-banner');
-        setTimeout(() => {
-            if (banner) banner.classList.remove('translate-y-full', 'opacity-0');
-        }, 1000);
-
-        const handleConsent = (choice) => {
-            localStorage.setItem('cookie-consent', choice);
-            if (banner) banner.classList.add('translate-y-full', 'opacity-0');
-            setTimeout(() => { if (banner) banner.remove(); }, 700);
-        };
-
-        const acceptBtn = document.getElementById('accept-cookies');
-        const denyBtn = document.getElementById('deny-cookies');
-        if (acceptBtn) acceptBtn.addEventListener('click', () => handleConsent('accepted'));
-        if (denyBtn) denyBtn.addEventListener('click', () => handleConsent('denied'));
-    }
 
     // --- Helper: Google Analytics Initialization ---
     function initAnalytics() {
@@ -661,6 +595,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
+
+
     if (sidebarContainer) {
         sidebarContainer.innerHTML = headerHtml;
 
@@ -678,11 +614,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             `);
             appContainer.insertAdjacentHTML('afterend', `
                 ${generateRelatedTools()}
-                ${generateToC()}
             `);
         }
 
-        initCookieConsent();
+
         initAnalytics();
         initSecurityHardening();
         initGlobalStyles();

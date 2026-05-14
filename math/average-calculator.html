@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Average Calculator | CalcSuit</title>
+    <title>Professional Average Calculator | CalcSuit</title>
     <meta name="description"
-        content="Free online average calculator. Calculate mean, median, min, max, and sum of a data set.">
+        content="Calculate mean, median, sum, and range instantly. A comprehensive guide to understanding central tendency with real-world examples.">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -16,7 +17,8 @@
                 extend: {
                     colors: {
                         slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
-                        sky: { 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' }
+                        sky: { 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' },
+                        violet: { 500: '#8b5cf6', 600: '#7c3aed' }
                     },
                     fontFamily: { sans: ['Inter', 'sans-serif'] }
                 }
@@ -27,186 +29,361 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="../images/favicon.png">
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .result-glow {
+            box-shadow: 0 0 30px -10px rgba(14, 165, 233, 0.3);
+        }
+    </style>
 </head>
 
-<body
+<main
     class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
 
+    <!-- HERO CALCULATOR SECTION -->
     <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        class="m-auto w-full max-w-5xl rounded-[3.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col relative z-10 bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20">
 
-        <main id="app-container"
-            class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
-            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2
-                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
-                            Average Calc</h2>
-                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate the mean, median, sum, and
-                            count of a data set.</p>
+        <main class="p-8 md:p-14">
+            <div class="mb-12 text-center">
+                <span
+                    class="px-4 py-1.5 rounded-full bg-sky-100 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 text-xs font-bold uppercase tracking-widest mb-4 inline-block">Data
+                    Analytics Tool</span>
+                <h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-4">Average
+                    Calculator</h1>
+                <p class="text-slate-500 dark:text-slate-400 text-lg">Clean, fast, and precise statistical summaries.
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto w-full">
+                <!-- Data Entry -->
+                <div class="glass-card p-6 md:p-10 rounded-[2.5rem] shadow-inner mb-8">
+                    <div class="flex items-center justify-between mb-4 px-2">
+                        <label class="text-xs font-black uppercase text-slate-400 tracking-tighter">Enter your number
+                            series</label>
+                        <i class="fas fa-layer-group text-sky-500"></i>
+                    </div>
+                    <textarea id="avg-input" rows="4"
+                        class="w-full bg-white/80 dark:bg-slate-800/80 rounded-3xl p-6 text-xl font-medium outline-none ring-4 ring-transparent focus:ring-sky-500/10 border-2 border-slate-100 dark:border-slate-700 transition-all placeholder:text-slate-300"
+                        placeholder="12, 45, 67, 23.5..."></textarea>
+                    <div class="mt-4 flex gap-4 text-[11px] text-slate-400 font-bold uppercase tracking-widest">
+                        <span><i class="fas fa-check text-emerald-500 mr-1"></i> Commas</span>
+                        <span><i class="fas fa-check text-emerald-500 mr-1"></i> Spaces</span>
+                        <span><i class="fas fa-check text-emerald-500 mr-1"></i> Newlines</span>
                     </div>
                 </div>
 
-                <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
-                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
-                        <label
-                            class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Enter
-                            Numbers</label>
-                        <p class="text-xs text-slate-400 mb-4">Values should be separated by commas, spaces, or
-                            newlines.</p>
-                        <textarea id="avg-input" rows="4"
-                            class="perc-input w-full font-medium text-lg py-3 px-4 resize-y leading-relaxed"
-                            placeholder="10, 25, 42, 100..."></textarea>
+                <!-- Live Results -->
+                <div id="avg-results-area"
+                    class="hidden opacity-0 grid grid-cols-2 md:grid-cols-4 gap-4 transition-all duration-700 transform translate-y-4">
+                    <div
+                        class="col-span-2 md:col-span-4 glass-card result-glow p-8 rounded-[2.5rem] text-center border-b-4 border-b-sky-500">
+                        <div class="text-xs font-black uppercase tracking-widest text-sky-500 mb-2">Arithmetic Mean
+                        </div>
+                        <div class="text-6xl font-black text-slate-900 dark:text-white" id="avg-res-mean">0</div>
                     </div>
 
-                    <div id="avg-results-area"
-                        class="hidden opacity-0 grid grid-cols-2 sm:grid-cols-3 gap-4 mt-2 transition-all duration-500">
-                        <div
-                            class="glass-display p-6 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30 sm:col-span-3">
-                            <button
-                                class="copy-trigger absolute top-3 right-3 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                                data-target="avg-res-mean"><i class="fas fa-copy"></i></button>
-                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">Mean
-                                (Average)</div>
-                            <div class="text-4xl font-bold text-sky-600 dark:text-sky-400 break-all" id="avg-res-mean">
-                                &mdash;</div>
-                        </div>
-
-                        <div class="glass-display p-4 rounded-3xl text-center group relative">
-                            <button
-                                class="copy-trigger absolute top-3 right-3 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                                data-target="avg-res-median"><i class="fas fa-copy"></i></button>
-                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">Median
-                            </div>
-                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-200" id="avg-res-median">
-                                &mdash;</div>
-                        </div>
-
-                        <div class="glass-display p-4 rounded-3xl text-center group relative">
-                            <button
-                                class="copy-trigger absolute top-3 right-3 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                                data-target="avg-res-sum"><i class="fas fa-copy"></i></button>
-                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">Sum</div>
-                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-200" id="avg-res-sum">&mdash;
-                            </div>
-                        </div>
-
-                        <div
-                            class="glass-display p-4 rounded-3xl text-center group relative col-span-2 sm:col-span-1 border-emerald-100 dark:border-emerald-900/30">
-                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">Count</div>
-                            <div class="text-2xl font-bold text-emerald-600 dark:text-emerald-400" id="avg-res-count">
-                                &mdash;</div>
-                        </div>
+                    <div
+                        class="glass-card p-6 rounded-[2rem] text-center group hover:border-sky-400/50 transition-colors">
+                        <div class="text-[10px] font-black uppercase text-slate-400 mb-1">Median</div>
+                        <div class="text-2xl font-bold text-slate-800 dark:text-slate-200" id="avg-res-median">0</div>
                     </div>
 
+                    <div
+                        class="glass-card p-6 rounded-[2rem] text-center group hover:border-sky-400/50 transition-colors">
+                        <div class="text-[10px] font-black uppercase text-slate-400 mb-1">Sum</div>
+                        <div class="text-2xl font-bold text-slate-800 dark:text-slate-200" id="avg-res-sum">0</div>
+                    </div>
+
+                    <div
+                        class="glass-card p-6 rounded-[2rem] text-center group hover:border-sky-400/50 transition-colors">
+                        <div class="text-[10px] font-black uppercase text-slate-400 mb-1">Count (n)</div>
+                        <div class="text-2xl font-bold text-slate-800 dark:text-slate-200" id="avg-res-count">0</div>
+                    </div>
+
+                    <div
+                        class="glass-card p-6 rounded-[2rem] text-center group hover:border-sky-400/50 transition-colors">
+                        <div class="text-[10px] font-black uppercase text-slate-400 mb-1">Range</div>
+                        <div class="text-2xl font-bold text-slate-800 dark:text-slate-200" id="avg-res-range">0</div>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
-    <br>
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
 
-            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <header>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
-                        Average Calculator – Calculate Mean, Median, Sum, and Count of Any Data Set
-                    </h1>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        An average calculator is a powerful online tool that helps you quickly compute statistical
-                        measures for a data set. Our free online average calculator allows you to calculate the mean,
-                        median, sum, and count of your numbers in seconds, providing fast and accurate results.
-                    </p>
-                </header>
-                <br>
+    <!-- CONTENT MODULE -->
+    <section class="mt-20 w-full max-w-5xl mx-auto space-y-16">
+        <article
+            class="glass-card p-8 md:p-20 rounded-[4rem] shadow-2xl border border-white/40 dark:border-slate-800/40">
 
-                <div class="intro-section">
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        Whether you are a student analyzing homework data, a teacher checking class scores, or a
-                        professional working with statistical data, this average calculator online makes analyzing
-                        numbers easy and reliable.
-                    </p>
+            <header class="mb-20 text-center">
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Learn the Logic of <span
+                        class="text-sky-500">Numbers</span></h2>
+                <div class="w-24 h-2 bg-sky-500 mx-auto rounded-full"></div>
+            </header>
+
+            <div class="space-y-20">
+                <!-- Concept 1 -->
+                <div class="flex flex-col lg:flex-row gap-12 items-center">
+                    <div class="flex-1">
+                        <h3 class="text-3xl font-bold mb-6">The "Average" Mystery</h3>
+                        <p class="text-slate-600 dark:text-slate-400 mb-6 text-lg leading-relaxed">
+                            Most people use the word "average" to mean the <strong>Arithmetic Mean</strong>. However, in
+                            statistics, "average" is an umbrella term for <strong>Central Tendency</strong>—the middle
+                            or typical value of a data set.
+                        </p>
+                        <p class="text-slate-600 dark:text-slate-400">
+                            Our calculator provides the mean, median, and range because one number rarely tells the
+                            whole story. For instance, the "average" salary in a room might be $50,000, but if a
+                            billionaire walks in, the <strong>mean</strong> jumps to $1,000,000 while the
+                            <strong>median</strong> stays exactly where it was.
+                        </p>
+                    </div>
+                    <div
+                        class="flex-1 bg-violet-500/5 p-10 rounded-[3rem] border border-violet-200 dark:border-violet-900/30">
+                        <h4
+                            class="font-black text-violet-600 dark:text-violet-400 uppercase text-xs tracking-widest mb-4">
+                            Concept Check: The Mean</h4>
+                        <p class="text-sm font-medium italic mb-6">"If 5 friends have 10, 20, 30, 40, and 50 dollars,
+                            what is the mean?"</p>
+                        <div class="space-y-2 font-mono text-xs">
+                            <p>1. Sum: 10 + 20 + 30 + 40 + 50 = 150</p>
+                            <p>2. Count: 5</p>
+                            <p>3. Divide: 150 / 5 = 30</p>
+                        </div>
+                        <p class="mt-6 text-violet-600 font-bold">The Mean is $30.</p>
+                    </div>
                 </div>
-                <br>
 
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is an Average
-                        Calculator?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        An average calculator is a digital tool designed to perform basic statistical calculations for a
-                        set of numbers. It simplifies tasks such as finding:
-                    </p>
+                <!-- Features Section -->
+                <div>
+                    <h3 class="text-3xl font-bold mb-10 text-center">Powerful Features for Every User</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div
+                            class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
+                            <div class="flex items-center gap-4 mb-4">
+                                <span
+                                    class="w-10 h-10 rounded-full bg-sky-500 text-white flex items-center justify-center shadow-lg shadow-sky-500/30"><i
+                                        class="fas fa-bolt"></i></span>
+                                <h4 class="font-bold text-xl">Instant Range Calculation</h4>
+                            </div>
+                            <p class="text-sm text-slate-500">Automatically identifies the Highest and Lowest numbers in
+                                your set and calculates the 'Range'. This helps you understand the
+                                <strong>spread</strong> or volatility of your data instantly.
+                            </p>
+                        </div>
 
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
-                        <li><strong>Mean (Arithmetic Average)</strong> – The sum of all numbers divided by the count.
-                        </li>
-                        <li><strong>Median</strong> – The middle number in a sorted data set.</li>
-                        <li><strong>Sum</strong> – The total of all numbers in the set.</li>
-                        <li><strong>Count</strong> – The number of entries in the data set.</li>
-                    </ul>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Why Use an Online
-                        Average Calculator?</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Fast and Efficient</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Compute the mean, median, sum, and
-                                count instantly without manual calculations.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Highly Accurate</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Manual calculations can lead to
-                                errors; our tool ensures precision even with large data sets.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Completely free to use with no
-                                registration required on any device (mobile or desktop).</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Universal Utility</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Perfect for students, teachers,
-                                finance professionals, and business analysts.</p>
+                        <div
+                            class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
+                            <div class="flex items-center gap-4 mb-4">
+                                <span
+                                    class="w-10 h-10 rounded-full bg-indigo-500 text-white flex items-center justify-center shadow-lg shadow-indigo-500/30"><i
+                                        class="fas fa-microscope"></i></span>
+                                <h4 class="font-bold text-xl">Decimal & Negative Support</h4>
+                            </div>
+                            <p class="text-sm text-slate-500">Unlike basic tools, we handle negative integers and
+                                complex floating-point decimals with extreme accuracy. Perfect for scientific labs and
+                                financial balance sheets.</p>
                         </div>
                     </div>
-                </section>
-                <br>
+                </div>
 
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
-                        Average Calculator</h2>
-                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
-                        <li>Enter your numbers separated by commas, spaces, or line breaks.</li>
-                        <li>Click the <strong>Calculate</strong> button.</li>
-                        <li>Instantly view the mean, median, sum, and count of your data set.</li>
-                    </ol>
-                </section>
-                <br>
-
-                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Analyze your data instantly!</h2>
-                    <p class="text-slate-500 dark:text-slate-400">
-                        Try the online average calculator today and simplify your statistical analysis.
-                    </p>
-                </section>
-
-                <footer>
-                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
-                        &copy; 2026 Average Calculator Tool. All rights reserved.
-                    </p>
-                </footer>
+                <!-- Uses Section -->
+                <div class="pt-10 border-t border-slate-100 dark:border-slate-800">
+                    <h3 class="text-3xl font-bold mb-8">Common Applications</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="space-y-3">
+                            <h5 class="font-bold text-sky-500">Education</h5>
+                            <p class="text-sm text-slate-500 leading-relaxed">Students use this tool to calculate their
+                                GPA or weighted averages for semester scores to predict final grades.</p>
+                        </div>
+                        <div class="space-y-3">
+                            <h5 class="font-bold text-sky-500">Business</h5>
+                            <p class="text-sm text-slate-500 leading-relaxed">Managers calculate average daily sales or
+                                average customer spend to forecast monthly revenue goals.</p>
+                        </div>
+                        <div class="space-y-3">
+                            <h5 class="font-bold text-sky-500">Health</h5>
+                            <p class="text-sm text-slate-500 leading-relaxed">Athletes track average calorie intake or
+                                average heart rate over a week of training to optimize performance.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </main>
-    </div>
+
+            <!-- CTA Section -->
+            <div class="mt-24 p-12 rounded-[3.5rem] bg-slate-900 text-center relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-sky-500/20 blur-[100px] rounded-full"></div>
+                <h2 class="text-3xl font-black text-white mb-6">Ready to decode your data?</h2>
+                <p class="text-slate-400 mb-10 max-w-lg mx-auto text-sm">Experience the most user-friendly statistical
+                    suite available online. Free, fast, and secure.</p>
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                    class="px-12 py-4 bg-white text-slate-900 rounded-2xl font-black hover:bg-sky-400 hover:text-white transition-all shadow-xl">Start
+                    Calculating</button>
+            </div>
+
+        </article>
+    </section>
+    <section class="mt-20 w-full max-w-5xl mx-auto space-y-16 pb-24">
+        <article
+            class="glass-card p-8 md:p-20 rounded-[4rem] shadow-2xl border border-white/40 dark:border-slate-800/40">
+
+            <header class="mb-20 text-center">
+                <span class="text-sky-500 font-black uppercase tracking-[0.2em] text-xs">The CalcSuit Deep Dive</span>
+                <h2 class="text-5xl md:text-6xl font-black text-slate-900 dark:text-white mt-4 mb-6">Master the Art of
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-violet-500">Data
+                        Storytelling</span></h2>
+                <p class="text-slate-500 max-w-2xl mx-auto text-lg">Numbers don't lie, but they do have secrets. Here is
+                    how to uncover them using our Advanced Average Calculator.</p>
+            </header>
+
+            <!-- Hook: Why Averages are Addictive -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
+                <div class="space-y-6">
+                    <h3 class="text-3xl font-bold text-slate-800 dark:text-white">Why We Are Obsessed with "Average"
+                    </h3>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                        From tracking your <strong>daily screen time</strong> to comparing your <strong>salary</strong>
+                        against national benchmarks, averages provide a sense of "belonging" or "excellence." Our brains
+                        are wired to find patterns in chaos. When you paste a messy list of 50 numbers into this
+                        calculator and get a single, clean <strong>Mean</strong>, your brain experiences a "closure
+                        hit"—the psychological satisfaction of turning noise into information.
+                    </p>
+                    <div class="p-6 bg-sky-500/10 border-l-4 border-sky-500 rounded-r-2xl">
+                        <p class="text-sm font-bold text-sky-700 dark:text-sky-400 italic">"The average is the anchor
+                            that stops us from drifting in a sea of data."</p>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div
+                        class="absolute -inset-4 bg-gradient-to-tr from-sky-500 to-violet-500 opacity-20 blur-2xl rounded-full">
+                    </div>
+                    <div class="relative glass-card p-8 rounded-[2.5rem] border border-white/50 shadow-xl">
+                        <h4 class="font-black text-xs uppercase tracking-widest mb-4 text-slate-400">Pro Hack: The
+                            Outlier Trap</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                            Always compare your <strong>Mean</strong> to your <strong>Median</strong>.
+                        </p>
+                        <ul class="text-xs space-y-3 font-medium">
+                            <li class="flex items-center gap-2 text-emerald-500"><i class="fas fa-arrow-right"></i> Mean
+                                > Median: Your data is "Right Skewed" (high outliers).</li>
+                            <li class="flex items-center gap-2 text-rose-500"><i class="fas fa-arrow-right"></i> Mean <
+                                    Median: Your data is "Left Skewed" (low outliers).</li>
+                            <li class="flex items-center gap-2 text-sky-500"><i class="fas fa-arrow-right"></i> Equal:
+                                You have a "Perfect Bell Curve."</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deep Learning: Examples & Formulas -->
+            <div class="mb-24">
+                <h3 class="text-3xl font-bold mb-10">Step-by-Step Statistical Mastery</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glass-card p-8 rounded-3xl group hover:-translate-y-2 transition-all">
+                        <div
+                            class="w-12 h-12 bg-slate-900 text-white flex items-center justify-center rounded-2xl mb-6 font-bold">
+                            01</div>
+                        <h4 class="font-bold text-xl mb-4">The Summation</h4>
+                        <p class="text-sm text-slate-500 mb-4">Before we find the middle, we find the whole. The sum
+                            represents the total weight of your data.</p>
+                        <code
+                            class="text-[10px] bg-slate-100 dark:bg-slate-800 p-2 rounded block">Σx = x₁ + x₂ + ... + xₙ</code>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-3xl group hover:-translate-y-2 transition-all">
+                        <div
+                            class="w-12 h-12 bg-sky-500 text-white flex items-center justify-center rounded-2xl mb-6 font-bold">
+                            02</div>
+                        <h4 class="font-bold text-xl mb-4">The Count (n)</h4>
+                        <p class="text-sm text-slate-500 mb-4">Quantity matters. In statistics, 'n' represents your
+                            sample size. A larger 'n' usually means a more reliable average.</p>
+                        <code
+                            class="text-[10px] bg-slate-100 dark:bg-slate-800 p-2 rounded block">n = Total Elements</code>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-3xl group hover:-translate-y-2 transition-all">
+                        <div
+                            class="w-12 h-12 bg-violet-500 text-white flex items-center justify-center rounded-2xl mb-6 font-bold">
+                            03</div>
+                        <h4 class="font-bold text-xl mb-4">The Arithmetic Mean</h4>
+                        <p class="text-sm text-slate-500 mb-4">The crown jewel of math. Dividing the total by the count
+                            gives you the fair share for each individual.</p>
+                        <code class="text-[10px] bg-slate-100 dark:bg-slate-800 p-2 rounded block">x̄ = Σx / n</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Addictive Use Cases: Gamified Thinking -->
+            <div class="bg-slate-900 rounded-[3rem] p-10 md:p-16 text-white overflow-hidden relative">
+                <div
+                    class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-sky-500 via-violet-500 to-emerald-500">
+                </div>
+                <h3 class="text-3xl font-black mb-12">Unexpected Ways to Use This Tool</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                    <div class="space-y-4">
+                        <div class="text-sky-400 text-2xl"><i class="fas fa-gamepad"></i></div>
+                        <h5 class="font-bold">Gaming K/D</h5>
+                        <p class="text-xs text-slate-400 leading-relaxed">Paste your last 20 match scores to find your
+                            true skill average, ignoring that one "laggy" game where you went 0-10.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="text-emerald-400 text-2xl"><i class="fas fa-shopping-cart"></i></div>
+                        <h5 class="font-bold">Grocery Budgeting</h5>
+                        <p class="text-xs text-slate-400 leading-relaxed">Enter your weekly receipts for the last month.
+                            Use the <strong>Median</strong> to see what you "usually" spend vs the <strong>Mean</strong>
+                            which includes that expensive party shop.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="text-rose-400 text-2xl"><i class="fas fa-heartbeat"></i></div>
+                        <h5 class="font-bold">Health Tracking</h5>
+                        <p class="text-xs text-slate-400 leading-relaxed">Track your resting heart rate or sleep hours.
+                            Use the <strong>Range</strong> to see how consistent your lifestyle habits actually are.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="text-violet-400 text-2xl"><i class="fas fa-chart-pie"></i></div>
+                        <h5 class="font-bold">Ad Campaign ROI</h5>
+                        <p class="text-xs text-slate-400 leading-relaxed">Marketing pros paste daily conversion rates
+                            here to find the baseline performance of a new funnel instantly.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- "Did You Know" Interactive Style Text -->
+            <div class="mt-24 text-center max-w-3xl mx-auto">
+                <h3 class="text-2xl font-bold mb-6 italic">"A mathematician is a person who can't take a nap without
+                    counting the average sheep per minute."</h3>
+                <p class="text-slate-500 leading-relaxed">
+                    Whether you're a student trying to ace your SATs, a crypto trader looking for the average entry
+                    price (Dollar Cost Averaging), or a developer checking API latency, the CalcSuit Average Calculator
+                    is built to handle the heavy lifting. Our algorithm doesn't just "calculate"—it cleans. It strips
+                    out accidental text, fixes formatting errors, and delivers the truth behind your data.
+                </p>
+                <div class="mt-12 flex flex-wrap justify-center gap-6">
+                    <span
+                        class="px-6 py-2 rounded-full border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-400 hover:bg-sky-500 hover:text-white transition-colors cursor-default">#DataScience</span>
+                    <span
+                        class="px-6 py-2 rounded-full border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-400 hover:bg-violet-500 hover:text-white transition-colors cursor-default">#StudyHack</span>
+                    <span
+                        class="px-6 py-2 rounded-full border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-400 hover:bg-emerald-500 hover:text-white transition-colors cursor-default">#BusinessTools</span>
+                </div>
+            </div>
+
+        </article>
+    </section>
 
     <script src="../js/layout.js"></script>
     <script src="../js/calculators/average.js"></script>
-</body>
+</main>
 
 </html>

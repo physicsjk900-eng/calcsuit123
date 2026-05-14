@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +10,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="../images/favicon.png">
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+
+<body
+    class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
     <div id="sidebar-container"></div>
     <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20">
-        <div class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+        <div
+            class="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
             <div class="bg-slate-900 p-8 text-white text-center">
                 <i class="fas fa-dice text-4xl mb-4 text-indigo-400"></i>
-                <h1 class="text-3xl font-bold">Probability Hub</h1>
+                <h1 class="text-3xl font-bold">Probability, Permutations, and Combinations Calculator</h1>
                 <p class="text-slate-400 mt-2">Factorials, Permutations (nPr), and Combinations (nCr)</p>
             </div>
             <div class="p-8 space-y-8">
@@ -23,40 +27,192 @@
                 <div class="grid grid-cols-2 gap-6">
                     <div class="space-y-2">
                         <label class="block text-sm font-bold text-slate-500 uppercase">Total Items (n)</label>
-                        <input type="number" id="input-n" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="10">
+                        <input type="number" id="input-n"
+                            class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none"
+                            value="10">
                     </div>
                     <div class="space-y-2">
                         <label class="block text-sm font-bold text-slate-500 uppercase">Selected Items (r)</label>
-                        <input type="number" id="input-r" class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none" value="3">
+                        <input type="number" id="input-r"
+                            class="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl py-4 px-4 text-center text-2xl font-bold focus:ring-2 focus:ring-indigo-500 outline-none"
+                            value="3">
                     </div>
                 </div>
 
                 <div id="result-area" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-indigo-50 dark:bg-indigo-500/10 p-5 rounded-2xl border border-indigo-100 dark:border-indigo-500/20 text-center">
-                        <div class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Factorial (n!)</div>
-                        <div id="res-factorial" class="text-xl font-bold text-slate-800 dark:text-white truncate">3,628,800</div>
-                        <button class="copy-trigger mt-1 text-[10px] text-indigo-500 hover:underline" data-target="res-factorial">Copy</button>
+                    <div
+                        class="bg-indigo-50 dark:bg-indigo-500/10 p-5 rounded-2xl border border-indigo-100 dark:border-indigo-500/20 text-center">
+                        <div
+                            class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">
+                            Factorial (n!)</div>
+                        <div id="res-factorial" class="text-xl font-bold text-slate-800 dark:text-white truncate">
+                            3,628,800</div>
+                        <button class="copy-trigger mt-1 text-[10px] text-indigo-500 hover:underline"
+                            data-target="res-factorial">Copy</button>
                     </div>
-                    <div class="bg-emerald-50 dark:bg-emerald-500/10 p-5 rounded-2xl border border-emerald-100 dark:border-emerald-500/20 text-center">
-                        <div class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Permutation (nPr)</div>
+                    <div
+                        class="bg-emerald-50 dark:bg-emerald-500/10 p-5 rounded-2xl border border-emerald-100 dark:border-emerald-500/20 text-center">
+                        <div
+                            class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">
+                            Permutation (nPr)</div>
                         <div id="res-npr" class="text-xl font-bold text-slate-800 dark:text-white truncate">720</div>
-                        <button class="copy-trigger mt-1 text-[10px] text-emerald-500 hover:underline" data-target="res-npr">Copy</button>
+                        <button class="copy-trigger mt-1 text-[10px] text-emerald-500 hover:underline"
+                            data-target="res-npr">Copy</button>
                     </div>
-                    <div class="bg-amber-50 dark:bg-amber-500/10 p-5 rounded-2xl border border-amber-100 dark:border-amber-500/20 text-center">
-                        <div class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-1">Combination (nCr)</div>
+                    <div
+                        class="bg-amber-50 dark:bg-amber-500/10 p-5 rounded-2xl border border-amber-100 dark:border-amber-500/20 text-center">
+                        <div
+                            class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-1">
+                            Combination (nCr)</div>
                         <div id="res-ncr" class="text-xl font-bold text-slate-800 dark:text-white truncate">120</div>
-                        <button class="copy-trigger mt-1 text-[10px] text-amber-500 hover:underline" data-target="res-ncr">Copy</button>
+                        <button class="copy-trigger mt-1 text-[10px] text-amber-500 hover:underline"
+                            data-target="res-ncr">Copy</button>
                     </div>
                 </div>
 
-                <button id="calculate-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-lg">
+                <button id="calculate-btn"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all active:scale-95 text-lg">
                     Process Probability
                 </button>
             </div>
         </div>
-        <div class="max-w-2xl w-full mt-12 text-slate-500 dark:text-slate-400 prose dark:prose-invert">
-            <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Probability & Sets</h2>
-            <p>Calculate total variations and choices. <strong>Permutations (nPr)</strong> account for arrangement order, while <strong>Combinations (nCr)</strong> focus purely on selection sets without regard for sequence.</p>
+        <div class="max-w-3xl w-full mt-12 text-slate-600 dark:text-slate-400 prose prose-slate dark:prose-invert">
+            <div
+                class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm p-6 md:p-10 mb-12">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Probability & Sets</h2>
+                <p>Calculate total variations and choices. <strong>Permutations (nPr)</strong> account for arrangement
+                    order, while <strong>Combinations (nCr)</strong> focus purely on selection sets without regard for
+                    sequence.</p>
+
+                <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200 mt-8 mb-3">Deep Dive: Mastering
+                    Probability, Permutations, and Combinations</h3>
+
+                <p>Whether you're a statistics student analyzing complex data sets, a poker player calculating pot odds,
+                    or simply someone trying to figure out how many different ways you can arrange a playlist, the
+                    mathematical principles of combinatorics and probability are constantly at play in our daily lives.
+                    This comprehensive guide will break down the essential concepts of factorials, permutations,
+                    combinations, and the overarching rules of probability theory.</p>
+
+                <h4 class="font-semibold text-slate-800 dark:text-slate-200 mt-6 mb-2">1. The Foundation: What is a
+                    Factorial?</h4>
+                <p>Before diving into permutations and combinations, you must understand the concept of a
+                    <strong>factorial</strong>. Denoted by an exclamation point (!), a factorial is the product of an
+                    integer and all the integers below it. For example, <span class="mono">5! = 5 × 4 × 3 × 2 × 1 =
+                        120</span>.
+                </p>
+                <p>Factorials represent the total number of ways to arrange <em>n</em> distinct objects into a sequence.
+                    If you have 5 different books and want to arrange them on a shelf, there are 120 possible
+                    arrangements. By definition, <span class="mono">0! = 1</span>. Our calculator computes factorials
+                    instantly, even for large numbers, saving you from tedious manual multiplication.</p>
+
+                <h4 class="font-semibold text-slate-800 dark:text-slate-200 mt-6 mb-2">2. Permutations (nPr): When Order
+                    Matters</h4>
+                <p>A <strong>permutation</strong> is an arrangement of all or part of a set of objects, with regard to
+                    the order of the arrangement. In permutations, <strong>order matters</strong>. For example, the
+                    password "123" is different from "321", even though they use the same digits. Similarly, selecting a
+                    President, Vice President, and Secretary from a committee of 10 people is a permutation problem
+                    because the roles (order) are distinct.</p>
+                <p>The formula for permutations is: <span class="mono">nPr = n! / (n - r)!</span>, where <em>n</em> is
+                    the total number of items available, and <em>r</em> is the number of items being chosen. If you are
+                    choosing 3 officers from a group of 10, the calculation is <span class="mono">10P3 = 10! / (10 - 3)!
+                        = 10 × 9 × 8 = 720</span> possible leadership combinations.</p>
+
+                <h4 class="font-semibold text-slate-800 dark:text-slate-200 mt-6 mb-2">3. Combinations (nCr): When Order
+                    Doesn't Matter</h4>
+                <p>A <strong>combination</strong> is a selection of all or part of a set of objects, without regard to
+                    the order in which objects are selected. In combinations, <strong>order does not matter</strong>. If
+                    you are making a fruit salad with apples, bananas, and oranges, it is the exact same salad
+                    regardless of the order you chopped the fruit. If you are picking a sub-committee of 3 people from a
+                    group of 10, and all roles are equal, this is a combination problem.</p>
+                <p>The formula for combinations divides the permutation formula by the number of ways to arrange the
+                    chosen items, removing the duplicate sets: <span class="mono">nCr = n! / (r! × (n - r)!)</span>.
+                    Using the previous example, picking 3 people from 10 yields <span class="mono">10C3 = 10! / (3! ×
+                        7!) = 120</span>. There are always fewer combinations than permutations for the same <em>n</em>
+                    and <em>r</em>.</p>
+
+                <h4 class="font-semibold text-slate-800 dark:text-slate-200 mt-6 mb-2">4. The Rules of Probability
+                    Theory</h4>
+                <p>Probability is the measure of the likelihood that an event will occur. It is quantified as a number
+                    between 0 and 1, where 0 indicates impossibility and 1 indicates absolute certainty. The probability
+                    of an event <em>A</em> is calculated by dividing the number of favorable outcomes by the total
+                    number of possible outcomes: <span class="mono">P(A) = Favorable Outcomes / Total Outcomes</span>.
+                </p>
+                <p>To master complex probability, you must understand a few core rules:</p>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><strong>The Addition Rule (Mutually Exclusive Events):</strong> If two events A and B cannot
+                        occur at the same time (like flipping a coin and getting both heads and tails), the probability
+                        that either A or B occurs is the sum of their individual probabilities: <span class="mono">P(A
+                            or B) = P(A) + P(B)</span>.</li>
+                    <li><strong>The Addition Rule (Non-Mutually Exclusive Events):</strong> If events A and B can happen
+                        together (like drawing a card that is both a King and a Heart), you must subtract the
+                        overlapping probability to avoid double-counting: <span class="mono">P(A or B) = P(A) + P(B) -
+                            P(A and B)</span>.</li>
+                    <li><strong>The Multiplication Rule (Independent Events):</strong> If the occurrence of event A does
+                        not affect event B (like rolling two separate dice), the probability of both occurring is their
+                        product: <span class="mono">P(A and B) = P(A) × P(B)</span>.</li>
+                    <li><strong>The Multiplication Rule (Dependent Events):</strong> If event A affects the outcome of
+                        event B (like drawing a card and not replacing it), you use conditional probability: <span
+                            class="mono">P(A and B) = P(A) × P(B|A)</span>, where P(B|A) is the probability of B given
+                        that A has occurred.</li>
+                </ul>
+
+                <h4 class="font-semibold text-slate-800 dark:text-slate-200 mt-6 mb-2">5. Real-World Applications of
+                    Combinatorics and Probability</h4>
+                <p>These mathematical concepts are not just for textbooks; they power major systems in the modern world:
+                </p>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><strong>Cryptography and Cyber Security:</strong> Permutations are the backbone of password
+                        security. By understanding <span class="mono">nPr</span>, security experts calculate how many
+                        possible password combinations exist for a given character set and length, determining how long
+                        it would take a brute-force attack to crack a system.</li>
+                    <li><strong>Lotteries and Gaming:</strong> Lottery odds are pure combination calculations. When a
+                        lottery requires you to pick 6 numbers out of 49, the total number of possible tickets is <span
+                            class="mono">49C6</span>, which equals 13,983,816. This means you have a 1 in nearly 14
+                        million chance of winning. Casino games similarly rely on intricate probability matrices to
+                        ensure the "house edge."</li>
+                    <li><strong>Genetics and Biology:</strong> Biologists use probability to predict the inheritance of
+                        traits. Punnett squares are essentially visual probability calculators that determine the
+                        likelihood of offspring inheriting specific genetic combinations from their parents.</li>
+                    <li><strong>Logistics and Route Planning:</strong> The famous "Traveling Salesperson Problem" seeks
+                        the most efficient route connecting multiple cities. This involves calculating the permutations
+                        of all possible routes to minimize travel time and fuel costs—a calculation that becomes
+                        immensely complex as the number of cities (n) increases.</li>
+                </ul>
+
+                <h4 class="font-semibold text-slate-800 dark:text-slate-200 mt-6 mb-2">6. How to Use the CalcSuit
+                    Probability Calculator</h4>
+                <p>Our tool is designed to simplify complex combinatorics calculations instantly. Here is a step-by-step
+                    guide to using the calculator effectively:</p>
+                <p><strong>Step 1: Identify 'n' and 'r'.</strong> First, determine the total size of the population or
+                    the total number of items you have available. This is your <em>n</em> value (Total Items). Next,
+                    determine how many items you are selecting or arranging from that population. This is your
+                    <em>r</em> value (Chosen Items).
+                </p>
+                <p><strong>Step 2: Enter your values.</strong> Input your <em>n</em> and <em>r</em> values into the
+                    respective fields. Ensure that both are non-negative integers, and remember that <em>r</em> cannot
+                    be greater than <em>n</em> (you cannot choose 5 items if you only have 3 available). If you only
+                    want to calculate the factorial of a number, enter that number as <em>n</em>.</p>
+                <p><strong>Step 3: Process and Interpret.</strong> Click the "Process Probability" button. The
+                    calculator will instantly output three vital statistics:</p>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><strong>Factorial (n!):</strong> The total number of ways to arrange all <em>n</em> items.</li>
+                    <li><strong>Permutations (nPr):</strong> The number of ways to arrange <em>r</em> items out of
+                        <em>n</em>, where the order of selection matters.
+                    </li>
+                    <li><strong>Combinations (nCr):</strong> The number of ways to group <em>r</em> items out of
+                        <em>n</em>, where the order of selection does not matter.
+                    </li>
+                </ul>
+                <p>We've also included convenient "Copy" buttons next to each result, allowing you to easily paste these
+                    large numbers into your homework, spreadsheets, or code.</p>
+
+                <p
+                    class="mt-8 italic border-l-4 border-indigo-500 pl-4 py-2 bg-indigo-50/50 dark:bg-indigo-900/20 text-slate-700 dark:text-slate-300">
+                    By understanding factorials, permutations, combinations, and core probability rules, you gain a
+                    powerful framework for making logical predictions in an uncertain world. The CalcSuit Probability
+                    Calculator is built to handle the heavy computational lifting, freeing you to focus on analyzing the
+                    results and making data-driven decisions.</p>
+            </div>
         </div>
     </main>
     <script src="../js/layout.js"></script>
@@ -104,8 +260,8 @@
                 const ncr = npr / factR;
                 resNcr.innerText = ncr.toString().length > 15 ? ncr.toString().substring(0, 12) + "..." : ncr.toLocaleString();
                 resNcr.dataset.full = ncr.toString();
-                
-            } catch(e) {
+
+            } catch (e) {
                 alert("Calculation error: Result may be too large.");
             }
         }
@@ -114,5 +270,5 @@
         calculate();
     </script>
 </body>
-</html>
 
+</html>

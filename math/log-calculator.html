@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logarithm Calculator | CalcSuit</title>
+    <title>Advanced Logarithm Calculator | CalcSuit</title>
     <meta name="description"
-        content="Free online logarithm calculator. Calculate log base 10, natural log, or any custom base.">
+        content="Professional logarithm calculator for any base, natural log (ln), and common log (log10). Includes detailed steps, rules, and change of base formulas.">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -27,298 +28,461 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="../images/favicon.png">
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dark .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .perc-input {
+            background: transparent;
+            border-bottom: 2px solid #e2e8f0;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .dark .perc-input {
+            border-bottom-color: #334155;
+        }
+
+        .perc-input:focus {
+            border-bottom-color: #38bdf8;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
 </head>
 
-<body
-    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+<main class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen p-4 md:p-8">
 
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+    <!-- Calculator Interface -->
+    <div class="m-auto glass-panel w-full max-w-4xl rounded-[2.5rem] shadow-2xl overflow-hidden mb-12">
+        <main class="p-8 md:p-12">
+            <div class="mb-10 text-center">
+                <h2 class="text-4xl font-light tracking-tight text-slate-900 dark:text-white">Logarithm <span
+                        class="font-bold text-sky-500">Calculator</span></h2>
+                <p class="text-slate-500 dark:text-slate-400 mt-2">Solve \(\log_b(x)\) with precision and detailed
+                    steps.
+                </p>
+            </div>
 
+            <div class="flex flex-col items-center space-y-8">
+                <!-- Mathematical Input Layout -->
+                <div
+                    class="flex flex-wrap items-center justify-center gap-4 py-10 px-6 bg-slate-50/50 dark:bg-slate-800/30 rounded-[2rem] w-full border border-slate-100 dark:border-slate-700/50">
 
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
-            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2
-                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
-                            Logarithm Calc</h2>
-                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate logarithms for any base
-                            computationally.</p>
+                    <div class="flex flex-col items-end">
+                        <span
+                            class="text-6xl font-serif italic text-slate-300 dark:text-slate-600 select-none">log</span>
                     </div>
+
+                    <!-- Base Input -->
+                    <div class="w-20 -mt-2">
+                        <label
+                            class="block text-[10px] font-bold text-sky-500 uppercase tracking-tighter mb-1 text-center">Base
+                            (b)</label>
+                        <input type="number" id="log-base" class="perc-input w-full text-center font-bold text-xl py-1"
+                            value="10" placeholder="10">
+                    </div>
+
+                    <div class="text-6xl font-extralight text-slate-300 dark:text-slate-700">(</div>
+
+                    <!-- Argument Input -->
+                    <div class="w-32">
+                        <label
+                            class="block text-[10px] font-bold text-sky-500 uppercase tracking-tighter mb-1 text-center">Number
+                            (x)</label>
+                        <input type="number" id="log-number"
+                            class="perc-input w-full text-center font-bold text-3xl py-1" placeholder="100">
+                    </div>
+
+                    <div class="text-6xl font-extralight text-slate-300 dark:text-slate-700">)</div>
                 </div>
 
-                <div class="max-w-xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
-                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
-                        <div class="flex items-end justify-center gap-4 mb-2">
-                            <span class="text-5xl font-serif italic text-slate-400 mb-2">log</span>
-                            <div class="flex flex-col items-center w-24">
-                                <label
-                                    class="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Base</label>
-                                <input type="number" id="log-base"
-                                    class="perc-input w-full text-center font-bold text-lg py-2" value="10"
-                                    placeholder="10">
-                            </div>
-                            <span class="text-4xl font-light text-slate-400 mb-2">(</span>
-                            <div class="flex flex-col items-center w-32">
-                                <label
-                                    class="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Number</label>
-                                <input type="number" id="log-number"
-                                    class="perc-input w-full text-center font-bold text-2xl py-2" placeholder="100">
-                            </div>
-                            <span class="text-4xl font-light text-slate-400 mb-2">)</span>
-                        </div>
-                    </div>
-
-                    <div id="log-results-area"
-                        class="hidden opacity-0 flex flex-col items-center justify-center gap-4 mt-4 transition-all duration-500">
-                        <div class="text-4xl font-light text-slate-400">=</div>
-                        <div
-                            class="glass-display w-full p-8 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30">
-                            <button
-                                class="copy-trigger absolute top-3 right-3 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                                data-target="log-res-value"><i class="fas fa-copy"></i></button>
-                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2">Result
-                            </div>
-                            <div class="text-5xl font-bold text-sky-600 dark:text-sky-400 break-all" id="log-res-value">
-                                &mdash;</div>
-                        </div>
-                    </div>
+                <!-- Shortcuts -->
+                <div class="flex gap-3">
+                    <button onclick="setBase('10')"
+                        class="px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 text-xs font-semibold hover:bg-sky-500 hover:text-white transition-all">Base
+                        10</button>
+                    <button onclick="setBase('2.71828')"
+                        class="px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 text-xs font-semibold hover:bg-sky-500 hover:text-white transition-all">Natural
+                        (e)</button>
+                    <button onclick="setBase('2')"
+                        class="px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 text-xs font-semibold hover:bg-sky-500 hover:text-white transition-all">Binary
+                        (2)</button>
                 </div>
 
+                <!-- Action Button -->
+                <button id="calc-btn"
+                    class="w-full max-w-xs bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-sky-500/20 transition-all transform hover:-translate-y-1">
+                    Calculate Result
+                </button>
+
+                <!-- Result Display -->
+                <div id="log-results-area" class="hidden w-full space-y-4">
+                    <div class="flex items-center justify-center">
+                        <div class="h-[1px] bg-slate-200 dark:bg-slate-700 flex-1"></div>
+                        <span class="px-4 text-slate-400 text-sm font-mono">RESULT</span>
+                        <div class="h-[1px] bg-slate-200 dark:bg-slate-700 flex-1"></div>
+                    </div>
+                    <div class="glass-panel p-8 rounded-3xl text-center group relative border-2 border-sky-400/20">
+                        <div class="text-6xl font-bold text-sky-600 dark:text-sky-400" id="log-res-value">&mdash;</div>
+                        <p id="step-desc" class="mt-4 text-slate-500 italic text-sm"></p>
+                    </div>
+                </div>
             </div>
         </main>
+    </div>
+
+    <!-- SEO & EDUCATIONAL CONTENT -->
+    <div class="m-auto w-full max-w-4xl space-y-12">
+
+        <!-- Section 1: Detailed Introduction -->
+        <section class="glass-panel p-8 md:p-12 rounded-[2.5rem]">
+            <h2 class="text-3xl font-bold mb-6">Mastering Logarithms: The Ultimate Guide</h2>
+            <p class="leading-relaxed mb-6">
+                A logarithm is fundamentally a way to answer the question: <strong>"To what power must we raise a base
+                    (b) to get a specific number (x)?"</strong>. While basic arithmetic covers addition and
+                multiplication, logarithms allow us to navigate the world of exponential growth, decay, and complex data
+                scaling.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8 mt-10">
+                <div
+                    class="bg-white/50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
+                    <h3 class="text-xl font-bold text-sky-500 mb-3">The Mathematical Definition</h3>
+                    <p class="text-sm">If \(b^y = x\), then \(\log_b(x) = y\).</p>
+                    <ul class="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-400">
+                        <li>• \(b\): The base (must be positive and not 1).</li>
+                        <li>• \(x\): The argument (must be positive).</li>
+                        <li>• \(y\): The exponent or logarithmic value.</li>
+                    </ul>
+                </div>
+                <div
+                    class="bg-white/50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
+                    <h3 class="text-xl font-bold text-sky-500 mb-3">Common Logarithm Types</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><strong>Common Log (\(\log_{10}\) ):</strong> Used in science for pH levels and Richter
+                            scales.</li>
+                        <li><strong>Natural Log (\(\ln\) ):</strong> Base\(e\) (approx. 2.718). Essential for calculus
+                            and finance.</li>
+                        <li><strong>Binary Log (\(\log_2\) ):</strong> The backbone of computer science and data
+                            theory.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Properties & Rules -->
+        <section class="p-4 md:p-8">
+            <h2 class="text-3xl font-bold mb-8 text-center">Fundamental Logarithm Rules</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Rule 1 -->
+                <div class="glass-panel p-6 rounded-2xl border-t-4 border-sky-500">
+                    <h4 class="font-bold mb-2">Product Rule</h4>
+                    <p class="text-xs text-slate-500 mb-2">
+                        \[ \log_b(M \cdot N) = \log_b(M) + \log_b(N) \]
+                    </p>
+                    <p class="text-sm">Log of a product is the sum of logs. Useful for simplifying large
+                        multiplications.</p>
+                </div>
+                <!-- Rule 2 -->
+                <div class="glass-panel p-6 rounded-2xl border-t-4 border-sky-500">
+                    <h4 class="font-bold mb-2">Quotient Rule</h4>
+                    <p class="text-xs text-slate-500 mb-2">
+                        \[ \log_b(M / N) = \log_b(M) - \log_b(N) \]
+                    </p>
+                    <p class="text-sm">Log of a fraction is the difference of logs. Common in acoustic and decibel math.
+                    </p>
+                </div>
+                <!-- Rule 3 -->
+                <div class="glass-panel p-6 rounded-2xl border-t-4 border-sky-500">
+                    <h4 class="font-bold mb-2">Power Rule</h4>
+                    <p class="text-xs text-slate-500 mb-2">
+                        \[ \log_b(M^k) = k \cdot \log_b(M) \]
+                    </p>
+                    <p class="text-sm">Exponents can be moved to the front. This is how we solve for unknown variables
+                        in exponents.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Deep Dive Examples -->
+        <section class="glass-panel p-8 md:p-12 rounded-[2.5rem] bg-slate-900 text-white">
+            <h2 class="text-3xl font-bold mb-8">Step-by-Step Examples</h2>
+            <div class="space-y-8">
+                <div class="border-l-2 border-sky-500 pl-6">
+                    <h4 class="text-xl font-semibold mb-2">Example 1: Solving for Base 2</h4>
+                    <p class="text-slate-400 mb-2">Calculate \( \log_2(32) \)</p>
+                    <p class="text-sm italic text-sky-400">Step: Ask "2 to what power is 32?" -> \( 2 \times 2 \times 2
+                        \times 2 \times 2 = 32 \). Therefore, the answer is 5.</p>
+                </div>
+                <div class="border-l-2 border-sky-500 pl-6">
+                    <h4 class="text-xl font-semibold mb-2">Example 2: Change of Base Formula</h4>
+                    <p class="text-slate-400 mb-2">Calculate \( \log_3(10) \) using a standard calculator.</p>
+                    <p class="text-sm italic text-sky-400">Formula: \( \log_b(x) = \ln(x) / \ln(b) \) \( \ln(10) /
+                        \ln(3)
+                        \approx 2.302 / 1.098 = 2.095 \).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Real-world Applications -->
+        <section class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl font-bold mb-6">Where Are Logs Used?</h2>
+                <ul class="space-y-4">
+                    <li class="flex gap-4">
+                        <div class="bg-sky-100 dark:bg-sky-900/30 p-3 rounded-xl h-fit"><i
+                                class="fas fa-flask text-sky-500"></i></div>
+                        <div>
+                            <h5 class="font-bold">Chemistry (pH Scale)</h5>
+                            <p class="text-sm text-slate-500">pH is calculated as \(-\log[H^+]\). A change of 1 pH unit
+                                represents a 10-fold change in acidity.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <div class="bg-sky-100 dark:bg-sky-900/30 p-3 rounded-xl h-fit"><i
+                                class="fas fa-chart-line text-sky-500"></i></div>
+                        <div>
+                            <h5 class="font-bold">Finance (Compound Interest)</h5>
+                            <p class="text-sm text-slate-500">Used to determine how long it takes for an investment to
+                                double or triple using the Rule of 72.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <div class="bg-sky-100 dark:bg-sky-900/30 p-3 rounded-xl h-fit"><i
+                                class="fas fa-microchip text-sky-500"></i></div>
+                        <div>
+                            <h5 class="font-bold">Data Science</h5>
+                            <p class="text-sm text-slate-500">Feature scaling and normalizing skewed data distributions
+                                for machine learning models.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="bg-sky-500 p-1 rounded-[2rem] rotate-2 shadow-xl">
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-[1.8rem] -rotate-2">
+                    <h3 class="text-xl font-bold mb-4">Did You Know?</h3>
+                    <p class="text-sm leading-relaxed text-slate-500 italic">
+                        "Before electronic calculators, engineers used 'Slide Rules' and 'Log Tables' to perform complex
+                        multiplications. By converting numbers to their logarithmic forms, they could simply add the
+                        values instead of multiplying them!"
+                    </p>
+                </div>
+            </div>
+        </section>
+
     </div>
     <br>
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
+    <!-- SEO & EDUCATIONAL DEEP DIVE -->
+    <div class="m-auto w-full max-w-4xl space-y-16 pb-20">
 
-            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <header>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
-                        Logarithm Calculator – Calculate Logarithms for Any Base
-                    </h1>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        A logarithm calculator is a powerful online tool that helps you quickly compute logarithms for
-                        any base. Our free online log calculator allows you to calculate logarithmic values for base 10,
-                        base e (natural logarithm), or any custom base, providing instant and accurate results.
+        <!-- Section 1: Detailed Theory -->
+        <section class="glass-panel p-8 md:p-12 rounded-[2.5rem]">
+            <div class="max-w-3xl">
+                <h2 class="text-3xl font-bold mb-6 text-slate-900 dark:text-white">Understanding Logarithms: A Complete
+                    Guide</h2>
+                <div
+                    class="prose prose-slate dark:prose-invert max-w-none space-y-6 text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p>
+                        A <strong>logarithm</strong> is the inverse operation of exponentiation. Think of it as a
+                        mathematical "detective" tool used to find the exponent. If you have an equation like \(10^x =
+                        1000\), the logarithm is what helps you solve for \(x\). In this case, \(\log_{10}(1000) = 3\).
                     </p>
-                </header>
-                <br>
-
-                <div class="intro-section">
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        Whether you are a student studying mathematics, a teacher verifying logarithmic calculations, or
-                        a professional working with scientific data, this logarithm calculator online simplifies
-                        computations and saves time.
+                    <p>
+                        Logarithms were originally introduced by John Napier in the 17th century to simplify complex
+                        calculations. Before the invention of digital computers, scientists and navigators used
+                        <strong>log tables</strong> to convert difficult multiplication problems into simple addition
+                        problems. Today, they remain the backbone of data science, chemistry, and financial modeling.
                     </p>
                 </div>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a
-                        Logarithm?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        A logarithm is the inverse operation of exponentiation. In other words, if $$b^y = x$$, then:
-                    </p>
-
-
-
-                    <p
-                        class="text-xl font-mono text-center text-slate-800 dark:text-white my-6 bg-slate-100 dark:bg-slate-800 p-4 rounded-xl">
-                        $$\log_b(x) = y$$
-                    </p>
-
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-2">Where:</p>
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6 mb-4">
-                        <li><strong>b</strong> is the base ($$b > 0, b \neq 1$$)</li>
-                        <li><strong>x</strong> is the number you want to find the logarithm of</li>
-                        <li><strong>y</strong> is the exponent</li>
-                    </ul>
-
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-2">Examples:</p>
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
-                        <li>$$\log_2(8) = 3$$, because $$2^3 = 8$$</li>
-                        <li>$$\log_{10}(1000) = 3$$, because $$10^3 = 1000$$</li>
-                        <li>$$\ln(e^5) = 5$$, where <strong>ln</strong> is the natural logarithm (base
-                            <strong>e</strong>)
-                        </li>
-                    </ul>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Why Use an Online
-                        Logarithm Calculator?</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Instant Results</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Calculates logarithmic values
-                                immediately without the need for manual table lookups or complex formulas.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">High Accuracy</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Ensures precision in scientific and
-                                financial data where manual rounding errors can cause issues.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Completely free to use on any device,
-                                making it perfect for students and professionals on the go.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Supports Any Base</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Easily switch between Common Log (base
-                                10), Natural Log (base e), or your own custom base values.</p>
-                        </div>
-                    </div>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
-                        Logarithm Calculator</h2>
-                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
-                        <li>Enter the number you want to calculate the logarithm of.</li>
-                        <li>Select the base (default options include <strong>10</strong>, <strong>e</strong>, or enter a
-                            <strong>custom base</strong>).
-                        </li>
-                        <li>Click the <strong>Calculate</strong> button.</li>
-                        <li>Instantly view the accurate logarithmic result.</li>
-                    </ol>
-                </section>
-                <br>
-
-                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Simplify your math today!</h2>
-                    <p class="text-slate-500 dark:text-slate-400">
-                        Try the logarithm calculator online and make your exponential and logarithmic computations
-                        effortless.
-                    </p>
-                </section>
-
-                <footer>
-                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
-                        &copy; 2026 Logarithm Calculator Tool. All rights reserved.
-                    </p>
-                </footer>
             </div>
-        </main>
-    </div>
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
 
-            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <header>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
-                        Logarithm Calculator – Calculate Logarithms for Any Base
-                    </h1>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        A logarithm calculator is a powerful online tool that helps you quickly compute logarithms for
-                        any base. Our free online log calculator allows you to calculate logarithmic values for base 10,
-                        base e (natural logarithm), or any custom base, providing instant and accurate results.
-                    </p>
-                </header>
-                <br>
+            <div class="grid md:grid-cols-2 gap-6 mt-12">
+                <div class="p-6 rounded-3xl bg-sky-50 dark:bg-sky-900/10 border border-sky-100 dark:border-sky-800">
+                    <h3 class="text-lg font-bold text-sky-600 dark:text-sky-400 mb-2">The Common Logarithm</h3>
+                    <p class="text-sm">Base 10 logarithms, written as \(\log(x)\), are standard in science and
+                        engineering. They form the basis of the decibel scale and pH levels.</p>
+                </div>
+                <div
+                    class="p-6 rounded-3xl bg-indigo-50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-800">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 mb-2">The Natural Logarithm</h3>
+                    <p class="text-sm">Base \(e\) (Euler's number \(\approx 2.718\)) logarithms, written as \(\ln(x)\),
+                        are
+                        used in calculus and to describe natural growth or decay.</p>
+                </div>
+            </div>
+        </section>
 
-                <div class="intro-section">
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        Whether you are a student studying mathematics, a teacher verifying logarithmic calculations, or
-                        a professional working with scientific data, this logarithm calculator online simplifies
-                        computations and saves time.
+        <!-- Section 2: Mathematical Laws (Grid) -->
+        <section>
+            <h2 class="text-2xl font-bold mb-8 text-center text-slate-800 dark:text-white">Core Logarithmic Identities
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Law 1 -->
+                <div class="glass-panel p-8 rounded-[2rem] border-l-4 border-sky-500">
+                    <span class="text-xs font-bold text-sky-500 uppercase tracking-widest">Rule #1</span>
+                    <h4 class="text-xl font-bold mt-1 mb-3">Product Rule</h4>
+                    <p class="text-sm text-slate-500 mb-4">\(\log_b(M \cdot N) = \log_b(M) + \log_b(N)\)</p>
+                    <p class="text-sm leading-relaxed">The logarithm of a product is equal to the sum of the logarithms
+                        of its factors. This rule allows you to break down massive numbers into manageable parts.</p>
+                </div>
+                <!-- Law 2 -->
+                <div class="glass-panel p-8 rounded-[2rem] border-l-4 border-indigo-500">
+                    <span class="text-xs font-bold text-indigo-500 uppercase tracking-widest">Rule #2</span>
+                    <h4 class="text-xl font-bold mt-1 mb-3">Power Rule</h4>
+                    <p class="text-sm text-slate-500 mb-4">\(\log_b(M^k) = k \cdot \log_b(M)\)</p>
+                    <p class="text-sm leading-relaxed">This is the "magic" rule of logs. It allows you to move an
+                        exponent to the front of the equation, turning an exponential problem into a multiplication
+                        problem.</p>
+                </div>
+                <!-- Law 3 -->
+                <div class="glass-panel p-8 rounded-[2rem] border-l-4 border-emerald-500">
+                    <span class="text-xs font-bold text-emerald-500 uppercase tracking-widest">Rule #3</span>
+                    <h4 class="text-xl font-bold mt-1 mb-3">Quotient Rule</h4>
+                    <p class="text-sm text-slate-500 mb-4">\(\log_b(M/N) = \log_b(M) - \log_b(N)\)</p>
+                    <p class="text-sm leading-relaxed">Similar to the product rule, the log of a division is simply the
+                        difference between the two logs. Essential for calculating signal loss in telecommunications.
                     </p>
                 </div>
-                <br>
+                <!-- Law 4 -->
+                <div class="glass-panel p-8 rounded-[2rem] border-l-4 border-orange-500">
+                    <span class="text-xs font-bold text-orange-500 uppercase tracking-widest">Rule #4</span>
+                    <h4 class="text-xl font-bold mt-1 mb-3">Change of Base</h4>
+                    <p class="text-sm text-slate-500 mb-4">\(\log_b(x) = \log_k(x) / \log_k(b)\)</p>
+                    <p class="text-sm leading-relaxed">This formula is what makes our calculator so versatile. It allows
+                        us to calculate any custom base using standard mathematical functions.</p>
+                </div>
+            </div>
+        </section>
 
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a
-                        Logarithm?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        A logarithm is the inverse operation of exponentiation. In other words, if <strong>b<sup>y</sup>
-                            = x</strong>, then <strong>log<sub>b</sub>(x) = y</strong>.
-                    </p>
-
-
-
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4 mb-2">Where:</p>
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6 mb-4">
-                        <li><strong>b</strong> is the base (b > 0, b ≠ 1)</li>
-                        <li><strong>x</strong> is the number you want to find the logarithm of</li>
-                        <li><strong>y</strong> is the exponent</li>
-                    </ul>
-
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-2">Examples:</p>
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
-                        <li>log<sub>2</sub>(8) = 3, because 2<sup>3</sup> = 8</li>
-                        <li>log<sub>10</sub>(1000) = 3, because 10<sup>3</sup> = 1000</li>
-                        <li>ln(e<sup>5</sup>) = 5, where <strong>ln</strong> is the natural logarithm (base e)</li>
-                    </ul>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Why Use an Online
-                        Logarithm Calculator?</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Instant Results</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Calculates logarithmic values
-                                immediately without manual computation.</p>
+        <!-- Section 3: Real World Use Cases -->
+        <section class="glass-panel p-8 md:p-12 rounded-[2.5rem] bg-slate-900 text-white overflow-hidden relative">
+            <div class="relative z-10">
+                <h2 class="text-3xl font-bold mb-10">Real-World Applications</h2>
+                <div class="space-y-12">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="flex-1">
+                            <h5 class="text-sky-400 font-bold uppercase tracking-tighter mb-2">01. Finance & Compound
+                                Interest</h5>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                Logarithms are used to calculate the time required to reach a specific financial goal.
+                                If you want to know how many years it will take for an investment to triple at a 5%
+                                interest rate, logarithms provide the exact answer.
+                            </p>
                         </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Highly Accurate</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Avoid the complexity of manual logs;
-                                the calculator ensures precise results for any base.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Completely free to use with no
-                                registration, accessible on smartphones, tablets, and desktops.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Versatile Features</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Perfect for math homework, scientific
-                                research, and complex engineering formulas.</p>
+                        <div class="flex-1">
+                            <h5 class="text-sky-400 font-bold uppercase tracking-tighter mb-2">02. The Richter Scale
+                            </h5>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                Earthquake intensity is measured logarithmically. A magnitude 7 earthquake is 10 times
+                                more intense than a magnitude 6. Without logs, we would be dealing with numbers in the
+                                trillions to describe seismic waves.
+                            </p>
                         </div>
                     </div>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
-                        Logarithm Calculator</h2>
-                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
-                        <li>Enter the number you want to calculate the logarithm of.</li>
-                        <li>Select the base (options include 10, e, or a custom base).</li>
-                        <li>Click the <strong>Calculate</strong> button.</li>
-                        <li>Instantly view the accurate logarithmic result.</li>
-                    </ol>
-                </section>
-                <br>
-
-                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Simplify your calculations!</h2>
-                    <p class="text-slate-500 dark:text-slate-400">
-                        Try the online logarithm calculator today and simplify your exponential and scientific math
-                        problems.
-                    </p>
-                </section>
-
-                <footer>
-                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
-                        &copy; 2026 Logarithm Calculator Tool. All rights reserved.
-                    </p>
-                </footer>
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="flex-1">
+                            <h5 class="text-sky-400 font-bold uppercase tracking-tighter mb-2">03. Computer Science</h5>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                In algorithm analysis, "Logarithmic Time Complexity" (\(O(\log n)\)) represents the
+                                gold
+                                standard of efficiency. It’s how Google searches billions of pages in milliseconds.
+                            </p>
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="text-sky-400 font-bold uppercase tracking-tighter mb-2">04. Chemistry (pH Levels)
+                            </h5>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                The acidity of a liquid is the negative base-10 logarithm of hydrogen ion concentration.
+                                Logarithms turn tiny, complex decimal concentrations into a simple 0-14 scale.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </main>
+            <!-- Decorative Background Element -->
+            <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl"></div>
+        </section>
+
+        <!-- Section 4: FAQ Step-by-Step -->
+        <section class="max-w-3xl mx-auto">
+            <h2 class="text-2xl font-bold mb-8 text-center text-slate-800 dark:text-white">Frequently Asked Questions
+            </h2>
+            <div class="space-y-4">
+                <details class="group glass-panel rounded-2xl p-6 cursor-pointer" open>
+                    <summary class="flex justify-between items-center font-bold text-slate-700 dark:text-slate-200">
+                        Can the logarithm of a number be negative?
+                        <span class="text-sky-500 group-open:rotate-180 transition-transform">▼</span>
+                    </summary>
+                    <p class="mt-4 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                        Yes! If the argument (the number) is between 0 and 1, the result will be negative. For example,
+                        \(\log_{10}(0.1) = -1\). This happens because you are essentially asking for a reciprocal power.
+                    </p>
+                </details>
+                <details class="group glass-panel rounded-2xl p-6 cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-slate-700 dark:text-slate-200">
+                        Why can't the base be 1?
+                        <span class="text-sky-500 group-open:rotate-180 transition-transform">▼</span>
+                    </summary>
+                    <p class="mt-4 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                        If the base were 1, then \(1^y = x\). Since 1 raised to any power is always 1, you could never
+                        get
+                        any other value for \(x\). This makes the function constant and mathematically useless for
+                        logarithmic operations.
+                    </p>
+                </details>
+                <details class="group glass-panel rounded-2xl p-6 cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-slate-700 dark:text-slate-200">
+                        What is an "Antilog"?
+                        <span class="text-sky-500 group-open:rotate-180 transition-transform">▼</span>
+                    </summary>
+                    <p class="mt-4 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                        The antilogarithm is simply the exponential form. If \(\log_b(x) = y\), then the antilog of
+                        \(y\) is
+                        \(x\), which is calculated as \(b^y\). It’s the "undo" button for a logarithm.
+                    </p>
+                </details>
+            </div>
+        </section>
     </div>
+
+    <script>
+        function setBase(val) {
+            document.getElementById('log-base').value = val;
+        }
+
+        document.getElementById('calc-btn').addEventListener('click', () => {
+            const base = parseFloat(document.getElementById('log-base').value);
+            const num = parseFloat(document.getElementById('log-number').value);
+            const resultArea = document.getElementById('log-results-area');
+            const resValue = document.getElementById('log-res-value');
+            const stepDesc = document.getElementById('step-desc');
+
+            if (isNaN(base) || isNaN(num) || base <= 0 || base === 1 || num <= 0) {
+                alert("Please enter valid positive numbers. Base cannot be 1.");
+                return;
+            }
+
+            const logResult = Math.log(num) / Math.log(base);
+
+            // Animation
+            resultArea.classList.remove('hidden');
+            resValue.innerText = Number.isInteger(logResult) ? logResult : logResult.toFixed(6);
+            stepDesc.innerText = `Because ${base} raised to the power of ${resValue.innerText} equals ${num}.`;
+        });
+    </script>
     <script src="../js/layout.js"></script>
-    <script src="../js/calculators/log.js"></script>
-</body>
+</main>
 
 </html>

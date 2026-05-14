@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Standard Deviation Calculator | CalcSuit</title>
+    <title>Standard Deviation Calculator | Statistics & Variance Tool | CalcSuit</title>
     <meta name="description"
-        content="Free online standard deviation calculator. Calculate sample and population standard deviation, variance, and mean.">
+        content="Calculate sample and population standard deviation, variance, and mean. Master statistics with our deep-dive guide on data dispersion and real-world uses.">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -27,210 +28,272 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .result-gradient {
+            background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
 </head>
 
-<body
-    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+<main
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 md:p-8 relative overflow-x-hidden">
 
+    <!-- MAIN CALCULATOR INTERFACE -->
     <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
+        class="m-auto w-full max-w-5xl rounded-[3rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col relative z-10 glass-card">
 
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
-            <div id="calc-view" class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2
-                            class="text-3xl font-light tracking-tight pb-2 border-b border-slate-200 dark:border-slate-700/50 inline-block pr-8">
-                            Standard Deviation</h2>
-                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Calculate sample and population
-                            standard deviation (&sigma;), variance, and mean.</p>
+        <main class="p-6 md:p-14">
+            <div class="mb-10 text-center">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs font-black uppercase tracking-widest mb-6">
+                    <i class="fas fa-chart-line"></i> Statistics Engine 2.0
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black tracking-tighter text-slate-900 dark:text-white mb-4">
+                    Standard <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-indigo-500">Deviation</span>
+                </h1>
+                <p class="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto">Analyze the spread and
+                    volatility of your data with scientific precision.</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto w-full">
+                <!-- Data Entry -->
+                <div class="relative group mb-8">
+                    <div
+                        class="absolute -inset-1 bg-gradient-to-r from-sky-500 to-indigo-500 rounded-[2rem] blur opacity-20 group-hover:opacity-40 transition duration-1000">
+                    </div>
+                    <div class="relative glass-card p-6 md:p-8 rounded-[2rem] shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <label class="text-xs font-black uppercase text-slate-400 tracking-widest">Input Data
+                                Set</label>
+                            <span
+                                class="text-[10px] text-indigo-500 font-bold bg-indigo-50 dark:bg-indigo-900/40 px-2 py-1 rounded">Auto-parsing
+                                Enabled</span>
+                        </div>
+                        <textarea id="std-input" rows="5"
+                            class="w-full bg-transparent text-xl font-medium outline-none border-b-2 border-slate-100 dark:border-slate-700 focus:border-sky-500 transition-all placeholder:text-slate-300 resize-none"
+                            placeholder="e.g., 85, 90, 78, 92, 88"></textarea>
+                        <div class="mt-4 flex flex-wrap gap-4 text-[11px] text-slate-400 font-bold uppercase">
+                            <span class="flex items-center gap-1"><i class="fas fa-keyboard text-sky-500"></i> Delimit
+                                by space or comma</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col pt-4 overflow-y-auto pr-2 custom-scrollbar">
-                    <div class="glass-panel p-6 sm:p-8 rounded-3xl mb-6 shadow-lg border-l-4 border-l-sky-400">
-                        <label
-                            class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Enter
-                            Numbers</label>
-                        <p class="text-xs text-slate-400 mb-4">Values should be separated by commas, spaces, or
-                            newlines.</p>
-                        <textarea id="std-input" rows="4"
-                            class="perc-input w-full font-medium text-lg py-3 px-4 resize-y leading-relaxed"
-                            placeholder="10, 25, 42, 100..."></textarea>
+                <!-- Action Button (Mobile Focused) -->
+                <button id="calc-btn"
+                    class="w-full py-5 mb-8 rounded-2xl result-gradient text-white font-black text-lg shadow-xl shadow-indigo-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3">
+                    <i class="fas fa-calculator"></i> Run Analysis
+                </button>
+
+                <!-- Advanced Results Dashboard -->
+                <div id="std-results-area"
+                    class="hidden opacity-0 grid grid-cols-1 md:grid-cols-2 gap-4 transition-all duration-700">
+                    <!-- Primary Result -->
+                    <div
+                        class="md:col-span-2 p-8 rounded-[2.5rem] result-gradient text-white text-center shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-20 text-6xl italic font-black">σ</div>
+                        <div class="text-xs font-black uppercase tracking-[0.3em] mb-2 opacity-80">Population Standard
+                            Deviation</div>
+                        <div class="text-6xl md:text-7xl font-black" id="std-res-pop">0.00</div>
                     </div>
 
-                    <div id="std-results-area"
-                        class="hidden opacity-0 grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2 transition-all duration-500">
-                        <div
-                            class="glass-display p-6 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30">
-                            <button
-                                class="copy-trigger absolute top-3 right-3 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                                data-target="std-res-sample"><i class="fas fa-copy"></i></button>
-                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">Sample Std
-                                Dev (s)</div>
-                            <div class="text-4xl font-bold text-sky-600 dark:text-sky-400 break-all"
-                                id="std-res-sample">&mdash;</div>
-                        </div>
-
-                        <div
-                            class="glass-display p-6 rounded-3xl text-center group relative border border-sky-100 dark:border-sky-900/30">
-                            <button
-                                class="copy-trigger absolute top-3 right-3 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                                data-target="std-res-pop"><i class="fas fa-copy"></i></button>
-                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">Population
-                                Std Dev (&sigma;)</div>
-                            <div class="text-4xl font-bold text-sky-600 dark:text-sky-400 break-all" id="std-res-pop">
-                                &mdash;</div>
-                        </div>
-
-                        <div class="glass-display p-4 rounded-3xl text-center group relative">
-                            <button
-                                class="copy-trigger absolute top-3 right-3 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                                data-target="std-res-var"><i class="fas fa-copy"></i></button>
-                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">Sample
-                                Variance (s&sup2;)</div>
-                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-200" id="std-res-var">&mdash;
-                            </div>
-                        </div>
-
-                        <div class="glass-display p-4 rounded-3xl text-center group relative">
-                            <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">Mean (&mu;
-                                / x&#772;)</div>
-                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-200" id="std-res-mean">&mdash;
-                            </div>
-                        </div>
+                    <div class="glass-card p-6 rounded-[2rem] border-l-4 border-l-sky-500">
+                        <div class="text-[10px] font-black uppercase text-slate-400 mb-1">Sample Std. Dev (s)</div>
+                        <div class="text-3xl font-bold text-slate-900 dark:text-white" id="std-res-sample">0.00</div>
                     </div>
 
+                    <div class="glass-card p-6 rounded-[2rem] border-l-4 border-l-indigo-500">
+                        <div class="text-[10px] font-black uppercase text-slate-400 mb-1">Variance (s²)</div>
+                        <div class="text-3xl font-bold text-slate-900 dark:text-white" id="std-res-var">0.00</div>
+                    </div>
+
+                    <div
+                        class="glass-card p-6 rounded-[2rem] border-l-4 border-l-emerald-500 md:col-span-2 flex justify-between items-center">
+                        <div>
+                            <div class="text-[10px] font-black uppercase text-slate-400 mb-1">Arithmetic Mean (μ)</div>
+                            <div class="text-3xl font-bold text-slate-900 dark:text-white" id="std-res-mean">0.00</div>
+                        </div>
+                        <i class="fas fa-divide text-emerald-500/20 text-4xl"></i>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
-    <br>
-    <div id="app-container"
-        class="m-auto glass-panel w-full max-w-5xl rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row min-h-[650px] relative z-10 transition-all duration-300">
-        <main
-            class="flex-1 p-6 md:p-10 lg:p-12 relative overflow-y-auto bg-white/10 dark:bg-slate-900/10 backdrop-blur-md">
 
-            <div class="calculator-view active h-full flex flex-col transition-opacity duration-300">
-                <header>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">
-                        Standard Deviation Calculator – Calculate Sample & Population σ, Variance, and Mean
-                    </h1>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        A standard deviation calculator is a powerful online tool that helps you analyze data sets by
-                        calculating sample and population standard deviation (σ), variance, and mean quickly and
-                        accurately. Our free online standard deviation calculator simplifies complex statistical
-                        calculations, making it easy to understand and interpret data.
+    <!-- SEO & EDUCATIONAL DEEP DIVE (800+ Words) -->
+    <section class="mt-20 w-full max-w-5xl mx-auto space-y-16 pb-20 px-4">
+        <article
+            class="glass-card p-8 md:p-20 rounded-[4rem] shadow-2xl border border-white/40 dark:border-slate-800/40">
+
+            <header class="mb-20 text-center">
+                <h2 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6">The Science of <span
+                        class="text-sky-500">Deviation</span></h2>
+                <p class="text-xl text-slate-500 max-w-3xl mx-auto leading-relaxed">
+                    Standard deviation is the most powerful tool in a statistician's arsenal. It moves beyond the
+                    "average" to tell you the <strong>truth about consistency.</strong>
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                <div class="space-y-8">
+                    <h3 class="text-3xl font-bold text-slate-800 dark:text-white">1. What Exactly is Standard Deviation?
+                    </h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                        Imagine two archers. Both hit the bullseye on average. Archer A's arrows are all clustered
+                        within an inch of the center. Archer B's arrows are scattered across the whole target, but their
+                        "average" position is still the center.
                     </p>
-                </header>
-                <br>
-
-                <div class="intro-section">
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl">
-                        Whether you are a student studying statistics, a teacher verifying results, or a professional
-                        analyzing data, this statistics calculator online provides fast and reliable results for all
-                        your statistical needs.
+                    <p class="text-slate-600 dark:text-slate-400">
+                        The <strong>Standard Deviation (SD)</strong> is the math that tells us Archer A is a pro and
+                        Archer B is lucky. It measures the "typical" distance between each data point and the mean.
                     </p>
-                </div>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is Standard
-                        Deviation?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        Standard deviation (σ) is a key statistical measure that quantifies the amount of variation or
-                        dispersion in a set of numbers. A low standard deviation means the values are close to the mean,
-                        while a high standard deviation indicates that the data points are spread out over a wider
-                        range.
-                    </p>
-
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mt-4">Standard deviation is commonly used in
-                        statistics, finance, research analysis, and quality control.</p>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">What Is a Standard
-                        Deviation Calculator?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-5xl mb-4">
-                        Our online tool automatically performs the heavy lifting for your statistical analysis,
-                        instantly providing:
-                    </p>
-                    <ul class="text-slate-500 dark:text-slate-400 max-w-5xl list-disc ml-6">
-                        <li><strong>Sample Standard Deviation (s)</strong> – Used for a subset of a larger group.</li>
-                        <li><strong>Population Standard Deviation (σ)</strong> – Used for an entire data population.
+                    <ul class="space-y-4">
+                        <li class="flex gap-3"><i class="fas fa-caret-right text-sky-500 mt-1"></i> <span><strong>Low
+                                    SD:</strong> Data points are tightly packed around the mean (Consistent).</span>
                         </li>
-                        <li><strong>Variance</strong> – The square of the standard deviation.</li>
-                        <li><strong>Mean (Average)</strong> – The arithmetic average of your data set.</li>
+                        <li class="flex gap-3"><i class="fas fa-caret-right text-sky-500 mt-1"></i> <span><strong>High
+                                    SD:</strong> Data points are spread far apart (Volatile).</span></li>
                     </ul>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">Why Use an Online
-                        Standard Deviation Calculator?</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Fast and Accurate</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Calculates σ, s, variance, and mean
-                                instantly, saving you from long manual formulas.</p>
+                </div>
+                <div class="bg-slate-900 rounded-[2.5rem] p-10 text-white relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 blur-3xl rounded-full"></div>
+                    <h4 class="text-sky-400 font-black uppercase text-xs tracking-widest mb-6">The Formula Deck</h4>
+                    <div class="space-y-6 font-mono text-sm">
+                        <div>
+                            <p class="text-slate-400 mb-2">// Population Standard Deviation</p>
+                            <p class="text-xl">σ = √[ Σ(x - μ)² / N ]</p>
                         </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Reduces Manual Errors</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Statistical formulas are complex;
-                                using a digital tool ensures precision for every data set.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Free & Accessible</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">No registration required. Works
-                                perfectly on smartphones, tablets, and desktop computers.</p>
-                        </div>
-                        <div class="feature-item p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <h3 class="font-bold text-slate-800 dark:text-white">Instant Data Insight</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Perfect for students, teachers, data
-                                analysts, and researchers across all fields.</p>
+                        <div class="pt-6 border-t border-white/10">
+                            <p class="text-slate-400 mb-2">// Sample Standard Deviation</p>
+                            <p class="text-xl">s = √[ Σ(x - x̄)² / (n - 1) ]</p>
                         </div>
                     </div>
-                </section>
-                <br>
-
-                <section>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-4">How to Use the
-                        Standard Deviation Calculator</h2>
-                    <ol class="text-slate-500 dark:text-slate-400 max-w-5xl list-decimal ml-6">
-                        <li>Enter your data set separated by commas, spaces, or line breaks.</li>
-                        <li>Select whether your data represents a <strong>sample</strong> or a
-                            <strong>population</strong>.
-                        </li>
-                        <li>Click the <strong>Calculate</strong> button.</li>
-                        <li>Instantly view the mean, variance, and standard deviation results.</li>
-                    </ol>
-                </section>
-                <br>
-
-                <section class="cta-section bg-slate-100 dark:bg-slate-800 p-8 rounded-2xl text-center">
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Make data analysis effortless!
-                    </h2>
-
-                    <p class="text-slate-500 dark:text-slate-400 mt-4">
-                        Try the standard deviation calculator today and get precise results for your assignments or
-                        research projects.
-                    </p>
-                </section>
-
-                <footer>
-                    <p style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #888;">
-                        &copy; 2026 Standard Deviation Calculator Tool. All rights reserved.
-                    </p>
-                </footer>
+                </div>
             </div>
-        </main>
-    </div>
+
+            <!-- New Interactive Section: Sample vs Population -->
+            <div
+                class="my-24 p-10 md:p-16 rounded-[3rem] bg-indigo-500/5 border border-indigo-200 dark:border-indigo-800">
+                <h3 class="text-3xl font-bold mb-8 text-center text-indigo-600 dark:text-indigo-400">The "Bessel's
+                    Correction" Mystery</h3>
+                <p class="mb-8 text-center max-w-3xl mx-auto">Why does our calculator have two different results? It’s
+                    all about <strong>Bessel's Correction</strong>.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="glass-card p-8 rounded-3xl">
+                        <h4 class="font-bold text-xl mb-4 text-slate-800 dark:text-white">Population (σ)</h4>
+                        <p class="text-sm text-slate-500">Use this when you have every single data point in existence
+                            for that group. Example: The heights of all 12 players on a specific basketball team.</p>
+                    </div>
+                    <div class="glass-card p-8 rounded-3xl">
+                        <h4 class="font-bold text-xl mb-4 text-slate-800 dark:text-white">Sample (s)</h4>
+                        <p class="text-sm text-slate-500">Use this when your data is just a "glimpse" of a bigger group.
+                            We divide by <strong>n-1</strong> to account for the fact that a small sample usually
+                            underestimates the true spread.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Application Section -->
+            <div class="space-y-16">
+                <h3 class="text-3xl font-bold text-center">Where is SD used in the real world?</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="group">
+                        <div class="mb-6 text-4xl text-sky-500 group-hover:scale-110 transition-transform"><i
+                                class="fas fa-vault"></i></div>
+                        <h4 class="text-xl font-bold mb-3">Investment Finance</h4>
+                        <p class="text-slate-500 text-sm leading-relaxed">Risk is measured by Standard Deviation. A
+                            stock with an SD of 2% is "safe," while a crypto coin with an SD of 15% is a
+                            "rollercoaster."</p>
+                    </div>
+                    <div class="group">
+                        <div class="mb-6 text-4xl text-indigo-500 group-hover:scale-110 transition-transform"><i
+                                class="fas fa-vial"></i></div>
+                        <h4 class="text-xl font-bold mb-3">Clinical Trials</h4>
+                        <p class="text-slate-500 text-sm leading-relaxed">When testing a new drug, scientists use SD to
+                            see if the drug works consistently for everyone or if the results are too "random" to be
+                            trusted.</p>
+                    </div>
+                    <div class="group">
+                        <div class="mb-6 text-4xl text-emerald-500 group-hover:scale-110 transition-transform"><i
+                                class="fas fa-industry"></i></div>
+                        <h4 class="text-xl font-bold mb-3">Manufacturing (Six Sigma)</h4>
+                        <p class="text-slate-500 text-sm leading-relaxed">Quality control engineers use SD to ensure
+                            that every smartphone screen or car engine part is built to the exact same millimeter.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Feature Section: The "Addictive" Extras -->
+            <div class="mt-32 pt-20 border-t border-slate-100 dark:border-slate-800">
+                <h3 class="text-4xl font-black mb-12 text-center">Why Power Users Choose CalcSuit</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="flex gap-6">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center text-white shadow-lg">
+                            <i class="fas fa-magic"></i></div>
+                        <div>
+                            <h5 class="text-xl font-bold mb-2">Clean-Paste Logic</h5>
+                            <p class="text-slate-500 text-sm">Copying data from a PDF or a messy email? Our tool
+                                automatically strips out text, special characters, and double-spaces to find the numbers
+                                hidden inside.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center text-white shadow-lg">
+                            <i class="fas fa-mobile-alt"></i></div>
+                        <div>
+                            <h5 class="text-xl font-bold mb-2">Zero-Latency Mobile UI</h5>
+                            <p class="text-slate-500 text-sm">Most calculators struggle with 100+ data points on mobile.
+                                Our engine is optimized for high-performance browser-side processing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-24 p-12 rounded-[4rem] bg-slate-900 text-center relative overflow-hidden">
+                <div class="absolute -top-24 -left-24 w-64 h-64 bg-indigo-500/20 blur-[100px] rounded-full"></div>
+                <h3 class="text-3xl font-black text-white mb-4 italic">"In God we trust. All others must bring data."
+                </h3>
+                <p class="text-slate-400 mb-10 max-w-lg mx-auto">W. Edwards Deming</p>
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                    class="px-10 py-4 bg-white text-slate-900 rounded-2xl font-black hover:scale-110 transition-all shadow-xl">Back
+                    to Top</button>
+            </div>
+
+        </article>
+    </section>
 
     <script src="../js/layout.js"></script>
     <script src="../js/calculators/stdev.js"></script>
-</body>
+</main>
 
 </html>

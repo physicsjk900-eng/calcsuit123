@@ -115,12 +115,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     function generateBreadcrumbs() {
         if (activeId === '/' || !currentTool) return '';
         return `
-            <nav class="w-full max-w-5xl mx-auto mb-6 px-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">
-                <a href="${rootPrefix}index.html" class="hover:text-indigo-500 transition-colors">Home</a>
-                <i class="fas fa-chevron-right text-[8px] opacity-30"></i>
-                <span class="text-slate-300">${currentTool.category}</span>
-                <i class="fas fa-chevron-right text-[8px] opacity-30"></i>
-                <span class="text-indigo-500">${currentTool.name}</span>
+            <nav class="w-full max-w-5xl mx-auto mb-6 px-4 flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-400 overflow-x-auto whitespace-nowrap no-scrollbar scroll-smooth">
+                <a href="${rootPrefix}index.html" class="hover:text-indigo-500 transition-colors shrink-0">Home</a>
+                <i class="fas fa-chevron-right text-[8px] opacity-30 shrink-0"></i>
+                <span class="text-slate-300 shrink-0">${currentTool.category}</span>
+                <i class="fas fa-chevron-right text-[8px] opacity-30 shrink-0"></i>
+                <span class="text-indigo-500 shrink-0">${currentTool.name}</span>
             </nav>
         `;
     }
@@ -261,8 +261,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (localStorage.getItem('cookie-consent')) return;
 
         const consentHtml = `
-            <div id="cookie-consent-banner" class="fixed bottom-0 left-0 right-0 p-4 md:p-0 md:bottom-6 md:right-6 md:left-auto md:max-w-md z-[100] transform translate-y-full opacity-0 transition-all duration-700 ease-out">
-                <div class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-slate-200 dark:border-slate-800 p-5 md:p-6 rounded-3xl md:rounded-[2rem] shadow-2xl shadow-indigo-500/20">
+            <div id="cookie-consent-banner" class="fixed bottom-0 left-0 right-0 p-4 md:p-0 md:bottom-6 md:right-6 md:left-auto md:max-w-md z-[9999] transform translate-y-full opacity-0 transition-all duration-700 ease-out pointer-events-none">
+                <div class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-slate-200 dark:border-slate-800 p-5 md:p-6 rounded-3xl md:rounded-[2rem] shadow-2xl shadow-indigo-500/20 pointer-events-auto">
                     <div class="flex items-start gap-4 mb-5">
                         <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-indigo-500 text-white flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/20">
                             <i class="fas fa-cookie-bite text-lg md:text-xl"></i>
@@ -400,47 +400,43 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 1. Inject SaaS Top Header HTML instead of Sidebar
     const headerHtml = `
-<header class="w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-[100] transition-all duration-300">
+<header class="w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800 sticky top-0 z-[100] transition-all duration-300">
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
-        <div class="flex justify-between items-center h-16">
+        <div class="flex justify-between items-center h-14 sm:h-16">
             
-            <!-- Logo -->
-            <div class="flex-shrink-0 flex items-center gap-3">
-                <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 flex items-center justify-center text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors bg-slate-50 dark:bg-slate-800 rounded-lg">
-                    <i class="fas fa-bars"></i>
+            <!-- Logo & Mobile Toggle -->
+            <div class="flex-shrink-0 flex items-center gap-2 sm:gap-3">
+                <button id="mobile-menu-btn" class="lg:hidden w-9 h-9 flex items-center justify-center text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors bg-slate-50 dark:bg-slate-800 rounded-lg">
+                    <i class="fas fa-bars text-sm"></i>
                 </button>
                 <div class="hidden sm:flex w-9 h-9 rounded-lg bg-indigo-600 items-center justify-center text-white shadow-sm shadow-indigo-500/20">
                     <i class="fas fa-calculator text-sm"></i>
                 </div>
-                <!-- Important: link back to root dashboard -->
-                <a href="${rootPrefix}index.html" class="text-xl font-bold tracking-tight text-slate-900 dark:text-white ml-2 sm:ml-0">
+                <a href="${rootPrefix}index.html" class="text-lg sm:text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                     Calc<span class="text-indigo-600 dark:text-indigo-400">Suit</span>
                 </a>
             </div>
 
             <!-- Desktop Nav -->
-            <nav class="hidden lg:flex space-x-6 h-16" id="desktop-nav" role="navigation" aria-label="Main Navigation">
+            <nav class="hidden lg:flex space-x-6 h-16" id="desktop-nav">
                 ${desktopNavHtml}
             </nav>
 
             <!-- Right Actions -->
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 sm:gap-4">
                 <div class="relative hidden sm:block w-48 xl:w-64">
-                    <span class="absolute left-1 top-1/2 -translate-y-1/2 text-slate-400"><i class="fas fa-search text-xs"></i></span>
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"><i class="fas fa-search text-xs"></i></span>
                     <input type="text" id="calc-search"
                         class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 pl-9 pr-4 text-sm text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all outline-none"
                         placeholder="Search tools...">
-                    
-                    <!-- Search Results Dropdown -->
-                    <div id="search-results" class="absolute top-full right-0 mt-2 w-72 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden hidden"></div>
                 </div>
 
                 <div class="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
 
                 <button id="theme-toggle"
-                    class="w-8 h-8 rounded-md flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors"
-                    aria-label="Toggle Dark Mode">
+                    class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors">
                     <i class="fas fa-moon text-sm dark:hidden"></i>
+                    <i class="fas fa-sun text-sm hidden dark:block"></i>
                 </button>
             </div>
         </div>
@@ -461,7 +457,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <div class="p-4 flex-1 pb-12">
+        <div class="p-5 flex flex-col gap-4">
+            <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"><i class="fas fa-search text-xs"></i></span>
+                <input type="text" id="mobile-search"
+                    class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-xl py-3 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
+                    placeholder="Search all tools...">
+            </div>
+            <a href="${rootPrefix}index.html" class="flex items-center gap-3 px-3 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm shadow-lg shadow-indigo-500/20">
+                <i class="fas fa-home w-5 text-center"></i> Dashboard Home
+            </a>
+            <div class="h-px bg-slate-100 dark:bg-slate-800 my-2"></div>
             ${mobileNavHtml}
         </div>
     </div>
@@ -469,11 +475,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     `;
 
     const footerHtml = `
-<footer class="w-full bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 mt-32 relative overflow-hidden transition-all duration-300">
+<footer class="w-full bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 mt-16 sm:mt-32 relative overflow-hidden transition-all duration-300">
     <!-- Decorative Authority Strip -->
     <div class="h-1 bg-gradient-to-r from-indigo-500 via-emerald-500 to-indigo-500 opacity-50"></div>
     
-    <div class="max-w-[1440px] mx-auto px-6 py-20 lg:px-10">
+    <div class="max-w-[1440px] mx-auto px-6 py-12 sm:py-20 lg:px-10">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
             
             <!-- Column 1: Brand & Bio -->
@@ -614,6 +620,47 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.body.prepend(sidebarContainer);
     }
 
+    // --- Helper: Global Style Injection for Responsiveness ---
+    function initGlobalStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            img { max-width: 100%; height: auto; border-radius: 1rem; }
+            .no-scrollbar::-webkit-scrollbar { display: none; }
+            .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            @media (max-width: 640px) {
+                h1 { font-size: 1.875rem !important; line-height: 2.25rem !important; }
+                h2 { font-size: 1.5rem !important; line-height: 2rem !important; }
+                .prose p { font-size: 1rem !important; line-height: 1.625rem !important; }
+            }
+            .back-to-top {
+                position: fixed; bottom: 2rem; right: 2rem;
+                background: #4f46e5; color: white;
+                width: 3rem; height: 3rem; border-radius: 1rem;
+                display: flex; align-items: center; justify-content: center;
+                cursor: pointer; z-index: 90; opacity: 0; visibility: hidden;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+            }
+            .back-to-top.visible { opacity: 1; visibility: visible; }
+            .back-to-top:hover { transform: translateY(-5px); background: #4338ca; }
+        `;
+        document.head.appendChild(style);
+
+        const btt = document.createElement('div');
+        btt.className = 'back-to-top';
+        btt.innerHTML = '<i class="fas fa-arrow-up"></i>';
+        document.body.appendChild(btt);
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) btt.classList.add('visible');
+            else btt.classList.remove('visible');
+        });
+
+        btt.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
     if (sidebarContainer) {
         sidebarContainer.innerHTML = headerHtml;
 
@@ -638,6 +685,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         initCookieConsent();
         initAnalytics();
         initSecurityHardening();
+        initGlobalStyles();
 
         const themeToggleBtn = document.getElementById('theme-toggle');
         if (themeToggleBtn) {

@@ -367,6 +367,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 <div class="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
 
+                <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700 transition-all hover:border-indigo-500/30 group">
+                    <i class="fas fa-language text-slate-400 group-hover:text-indigo-500 transition-colors"></i>
+                    <div id="google_translate_element_desktop"></div>
+                </div>
+
                 <button id="theme-toggle"
                     class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors">
                     <i class="fas fa-moon text-sm dark:hidden"></i>
@@ -398,6 +403,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-xl py-3 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
                     placeholder="Search all tools...">
             </div>
+            <div id="google_translate_element_mobile" class="mt-2"></div>
+        </div>
             <a href="${rootPrefix}index.html" class="flex items-center gap-3 px-3 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm shadow-lg shadow-indigo-500/20">
                 <i class="fas fa-home w-5 text-center"></i> Dashboard Home
             </a>
@@ -829,96 +836,57 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // 7. Global Multi-Language Translator Widget
-    const translateContainerHtml = `
-        <div id="google_translate_element" style="display:none;"></div>
-        <div class="fixed bottom-6 left-6 z-[200] group">
-            <button class="w-12 h-12 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-lg transition-all duration-300 hover:shadow-xl hover:text-indigo-600 dark:hover:text-indigo-400">
-                <i class="fas fa-language"></i>
-            </button>
-            <div class="absolute bottom-full left-0 mb-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-bottom-left scale-95 group-hover:scale-100">
-                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 min-w-[200px]">
-                    <div id="custom-translate-container" class="translate-wrapper"></div>
-                </div>
-            </div>
-        </div>
-        <style>
-            body { top: 0 !important; }
-            .skiptranslate.goog-te-banner-frame { display: none !important; }
-            #goog-gt-tt { display: none !important; }
-            .goog-tooltip, .goog-tooltip:hover { display: none !important; }
-            .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
-            #custom-translate-container .goog-te-combo { 
-                width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; 
-                background-color: #f8fafc; color: #334155; font-size: 13px; outline: none; cursor: pointer;
-            }
-            html.dark #custom-translate-container .goog-te-combo {
-                border-color: #334155; background-color: #0f172a; color: #e2e8f0;
-            }
-            .goog-logo-link { display: none !important; }
-            .goog-te-gadget { color: transparent !important; font-size: 0 !important; }
-            .goog-te-gadget .goog-te-combo { margin: 0 !important; }
-        </style>
-    `;
-
-    document.body.insertAdjacentHTML('beforeend', translateContainerHtml);
-
+    // 7. Global Multi-Language Translator Logic
     window.googleTranslateElementInit = function () {
         new google.translate.TranslateElement({
             pageLanguage: 'en',
             layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
             autoDisplay: false
-        }, 'custom-translate-container');
+        }, 'google_translate_element_desktop');
     };
 
-    // 8. Cookie Consent
-    function initCookieConsent() {
-        if (localStorage.getItem('cookie-consent-accepted')) return;
+    const style = document.createElement('style');
+    style.textContent = `
+        /* Hide Google Translate Bar and Branding */
+        body { top: 0 !important; }
+        .skiptranslate.goog-te-banner-frame { display: none !important; }
+        #goog-gt-tt { display: none !important; }
+        .goog-tooltip, .goog-tooltip:hover { display: none !important; }
+        .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
+        .goog-logo-link { display: none !important; }
+        .goog-te-gadget { color: transparent !important; font-size: 0 !important; }
+        
+        /* Custom Dropdown Styling */
+        .goog-te-combo {
+            background-color: #f8fafc !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 0.5rem !important;
+            padding: 0.4rem 0.75rem !important;
+            font-size: 0.75rem !important;
+            font-weight: 600 !important;
+            color: #475569 !important;
+            outline: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s !important;
+        }
+        .dark .goog-te-combo {
+            background-color: #1e293b !important;
+            border-color: #334155 !important;
+            color: #cbd5e1 !important;
+        }
+        .goog-te-combo:focus {
+            border-color: #6366f1 !important;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1) !important;
+        }
+    `;
+    document.head.appendChild(style);
 
-        const consentHtml = `
-            <div id="cookie-consent" class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-6 rounded-[2rem] z-[300] flex flex-col md:flex-row items-center gap-6 transform translate-y-20 opacity-0 transition-all duration-700">
-                <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center shrink-0">
-                    <i class="fas fa-cookie-bite text-2xl"></i>
-                </div>
-                <div class="flex-1 text-center md:text-left">
-                    <h4 class="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Privacy Notice</h4>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                        We use cookies to optimize your experience and analyze traffic. By using our tools, you agree to our <a href="${rootPrefix}privacy.html" class="text-indigo-500 font-bold hover:underline">Privacy Policy</a>.
-                    </p>
-                </div>
-                <div class="flex items-center gap-3 w-full md:w-auto">
-                    <button id="deny-cookies" class="flex-1 md:flex-none px-6 py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-black uppercase tracking-widest rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
-                        Deny
-                    </button>
-                    <button id="accept-cookies" class="flex-1 md:flex-none px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-indigo-500/20">
-                        Accept
-                    </button>
-                </div>
-            </div>
-        `;
+    const gtScript = document.createElement('script');
+    gtScript.type = 'text/javascript';
+    gtScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(gtScript);
 
-        document.body.insertAdjacentHTML('beforeend', consentHtml);
-        const banner = document.getElementById('cookie-consent');
-
-        setTimeout(() => {
-            banner.classList.remove('translate-y-20', 'opacity-0');
-        }, 1000);
-
-        document.getElementById('accept-cookies').addEventListener('click', () => {
-            banner.classList.add('translate-y-20', 'opacity-0');
-            localStorage.setItem('cookie-consent-accepted', 'true');
-            setTimeout(() => banner.remove(), 700);
-        });
-
-        document.getElementById('deny-cookies').addEventListener('click', () => {
-            banner.classList.add('translate-y-20', 'opacity-0');
-            localStorage.setItem('cookie-consent-accepted', 'false'); // Remember choice to not annoy user
-            setTimeout(() => banner.remove(), 700);
-        });
-    }
-    initCookieConsent();
-
-    // 9. Visual Sidebar Switcher (Internal Linking Boost)
+    // 8. Visual Sidebar Switcher (Internal Linking Boost)
     function initVisualSwitcher() {
         if (activeId === '/') return;
 
@@ -942,10 +910,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.body.insertAdjacentHTML('beforeend', switcherHtml);
     }
     initVisualSwitcher();
-
-    const gtScript = document.createElement('script');
-    gtScript.type = 'text/javascript';
-    gtScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    document.body.appendChild(gtScript);
 
 });

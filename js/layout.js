@@ -350,7 +350,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     Calc<span class="text-indigo-600 dark:text-indigo-400">Suit</span>
                 </a>
             </div>
-
             <!-- Desktop Nav -->
             <nav class="hidden lg:flex space-x-6 h-16" id="desktop-nav">
                 ${desktopNavHtml}
@@ -376,6 +375,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
     </div>
 </header>
+<br>
 <!-- Mobile Menu Overlay -->
 <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden opacity-0 transition-opacity duration-300">
     <div class="absolute inset-0 cursor-pointer" id="mobile-menu-bg"></div>
@@ -841,17 +841,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const topTools = calculatorConfig.filter(c => c.id !== '/' && c.id !== activeId).slice(0, 5);
         const switcherHtml = `
-            <div class="fixed left-6 top-1/2 -translate-y-1/2 z-[90] hidden xl:flex flex-col gap-3 group">
+            <div class="fixed left-4 top-1/2 -translate-y-1/2 z-[90] hidden 2xl:flex flex-col gap-3 group">
                 <div class="mb-2 px-3 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Quick Switch</div>
                 ${topTools.map(t => `
-                    <a href="${rootPrefix}${t.id.replace(/^\//, '')}" class="w-12 h-12 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-center ${t.colorClass} shadow-sm hover:shadow-xl hover:scale-110 hover:border-indigo-500 transition-all group/item relative">
+                    <a href="${rootPrefix}${t.id.replace(/^\//, '')}" class="w-11 h-11 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-center ${t.colorClass} shadow-sm hover:shadow-xl hover:scale-110 hover:border-indigo-500 transition-all group/item relative">
                         ${t.icon}
                         <div class="absolute left-full ml-4 px-3 py-1.5 bg-slate-900 text-white text-[10px] font-bold rounded-lg opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all whitespace-nowrap shadow-xl">
                             ${t.name}
                         </div>
                     </a>
                 `).join('')}
-                <a href="${rootPrefix}index.html" class="w-12 h-12 bg-indigo-600 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/20 hover:scale-110 transition-all mt-4">
+                <a href="${rootPrefix}index.html" class="w-11 h-11 bg-indigo-600 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/20 hover:scale-110 transition-all mt-4">
                     <i class="fas fa-th-large text-xs"></i>
                 </a>
             </div>

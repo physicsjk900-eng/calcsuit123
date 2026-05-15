@@ -1,4 +1,11 @@
-// js/layout.js
+// Global Translate Callback (MUST be global for Google Script)
+window.googleTranslateElementInit = function () {
+    new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+    }, 'google_translate_element_desktop');
+};
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -837,13 +844,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // 7. Global Multi-Language Translator Logic
-    window.googleTranslateElementInit = function () {
-        new google.translate.TranslateElement({
-            pageLanguage: 'en',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false
-        }, 'google_translate_element_desktop');
-    };
+    // Callback is defined at the top of the file for global scope
+
 
     const style = document.createElement('style');
     style.textContent = `
@@ -854,7 +856,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         .goog-tooltip, .goog-tooltip:hover { display: none !important; }
         .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
         .goog-logo-link { display: none !important; }
-        .goog-te-gadget { color: transparent !important; font-size: 0 !important; }
+        .goog-te-gadget { color: transparent !important; }
+        .goog-te-gadget .goog-te-combo { margin: 0 !important; font-size: 12px !important; }
         
         /* Custom Dropdown Styling */
         .goog-te-combo {

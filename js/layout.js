@@ -1,10 +1,19 @@
 // Global Translate Callback (MUST be global for Google Script)
 window.googleTranslateElementInit = function () {
-    new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-        autoDisplay: false
-    }, 'google_translate_element_desktop');
+    const initTranslator = () => {
+        const target = document.getElementById('google_translate_element_desktop');
+        if (target && typeof google !== 'undefined' && google.translate) {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element_desktop');
+        } else {
+            // Retry if element not ready or script not fully parsed
+            setTimeout(initTranslator, 500);
+        }
+    };
+    initTranslator();
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -638,6 +647,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (existingFooter) existingFooter.remove();
         document.body.insertAdjacentHTML('beforeend', footerHtml);
 
+        // Inject Google Translate Script AFTER DOM is ready and header is injected
+        const gtScript = document.createElement('script');
+        gtScript.type = 'text/javascript';
+        gtScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        document.body.appendChild(gtScript);
+
         // Inject Breadcrumbs if #app-container exists
         const appContainer = document.getElementById('app-container');
         if (appContainer) {
@@ -884,10 +899,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     `;
     document.head.appendChild(style);
 
-    const gtScript = document.createElement('script');
-    gtScript.type = 'text/javascript';
-    gtScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    document.body.appendChild(gtScript);
+    // 7. Global Multi-Language Translator Logic
+    // Callback is defined at the top of the file for global scope
+    // Script is injected after header injection to avoid racing conditions
+
 
     // 8. Visual Sidebar Switcher (Internal Linking Boost)
     function initVisualSwitcher() {

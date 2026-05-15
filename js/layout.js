@@ -831,33 +831,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
 
-    // Sidebar Switcher follows
-
-
-
-    // 8. Visual Sidebar Switcher (Internal Linking Boost)
-    function initVisualSwitcher() {
-        if (activeId === '/') return;
-
-        const topTools = calculatorConfig.filter(c => c.id !== '/' && c.id !== activeId).slice(0, 5);
-        const switcherHtml = `
-            <div class="fixed left-4 top-1/2 -translate-y-1/2 z-[90] hidden 2xl:flex flex-col gap-3 group">
-                <div class="mb-2 px-3 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Quick Switch</div>
-                ${topTools.map(t => `
-                    <a href="${rootPrefix}${t.id.replace(/^\//, '')}" class="w-11 h-11 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-center ${t.colorClass} shadow-sm hover:shadow-xl hover:scale-110 hover:border-indigo-500 transition-all group/item relative">
-                        ${t.icon}
-                        <div class="absolute left-full ml-4 px-3 py-1.5 bg-slate-900 text-white text-[10px] font-bold rounded-lg opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all whitespace-nowrap shadow-xl">
-                            ${t.name}
-                        </div>
-                    </a>
-                `).join('')}
-                <a href="${rootPrefix}index.html" class="w-11 h-11 bg-indigo-600 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/20 hover:scale-110 transition-all mt-4">
-                    <i class="fas fa-th-large text-xs"></i>
-                </a>
-            </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', switcherHtml);
-    }
-    initVisualSwitcher();
-
 });

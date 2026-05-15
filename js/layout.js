@@ -471,13 +471,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             <!-- Column 4: Authority Score -->
             <div class="space-y-8 lg:text-right flex flex-col lg:items-end justify-between">
-                <!-- <div class="space-y-4">
-                    <h5 class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">CALCSUIT AUTHORITY</h5>
+                <div class="space-y-4">
+                    <h5 class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Connect With Us</h5>
                     <div class="flex lg:justify-end gap-3">
-                         <a href="#" class="w-9 h-9 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 border border-slate-100 dark:border-slate-800 transition-all"><i class="fab fa-twitter"></i></a>
-                         <a href="#" class="w-9 h-9 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 border border-slate-100 dark:border-slate-800 transition-all"><i class="fab fa-github"></i></a>
+                         <a href="https://www.instagram.com/calcsuit_an_online_calculator/" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 border border-slate-100 dark:border-slate-800 transition-all">
+                            <i class="fab fa-instagram"></i>
+                         </a>
                     </div>
-                </div> -->
+                </div>
                 <div class="pt-6 border-t border-slate-50 dark:border-slate-800 w-full">
                     <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">&copy; 2026 CALCSUIT ENTERPRISE</p>
                     <p class="text-[9px] font-medium text-slate-300 dark:text-slate-600 mt-2 italic leading-relaxed">Decision Intelligence Architecture engineered with pride.<br/>Validated Global Standards Compliant.</p>

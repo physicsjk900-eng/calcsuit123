@@ -1,20 +1,4 @@
-// Global Translate Callback (MUST be global for Google Script)
-window.googleTranslateElementInit = function () {
-    const initTranslator = () => {
-        const target = document.getElementById('google_translate_element_desktop');
-        if (target && typeof google !== 'undefined' && google.translate) {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element_desktop');
-        } else {
-            // Retry if element not ready or script not fully parsed
-            setTimeout(initTranslator, 500);
-        }
-    };
-    initTranslator();
-};
+// js/layout.js
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -383,11 +367,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 <div class="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
 
-                <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700 transition-all hover:border-indigo-500/30 group">
-                    <i class="fas fa-language text-slate-400 group-hover:text-indigo-500 transition-colors"></i>
-                    <div id="google_translate_element_desktop"></div>
-                </div>
-
                 <button id="theme-toggle"
                     class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors">
                     <i class="fas fa-moon text-sm dark:hidden"></i>
@@ -419,7 +398,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-xl py-3 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
                     placeholder="Search all tools...">
             </div>
-            <div id="google_translate_element_mobile" class="mt-2"></div>
         </div>
             <a href="${rootPrefix}index.html" class="flex items-center gap-3 px-3 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm shadow-lg shadow-indigo-500/20">
                 <i class="fas fa-home w-5 text-center"></i> Dashboard Home
@@ -647,12 +625,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (existingFooter) existingFooter.remove();
         document.body.insertAdjacentHTML('beforeend', footerHtml);
 
-        // Inject Google Translate Script AFTER DOM is ready and header is injected
-        const gtScript = document.createElement('script');
-        gtScript.type = 'text/javascript';
-        gtScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-        document.body.appendChild(gtScript);
-
         // Inject Breadcrumbs if #app-container exists
         const appContainer = document.getElementById('app-container');
         if (appContainer) {
@@ -858,50 +830,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // 7. Global Multi-Language Translator Logic
-    // Callback is defined at the top of the file for global scope
 
+    // Sidebar Switcher follows
 
-    const style = document.createElement('style');
-    style.textContent = `
-        /* Hide Google Translate Bar and Branding */
-        body { top: 0 !important; }
-        .skiptranslate.goog-te-banner-frame { display: none !important; }
-        #goog-gt-tt { display: none !important; }
-        .goog-tooltip, .goog-tooltip:hover { display: none !important; }
-        .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
-        .goog-logo-link { display: none !important; }
-        .goog-te-gadget { color: transparent !important; }
-        .goog-te-gadget .goog-te-combo { margin: 0 !important; font-size: 12px !important; }
-        
-        /* Custom Dropdown Styling */
-        .goog-te-combo {
-            background-color: #f8fafc !important;
-            border: 1px solid #e2e8f0 !important;
-            border-radius: 0.5rem !important;
-            padding: 0.4rem 0.75rem !important;
-            font-size: 0.75rem !important;
-            font-weight: 600 !important;
-            color: #475569 !important;
-            outline: none !important;
-            cursor: pointer !important;
-            transition: all 0.2s !important;
-        }
-        .dark .goog-te-combo {
-            background-color: #1e293b !important;
-            border-color: #334155 !important;
-            color: #cbd5e1 !important;
-        }
-        .goog-te-combo:focus {
-            border-color: #6366f1 !important;
-            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1) !important;
-        }
-    `;
-    document.head.appendChild(style);
-
-    // 7. Global Multi-Language Translator Logic
-    // Callback is defined at the top of the file for global scope
-    // Script is injected after header injection to avoid racing conditions
 
 
     // 8. Visual Sidebar Switcher (Internal Linking Boost)

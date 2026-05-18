@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Gravity to Specific Gravity Temperature Converter | CalcSuit</title>
+    <meta name="description"
+        content="Convert between Standard API Gravity and Observed Specific Gravity at any temperature. Free online petroleum engineering tool with educational guides on thermal expansion.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax for LaTeX Rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        sky: { 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' },
+                        amber: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' },
+                        emerald: { 400: '#34d399', 500: '#10b981', 600: '#059669' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                        mono: ['Fira Code', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'slide-up': 'slideUp 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .calculated-glow {
+            animation: calcGlow 1s ease-out;
+        }
+
+        @keyframes calcGlow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7);
+                border-color: rgba(14, 165, 233, 1);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(14, 165, 233, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(14, 165, 233, 0);
+            }
+        }
+
+        /* Number input arrows removal */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Header will be injected by layout.js -->
+    <div id="header-placeholder"></div>
+
+    <main class="flex-1 w-full max-w-[1440px] mx-auto p-4 sm:p-6 lg:p-8 flex flex-col items-center">
+
+        <!-- Hero Section -->
+        <section class="w-full max-w-5xl mb-8 text-center mt-8">
+            <span
+                class="px-4 py-1.5 rounded-full bg-sky-100 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 text-xs font-bold uppercase tracking-widest mb-4 inline-block">Industry
+                Suite</span>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
+                API Gravity <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-sky-600">Converter</span>
+            </h1>
+            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-6">
+                Convert between Standard API Gravity (at 60°F) and Observed Specific Gravity at any temperature
+                instantly, using high-precision ASTM volume correction mathematics.
+            </p>
+            <a href="#learning-section"
+                class="inline-flex items-center text-sm font-bold text-sky-600 hover:text-sky-500 transition-colors bg-sky-100 dark:bg-sky-900/30 px-4 py-2 rounded-full shadow-sm border border-sky-200 dark:border-sky-800">
+                <i class="fas fa-graduation-cap mr-2"></i> Learn the Calculation Procedure Below
+            </a>
+        </section>
+
+        <!-- In-Page Navigation -->
+        <nav
+            class="w-full max-w-4xl mb-12 flex flex-wrap justify-center gap-3 sticky top-20 z-40 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-md py-4 border-y border-slate-200 dark:border-slate-800">
+            <a href="crude-oil-calculator.html#calc-volume"
+                class="px-5 py-2 rounded-full bg-amber-500 text-white font-bold text-sm shadow-md hover:bg-amber-600 transition-colors">
+                <i class="fas fa-cube mr-2"></i> Crude Volume Engine
+            </a>
+            <a href="#"
+                class="px-5 py-2 rounded-full bg-sky-500 text-white font-bold text-sm shadow-md hover:bg-sky-600 transition-colors">
+                <i class="fas fa-thermometer-half mr-2"></i> Temp Adjuster
+            </a>
+            <a href="crude-oil-calculator.html#calc-price"
+                class="px-5 py-2 rounded-full bg-emerald-500 text-white font-bold text-sm shadow-md hover:bg-emerald-600 transition-colors">
+                <i class="fas fa-chart-line mr-2"></i> Live Market Value
+            </a>
+        </nav>
+
+        <!-- Temperature Converter Card -->
+        <section class="w-full max-w-4xl glass-card rounded-[2.5rem] shadow-2xl overflow-hidden mb-16"
+            aria-label="API Temperature Converter">
+            <div class="bg-slate-900 p-8 text-white text-center relative border-b border-sky-500/30">
+                <i class="fas fa-thermometer-half text-5xl mb-4 text-sky-400"></i>
+                <h2 class="text-3xl font-extrabold text-white">API Temperature Adjuster</h2>
+                <p class="text-slate-400 mt-2 text-sm font-medium">Dynamic dual-input calculator. Modify any value to
+                    calculate the rest.</p>
+            </div>
+
+            <div class="p-8 md:p-12 relative overflow-hidden">
+                <!-- Background decorative elements -->
+                <div
+                    class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none">
+                </div>
+
+                <div class="max-w-2xl mx-auto w-full grid grid-cols-1 gap-8 relative z-10">
+
+                    <!-- Product Details Block -->
+                    <div
+                        class="glass-card p-8 rounded-3xl shadow-sm border-l-4 border-l-violet-500 bg-white/50 dark:bg-slate-800/50 transition-all duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label
+                                    class="block text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Petroleum
+                                    Product</label>
+                                <select id="input-product-type"
+                                    class="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-bold text-lg text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-violet-500 cursor-pointer shadow-inner">
+                                    <option value="0.00040">Crude Oil (~0.00040)</option>
+                                    <option value="0.00060">Gasoline (0.00060)</option>
+                                    <option value="0.00050">Jet Fuel / Kerosene (0.00050)</option>
+                                    <option value="0.00045">Diesel / Heating Oil (0.00045)</option>
+                                    <option value="0.00035">Fuel Oil / Lube (0.00035)</option>
+                                    <option value="custom">Custom Coefficient</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Thermal
+                                    Coefficient (α)</label>
+                                <div class="flex items-center gap-4">
+                                    <input type="number" id="input-alpha"
+                                        class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-violet-500 outline-none text-2xl font-black py-2 transition-all text-slate-800 dark:text-white"
+                                        placeholder="e.g. 0.0004" value="0.0004">
+                                    <span class="font-bold text-slate-400 text-sm whitespace-nowrap">per °F</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-xs text-slate-500">The rate at which the specific product expands or
+                            contracts per degree Fahrenheit.</p>
+                    </div>
+
+                    <!-- Standard API Block -->
+                    <div
+                        class="glass-card p-8 rounded-3xl shadow-sm border-l-4 border-l-amber-500 bg-white/50 dark:bg-slate-800/50 transition-all duration-300">
+                        <label
+                            class="block text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Standard
+                            API Gravity (at 60°F)</label>
+                        <div class="flex items-center gap-4">
+                            <input type="number" id="val-api-std"
+                                class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 outline-none text-3xl font-black py-2 transition-all temp-calc-input text-slate-800 dark:text-white"
+                                placeholder="e.g. 35">
+                            <span class="font-bold text-slate-400 text-xl">°API</span>
+                        </div>
+                        <p class="mt-2 text-xs text-slate-500">Industry standard measured strictly at 60°F (15.56°C).
+                        </p>
+                    </div>
+
+                    <!-- Temperature Block -->
+                    <div
+                        class="glass-card p-8 rounded-3xl shadow-sm border-l-4 border-l-sky-500 bg-white/50 dark:bg-slate-800/50 transition-all duration-300">
+                        <label
+                            class="block text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Observed
+                            Temperature</label>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <input type="number" id="val-obs-temp"
+                                class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-sky-500 outline-none text-3xl font-black py-2 transition-all temp-calc-input text-slate-800 dark:text-white"
+                                placeholder="e.g. 100" value="60">
+                            <select id="unit-obs-temp"
+                                class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2 font-bold text-lg text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-sky-500 w-full sm:w-32 cursor-pointer shadow-inner">
+                                <option value="F">°F</option>
+                                <option value="C">°C</option>
+                                <option value="K">K</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Observed SG Block -->
+                    <div
+                        class="glass-card p-8 rounded-3xl shadow-sm border-l-4 border-l-emerald-500 bg-white/50 dark:bg-slate-800/50 transition-all duration-300">
+                        <label
+                            class="block text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Observed
+                            Specific Gravity (SG)</label>
+                        <div class="flex items-center gap-4">
+                            <input type="number" id="val-obs-sg"
+                                class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 outline-none text-3xl font-black py-2 transition-all temp-calc-input text-slate-800 dark:text-white"
+                                placeholder="e.g. 0.85">
+                            <span class="font-bold text-slate-400 text-xl">SG</span>
+                        </div>
+                        <p class="mt-2 text-xs text-slate-500">The actual Specific Gravity at the observed temperature.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SEO & EDUCATIONAL SECTION (800+ Words) -->
+        <section id="learning-section"
+            class="w-full max-w-4xl bg-white dark:bg-slate-900 p-8 md:p-16 rounded-[3rem] shadow-xl border border-slate-200 dark:border-slate-800 mb-16 scroll-mt-32">
+            <article class="prose prose-slate dark:prose-invert max-w-none prose-lg">
+                <header class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
+                        High-Precision <span class="text-sky-500">Thermal Expansion</span> & VCF Calculations
+                    </h2>
+                    <div class="h-1.5 w-24 bg-gradient-to-r from-sky-400 to-sky-600 mx-auto rounded-full"></div>
+                </header>
+
+                <div class="mb-12">
+                    <p class="lead text-xl text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+                        In the high-stakes world of petroleum engineering, logistics, and commodity trading, the
+                        physical state of crude oil and its derivatives is never static. As temperatures rise and fall
+                        throughout the global supply chain, petroleum undergoes significant volumetric and density
+                        changes. A simple linear approximation is insufficient when millions of dollars are on the line.
+                        To maintain integrity, the industry strictly follows high-precision mathematics utilizing the
+                        exponential <strong>Volume Correction Factor (VCF)</strong> standard set by ASTM D1250 / API
+                        MPMS Chapter 11.
+                    </p>
+                </div>
+
+                <div class="mb-12">
+                    <h3 class="text-3xl font-bold text-slate-800 dark:text-white mb-6">1. True Definition of API Gravity
+                    </h3>
+                    <p>
+                        Developed by the American Petroleum Institute (API), API Gravity is a measure of how heavy or
+                        light a petroleum liquid is compared to water. If its API gravity is greater than 10, it is
+                        lighter and floats on water; if less than 10, it is heavier and sinks.
+                    </p>
+                    <p>
+                        However, API Gravity is completely standardized. By definition, true API Gravity must be
+                        measured—or mathematically corrected to—a standard temperature of exactly <strong>60°F
+                            (15.56°C)</strong>. The core formula linking Standard API Gravity to Standard Specific
+                        Gravity (\(SG_{60}\)) is:
+                    </p>
+                    <div
+                        class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-amber-500 text-center font-mono my-6 text-lg overflow-x-auto shadow-inner">
+                        $$API = \frac{141.5}{SG_{60}} - 131.5$$
+                    </div>
+                </div>
+
+                <div class="mb-12">
+                    <h3 class="text-3xl font-bold text-slate-800 dark:text-white mb-6">2. The High-Precision ASTM
+                        Exponential Formula</h3>
+                    <p>
+                        When a trader buys 100,000 barrels of oil in Texas at 100°F and it arrives in New York at 40°F,
+                        the physical volume has shrunk, and the density has increased. If the transaction was based on
+                        observed volume without temperature correction, immense financial discrepancies would occur.
+                    </p>
+                    <p>
+                        To precisely correct for this, engineers rely on the Thermal Expansion Coefficient (\(\alpha\))
+                        and the exponential Volume Correction Factor (VCF). Unlike a simple straight line, liquid
+                        expansion is a curve. The precise equation used in real-life problems takes into account both
+                        linear and quadratic expansion factors.
+                    </p>
+
+                    <h4 class="font-bold text-xl mt-8 mb-4 text-violet-400">Step A: Finding Thermal Coefficient
+                        (\(\alpha\))</h4>
+                    <p>Different petroleum products expand at different rates. The thermal coefficient \(\alpha\) (per
+                        °F at base temperature 60°F) defines this rate:</p>
+                    <ul class="list-disc pl-6 marker:text-violet-500">
+                        <li><strong>Gasoline:</strong> ~0.00060</li>
+                        <li><strong>Jet Fuel / Kerosene:</strong> ~0.00050</li>
+                        <li><strong>Diesel / Heating Oil:</strong> ~0.00045</li>
+                        <li><strong>Crude Oil:</strong> ~0.00040</li>
+                        <li><strong>Lubricating Oil:</strong> ~0.00035</li>
+                    </ul>
+
+                    <h4 class="font-bold text-xl mt-8 mb-4 text-sky-400">Step B: Calculating VCF</h4>
+                    <p>The Volume Correction Factor is calculated using the following high-precision exponential
+                        equation, where \(\Delta T\) is the observed temperature minus 60°F:</p>
+                    <div
+                        class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-sky-500 text-center font-mono my-6 text-lg overflow-x-auto shadow-inner">
+                        $$VCF = \exp[-\alpha \cdot \Delta T - 0.8 \cdot \alpha^2 \cdot \Delta T^2]$$
+                    </div>
+
+                    <h4 class="font-bold text-xl mt-8 mb-4 text-emerald-400">Step C: Final Gravity Calculation</h4>
+                    <p>Because Specific Gravity is inversely related to volume (Density = Mass/Volume), the observed
+                        Specific Gravity is the standard Specific Gravity multiplied by the VCF:</p>
+                    <div
+                        class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-emerald-500 text-center font-mono my-6 text-lg overflow-x-auto shadow-inner">
+                        $$SG_{obs} = SG_{60} \times VCF$$
+                    </div>
+                </div>
+
+                <div class="mb-16">
+                    <h3 class="text-3xl font-bold text-slate-800 dark:text-white mb-6 text-emerald-500">Procedure of
+                        Calculation: Step-by-Step Example</h3>
+
+                    <div class="bg-slate-900 text-slate-300 p-8 rounded-3xl shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
+                        <h4 class="text-xl font-bold text-white mb-4 border-b border-slate-700 pb-4">Real-Life Scenario:
+                            Forward Calculation</h4>
+                        <p class="mb-6">
+                            <strong>Problem:</strong> A pipeline operator measures a batch of Gasoline. The standard API
+                            Gravity is known to be <strong class="text-amber-400">60°API</strong>. The current pipeline
+                            temperature is <strong class="text-sky-400">95°F</strong>. Using the high-precision formula,
+                            what is the exact Specific Gravity observed in the pipe?
+                        </p>
+
+                        <ol class="list-decimal pl-6 space-y-4 marker:text-emerald-500 marker:font-bold">
+                            <li>
+                                <strong class="text-white">Determine the Coefficient (\(\alpha\)):</strong><br>
+                                For Gasoline, the standard expansion coefficient is <strong
+                                    class="text-violet-400">0.00060 per °F</strong>.
+                            </li>
+                            <li>
+                                <strong class="text-white">Calculate Standard Specific Gravity
+                                    (\(SG_{60}\)):</strong><br>
+                                \(SG_{60} = \frac{141.5}{60 + 131.5} = \frac{141.5}{191.5}\) = <strong
+                                    class="text-amber-400">0.7389</strong>
+                            </li>
+                            <li>
+                                <strong class="text-white">Calculate Temperature Differential (\(\Delta
+                                    T\)):</strong><br>
+                                \(\Delta T = 95^\circ F - 60^\circ F\) = <strong class="text-sky-400">35°F</strong>
+                            </li>
+                            <li>
+                                <strong class="text-white">Calculate the Volume Correction Factor (VCF):</strong><br>
+                                \(VCF = \exp[- (0.00060 \times 35) - 0.8 \times (0.00060)^2 \times (35)^2]\)<br>
+                                \(VCF = \exp[- 0.021 - 0.8 \times 0.00000036 \times 1225]\)<br>
+                                \(VCF = \exp[- 0.021 - 0.0003528]\)<br>
+                                \(VCF = \exp[-0.0213528]\) = <strong class="text-emerald-400">0.9789</strong>
+                            </li>
+                            <li>
+                                <strong class="text-white">Calculate Observed Specific Gravity
+                                    (\(SG_{obs}\)):</strong><br>
+                                \(SG_{obs} = SG_{60} \times VCF = 0.7389 \times 0.9789\) = <strong
+                                    class="text-emerald-400 bg-emerald-500/20 px-2 py-1 rounded">0.7233</strong>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="mb-16">
+                    <div class="bg-slate-800 text-slate-300 p-8 rounded-3xl shadow-2xl relative overflow-hidden">
+                        <div class="absolute bottom-0 left-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
+                        <h4 class="text-xl font-bold text-white mb-4 border-b border-slate-700 pb-4">Real-Life Scenario:
+                            Reverse Calculation</h4>
+                        <p class="mb-6">
+                            <strong>Problem:</strong> A lab technician tests Jet Fuel. The hydrometer reads a Specific
+                            Gravity of <strong class="text-sky-400">0.7850</strong> at an ambient temperature of <strong
+                                class="text-amber-400">80°F</strong>. What is the true Standard API Gravity?
+                        </p>
+
+                        <ol class="list-decimal pl-6 space-y-4 marker:text-amber-500 marker:font-bold">
+                            <li>
+                                <strong class="text-white">Determine the Coefficient (\(\alpha\)):</strong><br>
+                                For Jet Fuel, the standard expansion coefficient is <strong
+                                    class="text-violet-400">0.00050 per °F</strong>.
+                            </li>
+                            <li>
+                                <strong class="text-white">Calculate the Temperature Differential (\(\Delta
+                                    T\)):</strong><br>
+                                \(\Delta T = 80^\circ F - 60^\circ F\) = <strong class="text-amber-400">20°F</strong>
+                            </li>
+                            <li>
+                                <strong class="text-white">Calculate the Volume Correction Factor (VCF):</strong><br>
+                                \(VCF = \exp[- (0.00050 \times 20) - 0.8 \times (0.00050)^2 \times (20)^2]\)<br>
+                                \(VCF = \exp[- 0.010 - 0.00008]\) = <strong class="text-amber-400">0.9899</strong>
+                            </li>
+                            <li>
+                                <strong class="text-white">Reverse the Calculation to find \(SG_{60}\):</strong><br>
+                                \(SG_{60} = \frac{SG_{obs}}{VCF} = \frac{0.7850}{0.9899}\) = <strong
+                                    class="text-amber-400">0.7930</strong>
+                            </li>
+                            <li>
+                                <strong class="text-white">Convert Standard SG to API Gravity:</strong><br>
+                                \(API = \frac{141.5}{0.7930} - 131.5\)<br>
+                                \(API = 178.43 - 131.5\) = <strong
+                                    class="text-amber-400 bg-amber-500/20 px-2 py-1 rounded">46.93 °API</strong>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="mb-12">
+                    <h3 class="text-3xl font-bold text-slate-800 dark:text-white mb-6">Real-World Use Cases for the
+                        Calculator</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                        <div
+                            class="bg-sky-50 dark:bg-sky-900/10 p-6 rounded-2xl border border-sky-100 dark:border-sky-900/30">
+                            <h5 class="font-bold text-sky-700 dark:text-sky-400 mb-2 text-xl">1. Custody Transfer &
+                                Trading</h5>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm">When custody of a petroleum cargo
+                                changes hands, the buyer and seller must agree on the volume at 60°F. If the ship's
+                                tanks are at 85°F, negotiators use temperature correction formulas to determine the
+                                "shrinkage" that will occur when the oil cools to standard temperature, thereby
+                                adjusting the final invoice price.</p>
+                        </div>
+                        <div
+                            class="bg-amber-50 dark:bg-amber-900/10 p-6 rounded-2xl border border-amber-100 dark:border-amber-900/30">
+                            <h5 class="font-bold text-amber-700 dark:text-amber-400 mb-2 text-xl">2. Refinery Logistics
+                            </h5>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm">Refineries heat crude oil
+                                significantly before it enters the atmospheric distillation tower. Knowing exactly how
+                                the specific gravity drops as the oil reaches temperatures exceeding 200°F is critical
+                                for pump sizing, flow meter calibration, and ensuring the distillation column operates
+                                at maximum thermodynamic efficiency.</p>
+                        </div>
+                        <div
+                            class="bg-emerald-50 dark:bg-emerald-900/10 p-6 rounded-2xl border border-emerald-100 dark:border-emerald-900/30">
+                            <h5 class="font-bold text-emerald-700 dark:text-emerald-400 mb-2 text-xl">3. Quality Control
+                                Labs</h5>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm">Lab technicians often pull samples
+                                that sit on benches at ambient room temperatures (typically 68°F - 75°F). Rather than
+                                waiting for the sample to cool exactly to 60°F in a water bath, they test it at room
+                                temperature and instantly use calculators to correct the hydrometer reading back to the
+                                required standard API.</p>
+                        </div>
+                        <div
+                            class="bg-slate-100 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700/50">
+                            <h5 class="font-bold text-slate-700 dark:text-slate-300 mb-2 text-xl">4. Engineering
+                                Students</h5>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm">Chemical and petroleum engineering
+                                students rely on API gravity converters to verify their manual thermodynamics homework.
+                                Understanding the fundamental inverse relationship between temperature and specific
+                                gravity forms the bedrock of advanced fluid dynamics coursework.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mt-16 p-8 bg-slate-950 text-slate-400 rounded-[2.5rem] text-sm leading-relaxed border-t-4 border-sky-500">
+                    <p class="mb-4">
+                        Whether you are a seasoned petroleum engineer, a commodities trader managing tanker fleets, or a
+                        student learning fluid mechanics, the <strong>API Gravity Temperature Adjuster</strong>
+                        eliminates the risk of human arithmetic error. By seamlessly handling the conversions between
+                        Celsius, Fahrenheit, Kelvin, Specific Gravity, and API Gravity, this tool serves as a critical
+                        component in your daily technical workflows.
+                    </p>
+                    <p>
+                        Don't forget to check out our complete <a href="crude-oil-calculator.html"
+                            class="text-sky-400 hover:text-sky-300 font-bold transition-colors">Crude Oil Volume
+                            Calculator</a> to process massive conversions between Barrels, Metric Tons, and Gallons.
+                    </p>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <!-- Footer will be injected by layout.js -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/api-gravity.js"></script>
+</body>
+
+</html>

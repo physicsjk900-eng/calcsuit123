@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crude Oil Volume Calculator | CalcSuit</title>
+    <meta name="description"
+        content="Free online crude oil volume calculator. Calculate missing parameters given any two of density, mass, and volume in industry-standard units like Barrels and Gallons.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax for LaTeX Rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        sky: { 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' },
+                        amber: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a, #334155, #f59e0b);
+        }
+
+        .calculated-glow {
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+            border-color: rgba(245, 158, 11, 0.8) !important;
+            transition: all 0.3s ease;
+        }
+
+        .dark .calculated-glow {
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+            border-color: rgba(245, 158, 11, 0.6) !important;
+        }
+
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+    </style>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col items-center">
+    <header id="sidebar-container" class="w-full"></header>
+
+    <main class="flex-1 w-full max-w-[1440px] mx-auto p-4 sm:p-6 lg:p-8 flex flex-col items-center">
+
+        <!-- Hero Section -->
+        <section class="w-full max-w-5xl mb-8 text-center mt-8">
+            <span
+                class="px-4 py-1.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-xs font-bold uppercase tracking-widest mb-4 inline-block">Industry
+                Suite</span>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
+                Crude Oil <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700">Analyzer</span>
+            </h1>
+            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-6">
+                Calculate missing parameters instantly. Input any two of density, mass, or volume, and our engine
+                computes the rest in industry-standard units.
+            </p>
+            <a href="#learning-section"
+                class="inline-flex items-center text-sm font-bold text-amber-600 hover:text-amber-500 transition-colors bg-amber-100 dark:bg-amber-900/30 px-4 py-2 rounded-full shadow-sm border border-amber-200 dark:border-amber-800">
+                <i class="fas fa-graduation-cap mr-2"></i> Learn the Calculation Procedure Below
+            </a>
+        </section>
+
+        <!-- In-Page Navigation -->
+        <nav
+            class="w-full max-w-4xl mb-12 flex flex-wrap justify-center gap-3 sticky top-20 z-40 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-md py-4 border-y border-slate-200 dark:border-slate-800">
+            <a href="#calc-volume"
+                class="px-5 py-2 rounded-full bg-amber-500 text-white font-bold text-sm shadow-md hover:bg-amber-600 transition-colors">
+                <i class="fas fa-cube mr-2"></i> Volume Engine
+            </a>
+            <a href="#calc-flow"
+                class="px-5 py-2 rounded-full bg-violet-500 text-white font-bold text-sm shadow-md hover:bg-violet-600 transition-colors">
+                <i class="fas fa-water mr-2"></i> Flow Rate Engine
+            </a>
+            <a href="api-gravity-converter.html"
+                class="px-5 py-2 rounded-full bg-sky-500 text-white font-bold text-sm shadow-md hover:bg-sky-600 transition-colors">
+                <i class="fas fa-thermometer-half mr-2"></i> Temperature dependent API to SG Convertor
+            </a>
+            <a href="#calc-price"
+                class="px-5 py-2 rounded-full bg-emerald-500 text-white font-bold text-sm shadow-md hover:bg-emerald-600 transition-colors">
+                <i class="fas fa-chart-line mr-2"></i> Live Market Value
+            </a>
+        </nav>
+
+        <!-- Main Calculator Card -->
+        <section id="calc-volume"
+            class="w-full max-w-4xl glass-card rounded-[2.5rem] shadow-2xl overflow-hidden mb-16 scroll-mt-32"
+            aria-label="Crude Oil Calculator">
+            <div class="hero-gradient p-10 text-white text-center relative">
+                <div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay">
+                    <svg width="100%" height="100%">
+                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1" />
+                        </pattern>
+                        <rect width="100%" height="100%" fill="url(#grid)" />
+                    </svg>
+                </div>
+                <i class="fas fa-oil-can text-6xl mb-4 text-amber-400 drop-shadow-lg"></i>
+                <h2 class="text-3xl font-extrabold text-white">Dynamic Parameter Solver</h2>
+                <p class="text-slate-300 mt-2 font-medium">Input any 2 fields to auto-calculate the 3rd.</p>
+            </div>
+
+            <div class="p-8 md:p-12">
+                <div class="max-w-3xl mx-auto w-full grid grid-cols-1 gap-8">
+
+                    <!-- Density Block -->
+                    <div id="block-density"
+                        class="glass-card p-6 md:p-8 rounded-3xl shadow-lg border-l-4 border-l-amber-500 bg-white/50 dark:bg-slate-800/50 transition-all duration-300 relative overflow-hidden group">
+
+                        <div class="absolute top-0 right-0 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl hidden"
+                            id="badge-density">
+                            <i class="fas fa-magic mr-1"></i> Calculated
+                        </div>
+
+                        <div class="flex flex-col md:flex-row md:items-center gap-6">
+                            <div
+                                class="flex-shrink-0 w-16 h-16 bg-amber-100 dark:bg-amber-900/30 text-amber-600 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
+                                <i class="fas fa-weight-hanging"></i>
+                            </div>
+                            <div class="flex-grow">
+                                <label
+                                    class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Density
+                                    (\(\rho\))</label>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <input type="number" id="val-density"
+                                        class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 outline-none text-2xl font-bold py-2 transition-all calc-input"
+                                        placeholder="e.g. 35">
+                                    <select id="unit-density"
+                                        class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2 font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-amber-500 w-full sm:w-48 cursor-pointer">
+                                        <option value="api">API Gravity</option>
+                                        <option value="kgm3">kg/m³</option>
+                                        <option value="gcm3">g/cm³</option>
+                                        <option value="lbgal">lb/gal (US)</option>
+                                        <option value="lbft3">lb/ft³</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mass Block -->
+                    <div id="block-mass"
+                        class="glass-card p-6 md:p-8 rounded-3xl shadow-lg border-l-4 border-l-blue-500 bg-white/50 dark:bg-slate-800/50 transition-all duration-300 relative overflow-hidden group">
+
+                        <div class="absolute top-0 right-0 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl hidden"
+                            id="badge-mass">
+                            <i class="fas fa-magic mr-1"></i> Calculated
+                        </div>
+
+                        <div class="flex flex-col md:flex-row md:items-center gap-6">
+                            <div
+                                class="flex-shrink-0 w-16 h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
+                                <i class="fas fa-balance-scale"></i>
+                            </div>
+                            <div class="flex-grow">
+                                <label
+                                    class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Mass
+                                    (\(m\))</label>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <input type="number" id="val-mass"
+                                        class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-blue-500 outline-none text-2xl font-bold py-2 transition-all calc-input"
+                                        placeholder="e.g. 1000">
+                                    <select id="unit-mass"
+                                        class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2 font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-48 cursor-pointer">
+                                        <option value="kg">Kilograms (kg)</option>
+                                        <option value="ton">Metric Tons (t)</option>
+                                        <option value="g">Grams (g)</option>
+                                        <option value="lb">Pounds (lb)</option>
+                                        <option value="longton">Long Tons</option>
+                                        <option value="shortton">Short Tons</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Volume Block -->
+                    <div id="block-volume"
+                        class="glass-card p-6 md:p-8 rounded-3xl shadow-lg border-l-4 border-l-emerald-500 bg-white/50 dark:bg-slate-800/50 transition-all duration-300 relative overflow-hidden group">
+
+                        <div class="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl hidden"
+                            id="badge-volume">
+                            <i class="fas fa-magic mr-1"></i> Calculated
+                        </div>
+
+                        <div class="flex flex-col md:flex-row md:items-center gap-6">
+                            <div
+                                class="flex-shrink-0 w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
+                                <i class="fas fa-cube"></i>
+                            </div>
+                            <div class="flex-grow">
+                                <label
+                                    class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Volume
+                                    (\(V\))</label>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <input type="number" id="val-volume"
+                                        class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 outline-none text-2xl font-bold py-2 transition-all calc-input"
+                                        placeholder="e.g. 159">
+                                    <select id="unit-volume"
+                                        class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2 font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-emerald-500 w-full sm:w-48 cursor-pointer">
+                                        <option value="bbl">Barrels (bbl)</option>
+                                        <option value="usgal">US Gallons</option>
+                                        <option value="ukgal">UK Gallons</option>
+                                        <option value="liter">Liters (L)</option>
+                                        <option value="m3">Cubic Meters (m³)</option>
+                                        <option value="ft3">Cubic Feet (ft³)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-8 flex justify-center">
+                    <button id="btn-reset"
+                        class="px-8 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        <i class="fas fa-redo-alt mr-2"></i> Reset Calculator
+                    </button>
+                </div>
+
+                <!-- Extended Conversions Display -->
+                <div id="extended-results" class="hidden mt-12 pt-8 border-t border-slate-200 dark:border-slate-800">
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-6 text-center"
+                        id="extended-results-title">Calculated Volume Conversions</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="conversions-grid">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Flow Rate Engine Card -->
+        <section id="calc-flow"
+            class="w-full max-w-4xl glass-card rounded-[2.5rem] shadow-2xl overflow-hidden mb-16 scroll-mt-32"
+            aria-label="Production Flow Rate Calculator">
+            <div class="bg-slate-900 p-10 text-white text-center relative border-b border-violet-500/30">
+                <div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay">
+                    <svg width="100%" height="100%">
+                        <pattern id="flow-waves" width="60" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 0 10 Q 15 0, 30 10 T 60 10" fill="none" stroke="white" stroke-width="2" />
+                        </pattern>
+                        <rect width="100%" height="100%" fill="url(#flow-waves)" />
+                    </svg>
+                </div>
+                <i class="fas fa-water text-6xl mb-4 text-violet-400 drop-shadow-lg"></i>
+                <h2 class="text-3xl font-extrabold text-white">Production Flow Rate Engine</h2>
+                <p class="text-slate-300 mt-2 font-medium">Calculate time-based throughput (e.g., Gallons/Day to Metric
+                    Tons/Year)</p>
+            </div>
+
+            <div class="p-8 md:p-12 relative overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl pointer-events-none">
+                </div>
+
+                <div class="max-w-3xl mx-auto w-full grid grid-cols-1 gap-8 relative z-10">
+
+                    <!-- Flow Density Block -->
+                    <div id="block-flow-density"
+                        class="glass-card p-6 md:p-8 rounded-3xl shadow-lg border-l-4 border-l-amber-500 bg-white/50 dark:bg-slate-800/50 transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl hidden"
+                            id="badge-flow-density">
+                            <i class="fas fa-magic mr-1"></i> Calculated
+                        </div>
+
+                        <div class="flex flex-col md:flex-row md:items-center gap-6">
+                            <div
+                                class="flex-shrink-0 w-16 h-16 bg-amber-100 dark:bg-amber-900/30 text-amber-600 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
+                                <i class="fas fa-weight-hanging"></i>
+                            </div>
+                            <div class="flex-grow">
+                                <label
+                                    class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Product
+                                    Density</label>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <input type="number" id="val-flow-density"
+                                        class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 outline-none text-2xl font-bold py-2 transition-all flow-calc-input text-slate-800 dark:text-white"
+                                        placeholder="e.g. 35">
+                                    <select id="unit-flow-density"
+                                        class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2 font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-amber-500 w-full sm:w-48 cursor-pointer shadow-inner">
+                                        <option value="api">API Gravity</option>
+                                        <option value="kgm3">kg/m³</option>
+                                        <option value="gcm3">g/cm³</option>
+                                        <option value="lbgal">lb/gal (US)</option>
+                                        <option value="lbft3">lb/ft³</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Volume Flow Block -->
+                    <div id="block-flow-vol"
+                        class="glass-card p-6 md:p-8 rounded-3xl shadow-lg border-l-4 border-l-violet-500 bg-white/50 dark:bg-slate-800/50 transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 bg-violet-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl hidden"
+                            id="badge-flow-vol">
+                            <i class="fas fa-magic mr-1"></i> Calculated
+                        </div>
+
+                        <div class="flex flex-col md:flex-row md:items-center gap-6">
+                            <div
+                                class="flex-shrink-0 w-16 h-16 bg-violet-100 dark:bg-violet-900/30 text-violet-600 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <div class="flex-grow">
+                                <label
+                                    class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Volume
+                                    Flow Rate</label>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <input type="number" id="val-flow-vol"
+                                        class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-violet-500 outline-none text-2xl font-bold py-2 transition-all flow-calc-input text-slate-800 dark:text-white"
+                                        placeholder="e.g. 5000">
+                                    <select id="unit-flow-vol"
+                                        class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2 font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-violet-500 w-full sm:w-48 cursor-pointer shadow-inner">
+                                        <option value="gal_day">Gallons / Day</option>
+                                        <option value="bbl_day">Barrels / Day (bpd)</option>
+                                        <option value="m3_hr">m³ / Hour</option>
+                                        <option value="liter_min">Liters / Minute</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mass Flow Block -->
+                    <div id="block-flow-mass"
+                        class="glass-card p-6 md:p-8 rounded-3xl shadow-lg border-l-4 border-l-blue-500 bg-white/50 dark:bg-slate-800/50 transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl hidden"
+                            id="badge-flow-mass">
+                            <i class="fas fa-magic mr-1"></i> Calculated
+                        </div>
+
+                        <div class="flex flex-col md:flex-row md:items-center gap-6">
+                            <div
+                                class="flex-shrink-0 w-16 h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
+                                <i class="fas fa-truck-loading"></i>
+                            </div>
+                            <div class="flex-grow">
+                                <label
+                                    class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Mass
+                                    Flow Rate</label>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <input type="number" id="val-flow-mass"
+                                        class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-blue-500 outline-none text-2xl font-bold py-2 transition-all flow-calc-input text-slate-800 dark:text-white"
+                                        placeholder="e.g. 10000">
+                                    <select id="unit-flow-mass"
+                                        class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2 font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-48 cursor-pointer shadow-inner">
+                                        <option value="ton_year">Metric Tons / Year</option>
+                                        <option value="kg_hr">kg / Hour</option>
+                                        <option value="lb_day">Pounds / Day</option>
+                                        <option value="ton_day">Metric Tons / Day</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-8 flex justify-center">
+                    <button id="btn-reset-flow"
+                        class="px-8 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        <i class="fas fa-redo-alt mr-2"></i> Reset Flow Engine
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Live Price Calculator Card -->
+        <!-- <section id="calc-price"
+            class="w-full max-w-4xl glass-card rounded-[2.5rem] shadow-2xl overflow-hidden mb-16 scroll-mt-32"
+            aria-label="Live Market Valuation">
+            <div class="bg-slate-900 p-8 text-white text-center relative border-b border-emerald-500/30">
+                <div id="price-status-badge"
+                    class="absolute top-4 right-4 bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1.5 rounded-full border border-emerald-500/30 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Demo Mode
+                </div>
+                <i class="fas fa-chart-line text-4xl mb-3 text-emerald-400"></i>
+                <h2 class="text-2xl font-extrabold text-white">Live Petroleum Valuation</h2>
+                <p class="text-slate-400 mt-1 text-sm font-medium">Calculate real-time market value based on commodity
+                    pricing</p>
+            </div>
+
+            <div class="p-8 md:p-12">
+                <div class="max-w-2xl mx-auto w-full grid grid-cols-1 gap-6"> -->
+
+        <!-- Commodity Selection -->
+        <!-- <div
+                        class="glass-card p-6 rounded-2xl shadow-sm border-l-4 border-l-emerald-500 bg-white/50 dark:bg-slate-800/50">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Select
+                            Commodity</label>
+                        <select id="price-commodity"
+                            class="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-bold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer">
+                            <option value="WTI">WTI Crude Oil (NYMEX)</option>
+                            <option value="BRENT">Brent Crude Oil (ICE)</option>
+                            <option value="NATGAS">Natural Gas (Henry Hub)</option>
+                            <option value="GASOLINE">RBOB Gasoline</option>
+                            <option value="HEATINGOIL">Heating Oil</option>
+                        </select>
+                        <div class="flex justify-between items-center mt-3 text-sm">
+                            <span class="text-slate-500 font-medium">Current Market Price:</span>
+                            <span id="price-display-rate"
+                                class="font-black text-emerald-600 dark:text-emerald-400">Fetching...</span>
+                        </div>
+                    </div> -->
+
+        <!-- Amount Block -->
+        <!-- <div
+                        class="glass-card p-6 rounded-2xl shadow-sm border-l-4 border-l-emerald-500 bg-white/50 dark:bg-slate-800/50">
+                        <label
+                            class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Quantity</label>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <input type="number" id="val-price-qty"
+                                class="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 outline-none text-2xl font-bold py-2 transition-all"
+                                placeholder="e.g. 1000" value="1000">
+                            <select id="unit-price-qty"
+                                class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2 font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-emerald-500 w-full sm:w-48 cursor-pointer">
+                                <option value="bbl">Barrels (bbl)</option>
+                                <option value="gal">Gallons (gal)</option>
+                                <option value="mmbtu">MMBtu (NatGas)</option>
+                                <option value="mt">Metric Tons (t)</option>
+                            </select>
+                        </div>
+                    </div> -->
+
+        <!-- Result Block -->
+        <!-- <div class="mt-4 p-8 bg-slate-900 rounded-3xl text-center shadow-xl border border-emerald-500/30">
+                        <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Total Estimated
+                            Value</div>
+                        <div class="text-5xl md:text-6xl font-black text-white break-all">
+                            $<span id="price-total-value">0.00</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section> -->
+
+        <!-- SEO & EDUCATIONAL SECTION -->
+        <section id="learning-section"
+            class="w-full max-w-4xl bg-white dark:bg-slate-900 p-8 md:p-16 rounded-[3rem] shadow-xl border border-slate-200 dark:border-slate-800 scroll-mt-32">
+            <article class="prose prose-slate dark:prose-invert max-w-none">
+                <header class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
+                        Crude Oil Analysis: <span class="text-amber-500">The Ultimate Engineering Guide</span>
+                    </h2>
+                    <div class="h-1.5 w-24 bg-gradient-to-r from-amber-500 to-amber-700 mx-auto rounded-full"></div>
+                </header>
+
+                <div class="mb-12">
+                    <img src="../images/crude-oil-testing.png" alt="Laboratory testing of crude oil density"
+                        class="w-full rounded-2xl shadow-lg mb-8 border border-slate-200 dark:border-slate-800">
+                    <p class="text-lg leading-relaxed text-slate-600 dark:text-400">
+                        Precision in petroleum engineering dictates millions of dollars in commodity trading every day.
+                        From wellhead extraction to refinery processing, knowing exactly how to calculate the **volume,
+                        mass, density, and API gravity** of crude oil is non-negotiable. Our dual calculation suite
+                        provides real-time, bidirectional conversions adapted for international industry standards.
+                    </p>
+                </div>
+
+                <div class="mb-12">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-4">Understanding API Gravity
+                    </h3>
+                    <p class="text-lg leading-relaxed">
+                        In the petroleum industry, the density of crude oil is usually expressed in terms of <strong>API
+                            gravity</strong>. It is a measure of how heavy or light a petroleum liquid is compared to
+                        water.
+                    </p>
+                    <ul class="list-none space-y-4 my-6">
+                        <li class="flex items-start gap-3">
+                            <span class="bg-amber-100 text-amber-600 px-3 py-1 rounded-lg font-bold">> 31.1°</span>
+                            <span><strong>Light crude oil</strong>: Flows freely and yields more valuable products like
+                                gasoline.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="bg-amber-100 text-amber-600 px-3 py-1 rounded-lg font-bold">22.3° to
+                                31.1°</span>
+                            <span><strong>Medium crude oil</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="bg-amber-100 text-amber-600 px-3 py-1 rounded-lg font-bold">
+                                < 22.3°</span>
+                                    <span><strong>Heavy crude oil</strong>: Highly viscous, requiring more processing to
+                                        yield high-value products.</span>
+                        </li>
+                    </ul>
+                    <div
+                        class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border-l-4 border-amber-400 italic mt-6">
+                        The formula to convert API Gravity to specific gravity (SG) at 60°F is:
+                        <br>
+                        <strong>$$SG = \frac{141.5}{\text{API} + 131.5}$$</strong>
+                    </div>
+                </div>
+
+                <div class="mb-12">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">The Formula Triad: Density, Mass,
+                        and Volume</h3>
+                    <p>Our tool uses the fundamental relationship between density (\(\rho\)), mass (\(m\)), and volume
+                        (\(V\)):</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 text-center">
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                            <h4 class="font-bold text-amber-500 mb-2">Finding Density</h4>
+                            <p class="text-lg font-bold">$$\rho = \frac{m}{V}$$</p>
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                            <h4 class="font-bold text-blue-500 mb-2">Finding Mass</h4>
+                            <p class="text-lg font-bold">$$m = \rho \times V$$</p>
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                            <h4 class="font-bold text-emerald-500 mb-2">Finding Volume</h4>
+                            <p class="text-lg font-bold">$$V = \frac{m}{\rho}$$</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-16">
+                    <h3 class="text-3xl font-bold text-slate-800 dark:text-white mb-6 text-emerald-500">Procedure of
+                        Calculation: Step-by-Step Example</h3>
+
+                    <div class="bg-slate-900 text-slate-300 p-8 rounded-3xl shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
+                        <h4 class="text-xl font-bold text-white mb-4 border-b border-slate-700 pb-4">Real-Life Scenario:
+                            Finding Total Mass</h4>
+                        <p class="mb-6">
+                            <strong>Problem:</strong> A storage tank holds exactly <strong class="text-sky-400">10,000
+                                Barrels (bbl)</strong> of Crude Oil. The density of the oil is measured at <strong
+                                class="text-amber-400">850 kg/m³</strong>. What is the total mass of the oil in Metric
+                            Tons?
+                        </p>
+
+                        <ol class="list-decimal pl-6 space-y-4 marker:text-emerald-500 marker:font-bold">
+                            <li>
+                                <strong class="text-white">Convert Volume to a Compatible Unit (m³):</strong><br>
+                                Since density is in kg/m³, we must convert Barrels to cubic meters. The standard
+                                conversion is \(1 \text{ bbl} \approx 0.158987 \text{ m}^3\).<br>
+                                \(V = 10,000 \times 0.158987\) = <strong class="text-sky-400">1,589.87 m³</strong>
+                            </li>
+                            <li>
+                                <strong class="text-white">Apply the Mass Formula:</strong><br>
+                                \(m = \rho \times V\)<br>
+                                \(m = 850 \text{ kg/m}^3 \times 1,589.87 \text{ m}^3\) = <strong
+                                    class="text-amber-400">1,351,389.5 kg</strong>
+                            </li>
+                            <li>
+                                <strong class="text-white">Convert Mass to Final Target Unit (Metric Tons):</strong><br>
+                                There are \(1,000 \text{ kg}\) in a Metric Ton.<br>
+                                \(m = 1,351,389.5 \div 1,000\) = <strong
+                                    class="text-emerald-400 bg-emerald-500/20 px-2 py-1 rounded">1,351.39 Metric
+                                    Tons</strong>
+                            </li>
+                        </ol>
+                        <p class="mt-6 text-sm text-slate-400">
+                            <strong>Note:</strong> Our Crude Oil Analyzer tool performs all of these unit conversions
+                            automatically behind the scenes!
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mb-12">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Temperature Corrections</h3>
+                    <p>
+                        Crude oil expands when heated and contracts when cooled. Because density and volume are
+                        temperature-dependent, the industry standardizes measurements to exactly **60°F (15.56°C)**.
+                    </p>
+                    <div class="mt-6">
+                        <a href="api-gravity-converter.html"
+                            class="inline-flex items-center px-6 py-3 rounded-full bg-sky-500 text-white font-bold hover:bg-sky-600 transition-colors shadow-lg">
+                            Go to Temperature dependent API to SG Convertor <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div
+                    class="mb-12 bg-amber-50 dark:bg-amber-900/10 p-8 rounded-[2rem] border border-amber-100 dark:border-amber-900/30">
+                    <h3 class="text-2xl font-bold text-amber-600 dark:text-amber-400 mb-4">What is a Barrel (bbl)?</h3>
+                    <p>In the oil industry, a barrel is the standard unit of volume. Historically, oil was transported
+                        in 42-gallon tierces (a type of wooden cask) derived from the Pennsylvania oil rush of the
+                        1860s. Today, the standard stands globally:</p>
+                    <ul class="font-medium mt-4 space-y-2">
+                        <li><strong>1 Oil Barrel (bbl)</strong> = 42 US Gallons</li>
+                        <li><strong>1 Oil Barrel (bbl)</strong> ≈ 158.987 Liters</li>
+                        <li><strong>1 Oil Barrel (bbl)</strong> ≈ 34.97 UK Gallons</li>
+                        <li><strong>1 Oil Barrel (bbl)</strong> ≈ 0.1589 Cubic Meters (m³)</li>
+                    </ul>
+                    <p class="mt-4 text-sm text-slate-500">
+                        Because different commodities are priced in different units (e.g., Crude Oil in Barrels, Natural
+                        Gas in MMBtu), it is critical to use our Volume Engine to properly convert your physical
+                        measurements into the specific unit required by the commodity market before applying the price
+                        valuation.
+                    </p>
+                </div>
+
+                <div
+                    class="mb-12 bg-indigo-50 dark:bg-indigo-900/10 p-8 rounded-[2rem] border border-indigo-100 dark:border-indigo-900/30">
+                    <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-4">Production Flow Rates</h3>
+                    <p class="text-slate-700 dark:text-slate-300">
+                        While the standard Volume Engine handles static amounts, the <strong>Production Flow Rate
+                            Engine</strong> handles continuous movement through pipelines. Converting <em>Gallons per
+                            Day</em> into <em>Metric Tons per Year</em> requires factoring in the product's density and
+                        normalizing the time component (multiplying daily rates by 365 days).
+                    </p>
+                    <div
+                        class="bg-white dark:bg-slate-800 p-4 rounded-xl mt-4 font-mono text-center text-sm shadow-inner">
+                        Mass Flow Rate = Volume Flow Rate &times; Density
+                    </div>
+                </div>
+
+                <div
+                    class="mt-16 p-8 bg-slate-950 text-slate-400 rounded-[2.5rem] text-sm leading-relaxed border-t-4 border-amber-500 shadow-2xl">
+                    <p>
+                        Our <strong>Crude Oil Calculator Suite</strong> empowers engineers, commodity traders, analysts,
+                        and students to rapidly perform complex conversions. Whether you need to convert metric tons to
+                        barrels, adjust API gravity for temperature fluctuations, or find the specific volume of heavy
+                        crude, our robust mathematical engine ensures your data is accurate and accessible without
+                        reloading the page. Optimize your petroleum logistics and calculations today.
+                    </p>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/crude-oil.js"></script>
+</body>
+
+</html>

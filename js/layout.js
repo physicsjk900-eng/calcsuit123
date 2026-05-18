@@ -86,6 +86,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/lifestyle/vacation-planner.html', name: 'Vacation Budget', icon: '<i class="fas fa-plane"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' }, */
         { id: '/productivity/task-management-calculator.html', name: 'Task Manager', icon: '<i class="fas fa-tasks"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
         { id: '/productivity/task-calendar-generator.html', name: 'Task Calendar', icon: '<i class="fas fa-calendar-alt"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
+        { id: '/Industrial/crude-oil-calculator.html', name: 'Crude Oil', icon: '<i class="fas fa-oil-can"></i>', category: 'Industrial', colorClass: 'text-amber-600' },
+        { id: '/Industrial/api-gravity-converter.html', name: 'API Gravity to Specific Gravity Converter (Temperature Dependant)', icon: '<i class="fas fa-thermometer-half"></i>', category: 'Industrial', colorClass: 'text-sky-600' },
         /* { id: '/productivity/circadian-rhythm-energy-calculator.html', name: 'Circadian Rhythm Energy', icon: '<i class="fas fa-brain"></i>', category: 'Productivity', colorClass: 'text-violet-600' },
         { id: '/productivity/commute-cost-calculator.html', name: 'Commute Cost Arbitrage', icon: '<i class="fas fa-car-side"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
         { id: '/productivity/neural-task-architect.html', name: 'Neural Task Architect', icon: '<i class="fas fa-microchip"></i>', category: 'Productivity', colorClass: 'text-violet-600' },
@@ -93,7 +95,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     ];
 
     const isLocal = window.location.protocol === 'file:';
-    const innerDirs = ['calculators', 'finance', 'health', 'math', 'time', 'conversion', 'lifestyle', 'business', 'productivity', 'physics'];
+    const innerDirs = ['calculators', 'finance', 'health', 'math', 'time', 'conversion', 'lifestyle', 'business', 'productivity', 'physics', 'Industrial'];
     const depth = window.location.pathname.split('/').reverse().findIndex(p => innerDirs.includes(p));
     const rootPrefix = depth > -1 ? '../' : './';
 
@@ -139,13 +141,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             { name: 'Health', icon: '<i class="fas fa-heartbeat"></i>', color: 'text-rose-500' },
             { name: 'Time & Date', icon: '<i class="far fa-calendar-alt"></i>', color: 'text-purple-500' },
             { name: 'Conversion', icon: '<i class="fas fa-exchange-alt"></i>', color: 'text-amber-500' },
-            { name: 'Productivity', icon: '<i class="fas fa-tasks"></i>', color: 'text-teal-500' }
+            { name: 'Productivity', icon: '<i class="fas fa-tasks"></i>', color: 'text-teal-500' },
+            { name: 'Industrial', icon: '<i class="fas fa-industry"></i>', color: 'text-sky-500' },
         ];
 
         const cats = allCats.filter(c => activeCategories.includes(c.name));
 
         return `
-            <div class="w-full max-w-5xl mx-auto mb-10 px-4">
+            <nav class="w-full max-w-5xl mx-auto mb-10 px-4" aria-label="Category Navigation">
                 <div class="flex items-center gap-3 overflow-x-auto pb-4 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
                     ${cats.map(c => {
             const isActive = currentTool && currentTool.category === c.name;
@@ -157,7 +160,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         `;
         }).join('')}
                 </div>
-            </div>
+            </nav>
         `;
     }
 
@@ -180,7 +183,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         return `
             <!-- Next/Prev Subtle Nav -->
-            <div class="w-full max-w-5xl mx-auto mb-12 px-4">
+            <nav class="w-full max-w-5xl mx-auto mb-12 px-4" aria-label="Tool Navigation">
                 <div class="flex justify-between items-center gap-4 py-6 border-y border-slate-100 dark:border-slate-800">
                     <a href="${rootPrefix}${prevTool.id.replace(/^\//, '')}" class="flex items-center gap-3 text-slate-400 hover:text-indigo-500 transition-colors group">
                         <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
@@ -198,9 +201,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
                     </a>
                 </div>
-            </div>
+            </nav>
 
-            <div class="w-full max-w-5xl mx-auto mt-16 mb-12 px-4">
+            <section class="w-full max-w-5xl mx-auto mt-16 mb-12 px-4" aria-label="Related Tools">
                 <div class="flex items-center justify-between mb-8">
                     <h3 class="text-xl font-extrabold text-slate-800 dark:text-white flex items-center gap-3">
                         <span class="w-8 h-8 rounded-lg bg-indigo-500 text-white flex items-center justify-center text-xs shadow-lg shadow-indigo-500/20">
@@ -225,7 +228,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </a>
                     `).join('')}
                 </div>
-            </div>
+            </section>
         `;
     }
 
@@ -262,7 +265,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         { name: 'Math & Systems', categories: ['Standard', 'Math', 'Technical', 'Physics'], icon: '<i class="fas fa-microchip"></i>' },
         /* { name: 'Wealth & Growth', categories: ['Financial', 'Business'], icon: '<i class="fas fa-vault"></i>' },
         { name: 'Health & Life', categories: ['Health', 'Lifestyle'], icon: '<i class="fas fa-heartbeat"></i>' }, */
-        { name: 'Utility Hub', categories: ['Time & Date', 'Conversion', 'Productivity'], icon: '<i class="fas fa-tools"></i>' }
+        { name: 'Utility Hub', categories: ['Time & Date', 'Conversion', 'Productivity'], icon: '<i class="fas fa-tools"></i>' },
+        { name: 'Industrial', categories: ['Industrial'], icon: '<i class="fas fa-tools"></i>' }
     ];
 
     // Generate Desktop Navigation Items (Mega-Menu Model)

@@ -524,6 +524,18 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://calcsuit.com/Industrial/crude-oil-calculator.html</loc>
+    <lastmod>2026-04-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://calcsuit.com/Industrial/api-gravity-calculator.html</loc>
+    <lastmod>2026-04-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <!-- <url>
     <loc>https://calcsuit.com/productivity/circadian-rhythm-energy-calculator.html</loc>
     <lastmod>2026-04-04</lastmod>

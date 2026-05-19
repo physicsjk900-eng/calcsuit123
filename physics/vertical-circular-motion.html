@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertical Circular Motion Analyzer | CalcSuit</title>
+    <meta name="description"
+        content="Advanced physics calculator for analyzing Vertical Circular Motion (VCM). Calculate critical velocities, string tension, and visualize the motion dynamically.">
+
+    <!-- Canonical URL -->
+    <link rel=canonical href="https://calcsuit.com/physics/vertical-circular-motion.html" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax for LaTeX Rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Chart.js for graphing -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        sky: { 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' },
+                        amber: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' },
+                        purple: { 400: '#c084fc', 500: '#a855f7', 600: '#9333ea' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a, #334155, #9333ea);
+        }
+
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        /* VCM Animation Styles */
+        .vcm-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 2px dashed rgba(148, 163, 184, 0.5);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vcm-center {
+            width: 10px;
+            height: 10px;
+            background: #94a3b8;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .vcm-arm {
+            position: absolute;
+            width: 2px;
+            height: 125px; /* Half of 250px */
+            background: #a855f7;
+            bottom: 50%;
+            left: calc(50% - 1px);
+            transform-origin: bottom center;
+            transform: rotate(180deg); /* Starts at bottom (theta = 0) */
+            transition: transform 0.1s linear;
+        }
+        
+        .dark .vcm-arm {
+            background: #c084fc;
+        }
+
+        .vcm-particle {
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle at 30% 30%, #fcd34d, #f59e0b);
+            border-radius: 50%;
+            position: absolute;
+            top: -12px;
+            left: -11px;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Custom Slider Style */
+        input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #a855f7;
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #e2e8f0;
+            border-radius: 2px;
+        }
+        .dark input[type=range]::-webkit-slider-runnable-track {
+            background: #475569;
+        }
+    </style>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+
+    <!-- Structured Data (SEO) -->
+    
+    
+    
+    
+
+    <!-- Structured Data (SEO) -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://calcsuit.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Physics",
+      "item": "https://calcsuit.com/physics/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "VCM Analyzer",
+      "item": "https://calcsuit.com/physics/vertical-circular-motion.html"
+    }
+  ]
+}
+</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "VCM Analyzer Calculator",
+  "description": "Advanced physics calculator for analyzing Vertical Circular Motion (VCM). Calculate critical velocities, string tension, and visualize the motion dynamically.",
+  "applicationCategory": "CalculatorApplication",
+  "operatingSystem": "Web",
+  "url": "https://calcsuit.com/physics/vertical-circular-motion.html",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Vertical Circular Motion Analyzer | CalcSuit",
+  "description": "Advanced physics calculator for analyzing Vertical Circular Motion (VCM). Calculate critical velocities, string tension, and visualize the motion dynamically.",
+  "url": "https://calcsuit.com/physics/vertical-circular-motion.html"
+}
+</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I use the VCM Analyzer Calculator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Using the VCM Analyzer Calculator is simple. Enter the required inputs in the fields provided, and the tool will instantly compute the results, complete with formulas and working where applicable."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this VCM Analyzer solver free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! The VCM Analyzer Calculator is 100% free, private, and works directly in your web browser with no ad interruptions."
+      }
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col items-center">
+    <header id="sidebar-container" class="w-full"></header>
+
+    <main class="flex-1 w-full max-w-[1440px] mx-auto p-4 sm:p-6 lg:p-8 flex flex-col items-center">
+
+        <!-- Hero Section -->
+        <section class="w-full max-w-5xl mb-8 text-center mt-8">
+            <span
+                class="px-4 py-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-xs font-bold uppercase tracking-widest mb-4 inline-block">Physics Suite</span>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
+                VCM <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-purple-700">Analyzer</span>
+            </h1>
+            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-6">
+                Dynamically analyze Vertical Circular Motion. Determine critical loop velocities, string tension mapping, and track particle energy across any angle.
+            </p>
+        </section>
+
+        <!-- Main Calculator Layout -->
+        <div class="w-full max-w-6xl grid grid-cols-1 xl:grid-cols-12 gap-8 mb-16">
+            
+            <!-- Left Column: Inputs & Status -->
+            <div class="xl:col-span-4 flex flex-col gap-6">
+                
+                <!-- Input Card -->
+                <div class="glass-card rounded-[2rem] p-6 shadow-xl">
+                    <h3 class="text-xl font-bold mb-6 flex items-center text-slate-800 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-3">
+                        <i class="fas fa-sliders-h mr-3 text-purple-500"></i> Parameters
+                    </h3>
+                    
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Mass (\(m\))</label>
+                            <div class="relative">
+                                <input type="number" id="vcm-mass" class="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-bold text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-purple-500" value="1.0" step="0.1" min="0.1">
+                                <span class="absolute right-4 top-3 text-slate-400 font-bold">kg</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">String Length (\(R\))</label>
+                            <div class="relative">
+                                <input type="number" id="vcm-radius" class="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-bold text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-purple-500" value="2.0" step="0.1" min="0.1">
+                                <span class="absolute right-4 top-3 text-slate-400 font-bold">m</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Initial Velocity at Bottom (\(u\))</label>
+                            <div class="relative">
+                                <input type="number" id="vcm-velocity" class="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-bold text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-purple-500" value="10.0" step="0.5" min="0">
+                                <span class="absolute right-4 top-3 text-slate-400 font-bold">m/s</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200 dark:border-slate-700">
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Gravity (\(g\))</label>
+                            <div class="relative">
+                                <input type="number" id="vcm-gravity" class="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 font-bold text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-purple-500" value="9.81" step="0.01">
+                                <span class="absolute right-4 top-3 text-slate-400 font-bold">m/s²</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Card -->
+                <div class="glass-card rounded-[2rem] p-6 shadow-xl relative overflow-hidden bg-slate-900 border-purple-500/30 text-white">
+                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-purple-500/20 rounded-full blur-2xl pointer-events-none"></div>
+                    <h3 class="text-sm font-bold mb-4 uppercase tracking-widest text-slate-400">Motion Status</h3>
+                    
+                    <div id="vcm-status-box" class="text-2xl font-black mb-4 break-words">
+                        <!-- Filled by JS -->
+                    </div>
+                    
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-2">
+                            <span class="text-slate-400">Req. \(v\) for Loop:</span>
+                            <span id="vcm-req-loop" class="font-bold text-emerald-400"></span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-2">
+                            <span class="text-slate-400">Req. \(v\) for Slack:</span>
+                            <span id="vcm-req-slack" class="font-bold text-amber-400"></span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-2 hidden" id="slack-angle-row">
+                            <span class="text-slate-400">Goes slack at \(\theta\):</span>
+                            <span id="vcm-slack-angle" class="font-bold text-rose-400"></span>
+                        </div>
+                        <div class="flex justify-between items-center pb-1">
+                            <span class="text-slate-400">Total Energy:</span>
+                            <span id="vcm-total-energy" class="font-bold text-purple-400"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Visualizer & Graph -->
+            <div class="xl:col-span-8 flex flex-col gap-6">
+                
+                <div class="glass-card rounded-[2rem] p-6 shadow-xl flex flex-col items-center w-full">
+                    
+                    <!-- Top Section: Interactive Visualizer & Live Data -->
+                    <div class="w-full flex flex-col md:flex-row gap-8 items-center justify-center mb-8">
+                        
+                        <!-- Physical Animation -->
+                        <div class="vcm-container bg-slate-50 dark:bg-slate-900 shadow-inner">
+                            <div class="vcm-center"></div>
+                            <div class="vcm-arm" id="vcm-arm">
+                                <div class="vcm-particle"></div>
+                            </div>
+                            <!-- Markers -->
+                            <div class="absolute top-2 text-xs font-bold text-slate-400">180°</div>
+                            <div class="absolute bottom-2 text-xs font-bold text-slate-400">0°</div>
+                            <div class="absolute right-2 text-xs font-bold text-slate-400">90°</div>
+                            <div class="absolute left-2 text-xs font-bold text-slate-400">270°</div>
+                        </div>
+
+                        <!-- Live Metrics -->
+                        <div class="flex-1 w-full bg-slate-900 text-white rounded-2xl p-6 border border-slate-700/50 shadow-lg">
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-purple-400 mb-4"><i class="fas fa-satellite-dish mr-2"></i> Live Telemetry</h4>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                    <div class="text-[10px] text-slate-400 uppercase font-bold">Angle (\(\theta\))</div>
+                                    <div class="text-xl font-black" id="live-theta">0°</div>
+                                </div>
+                                <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                    <div class="text-[10px] text-slate-400 uppercase font-bold">Tension (\(T\))</div>
+                                    <div class="text-xl font-black text-amber-400" id="live-tension">0 N</div>
+                                </div>
+                                <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                    <div class="text-[10px] text-slate-400 uppercase font-bold">Velocity (\(v\))</div>
+                                    <div class="text-xl font-black text-sky-400" id="live-velocity">0 m/s</div>
+                                </div>
+                                <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                    <div class="text-[10px] text-slate-400 uppercase font-bold">Height (\(h\))</div>
+                                    <div class="text-xl font-black text-emerald-400" id="live-height">0 m</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Time Slider -->
+                    <div class="w-full bg-slate-100 dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-inner mb-8">
+                        <div class="flex justify-between text-xs font-bold text-slate-500 mb-3">
+                            <span>Bottom (0°)</span>
+                            <span class="text-purple-500"><i class="fas fa-arrows-alt-h mr-1"></i> Interactive Time-Slider</span>
+                            <span>Top (180°)</span>
+                        </div>
+                        <input type="range" id="theta-slider" min="0" max="180" value="0" step="1">
+                        <p class="text-[10px] text-slate-400 text-center mt-2">Scrub slider to animate particle and track graph telemetry.</p>
+                    </div>
+
+                    <!-- Chart Container -->
+                    <div class="w-full h-64 relative">
+                        <canvas id="vcmChart"></canvas>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Educational Content -->
+        <section class="w-full max-w-4xl bg-white dark:bg-slate-900 p-8 md:p-12 rounded-[3rem] shadow-xl border border-slate-200 dark:border-slate-800">
+            <article class="prose prose-slate dark:prose-invert max-w-none">
+                <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-6 border-b border-slate-200 dark:border-slate-800 pb-4">Understanding Vertical Circular Motion</h2>
+                <p>
+                    Vertical circular motion occurs when an object is tied to a string and whirled in a vertical circle. Unlike horizontal circular motion, the speed of the object is <strong>not constant</strong> because gravity constantly acts upon it, altering its kinetic and potential energy.
+                </p>
+
+                <h3 class="text-xl font-bold text-purple-500 mt-8 mb-4">The Critical Conditions</h3>
+                <p>The motion of the particle is entirely dictated by its initial velocity at the lowest point (\(u\) or \(v_{bottom}\)):</p>
+                <ul class="space-y-3">
+                    <li>
+                        <strong>Completing the Loop (\(u \ge \sqrt{5gR}\)):</strong> 
+                        To maintain a circular path over the top without the string going slack, the tension at the top must be at least zero. This requires a minimum velocity at the bottom of \(\sqrt{5gR}\).
+                    </li>
+                    <li>
+                        <strong>Going Slack (\(\sqrt{2gR} < u < \sqrt{5gR}\)):</strong>
+                        The particle passes the horizontal position but lacks the energy to reach the top. The tension reaches zero before the velocity does, causing the string to go slack and the particle to fall in a parabolic projectile trajectory.
+                    </li>
+                    <li>
+                        <strong>Pendulum Motion (\(u \le \sqrt{2gR}\)):</strong>
+                        The particle does not even reach the horizontal position. Its velocity reaches zero before tension reaches zero, resulting in oscillation back and forth like a pendulum.
+                    </li>
+                </ul>
+
+                <h3 class="text-xl font-bold text-purple-500 mt-8 mb-4">The Mathematics of Tension</h3>
+                <p>
+                    The tension (\(T\)) in the string at any angle \(\theta\) (measured from the lowest point) is determined by the centripetal force requirement and the component of gravity acting along the string:
+                </p>
+                <div class="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-purple-500 font-bold text-lg text-center my-6">
+                    $$T = \frac{mv^2}{R} + mg \cos(\theta)$$
+                </div>
+                <p>
+                    By applying the Law of Conservation of Energy, we can find the velocity \(v\) at any angle \(\theta\):
+                </p>
+                <div class="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-sky-500 font-bold text-lg text-center my-6">
+                    $$\frac{1}{2}mu^2 = \frac{1}{2}mv^2 + mgR(1 - \cos(\theta))$$
+                </div>
+            </article>
+        </section>
+
+    
+<!-- SEO Content Module -->
+    <section class="w-full max-w-5xl mt-12 space-y-12">
+        <article class="bg-white dark:bg-slate-800 p-8 md:p-16 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 space-y-12">
+            
+            <!-- H2 Header & Intro -->
+            <header class="border-b border-slate-100 dark:border-slate-700 pb-8 text-center md:text-left">
+                <span class="px-4 py-1.5 rounded-full bg-purple-600/10 text-purple-500 text-xs font-bold uppercase tracking-widest mb-4 inline-block">PHYSICS SUITE</span>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-800 dark:text-white mt-2 mb-4 leading-tight">VCM Analyzer Calculator - Online Solver & Formula Guide</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed max-w-4xl">VCM Analyzer is a vital metric in our daily routines, academic assignments, and professional workflows. This comprehensive guide details the mathematical principles, practical use cases, and steps to perform these calculations accurately. Mathematics, physics, and statistics are the foundation of modern technology, engineering, and data analysis. From calculating averages in academic studies to solving vertical circular motion equations in physics, precise calculations are essential. Numerical datasets, geometry formulas, base conversions, and quadratic equations require absolute accuracy. Our math and physics solvers are designed to perform complex computations instantly, helping you check homework, debug code, and analyze statistical variance with ease.</p>
+            </header>
+
+            <!-- Detailed Explanation & What is Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-info-circle text-purple-500"></i> What is the VCM Analyzer Solver?
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">VCM Analyzer calculations are key in both personal planning and professional analysis. This online tool processes your inputs instantly in your browser to deliver accurate results. By analyzing the underlying variables, users can understand the relationships between inputs and identify key insights. Computational logic relies on applying established theorems and equations. Whether solving right triangles using the Pythagorean theorem, calculating population standard deviation, or converting binary values to hexadecimal, accuracy is key. These formulas model physical constraints and statistical spreads. Understanding how variables interact—such as the relationship between standard deviation and variance—helps data analysts and engineers extract meaningful information from raw data.</p>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-lightbulb text-purple-500"></i> Best Practices & Pro-Tips
+                    </h3>
+                    <div class="p-6 rounded-2xl bg-purple-500/5 border border-purple-200 dark:border-purple-900/30 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        <p class="font-bold text-purple-500 mb-2"><i class="fas fa-star mr-1"></i> Optimizing Your Results</p>
+                        Mathematical Pro-Tip: When working with statistical datasets, check for outliers that can skew the arithmetic mean, and compare the mean with the median. When performing base conversions in code, use hexadecimal for readability and binary for debugging low-level logic. Make sure to verify your input units before running calculations.
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use Section -->
+            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-directions text-purple-500"></i> How to Use the VCM Analyzer Calculator
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-sm mb-3">1</div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Input Data</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Enter the required values into the form fields. Make sure to double-check the values for accuracy.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-sm mb-3">2</div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Verify Units</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Ensure your values match the specified units (e.g. grams vs ounces, centimeters vs inches).</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-sm mb-3">3</div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Run Calculation</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Click the calculate button to process the mathematical formulas instantly in your browser.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-sm mb-3">4</div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Copy Results</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Review the output, check the formulas, and copy or save the results for your records.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mathematical Formula & Technical Description -->
+            <div class="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-square-root-variable text-purple-500"></i> Formula & Computational Methodology
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Understanding the mathematics behind the calculations helps clarify how the inputs relate to the final result. Our calculator processes the formulas instantly in your browser. Below is the equation used to calculate VCM Analyzer:</p>
+                <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
+                    Calculates physics parameters for vertical circular motion circular tracks:<br>- Minimum speed at top: \(v_{\text{min}} = \sqrt{g \cdot r}\)<br>- Tension at bottom: \(T_{\text{bottom}} = m \cdot g + \frac{m \cdot v^2}{r}\)
+                </div>
+            </div>
+
+            <!-- Step-by-Step Numerical Examples -->
+            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-calculator text-purple-500"></i> Step-by-Step Calculation Examples
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Review these examples to see how the mathematical formula is applied to different input values:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
+                        <h4 class="font-bold text-slate-800 dark:text-white text-base"><i class="fas fa-check-circle text-purple-500 mr-1"></i> Example Scenario 1</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">A loop of radius 5 meters under standard gravity (9.81 m/s²):
+Min velocity at top = √(9.81 * 5) = √49.05 = 7.00 m/s.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
+                        <h4 class="font-bold text-slate-800 dark:text-white text-base"><i class="fas fa-check-circle text-purple-500 mr-1"></i> Example Scenario 2</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">A 2 kg mass moving at 10 m/s on a 2m radius loop:
+Tension at bottom = (2 * 9.81) + (2 * 10² / 2) = 19.62 + 100 = 119.62 N.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Applications & Use Cases -->
+            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-briefcase text-purple-500"></i> Common Applications & Industry Use Cases
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Rollercoaster Safety Design</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Verify centripetal speeds and g-force loads at the loops of ride tracks.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Aerospace Flight Dynamics</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Calculate pilot g-force tolerances during steep vertical climb loops.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Physics Class Calculations</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Determine centripetal force and loop velocity parameters in homework exercises.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frequently Asked Questions (FAQ) -->
+            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-question-circle text-purple-500"></i> Frequently Asked Questions
+                </h3>
+                <div class="space-y-6">
+                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How does this online calculator perform calculations?</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">A: The calculations are processed instantly in your browser using standard mathematical formulas. Your data remains private and is never uploaded to external servers.</p>
+                    </div>
+                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: Why is tension highest at the bottom of a vertical loop?</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">A: At the bottom, tension must support both the weight of the object and provide the centripetal force required to keep it in the circular path.</p>
+                    </div>
+                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: What is the critical velocity at the top of a loop?</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">A: The minimum velocity required to complete the loop without falling, where centripetal force equals gravity (tension is zero).</p>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- Related Calculators Section -->
+            <div class="pt-10 border-t border-slate-200 dark:border-slate-700">
+                <h3 class="text-xl font-bold mb-6 text-slate-800 dark:text-white">Explore Related Physics Tools</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    
+                    <a href="../physics/ohms-law-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-purple-500 hover:shadow-md transition-all text-xs font-bold text-purple-500 block">
+                        Ohm’s Law
+                    </a>
+                    
+                </div>
+            </div>
+    
+
+            <!-- Conclusion Section -->
+            <div class="pt-6 border-t border-slate-100 dark:border-slate-700 text-center">
+                <p class="text-xs text-slate-400 max-w-3xl mx-auto mb-6">Mastering mathematical calculations requires practice and the right tools. Whether you are a student verifying algebra equations, an engineer checking circuit specs using Ohm's Law, or an analyst calculating statistical variance, CalcSuit provides precise, free solvers to handle the heavy lifting.</p>
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-8 py-3 bg-slate-900 dark:bg-slate-700 hover:bg-purple-600 text-white rounded-2xl text-sm font-bold transition-all shadow-md">
+                    Start New Calculation
+                </button>
+            </div>
+
+        </article>
+    </section>
+  
+<!-- /SEO Content Module -->
+</main>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/calculators/vcm.js"></script>
+</body>
+
+</html>

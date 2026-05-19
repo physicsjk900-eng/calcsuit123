@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productivity Calculators | Time Management & Workflow | CalcSuit</title>
+    <meta name="description"
+        content="Free productivity and workflow optimization calculators. Plan tasks, generate custom agendas, schedule sleep cycles, and evaluate sponsorships.">
+
+    <!-- Canonical URL -->
+    <link rel=canonical href="https://calcsuit.com/productivity/" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body
+    class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Header will be injected by layout.js -->
+    <div id="sidebar-container" class="contents"></div>
+
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <!-- Hero Title -->
+        <div class="text-center mb-16 mt-8">
+            <span
+                class="px-4 py-1.5 rounded-full bg-teal-100 dark:bg-teal-500/10 text-teal-600 dark:text-teal-400 text-xs font-bold uppercase tracking-widest mb-4 inline-block">
+                Workflow & Management Hub
+            </span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6">
+                Productivity <span class="text-indigo-600 dark:text-indigo-400">Suite</span>
+            </h1>
+            <p class="text-xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+                Streamline your daily operational efficiency. Leverage custom-built agenda planners, task managers,
+                sleep schedule models, and brand sponsorship calculators.
+            </p>
+        </div>
+
+        <!-- Dynamic Grid Area -->
+        <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+            <!-- Dynamically populated -->
+        </div>
+
+    </main>
+
+    <!-- Footer will be injected by layout.js -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/layout.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('tools-grid');
+            setTimeout(() => {
+                const config = window.calculatorConfig || [];
+                const productivityTools = config.filter(t => t.category === 'Productivity');
+
+                grid.innerHTML = productivityTools.map(t => {
+                    const href = '../' + t.id.replace(/^\//, '');
+                    return `
+                        <a href="${href}" class="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all shadow-sm hover:shadow-xl flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-teal-600 dark:text-teal-400 text-lg group-hover:scale-110 transition-transform mb-6">
+                                    ${t.icon}
+                                </div>
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">${t.name}</h3>
+                                <p class="text-xs text-slate-400 mb-6 font-medium uppercase tracking-wider">${t.category} Tool</p>
+                            </div>
+                            <span class="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-500 group-hover:underline">
+                                Launch Tool <i class="fas fa-chevron-right text-[8px] group-hover:translate-x-0.5 transition-transform"></i>
+                            </span>
+                        </a>
+                    `;
+                }).join('');
+            }, 500);
+        });
+    </script>
+</body>
+
+</html>

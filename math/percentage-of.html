@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Dynamic title & meta will be updated by JS -->
+    <title>Percentage Calculator | What is X% of Y? | CalcSuit</title>
+    <meta name="description" content="Calculate what percentage of a number is. Free interactive calculator with step-by-step math explanation and formulas.">
+
+    <!-- Canonical URL -->
+    <link rel=canonical href="https://calcsuit.com/math/percentage-of.html" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+
+    <!-- Structured Data (SEO) -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://calcsuit.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Math & Statistics",
+      "item": "https://calcsuit.com/math/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Percentage Of",
+      "item": "https://calcsuit.com/math/percentage-of.html"
+    }
+  ]
+}
+</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Percentage Of Calculator",
+  "description": "Calculate what percentage of a number is with step-by-step math explanation and formulas.",
+  "applicationCategory": "CalculatorApplication",
+  "operatingSystem": "Web",
+  "url": "https://calcsuit.com/math/percentage-of.html",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Percentage Calculator | What is X% of Y? | CalcSuit",
+  "description": "Calculate what percentage of a number is. Free interactive calculator with step-by-step math explanation and formulas.",
+  "url": "https://calcsuit.com/math/percentage-of.html"
+}
+</script>
+    <!-- MathJax for LaTeX Rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Header will be injected by layout.js -->
+    <div id="sidebar-container" class="contents"></div>
+
+    <main class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Calculator Container -->
+        <div id="app-container" class="bg-white dark:bg-slate-800 rounded-[3rem] border border-slate-200 dark:border-slate-700 p-8 md:p-12 shadow-xl relative overflow-hidden transition-all duration-300">
+            
+            <!-- Headline block -->
+            <div class="text-center mb-8">
+                <span class="px-3.5 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider mb-4 inline-block">
+                    Programmatic SEO Percentage Resolver
+                </span>
+                <h1 id="calc-title" class="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mt-2 leading-tight">
+                    What is <span class="text-indigo-600 dark:text-indigo-400" id="title-n">15</span>% of <span class="text-indigo-600 dark:text-indigo-400" id="title-of">200</span>?
+                </h1>
+            </div>
+
+            <!-- Big Result Visualization Card -->
+            <div class="bg-slate-50 dark:bg-slate-900/40 rounded-[2.5rem] p-8 md:p-10 border border-slate-100 dark:border-slate-800 text-center space-y-4 mb-8">
+                <p class="text-xs font-black uppercase tracking-widest text-slate-400">Calculated Value</p>
+                <div id="result-value" class="text-6xl md:text-8xl font-black text-indigo-600 dark:text-indigo-400 transition-all duration-300">
+                    30
+                </div>
+                
+                <!-- Visual progress indicator -->
+                <div class="max-w-md mx-auto mt-6">
+                    <div class="h-4 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="h-full bg-gradient-to-r from-indigo-500 to-indigo-600 transition-all duration-500" style="width: 15%;"></div>
+                    </div>
+                    <div class="flex justify-between text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider mt-2">
+                        <span>0%</span>
+                        <span id="visual-label">15% of 200</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Input Form for on-the-fly adjustment -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center p-6 bg-slate-50 dark:bg-slate-900/20 border border-slate-150 dark:border-slate-800 rounded-3xl mb-8">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Percentage (%)</label>
+                    <input type="number" id="input-n" value="15" step="any" class="w-full bg-white dark:bg-slate-900 rounded-xl p-3 border border-slate-200 dark:border-slate-700 outline-none text-base font-bold focus:border-indigo-500 text-center" />
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Of Number</label>
+                    <input type="number" id="input-of" value="200" step="any" class="w-full bg-white dark:bg-slate-900 rounded-xl p-3 border border-slate-200 dark:border-slate-700 outline-none text-base font-bold focus:border-indigo-500 text-center" />
+                </div>
+                <div class="pt-6">
+                    <button id="recalc-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl shadow-md transition-colors text-sm">
+                        Calculate Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step-by-Step Math Box -->
+            <div class="space-y-6">
+                <h3 class="text-xl font-extrabold text-slate-800 dark:text-white">Step-by-Step Math Formulas & Working</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Method 1: Fractional Math -->
+                    <div class="p-6 bg-slate-50 dark:bg-slate-900/30 border border-slate-100 dark:border-slate-800 rounded-2xl">
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-3">Method 1: Decimal Multiplication</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
+                            Convert the percentage rate to a decimal by dividing by 100, then multiply by the source number.
+                        </p>
+                        <div class="bg-white dark:bg-slate-950 p-4 rounded-xl border border-slate-100 dark:border-slate-850 font-mono text-xs leading-relaxed space-y-1.5 text-indigo-600 dark:text-indigo-400">
+                            <div>1. Rate: <span id="method1-step1">15% / 100 = 0.15</span></div>
+                            <div>2. Multiply: <span id="method1-step2">0.15 * 200 = 30</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Method 2: Ratio Equation -->
+                    <div class="p-6 bg-slate-50 dark:bg-slate-900/30 border border-slate-100 dark:border-slate-800 rounded-2xl">
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-3">Method 2: Ratio Proportion</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
+                            Setup a ratio where part divided by total is equal to the percentage rate divided by 100.
+                        </p>
+                        <div class="bg-white dark:bg-slate-950 p-4 rounded-xl border border-slate-100 dark:border-slate-850 font-mono text-xs leading-relaxed space-y-1.5 text-indigo-600 dark:text-indigo-400">
+                            <div>1. Ratio: X / <span id="method2-of">200</span> = <span id="method2-n">15</span> / 100</div>
+                            <div>2. Solve: X = (<span id="method2-solve">15 * 200</span>) / 100 = 30</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Popular Related Queries -->
+            <div class="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800">
+                <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-6">Popular Percentage Queries for <span id="queries-of">200</span></h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="related-queries-grid">
+                    <!-- Dynamic similar cards -->
+                </div>
+            </div>
+
+        </div>
+
+    
+        <!-- SEO Content Module -->
+    <section class="w-full max-w-5xl mt-12 space-y-12">
+        <article class="bg-white dark:bg-slate-800 p-8 md:p-16 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 space-y-12">
+            
+            <!-- H2 Header & Intro -->
+            <header class="border-b border-slate-100 dark:border-slate-700 pb-8 text-center md:text-left">
+                <span class="px-4 py-1.5 rounded-full bg-sky-600/10 text-sky-500 text-xs font-bold uppercase tracking-widest mb-4 inline-block">MATH SUITE</span>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-800 dark:text-white mt-2 mb-4 leading-tight">Percentage Of Calculator - Online Solver & Formula Guide</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed max-w-4xl">Percentage Of is a vital metric in our daily routines, academic assignments, and professional workflows. This comprehensive guide details the mathematical principles, practical use cases, and steps to perform these calculations accurately. Mathematics, physics, and statistics are the foundation of modern technology, engineering, and data analysis. From calculating averages in academic studies to solving vertical circular motion equations in physics, precise calculations are essential. Numerical datasets, geometry formulas, base conversions, and quadratic equations require absolute accuracy. Our math and physics solvers are designed to perform complex computations instantly, helping you check homework, debug code, and analyze statistical variance with ease.</p>
+            </header>
+
+            <!-- Detailed Explanation & What is Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-info-circle text-sky-500"></i> What is the Percentage Of Solver?
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Percentage Of calculations are key in both personal planning and professional analysis. This online tool processes your inputs instantly in your browser to deliver accurate results. By analyzing the underlying variables, users can understand the relationships between inputs and identify key insights. Computational logic relies on applying established theorems and equations. Whether solving right triangles using the Pythagorean theorem, calculating population standard deviation, or converting binary values to hexadecimal, accuracy is key. These formulas model physical constraints and statistical spreads. Understanding how variables interact—such as the relationship between standard deviation and variance—helps data analysts and engineers extract meaningful information from raw data.</p>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-lightbulb text-sky-500"></i> Best Practices & Pro-Tips
+                    </h3>
+                    <div class="p-6 rounded-2xl bg-sky-500/5 border border-sky-200 dark:border-sky-900/30 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        <p class="font-bold text-sky-500 mb-2"><i class="fas fa-star mr-1"></i> Optimizing Your Results</p>
+                        Mathematical Pro-Tip: When working with statistical datasets, check for outliers that can skew the arithmetic mean, and compare the mean with the median. When performing base conversions in code, use hexadecimal for readability and binary for debugging low-level logic. Make sure to verify your input units before running calculations.
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use Section -->
+            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-directions text-sky-500"></i> How to Use the Percentage Of Calculator
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm mb-3">1</div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Input Data</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Enter the required values into the form fields. Make sure to double-check the values for accuracy.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm mb-3">2</div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Verify Units</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Ensure your values match the specified units (e.g. grams vs ounces, centimeters vs inches).</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm mb-3">3</div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Run Calculation</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Click the calculate button to process the mathematical formulas instantly in your browser.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm mb-3">4</div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Copy Results</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Review the output, check the formulas, and copy or save the results for your records.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mathematical Formula & Technical Description -->
+            <div class="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-square-root-variable text-sky-500"></i> Formula & Computational Methodology
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Understanding the mathematics behind the calculations helps clarify how the inputs relate to the final result. Our calculator processes the formulas instantly in your browser. Below is the equation used to calculate Percentage Of:</p>
+                <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
+                    Calculates what percentage X is of Y:<br>\(\text{Percentage (\%)} = \left( \frac{X}{Y} \right) \times 100\)<br>This scales the part (\(X\)) relative to the whole base (\(Y\)) on a scale of 100.
+                </div>
+            </div>
+
+            <!-- Step-by-Step Numerical Examples -->
+            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-calculator text-sky-500"></i> Step-by-Step Calculation Examples
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Review these examples to see how the mathematical formula is applied to different input values:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
+                        <h4 class="font-bold text-slate-800 dark:text-white text-base"><i class="fas fa-check-circle text-sky-500 mr-1"></i> Example Scenario 1</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">What percentage is 45 of 200:
+(45 / 200) * 100 = 0.225 * 100 = 22.5%.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
+                        <h4 class="font-bold text-slate-800 dark:text-white text-base"><i class="fas fa-check-circle text-sky-500 mr-1"></i> Example Scenario 2</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">What percentage is 15 of 60:
+(15 / 60) * 100 = 0.25 * 100 = 25%.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Applications & Use Cases -->
+            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-briefcase text-sky-500"></i> Common Applications & Industry Use Cases
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Test Scores</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Calculate test score percentages by entering correct answers over total questions.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Marketing Analysis</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Determine the conversion rate percentage by comparing clicks against signups.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Finances</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Analyze asset allocations as a percentage of total portfolio value.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frequently Asked Questions (FAQ) -->
+            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-question-circle text-sky-500"></i> Frequently Asked Questions
+                </h3>
+                <div class="space-y-6">
+                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How does this online calculator perform calculations?</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">A: The calculations are processed instantly in your browser using standard mathematical formulas. Your data remains private and is never uploaded to external servers.</p>
+                    </div>
+                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How do you turn a fraction into a percentage?</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">A: Divide the numerator by the denominator to get a decimal, then multiply by 100.</p>
+                    </div>
+                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: Can a percentage exceed 100%?</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">A: Yes, if the part is larger than the whole, the result will be greater than 100% (e.g., 150 is 150% of 100).</p>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- Related Calculators Section -->
+            <div class="pt-10 border-t border-slate-200 dark:border-slate-700">
+                <h3 class="text-xl font-bold mb-6 text-slate-800 dark:text-white">Explore Related Math Tools</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    
+                    <a href="../math/percentage-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-sky-500 hover:shadow-md transition-all text-xs font-bold text-sky-500 block">
+                        Percentage Calculator
+                    </a>
+                    
+                    <a href="../math/fraction-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-sky-500 hover:shadow-md transition-all text-xs font-bold text-sky-500 block">
+                        Fraction Calculator
+                    </a>
+                    
+                    <a href="../math/squareroot-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-sky-500 hover:shadow-md transition-all text-xs font-bold text-sky-500 block">
+                        Square Root
+                    </a>
+                    
+                    <a href="../math/exponent-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-sky-500 hover:shadow-md transition-all text-xs font-bold text-sky-500 block">
+                        Exponent Calculator
+                    </a>
+                    
+                </div>
+            </div>
+    
+
+            <!-- Conclusion Section -->
+            <div class="pt-6 border-t border-slate-100 dark:border-slate-700 text-center">
+                <p class="text-xs text-slate-400 max-w-3xl mx-auto mb-6">Mastering mathematical calculations requires practice and the right tools. Whether you are a student verifying algebra equations, an engineer checking circuit specs using Ohm's Law, or an analyst calculating statistical variance, CalcSuit provides precise, free solvers to handle the heavy lifting.</p>
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-8 py-3 bg-slate-900 dark:bg-slate-700 hover:bg-sky-600 text-white rounded-2xl text-sm font-bold transition-all shadow-md">
+                    Start New Calculation
+                </button>
+            </div>
+
+        </article>
+    </section>
+  
+<!-- /SEO Content Module -->
+  </main>
+
+    <!-- Footer will be injected by layout.js -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Core calculation logic
+        function resolveCalculation() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let n = parseFloat(urlParams.get('n'));
+            let of = parseFloat(urlParams.get('of'));
+
+            // Fallback values if none provided
+            if (isNaN(n)) n = 15;
+            if (isNaN(of)) of = 200;
+
+            // Cap progress bar display at 100%
+            const progress = Math.min(Math.max(n, 0), 100);
+
+            // Compute result
+            const result = (n / 100) * of;
+            const formattedResult = Number(result.toFixed(4)).toString(); // clean decimal formatting
+
+            // Update DOM texts
+            document.getElementById('title-n').innerText = n;
+            document.getElementById('title-of').innerText = of;
+            document.getElementById('result-value').innerText = formattedResult;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('visual-label').innerText = `\({n}% of \){of}`;
+
+            // Sync inputs
+            document.getElementById('input-n').value = n;
+            document.getElementById('input-of').value = of;
+
+            // Steps text updates
+            document.getElementById('method1-step1').innerText = `\({n}% / 100 = \){(n/100)}`;
+            document.getElementById('method1-step2').innerText = `\({(n/100)} * \){of} = ${formattedResult}`;
+            document.getElementById('method2-of').innerText = of;
+            document.getElementById('method2-n').innerText = n;
+            document.getElementById('method2-solve').innerText = `\({n} * \){of}`;
+
+            // Update dynamically generated title & meta tags for Search engine crawlers
+            document.title = `\({n}% of \){of} - What is \({n} percent of \){of}? | CalcSuit`;
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) {
+                metaDesc.setAttribute("content", `Find out what \({n}% of \){of} is. Includes step-by-step mathematical working, formulas, decimal conversions, and visual diagrams.`);
+            }
+
+            // Generate popular suggestions grid
+            document.getElementById('queries-of').innerText = of;
+            const rates = [5, 10, 20, 25, 50, 75];
+            let gridHtml = '';
+            rates.forEach(r => {
+                gridHtml += `
+                    <a href="?n=\({r}&of=\){of}" class="p-4 rounded-xl border border-slate-100 dark:border-slate-800 text-center hover:border-indigo-500 hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-all">
+                        <div class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase">\({r}% of \){of}</div>
+                        <div class="text-lg font-black text-indigo-500 dark:text-indigo-400 mt-1">${Number(((r/100)*of).toFixed(2))}</div>
+                    </a>
+                `;
+            });
+            document.getElementById('related-queries-grid').innerHTML = gridHtml;
+
+            // Inject Schema FAQ Dynamic
+            injectFAQ(n, of, formattedResult);
+        }
+
+        function injectFAQ(n, of, res) {
+            // Remove previous faq script if exists
+            const prev = document.getElementById('dynamic-faq-schema');
+            if (prev) prev.remove();
+
+            const schema = {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": `How do you calculate \({n}% of \){of}?`,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `To calculate \({n}% of \){of}, convert the percentage to a decimal by dividing by 100 (\({n}/100 = \){n/100}), and then multiply by \({of} to get the final result: \){res}.`
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": `What is \({n} percent of \){of}?`,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `\({n} percent of \){of} is exactly ${res}.`
+                        }
+                    }
+                ]
+            };
+
+            const script = document.createElement('script');
+            script.id = 'dynamic-faq-schema';
+            script.type = 'application/ld+json';
+            script.text = JSON.stringify(schema);
+            document.head.appendChild(script);
+        }
+
+        // Attach events
+        document.getElementById('recalc-btn').addEventListener('click', () => {
+            const n = parseFloat(document.getElementById('input-n').value);
+            const of = parseFloat(document.getElementById('input-of').value);
+            if (!isNaN(n) && !isNaN(of)) {
+                // Update URL parameter without full reload
+                const newUrl = `\({window.location.pathname}?n=\){n}&of=${of}`;
+                window.history.pushState({ path: newUrl }, '', newUrl);
+                resolveCalculation();
+            }
+        });
+
+        // Run on load
+        window.addEventListener('DOMContentLoaded', resolveCalculation);
+    </script>
+    <script src="../js/layout.js"></script>
+</body>
+
+</html>

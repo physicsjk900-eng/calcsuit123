@@ -8,6 +8,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const sciCalc = new Calculator(sciDisplay, sciHistory);
     let scientificIsRad = false; // Default to DEG
 
+    // Read initial value from URL param for interconvertibility
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialVal = urlParams.get('val');
+    if (initialVal && initialVal !== 'Error') {
+        sciCalc.currentOperand = initialVal;
+        sciCalc.updateDisplay();
+    }
+
+    // Interconvertibility mode switch handler
+    const modeBasicBtn = document.getElementById('mode-basic-btn');
+    if (modeBasicBtn) {
+        modeBasicBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const val = sciCalc.getDisplayValue();
+            window.location.href = `basic-calculator.html?val=${encodeURIComponent(val)}`;
+        });
+    }
+
     const degBtn = document.getElementById('sci-deg');
     const radBtn = document.getElementById('sci-rad');
 

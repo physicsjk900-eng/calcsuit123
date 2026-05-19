@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.stopRingtone = function() {
+    window.stopRingtone = function () {
         if (ringtone) {
             ringtone.pause();
             ringtone.currentTime = 0;
@@ -794,9 +794,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!isNaN(evDate)) {
                     const diffMs = evDate - _now;
                     const diffMins = Math.floor(diffMs / 60000);
-                    
+
                     // Desktop/Universal: Trigger exactly at 10 minutes or user-defined reminder
-                    const reminderTarget = parseInt(ev.reminder) || 10; 
+                    const reminderTarget = parseInt(ev.reminder) || 10;
 
                     if (diffMins >= 0 && diffMins <= reminderTarget) {
                         showToast(`Universal Reminder: ${ev.title}`, `Starts in ${diffMins} minutes. (Desktop Ringtone Active)`, 'fa-bell', 'text-rose-500');
@@ -805,7 +805,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         // Try native notification for Mobile (vibration/sound)
                         if (Notification.permission === 'granted') {
-                            new Notification(`Sync Reminder: ${ev.title}`, { 
+                            new Notification(`Sync Reminder: ${ev.title}`, {
                                 body: `Starts in ${diffMins} mins. Check calendar for details.`,
                                 icon: '../favicon.ico',
                                 vibrate: [200, 100, 200]

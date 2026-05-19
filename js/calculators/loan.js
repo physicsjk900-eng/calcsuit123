@@ -3,15 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Loan Calculator (Reverse)
     // --------------------------------------
     const formatCurrency = val => isNaN(val) ? "&mdash;" : '$' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    
+
     let currentLoanCalcMode = 'principal'; // 'principal', 'tenure', 'rate'
 
     // We check if the loan calculator view is present
     const loanResValue = document.getElementById('loan-res-value');
 
     window.switchLoanCalcMode = (mode) => {
-        if(!loanResValue) return;
-        
+        if (!loanResValue) return;
+
         currentLoanCalcMode = mode;
         const btns = document.querySelectorAll('.loan-tab-btn');
         btns.forEach(b => {
@@ -20,14 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         let activeIdx = mode === 'principal' ? 0 : mode === 'tenure' ? 1 : 2;
-        if(btns[activeIdx]) {
+        if (btns[activeIdx]) {
             btns[activeIdx].classList.remove('text-slate-500', 'dark:text-slate-400');
             btns[activeIdx].classList.add('active-mode', 'bg-white', 'dark:bg-slate-700', 'text-slate-800', 'dark:text-white');
         }
 
         const container = document.getElementById('loan-inputs-container');
-        if(!container) return;
-        
+        if (!container) return;
+
         let html = '';
         if (mode === 'principal') {
             document.getElementById('loan-res-label').innerText = "Loan Amount (Principal):";
@@ -56,13 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Initialize the default layout
-    if(loanResValue) {
+    if (loanResValue) {
         switchLoanCalcMode('principal');
     }
 
     window.calculateReverseLoan = () => {
-        if(!document.getElementById('loan-res-value')) return;
-        
+        if (!document.getElementById('loan-res-value')) return;
+
         let p, emi, rAnnual, n, rMonthly;
 
         if (currentLoanCalcMode === 'principal') {
@@ -123,97 +123,5 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // --------------------------------------
-    // 9. Advanced Loan Calculator
-    // --------------------------------------
-    window.calculateAdvLoan = () => {
-        const advLoanResults = document.getElementById('adv-loan-results');
-        if(!advLoanResults) return;
-
-        const pStr = document.getElementById('adv-principal').value;
-        const rStr = document.getElementById('adv-rate').value;
-        const nStr = document.getElementById('adv-tenure').value;
-        const extraPmtStr = document.getElementById('adv-extra-val').value;
-
-        if (!pStr || !rStr || !nStr) {
-            advLoanResults.classList.add('hidden');
-            advLoanResults.classList.remove('opacity-100');
-            return;
-        }
-
-        const p = parseFloat(pStr);
-        const rAnnual = parseFloat(rStr);
-        const nYears = parseFloat(nStr);
-        let extra = parseFloat(extraPmtStr);
-        const extraType = document.getElementById('adv-extra-type').value; // monthly or yearly
-
-        if (isNaN(p) || isNaN(rAnnual) || isNaN(nYears) || p <= 0 || rAnnual <= 0 || nYears <= 0) return;
-        if (isNaN(extra) || extra < 0) extra = 0;
-
-        const nMonths = nYears * 12;
-        const rMonthly = rAnnual / 12 / 100;
-
-        // Baseline EMI and Total Interest
-        const baselineEmi = p * rMonthly * Math.pow(1 + rMonthly, nMonths) / (Math.pow(1 + rMonthly, nMonths) - 1);
-        const baselineTotalInterest = (baselineEmi * nMonths) - p;
-
-        document.getElementById('adv-baseline-emi').innerHTML = formatCurrency(baselineEmi);
-
-        if (extra === 0) {
-            advLoanResults.classList.remove('hidden');
-            void advLoanResults.offsetWidth; // reflow
-            advLoanResults.classList.add('opacity-100');
-            document.getElementById('adv-res-saved').innerHTML = formatCurrency(0);
-            document.getElementById('adv-res-time').innerHTML = "0 Months";
-            return;
-        }
-
-        // Simulating the loan with extra payments
-        let balance = p;
-        let monthsTaken = 0;
-        let totalInterestPaid = 0;
-
-        while (balance > 0 && monthsTaken < nMonths * 2) { // safety limit
-            monthsTaken++;
-            let interestForMonth = balance * rMonthly;
-            totalInterestPaid += interestForMonth;
-            let principalPmt = baselineEmi - interestForMonth;
-
-            let extraThisMonth = 0;
-            if (extraType === 'monthly') {
-                extraThisMonth = extra;
-            } else if (extraType === 'yearly' && monthsTaken % 12 === 0) {
-                extraThisMonth = extra;
-            }
-
-            let totalPmt = principalPmt + extraThisMonth;
-
-            if (balance <= totalPmt) {
-                balance = 0;
-                break;
-            } else {
-                balance -= totalPmt;
-            }
-        }
-
-        const interestSaved = baselineTotalInterest - totalInterestPaid;
-        const monthsSaved = nMonths - monthsTaken;
-
-        advLoanResults.classList.remove('hidden');
-        void advLoanResults.offsetWidth; // reflow
-        advLoanResults.classList.add('opacity-100');
-
-        document.getElementById('adv-res-saved').innerHTML = formatCurrency(interestSaved > 0 ? interestSaved : 0);
-
-        if (monthsSaved > 0) {
-            let ySaved = Math.floor(monthsSaved / 12);
-            let mSaved = monthsSaved % 12;
-            let text = "";
-            if (ySaved > 0) text += `${ySaved} Yr `;
-            if (mSaved > 0) text += `${mSaved} Mo`;
-            document.getElementById('adv-res-time').innerHTML = text.trim();
-        } else {
-            document.getElementById('adv-res-time').innerHTML = "None";
-        }
-    };
+    // Advanced Loan Logic has been moved to js/calculators/loan-optimizer.js
 });

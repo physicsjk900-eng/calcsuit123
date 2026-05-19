@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/', name: 'Dashboard', icon: '<i class="fas fa-home"></i>', category: 'General', colorClass: 'text-slate-500' },
         { id: '/calculators/basic-calculator.html', name: 'Basic', icon: '<i class="fas fa-equals text-sm"></i>', category: 'Standard', colorClass: 'text-indigo-600' },
         { id: '/calculators/scientific-calculator.html', name: 'Scientific', icon: '<i class="fas fa-flask"></i>', category: 'Standard', colorClass: 'text-indigo-600' },
-        { id: '/calculators/percentage-calculator.html', name: 'Percentage', icon: '<i class="fas fa-percent"></i>', category: 'Standard', colorClass: 'text-indigo-600' },
-        { id: '/calculators/age-calculator.html', name: 'Age', icon: '<i class="fas fa-user-clock"></i>', category: 'Standard', colorClass: 'text-indigo-600' },
+        { id: '/math/percentage-calculator.html', name: 'Percentage', icon: '<i class="fas fa-percent"></i>', category: 'Math', colorClass: 'text-indigo-600' },
+        { id: '/time/age-calculator.html', name: 'Age', icon: '<i class="fas fa-user-clock"></i>', category: 'Time & Date', colorClass: 'text-indigo-600' },
         { id: '/math/fraction-calculator.html', name: 'Fraction', icon: '<i class="fas fa-divide"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/squareroot-calculator.html', name: 'Square Root', icon: '<i class="fas fa-square-root-variable"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/exponent-calculator.html', name: 'Exponent', icon: '<i class="fas fa-superscript"></i>', category: 'Math', colorClass: 'text-sky-600' },
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/math/matrix-calculator.html', name: 'Matrix', icon: '<i class="fas fa-border-all"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/quadratic-calculator.html', name: 'Quadratic Solver', icon: '<i class="fas fa-superscript"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/probability-calculator.html', name: 'Probability', icon: '<i class="fas fa-dice"></i>', category: 'Math', colorClass: 'text-sky-600' },
-        /* { id: '/math/gcd-lcm-calculator.html', name: 'GCD & LCM', icon: '<i class="fas fa-layer-group"></i>', category: 'Math', colorClass: 'text-sky-600' },
+        { id: '/math/gcd-lcm-calculator.html', name: 'GCD & LCM', icon: '<i class="fas fa-layer-group"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/prime-calculator.html', name: 'Prime Numbers', icon: '<i class="fas fa-list-ol"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/base-converter.html', name: 'Base Converter', icon: '<i class="fas fa-hashtag"></i>', category: 'Math', colorClass: 'text-sky-600' },
         { id: '/math/bandwidth-calculator.html', name: 'Bandwidth Hub', icon: '<i class="fas fa-wifi"></i>', category: 'Math', colorClass: 'text-sky-600' },
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/conversion/volume-converter.html', name: 'Volume', icon: '<i class="fas fa-tint"></i>', category: 'Conversion', colorClass: 'text-amber-600' },
         { id: '/conversion/energy-converter.html', name: 'Energy', icon: '<i class="fas fa-bolt"></i>', category: 'Conversion', colorClass: 'text-amber-600' },
         { id: '/conversion/pressure-converter.html', name: 'Pressure', icon: '<i class="fas fa-compress-arrows-alt"></i>', category: 'Conversion', colorClass: 'text-amber-600' },
-        { id: '/finance/mortgage-afford-calculator.html', name: 'Mortgage Affordability', icon: '<i class="fas fa-home"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
+        { id: '/finance/mortgage-afford-calculator.html', name: 'Mortgage Affordability', icon: '<i class="fas fa-home"></i>', category: 'Financial', colorClass: 'text-sky-600' },
         { id: '/lifestyle/rent-vs-buy-calculator.html', name: 'Rent vs Buy', icon: '<i class="fas fa-balance-scale"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/lifestyle/electricity-calculator.html', name: 'Electricity Bill', icon: '<i class="fas fa-plug"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/lifestyle/fuel-cost-calculator.html', name: 'Fuel Cost', icon: '<i class="fas fa-gas-pump"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
@@ -83,19 +83,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/lifestyle/random-generator.html', name: 'Entropy Hub', icon: '<i class="fas fa-random"></i>', category: 'Technical', colorClass: 'text-sky-600' },
         { id: '/lifestyle/screen-time-impact.html', name: 'Screen Impact', icon: '<i class="fas fa-mobile-alt"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/lifestyle/carbon-footprint.html', name: 'CO2 Footprint', icon: '<i class="fas fa-leaf"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
-        { id: '/lifestyle/vacation-planner.html', name: 'Vacation Budget', icon: '<i class="fas fa-plane"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' }, */
+        { id: '/lifestyle/vacation-planner.html', name: 'Vacation Budget', icon: '<i class="fas fa-plane"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/productivity/task-management-calculator.html', name: 'Task Manager', icon: '<i class="fas fa-tasks"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
         { id: '/productivity/task-calendar-generator.html', name: 'Task Calendar', icon: '<i class="fas fa-calendar-alt"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
         { id: '/Industrial/crude-oil-calculator.html', name: 'Crude Oil', icon: '<i class="fas fa-oil-can"></i>', category: 'Industrial', colorClass: 'text-amber-600' },
         { id: '/Industrial/api-gravity-converter.html', name: 'API Gravity to Specific Gravity Converter (Temperature Dependant)', icon: '<i class="fas fa-thermometer-half"></i>', category: 'Industrial', colorClass: 'text-sky-600' },
-        /* { id: '/productivity/circadian-rhythm-energy-calculator.html', name: 'Circadian Rhythm Energy', icon: '<i class="fas fa-brain"></i>', category: 'Productivity', colorClass: 'text-violet-600' },
+        { id: '/physics/vertical-circular-motion.html', name: 'VCM Analyzer', icon: '<i class="fas fa-circle-notch"></i>', category: 'Physics', colorClass: 'text-purple-600' },
+        { id: '/productivity/circadian-rhythm-energy-calculator.html', name: 'Circadian Rhythm Energy', icon: '<i class="fas fa-brain"></i>', category: 'Productivity', colorClass: 'text-violet-600' },
         { id: '/productivity/commute-cost-calculator.html', name: 'Commute Cost Arbitrage', icon: '<i class="fas fa-car-side"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
         { id: '/productivity/neural-task-architect.html', name: 'Neural Task Architect', icon: '<i class="fas fa-microchip"></i>', category: 'Productivity', colorClass: 'text-violet-600' },
-        { id: '/productivity/brand-deal-calculator.html', name: 'Sponsorship Architect', icon: '<i class="fas fa-hand-holding-usd"></i>', category: 'Productivity', colorClass: 'text-violet-600' }*/
+        { id: '/productivity/brand-deal-calculator.html', name: 'Sponsorship Architect', icon: '<i class="fas fa-hand-holding-usd"></i>', category: 'Productivity', colorClass: 'text-violet-600' }
     ];
 
     const isLocal = window.location.protocol === 'file:';
-    const innerDirs = ['calculators', 'finance', 'health', 'math', 'time', 'conversion', 'lifestyle', 'business', 'productivity', 'physics', 'Industrial'];
+    const innerDirs = ['calculators', 'finance', 'health', 'math', 'time', 'conversion', 'lifestyle', 'business', 'productivity', 'physics', 'Industrial', 'blog', 'guides', 'faq', 'categories'];
     const depth = window.location.pathname.split('/').reverse().findIndex(p => innerDirs.includes(p));
     const rootPrefix = depth > -1 ? '../' : './';
 
@@ -143,6 +144,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             { name: 'Conversion', icon: '<i class="fas fa-exchange-alt"></i>', color: 'text-amber-500' },
             { name: 'Productivity', icon: '<i class="fas fa-tasks"></i>', color: 'text-teal-500' },
             { name: 'Industrial', icon: '<i class="fas fa-industry"></i>', color: 'text-sky-500' },
+            { name: 'Physics', icon: '<i class="fas fa-atom"></i>', color: 'text-purple-500' },
         ];
 
         const cats = allCats.filter(c => activeCategories.includes(c.name));
@@ -262,54 +264,77 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Define Suite Configuration for optimized Navigation
     const suites = [
-        { name: 'Math & Systems', categories: ['Standard', 'Math', 'Technical', 'Physics'], icon: '<i class="fas fa-microchip"></i>' },
-        /* { name: 'Wealth & Growth', categories: ['Financial', 'Business'], icon: '<i class="fas fa-vault"></i>' },
-        { name: 'Health & Life', categories: ['Health', 'Lifestyle'], icon: '<i class="fas fa-heartbeat"></i>' }, */
-        { name: 'Utility Hub', categories: ['Time & Date', 'Conversion', 'Productivity'], icon: '<i class="fas fa-tools"></i>' },
-        { name: 'Industrial', categories: ['Industrial'], icon: '<i class="fas fa-tools"></i>' }
+        { name: 'Math', categories: ['Math'], icon: '<i class="fas fa-microchip"></i>' },
+        { name: 'Unit Conversion', categories: ['Unit Conversion'], icon: '<i class="fas fa-microchip"></i>' },
+        { name: 'Finance & Wealth', categories: ['Finance & Wealth'], icon: '<i class="fas fa-vault"></i>' },
+        { name: 'Health', categories: ['Health'], icon: '<i class="fas fa-heartbeat"></i>' },
+        { name: 'Productivity', categories: ['Productivity'], icon: '<i class="fas fa-tools"></i>' },
+        { name: 'Physics', categories: ['Physics'], icon: '<i class="fas fa-atom"></i>' },
+        { name: 'Time and Date', categories: ['Time & Date'], icon: '<i class="fas fa-clock"></i>' },
+        { name: 'Industrial', categories: ['Industrial'], icon: '<i class="fas fa-industry"></i>' },
+        { name: 'Life Style', categories: ['Lifestyle'], icon: '<i class="fas fa-home"></i>' }
     ];
 
-    // Generate Desktop Navigation Items (Mega-Menu Model)
-    const desktopNavHtml = suites.map(suite => {
-        const suiteItems = calculatorConfig.filter(c => suite.categories.includes(c.category));
-        const isActiveSuite = suiteItems.some(item => item.id === activeId);
+    // Generate Desktop Navigation Items
+    const navItems = [
+        { name: 'Home', url: 'index.html', icon: '<i class="fas fa-home"></i>' },
+        { name: 'Blog', url: 'blog/index.html', icon: '<i class="fas fa-blog"></i>' },
+        { name: 'FAQs', url: 'faq/index.html', icon: '<i class="fas fa-question-circle"></i>' },
+        { name: 'Explore Suits', url: 'explore.html', icon: '<i class="fas fa-layer-group"></i>', hasDropdown: true },
+        { name: 'Contact Us', url: 'contact.html', icon: '<i class="fas fa-envelope"></i>' }
+    ];
 
-        // Optimization: Multi-column grid for dense suites (Enterprise look)
-        const columnClass = suiteItems.length > 10 ? 'grid-cols-3 w-[720px]' : (suiteItems.length > 5 ? 'grid-cols-2 w-[480px]' : 'grid-cols-1 w-64');
+    const desktopNavHtml = navItems.map(item => {
+        const url = rootPrefix + item.url;
+        const isActive = (item.url === 'index.html' && activeId === '/') || (item.url !== 'index.html' && currentPath.includes(item.url.split('/')[0]));
 
-        return `
-            <div class="relative group h-full flex items-center">
-                <button class="flex items-center gap-2 font-bold text-[13px] transition-all duration-300 py-1 px-3 rounded-lg group-hover:bg-slate-50 dark:group-hover:bg-slate-800/50 ${isActiveSuite ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400'}">
-                    <span class="opacity-70 text-xs">${suite.icon}</span>
-                    ${suite.name}
-                    <i class="fas fa-chevron-down text-[8px] opacity-40 group-hover:rotate-180 transition-transform duration-300"></i>
-                </button>
-                
-                <!-- Mega Dropdown -->
-                <div class="absolute top-full left-0 pt-2 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-slate-100 dark:border-slate-800 p-4 grid ${columnClass} gap-x-6 gap-y-1">
-                        <div class="col-span-full mb-3 pb-2 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center px-2">
-                            <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 italic">${suite.name} Registry</span>
-                            <span class="text-[9px] text-slate-300">${suiteItems.length} Professional Tools</span>
-                        </div>
-                        ${suiteItems.map(c => {
-            const isItemActive = c.id === activeId;
-            let href = rootPrefix + c.id.replace(/^\//, '');
-
-            // Highlight "Hero" products
-            const isHero = ['Circadian Rhythm', 'Commute Cost', 'Subscription Drain'].some(h => c.name.includes(h));
-            const badge = isHero ? '<span class="ml-auto text-[8px] bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 px-1.5 py-0.5 rounded-full font-black tracking-tighter uppercase">Hot</span>' : '';
-
+        if (item.hasDropdown) {
             return `
-                                <a href="${href}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-all duration-200 group/link ${isItemActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400'}">
-                                    <span class="w-7 h-7 rounded-lg bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-[10px] ${isItemActive ? 'text-indigo-600 dark:text-indigo-400 shadow-sm border-indigo-100' : c.colorClass + ' opacity-70 group-hover/link:opacity-100 group-hover/link:scale-110 transition-transform'} shrink-0">${c.icon}</span>
-                                    <span class="truncate">${c.name}</span>
-                                    ${badge}
-                                </a>
-                            `;
-        }).join('')}
+                <div class="relative group h-full flex items-center">
+                    <a href="${url}" class="flex items-center gap-2 font-bold text-[13.5px] transition-all duration-300 py-1.5 px-3.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 ${isActive ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400'}">
+                        <span class="opacity-70 text-xs">${item.icon}</span>
+                        ${item.name}
+                        <i class="fas fa-chevron-down text-[8px] opacity-40 group-hover:rotate-180 transition-transform duration-300"></i>
+                    </a>
+                    
+                    <!-- Mega Dropdown -->
+                    <div class="absolute top-full left-0 pt-2 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-slate-100 dark:border-slate-800 p-4 grid grid-cols-2 w-[480px] gap-x-6 gap-y-1">
+                            <div class="col-span-full mb-3 pb-2 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center px-2">
+                                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 italic">Calculator Suites</span>
+                                <span class="text-[9px] text-slate-300">${suites.length} Suites</span>
+                            </div>
+                            ${suites.map(suite => {
+                let suiteUrl = 'explore.html';
+                if (suite.name.includes('Math')) suiteUrl = 'math/index.html';
+                else if (suite.name.includes('Unit Conversion')) suiteUrl = 'conversion/index.html';
+                else if (suite.name.includes('Finance & Wealth')) suiteUrl = 'finance/index.html';
+                else if (suite.name.includes('Health')) suiteUrl = 'health/index.html';
+                else if (suite.name.includes('Industrial')) suiteUrl = 'Industrial/index.html';
+                else if (suite.name.includes('Time and Date')) suiteUrl = 'time/index.html';
+                else if (suite.name.includes('Life Style')) suiteUrl = 'lifestyle/index.html';
+                else if (suite.name.includes('Physics')) suiteUrl = 'physics/index.html';
+                else if (suite.name.includes('Productivity')) suiteUrl = 'productivity/index.html';
+
+                return `
+                                    <a href="${rootPrefix}${suiteUrl}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400">
+                                        <span class="w-7 h-7 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-[10px] opacity-70 shrink-0">${suite.icon}</span>
+                                        <span class="truncate">${suite.name}</span>
+                                    </a>
+                                `;
+            }).join('')}
+                        </div>
                     </div>
                 </div>
+            `;
+        }
+
+        return `
+            <div class="relative h-full flex items-center">
+                <a href="${url}" class="flex items-center gap-2 font-bold text-[13.5px] transition-all duration-300 py-1.5 px-3.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 ${isActive ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400'}">
+                    <span class="opacity-70 text-xs">${item.icon}</span>
+                    ${item.name}
+                </a>
             </div>
         `;
     }).join('');
@@ -362,10 +387,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             <!-- Right Actions -->
             <div class="flex items-center gap-2 sm:gap-4">
                 <div class="relative hidden sm:block w-48 xl:w-64">
-                    <span class="absolute left-0 top-1/2 -translate-y-1/2 text-slate-400"><i class="fas fa-search text-xs"></i></span>
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"><i class="fas fa-search text-xs"></i></span>
                     <input type="text" id="calc-search"
                         class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 pl-9 pr-4 text-sm text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all outline-none"
                         placeholder="Search tools...">
+                    <div id="search-results" class="absolute top-full right-0 mt-2 w-80 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-800 hidden overflow-hidden z-50"></div>
                 </div>
 
                 <div class="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
@@ -401,12 +427,33 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <input type="text" id="mobile-search"
                     class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-xl py-3 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
                     placeholder="Search all tools...">
+                <div id="mobile-search-results" class="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-100 dark:border-slate-800 hidden overflow-hidden z-50"></div>
             </div>
         </div>
-            <a href="${rootPrefix}index.html" class="flex items-center gap-3 px-3 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm shadow-lg shadow-indigo-500/20">
-                <i class="fas fa-home w-5 text-center"></i> Dashboard Home
+        <div class="px-5 pb-5 space-y-1">
+            <a href="${rootPrefix}index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                <span class="w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-indigo-600"><i class="fas fa-home"></i></span>
+                Home
             </a>
-            <div class="h-px bg-slate-100 dark:bg-slate-800 my-2"></div>
+            <a href="${rootPrefix}blog/index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                <span class="w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-indigo-600"><i class="fas fa-blog"></i></span>
+                Blog
+            </a>
+            <a href="${rootPrefix}faq/index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                <span class="w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-indigo-600"><i class="fas fa-question-circle"></i></span>
+                FAQs
+            </a>
+            <a href="${rootPrefix}explore.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                <span class="w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-indigo-600"><i class="fas fa-layer-group"></i></span>
+                Explore Suits
+            </a>
+            <a href="${rootPrefix}contact.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                <span class="w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-indigo-600"><i class="fas fa-envelope"></i></span>
+                Contact Us
+            </a>
+        </div>
+        <div class="h-px bg-slate-100 dark:bg-slate-800 my-2 mx-5"></div>
+        <div class="px-5 pb-8 overflow-y-auto">
             ${mobileNavHtml}
         </div>
     </div>
@@ -688,15 +735,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // 4. Search Filter
-    const searchInput = document.getElementById('calc-search');
-    const searchResults = document.getElementById('search-results');
+    function initSearch(inputEl, resultsEl) {
+        if (!inputEl || !resultsEl) return;
 
-    if (searchInput && searchResults) {
-        searchInput.addEventListener('input', (e) => {
+        inputEl.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase().trim();
             if (term.length === 0) {
-                searchResults.classList.add('hidden');
-                searchResults.innerHTML = '';
+                resultsEl.classList.add('hidden');
+                resultsEl.innerHTML = '';
                 return;
             }
 
@@ -706,7 +752,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             ).slice(0, 8);
 
             if (results.length > 0) {
-                searchResults.innerHTML = `
+                resultsEl.innerHTML = `
                     <div class="p-2">
                         <div class="px-3 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 italic mb-2 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center">
                             <span>Search Results</span>
@@ -729,9 +775,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </div>
                     </div>
                 `;
-                searchResults.classList.remove('hidden');
+                resultsEl.classList.remove('hidden');
             } else {
-                searchResults.innerHTML = `
+                resultsEl.innerHTML = `
                     <div class="p-8 text-center">
                         <div class="w-12 h-12 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-3 text-slate-300">
                             <i class="fas fa-search-minus text-xl"></i>
@@ -740,17 +786,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <p class="text-[10px] text-slate-500 mt-2">Try searching for "tax", "loan", or "commute"</p>
                     </div>
                 `;
-                searchResults.classList.remove('hidden');
+                resultsEl.classList.remove('hidden');
             }
         });
 
         // Hide search on outside click
         document.addEventListener('click', (e) => {
-            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-                searchResults.classList.add('hidden');
+            if (!inputEl.contains(e.target) && !resultsEl.contains(e.target)) {
+                resultsEl.classList.add('hidden');
             }
         });
     }
+
+    initSearch(document.getElementById('calc-search'), document.getElementById('search-results'));
+    initSearch(document.getElementById('mobile-search'), document.getElementById('mobile-search-results'));
 
     // 5. Global Copy to Clipboard & Toast
     const toast = document.createElement('div');
@@ -834,5 +883,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    // Dynamically inject the SEO content manager
+    const seoScript = document.createElement('script');
+    seoScript.src = rootPrefix + 'js/seo-injector.js';
+    document.head.appendChild(seoScript);
 
 });
+

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formatCurrency = val => isNaN(val) ? "&mdash;" : '$' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     const emiPrincipalInput = document.getElementById('emi-principal');
-    if(!emiPrincipalInput) return;
+    if (!emiPrincipalInput) return;
 
     window.calculateEMI = () => {
         const pEl = document.getElementById('emi-principal');
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nEl = document.getElementById('emi-tenure');
         const tenureTypeEl = document.getElementById('emi-tenure-type');
 
-        if(!pEl || !rAnnualEl || !nEl || !tenureTypeEl) return;
+        if (!pEl || !rAnnualEl || !nEl || !tenureTypeEl) return;
 
         const p = parseFloat(pEl.value);
         const rAnnual = parseFloat(rAnnualEl.value);
@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const resTotal = document.getElementById('emi-res-total');
 
         if (isNaN(p) || isNaN(rAnnual) || isNaN(n) || p <= 0 || rAnnual <= 0 || n <= 0) {
-            if(resMonthly) resMonthly.innerHTML = "&mdash;";
-            if(resInterest) resInterest.innerHTML = "&mdash;";
-            if(resTotal) resTotal.innerHTML = "&mdash;";
+            if (resMonthly) resMonthly.innerHTML = "&mdash;";
+            if (resInterest) resInterest.innerHTML = "&mdash;";
+            if (resTotal) resTotal.innerHTML = "&mdash;";
             return;
         }
 
@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalAmount = emi * n;
         const totalInterest = totalAmount - p;
 
-        if(resMonthly) resMonthly.innerHTML = formatCurrency(emi);
-        if(resInterest) resInterest.innerHTML = formatCurrency(totalInterest);
-        if(resTotal) resTotal.innerHTML = formatCurrency(totalAmount);
+        if (resMonthly) resMonthly.innerHTML = formatCurrency(emi);
+        if (resInterest) resInterest.innerHTML = formatCurrency(totalInterest);
+        if (resTotal) resTotal.innerHTML = formatCurrency(totalAmount);
     };
 });

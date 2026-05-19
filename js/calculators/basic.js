@@ -8,6 +8,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const basicCalc = new Calculator(basicDisplay, basicHistory);
 
+    // Read initial value from URL param for interconvertibility
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialVal = urlParams.get('val');
+    if (initialVal && initialVal !== 'Error') {
+        basicCalc.currentOperand = initialVal;
+        basicCalc.updateDisplay();
+    }
+
+    // Interconvertibility mode switch handler
+    const modeSciBtn = document.getElementById('mode-sci-btn');
+    if (modeSciBtn) {
+        modeSciBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const val = basicCalc.getDisplayValue();
+            window.location.href = `scientific-calculator.html?val=${encodeURIComponent(val)}`;
+        });
+    }
+
     document.querySelectorAll('#calc-basic .calc-btn').forEach(button => {
         button.addEventListener('click', () => {
             // Add haptic-like visual feedback

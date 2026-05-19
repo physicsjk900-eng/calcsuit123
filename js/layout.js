@@ -281,6 +281,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         { name: 'Blog', url: 'blog/index.html', icon: '<i class="fas fa-blog"></i>' },
         { name: 'FAQs', url: 'faq/index.html', icon: '<i class="fas fa-question-circle"></i>' },
         { name: 'Explore Suits', url: 'explore.html', icon: '<i class="fas fa-layer-group"></i>', hasDropdown: true },
+        { name: 'Guides', url: 'guides/index.html', icon: '<i class="fas fa-book"></i>' },
         { name: 'Contact Us', url: 'contact.html', icon: '<i class="fas fa-envelope"></i>' }
     ];
 

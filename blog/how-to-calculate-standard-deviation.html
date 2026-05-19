@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Calculate Standard Deviation: Step-by-Step Guide | CalcSuit Blog</title>
+    <meta name="description"
+        content="Learn the exact mathematics of Standard Deviation. Master population vs sample formulas, step-by-step calculation tables, and real-world variance analysis.">
+
+    <!-- Canonical URL -->
+    <link rel=canonical href="https://calcsuit.com/blog/how-to-calculate-standard-deviation.html" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <!-- MathJax for LaTeX Equations -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Header will be injected by layout.js -->
+    <div id="sidebar-container" class="contents"></div>
+
+    <main class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <article class="prose prose-slate dark:prose-invert max-w-none prose-lg">
+            
+            <header class="text-center mb-16 mt-8">
+                <span class="px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-500/10 text-sky-500 text-xs font-bold uppercase tracking-wider mb-4 inline-block">
+                    Mathematics & Statistics
+                </span>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6">
+                    How to Calculate Standard Deviation:<br /> A Step-by-Step Guide
+                </h1>
+                <div class="h-1.5 w-20 bg-indigo-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-slate-400 text-sm font-medium">Published May 19, 2026 • 7 min read</p>
+            </header>
+
+            <section class="space-y-6 leading-relaxed text-slate-600 dark:text-slate-300">
+                <p>
+                    In the field of data science and statistics, identifying the middle of a data set (using the mean or median) is only half the battle. To truly understand your data, you must measure its **dispersion**—how spread out the individual values are from that middle point. The most authoritative, universally accepted measure of this dispersion is **Standard Deviation**.
+                </p>
+                <p>
+                    Standard Deviation measures the average distance of each data point from the mean of the dataset. A low standard deviation indicates that the data points tend to be close to the mean, while a high standard deviation indicates that the data points are spread out over a wider range of values.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">1. Population vs. Sample Standard Deviation</h2>
+                <p>
+                    Before writing down the formulas, we must determine if we are calculating standard deviation for a **Population** (the entire group of interest) or a **Sample** (a subset representing the population).
+                </p>
+
+                <h3 class="text-xl font-bold text-slate-950 dark:text-white mt-6">A. Population Formula</h3>
+                <p>
+                    Use this formula when you possess data for every single member of the target population. It is denoted by the Greek letter **sigma (\(\sigma\))**:
+                </p>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-indigo-500 text-center font-mono my-6 text-lg overflow-x-auto">
+                    $$\sigma = \sqrt{\frac{\sum (x - \mu)^2}{N}}$$
+                </div>
+                <p class="text-xs text-slate-450 dark:text-slate-400">
+                    Where \(\mu\) is the population mean, \(x\) is each individual value, and \(N\) is the total population size.
+                </p>
+
+                <h3 class="text-xl font-bold text-slate-950 dark:text-white mt-6">B. Sample Formula</h3>
+                <p>
+                    Use this formula when you are using a sample to estimate the standard deviation of a larger population. It is denoted by **\(s\)** and uses Bessel's correction (\(n - 1\)) to adjust for bias:
+                </p>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-sky-500 text-center font-mono my-6 text-lg overflow-x-auto">
+                    $$s = \sqrt{\frac{\sum (x - \bar{x})^2}{n - 1}}$$
+                </div>
+                <p class="text-xs text-slate-450 dark:text-slate-400">
+                    Where \(\bar{x}\) is the sample mean, \(x\) is each individual value, and \(n\) is the sample size.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">2. Step-by-Step Worked Example (Sample)</h2>
+                <p>
+                    Let's calculate the sample standard deviation for a simple dataset representing student exam scores: **[10, 12, 14, 16, 18]**.
+                </p>
+                
+                <div class="overflow-x-auto my-6 border border-slate-200 dark:border-slate-700 rounded-2xl">
+                    <table class="w-full text-sm text-left text-slate-500 dark:text-slate-400">
+                        <thead class="text-xs text-slate-700 uppercase bg-slate-100 dark:bg-slate-800 dark:text-slate-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-4">Data Value (\(x\))</th>
+                                <th scope="col" class="px-6 py-4">Difference from Mean (\(x - \bar{x}\))</th>
+                                <th scope="col" class="px-6 py-4">Squared Difference (\((x - \bar{x})^2\))</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                            <tr class="bg-white dark:bg-slate-900">
+                                <td class="px-6 py-4 font-bold text-slate-900 dark:text-white">10</td>
+                                <td class="px-6 py-4">-4</td>
+                                <td class="px-6 py-4">16</td>
+                            </tr>
+                            <tr class="bg-slate-50/50 dark:bg-slate-900/50">
+                                <td class="px-6 py-4 font-bold text-slate-900 dark:text-white">12</td>
+                                <td class="px-6 py-4">-2</td>
+                                <td class="px-6 py-4">4</td>
+                            </tr>
+                            <tr class="bg-white dark:bg-slate-900">
+                                <td class="px-6 py-4 font-bold text-slate-900 dark:text-white">14</td>
+                                <td class="px-6 py-4">0</td>
+                                <td class="px-6 py-4">0</td>
+                            </tr>
+                            <tr class="bg-slate-50/50 dark:bg-slate-900/50">
+                                <td class="px-6 py-4 font-bold text-slate-900 dark:text-white">16</td>
+                                <td class="px-6 py-4">2</td>
+                                <td class="px-6 py-4">4</td>
+                            </tr>
+                            <tr class="bg-white dark:bg-slate-900">
+                                <td class="px-6 py-4 font-bold text-slate-900 dark:text-white">18</td>
+                                <td class="px-6 py-4">4</td>
+                                <td class="px-6 py-4">16</td>
+                            </tr>
+                            <tr class="bg-indigo-50/30 dark:bg-indigo-900/20 font-bold">
+                                <td class="px-6 py-4 text-slate-900 dark:text-white">Sum = 70</td>
+                                <td class="px-6 py-4 text-slate-900 dark:text-white">Mean (\(\bar{x}\)) = 14</td>
+                                <td class="px-6 py-4 text-indigo-600 dark:text-indigo-400">Sum of Squares = 40</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-8 rounded-3xl shadow-sm space-y-4">
+                    <h4 class="font-bold text-slate-900 dark:text-white text-lg">Finalizing the Calculation:</h4>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Step 1:</strong> Sum of Squares = 40</li>
+                        <li><strong>Step 2:</strong> Divide by \(n - 1\) (where \(n = 5\), so \(n-1 = 4\)): \(\frac{40}{4} = 10\) (This value is the **Variance**).</li>
+                        <li><strong>Step 3:</strong> Take the square root of the variance: \(\sqrt{10} \approx 3.16\)</li>
+                        <li><strong>Result:</strong> The sample standard deviation is **3.16**.</li>
+                    </ul>
+                </div>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">3. Practical Application & Meaning</h2>
+                <p>
+                    Why does standard deviation matter? In normal distributions (bell curves), standard deviation dictates the **empirical rule**:
+                </p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>**68%** of all data points lie within 1 standard deviation of the mean.</li>
+                    <li>**95%** of all data points lie within 2 standard deviations of the mean.</li>
+                    <li>**99.7%** of all data points lie within 3 standard deviations of the mean.</li>
+                </ul>
+
+                <div class="mt-12 p-8 bg-indigo-50 dark:bg-indigo-900/20 rounded-[2rem] border border-indigo-100 dark:border-indigo-900/30 text-sm leading-relaxed">
+                    <h5 class="font-bold text-indigo-700 dark:text-indigo-400 mb-2 text-base">Launch the Standard Deviation Calculator</h5>
+                    <p class="mb-4">
+                        Avoid manual calculations, sum of squares, and square roots. Paste your raw dataset into our **Standard Deviation Calculator** to instantly view both sample and population outputs, variance, count, and summary statistics.
+                    </p>
+                    <a href="../math/stdev-calculator.html" class="inline-flex items-center gap-1.5 font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+                        Open Standard Deviation Calculator Page &rarr;
+                    </a>
+                </div>
+            </section>
+
+        </article>
+
+    </main>
+
+    <!-- Footer will be injected by layout.js -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/layout.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Probability: Formulas, Distributions & Guide | CalcSuit Blog</title>
+    <meta name="description"
+        content="Master the mathematical formulas of combinatorial probability. Learn independent vs. dependent events, conditional algorithms, and Bayes' theorem.">
+
+    <!-- Canonical URL -->
+    <link rel=canonical href="https://calcsuit.com/blog/probability-formula-guide.html" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <!-- MathJax for LaTeX Equations -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Header will be injected by layout.js -->
+    <div id="sidebar-container" class="contents"></div>
+
+    <main class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <article class="prose prose-slate dark:prose-invert max-w-none prose-lg">
+            
+            <header class="text-center mb-16 mt-8">
+                <span class="px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-500/10 text-sky-500 text-xs font-bold uppercase tracking-wider mb-4 inline-block">
+                    Mathematics & Logic
+                </span>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6">
+                    Understanding Probability:<br /> Formulas, Distributions & Applications
+                </h1>
+                <div class="h-1.5 w-20 bg-indigo-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-slate-400 text-sm font-medium">Published May 18, 2026 • 10 min read</p>
+            </header>
+
+            <section class="space-y-6 leading-relaxed text-slate-600 dark:text-slate-300">
+                <p>
+                    Probability theory is the mathematical framework we use to analyze and quantify uncertainty. Whether you are a software developer sizing infrastructure scaling limits, a financial analyst evaluating options markets, or a student solving statistics homework, probability provides the bedrock principles for data-driven predictions.
+                </p>
+                <p>
+                    In this technical guide, we will break down the essential axioms of probability, clarify independent vs. dependent events, explore conditional probability matrices, and demonstrate Bayes' theorem.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">1. The Axioms of Classical Probability</h2>
+                <p>
+                    Historically defined by Pierre-Simon Laplace and formalized by Andrey Kolmogorov, the probability of an event \(A\), denoted \(P(A)\), is the ratio of favorable outcomes to the total size of the sample space \(S\):
+                </p>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-indigo-500 text-center font-mono my-6 text-lg overflow-x-auto">
+                    $$P(A) = \frac{n(A)}{n(S)}$$
+                </div>
+                <p>
+                    Where \(n(A)\) represents the number of favorable elements in the event set and \(n(S)\) represents the total number of equally likely sample outcomes. Kolmogorov established three foundational axioms:
+                </p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>The probability of any event is a non-negative real number: \(P(A) \ge 0\).</li>
+                    <li>The probability of the entire sample space occurring is exactly one: \(P(S) = 1\).</li>
+                    <li>For any sequence of mutually exclusive events, the probability of their union equals the sum of their individual probabilities.</li>
+                </ul>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">2. Independent vs. Dependent Events</h2>
+                <p>
+                    When assessing multiple consecutive events, we must establish whether the outcome of the first event affects the sample parameters of the next.
+                </p>
+
+                <h3 class="text-xl font-bold text-slate-950 dark:text-white mt-6">A. Independent Events</h3>
+                <p>
+                    Two events are independent if the occurrence of event \(A\) has zero impact on the probability of event \(B\) occurring. The joint probability of both events occurring is the product of their individual probabilities:
+                </p>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-sky-500 text-center font-mono my-6 text-lg overflow-x-auto">
+                    $$P(A \cap B) = P(A) \times P(B)$$
+                </div>
+
+                <h3 class="text-xl font-bold text-slate-950 dark:text-white mt-6">B. Dependent Events (Conditional Probability)</h3>
+                <p>
+                    If the occurrence of event \(A\) alters the sample space, the events are dependent. To calculate the joint probability, we utilize the conditional probability of \(B\) given that \(A\) has already occurred, denoted \(P(B|A)\):
+                </p>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-emerald-500 text-center font-mono my-6 text-lg overflow-x-auto">
+                    $$P(A \cap B) = P(A) \times P(B|A)$$
+                </div>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">3. Bayes' Theorem: Updating Prior Beliefs</h2>
+                <p>
+                    Bayes' theorem is one of the most powerful formulations in mathematics. It provides a way to update the probability of a hypothesis (\(H\)) based on new evidentiary data (\(E\)):
+                </p>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-violet-500 text-center font-mono my-6 text-lg overflow-x-auto">
+                    $$P(H|E) = \frac{P(E|H) \cdot P(H)}{P(E)}$$
+                </div>
+                <p>
+                    Where:
+                </p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>\(P(H|E)\) represents the <strong>posterior probability</strong>: the probability of hypothesis \(H\) after seeing evidence \(E\).</li>
+                    <li>\(P(E|H)\) represents the <strong>likelihood</strong>: the probability of observing evidence \(E\) given hypothesis \(H\) is true.</li>
+                    <li>\(P(H)\) represents the <strong>prior probability</strong>: our initial assessment of the likelihood of hypothesis \(H\).</li>
+                    <li>\(P(E)\) represents the <strong>marginal likelihood</strong>: the total probability of the evidence occurring across all possible hypotheses.</li>
+                </ul>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">4. Real-World Applications</h2>
+                <p>
+                    From algorithm designs to medical statistics, probability guides our most critical calculations:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                    <div class="bg-sky-50 dark:bg-sky-900/10 p-6 rounded-2xl border border-sky-100 dark:border-sky-900/30">
+                        <h5 class="font-bold text-sky-700 dark:text-sky-400 mb-2">Machine Learning Spam Filters</h5>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm">Naïve Bayes algorithms scan words inside emails, calculating the posterior probability that a message is "spam" based on the historic occurrences of specific words.</p>
+                    </div>
+                    <div class="bg-emerald-50 dark:bg-emerald-900/10 p-6 rounded-2xl border border-emerald-100 dark:border-emerald-900/30">
+                        <h5 class="font-bold text-emerald-700 dark:text-emerald-400 mb-2">Medical Diagnostics</h5>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm">When a patient tests positive for a rare disease, physicians apply Bayes' theorem to check the true posterior probability of having the disease, adjusting for test false-positive rates.</p>
+                    </div>
+                </div>
+
+                <div class="mt-12 p-8 bg-indigo-50 dark:bg-indigo-900/20 rounded-[2rem] border border-indigo-100 dark:border-indigo-900/30 text-sm leading-relaxed">
+                    <h5 class="font-bold text-indigo-700 dark:text-indigo-400 mb-2 text-base">Launch the Probability Calculator</h5>
+                    <p class="mb-4">
+                        Perform complex combinatorics and probability operations instantly. Use our responsive **Probability Calculator** to compute independent joint chances, conditional rates, combinations, and permutations without risk of arithmetic error.
+                    </p>
+                    <a href="../math/probability-calculator.html" class="inline-flex items-center gap-1.5 font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+                        Open Probability Calculator Page &rarr;
+                    </a>
+                </div>
+            </section>
+
+        </article>
+
+    </main>
+
+    <!-- Footer will be injected by layout.js -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/layout.js"></script>
+</body>
+
+</html>

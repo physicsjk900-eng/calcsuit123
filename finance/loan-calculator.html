@@ -1,28 +1,20 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO Mastery -->
     <title>Loan Architect | Professional Amortization & Payoff Calculator | CalcSuit</title>
-    <meta name="description" content="Use the Loan Architect to visualize your debt repayment. Calculate monthly payments, see deep amortization tables, and discover how extra payments can save you thousands in interest.">
-    <meta name="keywords" content="loan calculator, mortgage calculator, auto loan calculator, amortization schedule tool, debt payoff calculator, personal loan calculator usa, car loan interest calculator">
-    <link rel="canonical" href="https://calcsuit.com/finance/loan-calculator.html">
+    <meta name="description"
+        content="Use the Loan Architect to visualize your debt repayment. Calculate monthly payments, see deep amortization tables, and discover how extra payments can save you thousands in interest.">
+    <meta name="keywords"
+        content="loan calculator, mortgage calculator, auto loan calculator, amortization schedule tool, debt payoff calculator, personal loan calculator usa, car loan interest calculator">
+    <link rel=canonical href="https://calcsuit.com/finance/loan-calculator.html" />
 
     <!-- JSON-LD Schema (SaaS App + FAQ) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Loan Architect Pro",
-      "description": "Professional-grade loan calculation and amortization engine for mortgages, auto loans, and personal credit.",
-      "applicationCategory": "FinanceApplication",
-      "operatingSystem": "All",
-      "url": "https://calcsuit.com/finance/loan-calculator.html",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-    }
-    </script>
+    
 
     <!-- Tailwind & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -34,51 +26,163 @@
     </script>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(226, 232, 240, 0.8); }
-        .dark .glass-card { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(51, 65, 85, 0.8); }
-        .input-focus:focus { border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); }
-        .amortization-row:hover { background: rgba(99, 102, 241, 0.05); }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(51, 65, 85, 0.8);
+        }
+
+        .input-focus:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .amortization-row:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
     </style>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+
+    <!-- Structured Data (SEO) -->
+    
+    
+    
+    
+
+    <!-- Structured Data (SEO) -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://calcsuit.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Financial",
+      "item": "https://calcsuit.com/finance/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Loan Architect",
+      "item": "https://calcsuit.com/finance/loan-calculator.html"
+    }
+  ]
+}
+</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Loan Architect Calculator",
+  "description": "Use the Loan Architect to visualize your debt repayment. Calculate monthly payments, see deep amortization tables, and discover how extra payments can save you thousands in interest.",
+  "applicationCategory": "CalculatorApplication",
+  "operatingSystem": "Web",
+  "url": "https://calcsuit.com/finance/loan-calculator.html",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Loan Architect | Professional Amortization & Payoff Calculator | CalcSuit",
+  "description": "Use the Loan Architect to visualize your debt repayment. Calculate monthly payments, see deep amortization tables, and discover how extra payments can save you thousands in interest.",
+  "url": "https://calcsuit.com/finance/loan-calculator.html"
+}
+</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I use the Loan Architect Calculator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Using the Loan Architect Calculator is simple. Enter the required inputs in the fields provided, and the tool will instantly compute the results, complete with formulas and working where applicable."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this Loan Architect solver free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! The Loan Architect Calculator is 100% free, private, and works directly in your web browser with no ad interruptions."
+      }
+    }
+  ]
+}
+</script>
+    <!-- MathJax for LaTeX Rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
+
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen">
 
     <div id="sidebar-container"></div>
 
     <main class="max-w-[1440px] mx-auto px-4 py-12 lg:px-10 space-y-12">
-        
+
         <!-- Hero Header -->
         <div class="space-y-4 max-w-3xl">
-            <div class="inline-flex items-center gap-2 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.1em] border border-indigo-100 dark:border-indigo-500/20">
+            <div
+                class="inline-flex items-center gap-2 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.1em] border border-indigo-100 dark:border-indigo-500/20">
                 <i class="fas fa-landmark"></i> Professional Finance Suite
             </div>
-            <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">The Loan <span class="text-indigo-600 dark:text-indigo-400">Architect</span></h1>
-            <p class="text-slate-500 dark:text-slate-400 text-lg md:text-xl">Engineering your way to debt-free living. Accurate math, visual amortization, and strategic payoff insights.</p>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">The
+                Loan <span class="text-indigo-600 dark:text-indigo-400">Architect</span></h1>
+            <p class="text-slate-500 dark:text-slate-400 text-lg md:text-xl">Engineering your way to debt-free living.
+                Accurate math, visual amortization, and strategic payoff insights.</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
+
             <!-- Left: Engine Configuration -->
             <div class="lg:col-span-4 space-y-6">
                 <div class="glass-card rounded-3xl p-8 shadow-sm space-y-6 sticky top-24">
                     <h2 class="text-sm font-black uppercase tracking-widest text-slate-400">Loan Parameters</h2>
-                    
+
                     <div class="space-y-2">
                         <label class="text-xs font-bold text-slate-500 uppercase">Loan Amount ($)</label>
-                        <input type="number" id="loan-amount" value="350000" class="w-full bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 text-lg font-black outline-none input-focus transition-all">
+                        <input type="number" id="loan-amount" value="350000"
+                            class="w-full bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 text-lg font-black outline-none input-focus transition-all">
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div class="space-y-2">
                             <label class="text-xs font-bold text-slate-500 uppercase">Interest Rate (%)</label>
-                            <input type="number" id="interest-rate" value="6.5" step="0.1" class="w-full bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 font-bold outline-none input-focus transition-all">
+                            <input type="number" id="interest-rate" value="6.5" step="0.1"
+                                class="w-full bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 font-bold outline-none input-focus transition-all">
                         </div>
                         <div class="space-y-2">
                             <label class="text-xs font-bold text-slate-500 uppercase">Term (Years)</label>
-                            <input type="number" id="loan-term" value="30" class="w-full bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 font-bold outline-none input-focus transition-all">
+                            <input type="number" id="loan-term" value="30"
+                                class="w-full bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 font-bold outline-none input-focus transition-all">
                         </div>
                     </div>
 
@@ -87,11 +191,14 @@
                             <span class="text-xs font-bold text-slate-400 uppercase">Monthly Extra Payment</span>
                             <span id="extra-val" class="text-indigo-600 font-black text-sm">$0</span>
                         </div>
-                        <input type="range" id="extra-payment" min="0" max="2000" step="50" value="0" class="w-full accent-indigo-600">
-                        <p class="text-[10px] text-slate-400 mt-2 italic text-center">"Extra payments tackle the principal directly, cutting years off your loan."</p>
+                        <input type="range" id="extra-payment" min="0" max="2000" step="50" value="0"
+                            class="w-full accent-indigo-600">
+                        <p class="text-[10px] text-slate-400 mt-2 italic text-center">"Extra payments tackle the
+                            principal directly, cutting years off your loan."</p>
                     </div>
 
-                    <button id="recalc-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-indigo-600/20 transition-all active:scale-95 flex items-center justify-center gap-2">
+                    <button id="recalc-btn"
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-indigo-600/20 transition-all active:scale-95 flex items-center justify-center gap-2">
                         <i class="fas fa-sync-alt"></i> Recalculate Architecture
                     </button>
                 </div>
@@ -99,61 +206,80 @@
 
             <!-- Right: Real-Time Insights -->
             <div class="lg:col-span-8 space-y-8">
-                
+
                 <!-- Macro Stats Card -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="glass-card p-6 rounded-3xl border-l-4 border-l-indigo-500">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Monthly Payment</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Monthly Payment
+                        </p>
                         <h3 id="res-monthly" class="text-3xl font-black text-slate-900 dark:text-white">$2,212.11</h3>
                         <p class="text-[10px] text-slate-400 mt-1">Principal + Interest</p>
                     </div>
                     <div class="glass-card p-6 rounded-3xl animate-in zoom-in duration-500">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Interest Paid</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Interest
+                            Paid</p>
                         <h3 id="res-total-interest" class="text-2xl font-black text-rose-500">$446,361</h3>
-                        <p id="interest-savings" class="text-[10px] text-emerald-500 font-bold mt-1 opacity-0 transition-opacity">Saved $0 with extra payments</p>
+                        <p id="interest-savings"
+                            class="text-[10px] text-emerald-500 font-bold mt-1 opacity-0 transition-opacity">Saved $0
+                            with extra payments</p>
                     </div>
                     <div class="glass-card p-6 rounded-3xl">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Loan Payoff Date</p>
-                        <h3 id="res-payoff-date" class="text-2xl font-black text-slate-900 dark:text-white">Mar 2056</h3>
-                        <p id="time-saved" class="text-[10px] text-emerald-500 font-bold mt-1 opacity-0 transition-opacity">Saved 0.0 Years</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Loan Payoff Date
+                        </p>
+                        <h3 id="res-payoff-date" class="text-2xl font-black text-slate-900 dark:text-white">Mar 2056
+                        </h3>
+                        <p id="time-saved"
+                            class="text-[10px] text-emerald-500 font-bold mt-1 opacity-0 transition-opacity">Saved 0.0
+                            Years</p>
                     </div>
                 </div>
 
                 <!-- Learning: How It Works Section -->
                 <div class="glass-card rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800">
                     <div class="bg-slate-50 dark:bg-slate-800/50 p-6 flex items-center justify-between">
-                        <h3 class="font-bold text-sm tracking-tight flex items-center gap-2"><i class="fas fa-info-circle text-indigo-500"></i> The Math of Amortization</h3>
+                        <h3 class="font-bold text-sm tracking-tight flex items-center gap-2"><i
+                                class="fas fa-info-circle text-indigo-500"></i> The Math of Amortization</h3>
                         <div class="flex gap-2">
-                             <div class="w-3 h-3 rounded-full bg-indigo-500"></div>
-                             <div class="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+                            <div class="w-3 h-3 rounded-full bg-indigo-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-700"></div>
                         </div>
                     </div>
                     <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                         <div class="space-y-4">
                             <h4 class="text-lg font-bold">Why do you pay so much interest early on?</h4>
-                            <p class="text-sm text-slate-500 leading-relaxed italic">"In the USA and Europe, almost all loans use standard amortization where the interest is calculated based on the remaining balance. Initially, your balance is huge—so your interest is huge. Adding even small extra payments early on has a <strong>Goliath-sized</strong> impact because it lowers that interest-generating base forever."</p>
-                            <p class="text-xs font-bold text-indigo-600">Pro Tip: One extra monthly payment a year can cut 4+ years off a 30-yr mortgage.</p>
+                            <p class="text-sm text-slate-500 leading-relaxed italic">"In the USA and Europe, almost all
+                                loans use standard amortization where the interest is calculated based on the remaining
+                                balance. Initially, your balance is huge—so your interest is huge. Adding even small
+                                extra payments early on has a <strong>Goliath-sized</strong> impact because it lowers
+                                that interest-generating base forever."</p>
+                            <p class="text-xs font-bold text-indigo-600">Pro Tip: One extra monthly payment a year can
+                                cut 4+ years off a 30-yr mortgage.</p>
                         </div>
                         <div class="p-6 bg-slate-50 dark:bg-slate-900/50 rounded-2xl space-y-4">
-                            <div class="flex justify-between text-xs"><span>Principal Portion</span> <span id="princ-perc">12%</span></div>
+                            <div class="flex justify-between text-xs"><span>Principal Portion</span> <span
+                                    id="princ-perc">12%</span></div>
                             <div class="h-2 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden flex">
-                                <div id="princ-bar" class="h-full bg-emerald-500 transition-all" style="width: 12%"></div>
+                                <div id="princ-bar" class="h-full bg-emerald-500 transition-all" style="width: 12%">
+                                </div>
                                 <div class="h-full bg-rose-500 flex-1"></div>
                             </div>
-                            <p class="text-[10px] text-slate-400">Current visual shows early-loan makeup: Emerald is Principal, Rose is Interest. See how it flips in the table below.</p>
+                            <p class="text-[10px] text-slate-400">Current visual shows early-loan makeup: Emerald is
+                                Principal, Rose is Interest. See how it flips in the table below.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Interactive Amortization Table -->
-                <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+                <div
+                    class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
                     <div class="p-6 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
                         <h3 class="font-bold text-sm">Interactive Amortization Schedule</h3>
                         <div class="text-[10px] text-slate-400 italic">Showing First 12 Months</div>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left">
-                            <thead class="bg-slate-50 dark:bg-slate-900/50 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                            <thead
+                                class="bg-slate-50 dark:bg-slate-900/50 text-[10px] font-black uppercase tracking-widest text-slate-400">
                                 <tr>
                                     <th class="px-6 py-4">Pmt #</th>
                                     <th class="px-6 py-4">Payment</th>
@@ -175,32 +301,47 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12 border-t border-slate-200 dark:border-slate-800">
             <div class="space-y-6">
                 <h2 class="text-3xl font-black">Understanding Loan Amortization</h2>
-                <p class="text-slate-500 leading-relaxed">Most personal loans and mortgages in the USA use a fixed-rate amortization schedule. This means your monthly payment stays consistent, but the *composition* of that payment changes over time. Your first payment is heavy on interest; your last payment is almost entirely principal.</p>
+                <p class="text-slate-500 leading-relaxed">Most personal loans and mortgages in the USA use a fixed-rate
+                    amortization schedule. This means your monthly payment stays consistent, but the *composition* of
+                    that payment changes over time. Your first payment is heavy on interest; your last payment is almost
+                    entirely principal.</p>
                 <div class="space-y-4">
                     <div class="flex gap-4">
-                        <div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 shrink-0 mt-1"><i class="fas fa-check text-xs"></i></div>
+                        <div
+                            class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 shrink-0 mt-1">
+                            <i class="fas fa-check text-xs"></i></div>
                         <div>
                             <h4 class="font-bold text-sm">Principal</h4>
-                            <p class="text-xs text-slate-400">The actual amount you borrowed. Reducing this reduces the overall debt.</p>
+                            <p class="text-xs text-slate-400">The actual amount you borrowed. Reducing this reduces the
+                                overall debt.</p>
                         </div>
                     </div>
                     <div class="flex gap-4">
-                        <div class="w-8 h-8 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center text-rose-600 shrink-0 mt-1"><i class="fas fa-percent text-xs"></i></div>
+                        <div
+                            class="w-8 h-8 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center text-rose-600 shrink-0 mt-1">
+                            <i class="fas fa-percent text-xs"></i></div>
                         <div>
                             <h4 class="font-bold text-sm">Interest</h4>
-                            <p class="text-xs text-slate-400">The cost of borrowing. This is the fee the lender charges for lending you the money.</p>
+                            <p class="text-xs text-slate-400">The cost of borrowing. This is the fee the lender charges
+                                for lending you the money.</p>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="space-y-6 bg-slate-900 overflow-hidden text-white p-10 rounded-3xl relative">
                 <i class="fas fa-rocket absolute -bottom-10 -right-10 text-[200px] text-white/5 opacity-20"></i>
-                <h3 class="text-2xl font-black relative z-10">CalcSuit Pro Tip:<br><span class="text-indigo-400">The Bi-Weekly Hack</span></h3>
-                <p class="text-slate-400 text-sm leading-relaxed relative z-10">By paying half of your monthly payment every two weeks, you end up making <strong>one full extra payment</strong> per year (26 half-payments = 13 full payments). This strategy can cut 5-8 years off a 30-year mortgage without you ever feeling the financial "pinch."</p>
+                <h3 class="text-2xl font-black relative z-10">CalcSuit Pro Tip:<br><span class="text-indigo-400">The
+                        Bi-Weekly Hack</span></h3>
+                <p class="text-slate-400 text-sm leading-relaxed relative z-10">By paying half of your monthly payment
+                    every two weeks, you end up making <strong>one full extra payment</strong> per year (26
+                    half-payments = 13 full payments). This strategy can cut 5-8 years off a 30-year mortgage without
+                    you ever feeling the financial "pinch."</p>
                 <div class="pt-6 relative z-10">
-                    <div class="text-[10px] font-black uppercase tracking-widest text-indigo-400 mb-2">Impact Highlight</div>
-                    <p class="text-xs italic text-slate-300">"On a $400,000 loan at 7%, bi-weekly payments save over $100,000 in interest alone."</p>
+                    <div class="text-[10px] font-black uppercase tracking-widest text-indigo-400 mb-2">Impact Highlight
+                    </div>
+                    <p class="text-xs italic text-slate-300">"On a $400,000 loan at 7%, bi-weekly payments save over
+                        $100,000 in interest alone."</p>
                 </div>
             </div>
         </div>
@@ -209,31 +350,212 @@
         <div class="max-w-4xl mx-auto space-y-8 py-12">
             <h2 class="text-4xl font-black text-center">Frequently Asked Questions</h2>
             <div class="space-y-4">
-                <div class="glass-card p-6 rounded-2xl group cursor-pointer border-transparent hover:border-indigo-100 transition-all">
-                    <h4 class="font-bold flex items-center justify-between">What is an Amortization Schedule? <i class="fas fa-plus text-xs text-indigo-400 group-hover:rotate-45 transition-transform"></i></h4>
-                    <p class="text-slate-500 text-sm mt-3 leading-relaxed">An amortization schedule is a table detailing each monthly payment on a loan. It shows how much of each payment goes toward the principal and how much goes toward interest until the loan is paid off by the end of its term.</p>
+                <div
+                    class="glass-card p-6 rounded-2xl group cursor-pointer border-transparent hover:border-indigo-100 transition-all">
+                    <h4 class="font-bold flex items-center justify-between">What is an Amortization Schedule? <i
+                            class="fas fa-plus text-xs text-indigo-400 group-hover:rotate-45 transition-transform"></i>
+                    </h4>
+                    <p class="text-slate-500 text-sm mt-3 leading-relaxed">An amortization schedule is a table detailing
+                        each monthly payment on a loan. It shows how much of each payment goes toward the principal and
+                        how much goes toward interest until the loan is paid off by the end of its term.</p>
                 </div>
-                <div class="glass-card p-6 rounded-2xl group cursor-pointer border-transparent hover:border-indigo-100 transition-all">
-                    <h4 class="font-bold flex items-center justify-between">Can extra payments lower my monthly bill? <i class="fas fa-plus text-xs text-indigo-400 group-hover:rotate-45 transition-transform"></i></h4>
-                    <p class="text-slate-500 text-sm mt-3 leading-relaxed">No, for most standard loans, extra payments do not change the fixed monthly amount you owe. Instead, they shorten the total length of the loan and significantly reduce the total interest you pay over time.</p>
+                <div
+                    class="glass-card p-6 rounded-2xl group cursor-pointer border-transparent hover:border-indigo-100 transition-all">
+                    <h4 class="font-bold flex items-center justify-between">Can extra payments lower my monthly bill? <i
+                            class="fas fa-plus text-xs text-indigo-400 group-hover:rotate-45 transition-transform"></i>
+                    </h4>
+                    <p class="text-slate-500 text-sm mt-3 leading-relaxed">No, for most standard loans, extra payments
+                        do not change the fixed monthly amount you owe. Instead, they shorten the total length of the
+                        loan and significantly reduce the total interest you pay over time.</p>
                 </div>
             </div>
         </div>
-    </main>
+    
+<!-- SEO Content Module -->
+    <section class="w-full max-w-5xl mt-12 space-y-12">
+        <article class="bg-white dark:bg-slate-800 p-8 md:p-16 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 space-y-12">
+            
+            <!-- H2 Header & Intro -->
+            <header class="border-b border-slate-100 dark:border-slate-700 pb-8 text-center md:text-left">
+                <span class="px-4 py-1.5 rounded-full bg-emerald-600/10 text-emerald-500 text-xs font-bold uppercase tracking-widest mb-4 inline-block">FINANCE SUITE</span>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-800 dark:text-white mt-2 mb-4 leading-tight">Loan Architect Calculator - Online Solver & Formula Guide</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed max-w-4xl">Loan Architect is a vital metric in our daily routines, academic assignments, and professional workflows. This comprehensive guide details the mathematical principles, practical use cases, and steps to perform these calculations accurately. In the modern economic landscape, financial literacy and precise accounting are essential pillars for both personal stability and corporate growth. Making decisions blindly without analyzing basic formulas leads to operational inefficiencies and capital leaks. High-yield accounts, debt interest charges, operational margins, and compound growth parameters all interact dynamically to shape your net worth. This online solver is engineered to bring institutional-grade financial modeling directly to your web browser. By providing instant clarity on interest charges, payment terms, tax percentages, and budget lines, we empower users to eliminate assumptions and take command of their financial future.</p>
+            </header>
+
+            <!-- Detailed Explanation & What is Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-info-circle text-emerald-500"></i> What is the Loan Architect Solver?
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Loan Architect calculations are key in both personal planning and professional analysis. This online tool processes your inputs instantly in your browser to deliver accurate results. By analyzing the underlying variables, users can understand the relationships between inputs and identify key insights. Understanding the time value of money is critical when navigating financial models. Every dollar you spend on interest represents an opportunity cost—capital that could otherwise be earning compound returns in interest-bearing assets or equity markets. Amortization schedules show how payments are divided between paying down principal and paying interest charges over the life of a loan. By analyzing this data, borrowers can identify strategic prepayments that save significant money. Similarly, for businesses, identifying contribution margins and fixed costs ensures products are priced to cover overhead and generate sustainable profit.</p>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-lightbulb text-emerald-500"></i> Best Practices & Pro-Tips
+                    </h3>
+                    <div class="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-200 dark:border-emerald-900/30 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        <p class="font-bold text-emerald-500 mb-2"><i class="fas fa-star mr-1"></i> Optimizing Your Results</p>
+                        Financial Pro-Tip: When analyzing interest-bearing debt, prioritize paying off high-interest balances first (the Avalanche method) to minimize total interest paid. Additionally, automate savings deposits into High-Yield Savings Accounts (HYSAs) to earn interest on your cash, and audit recurring subscriptions regularly to prevent cost leaks. Make sure to verify your input units before running calculations.
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use Section -->
+            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-directions text-emerald-500"></i> How to Use the Loan Architect Calculator
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">1</div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Input Data</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Enter the required values into the form fields. Make sure to double-check the values for accuracy.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">2</div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Verify Units</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Ensure your values match the specified units (e.g. grams vs ounces, centimeters vs inches).</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">3</div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Run Calculation</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Click the calculate button to process the mathematical formulas instantly in your browser.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">4</div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Copy Results</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Review the output, check the formulas, and copy or save the results for your records.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mathematical Formula & Technical Description -->
+            <div class="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-square-root-variable text-emerald-500"></i> Formula & Computational Methodology
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Understanding the mathematics behind the calculations helps clarify how the inputs relate to the final result. Our calculator processes the formulas instantly in your browser. Below is the equation used to calculate Loan Architect:</p>
+                <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
+                    Calculates loan parameters using standard amortization math:<br>\(\text{Monthly Payment} = P \times r \times \frac{(1+r)^n}{(1+r)^n - 1}\)<br>This determines payments, total interest costs, and provides a full amortization schedule.
+                </div>
+            </div>
+
+            <!-- Step-by-Step Numerical Examples -->
+            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-calculator text-emerald-500"></i> Step-by-Step Calculation Examples
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Review these examples to see how the mathematical formula is applied to different input values:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
+                        <h4 class="font-bold text-slate-800 dark:text-white text-base"><i class="fas fa-check-circle text-emerald-500 mr-1"></i> Example Scenario 1</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">A loan of $15,000 at 6% interest for 4 years (48 months):
+Monthly payment = $15,000 * 0.005 * (1.005^48) / (1.005^48 - 1) = $352.28.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
+                        <h4 class="font-bold text-slate-800 dark:text-white text-base"><i class="fas fa-check-circle text-emerald-500 mr-1"></i> Example Scenario 2</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">A loan of $30,000 at 8% interest for 5 years (60 months):
+Monthly payment = $30,000 * 0.00667 * (1.00667^60) / (1.00667^60 - 1) = $608.29.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Applications & Use Cases -->
+            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-briefcase text-emerald-500"></i> Common Applications & Industry Use Cases
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Mortgage Scenarios</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Model monthly payments and check interest expenses for different home loans.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Business Funding</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Estimate borrowing costs and create payment schedules for business capital loans.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Auto Financing Reviews</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Check car dealership financing terms to ensure the deal is competitive.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frequently Asked Questions (FAQ) -->
+            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-question-circle text-emerald-500"></i> Frequently Asked Questions
+                </h3>
+                <div class="space-y-6">
+                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How does this online calculator perform calculations?</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">A: The calculations are processed instantly in your browser using standard mathematical formulas. Your data remains private and is never uploaded to external servers.</p>
+                    </div>
+                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: What is a loan amortization schedule?</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">A: It is a table showing each monthly payment, detailing how much goes toward interest versus paying down the principal balance.</p>
+                    </div>
+                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: Can I pay off my loan early?</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">A: In most cases, yes. Paying extra toward the principal reduces interest costs and pays off the loan faster, but check for prepayment penalties.</p>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- Related Calculators Section -->
+            <div class="pt-10 border-t border-slate-200 dark:border-slate-700">
+                <h3 class="text-xl font-bold mb-6 text-slate-800 dark:text-white">Explore Related Finance Tools</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    
+                    <a href="../finance/emi-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
+                        EMI Calculator
+                    </a>
+                    
+                    <a href="../finance/loan-optimizer.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
+                        Loan Optimizer
+                    </a>
+                    
+                    <a href="../finance/interest-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
+                        Interest Calculator
+                    </a>
+                    
+                    <a href="../finance/compound-interest-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
+                        Compound Growth
+                    </a>
+                    
+                </div>
+            </div>
+    
+
+            <!-- Conclusion Section -->
+            <div class="pt-6 border-t border-slate-100 dark:border-slate-700 text-center">
+                <p class="text-xs text-slate-400 max-w-3xl mx-auto mb-6">Ultimately, consistent tracking and forecasting are key to financial freedom. Whether you are budgeting for a down payment, auditing subscriptions, setting product markup prices, or planning for early retirement, using accurate financial tools ensures your decisions are based on data. CalcSuit provides private, free, and precise solvers to support your financial journey.</p>
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-8 py-3 bg-slate-900 dark:bg-slate-700 hover:bg-emerald-600 text-white rounded-2xl text-sm font-bold transition-all shadow-md">
+                    Start New Calculation
+                </button>
+            </div>
+
+        </article>
+    </section>
+  
+<!-- /SEO Content Module -->
+</main>
 
     <script src="../js/layout.js"></script>
     <script>
         const $ = id => document.getElementById(id);
-        
+
         function calculate() {
             const principal = parseFloat($('loan-amount').value) || 0;
             const annualRate = parseFloat($('interest-rate').value) || 0;
             const years = parseFloat($('loan-term').value) || 0;
             const extra = parseFloat($('extra-payment').value) || 0;
-            
+
             const monthlyRate = (annualRate / 100) / 12;
             const totalMonths = years * 12;
-            
+
             // Standard Monthly Payment Formula (M = P [ i(1 + i)^n ] / [ (1 + i)^n – 1 ])
             let payment = 0;
             if (monthlyRate > 0) {
@@ -255,7 +577,7 @@
 
             // Baseline Interest (without extra)
             let bBalance = principal;
-            for(let i=0; i<totalMonths; i++) {
+            for (let i = 0; i < totalMonths; i++) {
                 totalInterestBaseline += bBalance * monthlyRate;
                 bBalance -= (payment - (bBalance * monthlyRate));
             }
@@ -263,10 +585,10 @@
             // Real calc with extra
             for (let i = 1; i <= totalMonths; i++) {
                 if (currentBalance <= 0) break;
-                
+
                 const interestM = currentBalance * monthlyRate;
                 const principalM = Math.min(currentBalance, (payment - interestM) + extra);
-                
+
                 totalInterest += interestM;
                 currentBalance -= principalM;
                 monthsToPayoff = i;
@@ -286,15 +608,15 @@
             }
 
             $('res-total-interest').innerText = `$${Math.round(totalInterest).toLocaleString()}`;
-            
+
             // Savings display
             if (extra > 0) {
                 const interestSaved = totalInterestBaseline - totalInterest;
                 $('interest-savings').innerText = `Saved $${Math.round(interestSaved).toLocaleString()} in interest`;
                 $('interest-savings').classList.remove('opacity-0');
-                
+
                 const timeSaved = (totalMonths - monthsToPayoff) / 12;
-                $('time-saved').innerText = `Saved ${timeSaved.toFixed(1)} Years`;
+                \(('time-saved').innerText = `Saved \){timeSaved.toFixed(1)} Years`;
                 $('time-saved').classList.remove('opacity-0');
             } else {
                 $('interest-savings').classList.add('opacity-0');
@@ -310,14 +632,15 @@
             const firstInterest = principal * monthlyRate;
             const firstPrincipal = payment - firstInterest;
             const ratio = (firstPrincipal / payment) * 100;
-            $('princ-perc').innerText = `${Math.round(ratio)}%`;
-            $('princ-bar').style.width = `${ratio}%`;
+            \(('princ-perc').innerText = `\){Math.round(ratio)}%`;
+            \(('princ-bar').style.width = `\){ratio}%`;
         }
 
-        [$('loan-amount'), $('interest-rate'), $('loan-term'), $('extra-payment')].forEach(el => el.addEventListener('input', calculate));
+        [\(('loan-amount'), \)('interest-rate'), \(('loan-term'), \)('extra-payment')].forEach(el => el.addEventListener('input', calculate));
         $('recalc-btn').addEventListener('click', calculate);
-        
+
         calculate();
     </script>
 </body>
+
 </html>

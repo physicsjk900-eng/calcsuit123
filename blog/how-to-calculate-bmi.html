@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Calculate BMI: The Ultimate Guide to Body Mass Index | CalcSuit Blog</title>
+    <meta name="description"
+        content="Master the science and math behind Body Mass Index (BMI). Learn metric and imperial formulas, standard clinical classification brackets, and practical health limits.">
+
+    <!-- Canonical URL -->
+    <link rel=canonical href="https://calcsuit.com/blog/how-to-calculate-bmi.html" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <!-- MathJax for LaTeX Equations -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Header will be injected by layout.js -->
+    <div id="sidebar-container" class="contents"></div>
+
+    <main class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <article class="prose prose-slate dark:prose-invert max-w-none prose-lg">
+            
+            <header class="text-center mb-16 mt-8">
+                <span class="px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-500/10 text-rose-500 text-xs font-bold uppercase tracking-wider mb-4 inline-block">
+                    Health & Wellness
+                </span>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6">
+                    How to Calculate BMI:<br /> The Ultimate Guide to Body Mass Index
+                </h1>
+                <div class="h-1.5 w-20 bg-indigo-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-slate-400 text-sm font-medium">Published May 19, 2026 • 8 min read</p>
+            </header>
+
+            <section class="space-y-6 leading-relaxed text-slate-600 dark:text-slate-300">
+                <p>
+                    In modern metabolic medicine, maintaining a clear, objective view of body composition is crucial. While advanced body scans (such as DEXA scans and hydrostatic weighing) provide high-precision measurements of body fat percentages, they remain expensive and highly inaccessible for daily monitoring. This is why physicians and health organizations worldwide rely on the **Body Mass Index (BMI)**.
+                </p>
+                <p>
+                    Developed by the Belgian polymath Adolphe Quetelet in the mid-19th century, BMI serves as a rapid, low-cost screening tool to categorize individuals into weight brackets, helping predict potential metabolic and cardiovascular risks. In this definitive guide, we will break down the exact mathematics of BMI, discuss metric and imperial procedures, and review standard clinical classifications.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">1. The Mathematics of BMI: Equations</h2>
+                <p>
+                    At its core, BMI establishes a ratio between an individual's total body weight (mass) and their structural height. Because weight acts in three dimensions (volume) but height acts in one dimension, Quetelet derived that mass scales quadratically with height for typical body frames.
+                </p>
+
+                <h3 class="text-xl font-bold text-slate-950 dark:text-white mt-6">A. Metric BMI Formula</h3>
+                <p>
+                    The standard metric calculation requires weight in **kilograms (kg)** and height in **meters (m)**:
+                </p>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-indigo-500 text-center font-mono my-6 text-lg overflow-x-auto">
+                    $$BMI = \frac{Weight\ (kg)}{Height^2\ (m^2)}$$
+                </div>
+
+                <h3 class="text-xl font-bold text-slate-950 dark:text-white mt-6">B. Imperial BMI Formula</h3>
+                <p>
+                    For standard American or British units, where weight is in **pounds (lbs)** and height in **inches (in)**, a conversion scalar is required to match standard metric output scales:
+                </p>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-sky-500 text-center font-mono my-6 text-lg overflow-x-auto">
+                    $$BMI = \frac{Weight\ (lbs)}{Height^2\ (in^2)} \times 703$$
+                </div>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">2. Step-by-Step Calculation Procedure</h2>
+                <p>
+                    Let's walk through a real-world calculation example to cement this process.
+                </p>
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-8 rounded-3xl shadow-sm space-y-4">
+                    <h4 class="font-bold text-slate-900 dark:text-white text-lg">Scenario: Calculating Metric BMI</h4>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Subject Parameter 1:</strong> Weight = 75 kg</li>
+                        <li><strong>Subject Parameter 2:</strong> Height = 1.78 meters (178 cm)</li>
+                        <li><strong>Step 1:</strong> Square the height value: \(1.78 \times 1.78 = 3.1684\ m^2\)</li>
+                        <li><strong>Step 2:</strong> Divide weight by squared height: \(\frac{75}{3.1684} = 23.67\)</li>
+                        <li><strong>Result:</strong> The subject's BMI is <strong>23.7</strong>, which sits comfortably inside the healthy clinical range.</li>
+                    </ul>
+                </div>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">3. Standard Clinical Classification Brackets</h2>
+                <p>
+                    The World Health Organization (WHO) and the Centers for Disease Control and Prevention (CDC) segment adult BMI scores into four main categories:
+                </p>
+
+                <div class="overflow-x-auto my-6 border border-slate-200 dark:border-slate-700 rounded-2xl">
+                    <table class="w-full text-sm text-left text-slate-500 dark:text-slate-400">
+                        <thead class="text-xs text-slate-700 uppercase bg-slate-100 dark:bg-slate-800 dark:text-slate-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-4">BMI Range</th>
+                                <th scope="col" class="px-6 py-4">Classification Bracket</th>
+                                <th scope="col" class="px-6 py-4">Health Implications</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                            <tr class="bg-white dark:bg-slate-900">
+                                <td class="px-6 py-4 font-bold text-slate-900 dark:text-white">&lt; 18.5</td>
+                                <td class="px-6 py-4 text-sky-500 font-semibold">Underweight</td>
+                                <td class="px-6 py-4">Higher risk of nutritional deficiency, weakened immune system, and osteoporosis.</td>
+                            </tr>
+                            <tr class="bg-slate-50/50 dark:bg-slate-900/50">
+                                <td class="px-6 py-4 font-bold text-slate-900 dark:text-white">18.5 – 24.9</td>
+                                <td class="px-6 py-4 text-emerald-500 font-semibold">Normal / Healthy</td>
+                                <td class="px-6 py-4">Lowest statistical correlation with chronic metabolic diseases.</td>
+                            </tr>
+                            <tr class="bg-white dark:bg-slate-900">
+                                <td class="px-6 py-4 font-bold text-slate-900 dark:text-white">25.0 – 29.9</td>
+                                <td class="px-6 py-4 text-amber-500 font-semibold">Overweight</td>
+                                <td class="px-6 py-4">Elevated stress on joints, skeletal system, and mild increase in diabetes risks.</td>
+                            </tr>
+                            <tr class="bg-slate-50/50 dark:bg-slate-900/50">
+                                <td class="px-6 py-4 font-bold text-slate-900 dark:text-white">&ge; 30.0</td>
+                                <td class="px-6 py-4 text-rose-500 font-semibold">Obese</td>
+                                <td class="px-6 py-4">Significantly increased risk of cardiovascular diseases, hypertension, type 2 diabetes, and sleep apnea.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">4. Critical Limitations of BMI</h2>
+                <p>
+                    While BMI remains a highly effective baseline epidemiological model, it is vital to acknowledge its clinical limitations. Because it relies purely on weight and height, BMI cannot distinguish between **skeletal muscle mass** and **adipose (fat) tissue**. 
+                </p>
+                <p>
+                    For example, competitive bodybuilders or powerlifters with high levels of lean muscle mass will frequently trigger "overweight" or even "obese" categories, despite maintaining exceptionally low body fat percentages. Conversely, sedentary individuals may exhibit a "normal" BMI score while hiding high levels of visceral fat, a clinical state colloquially referred to as "skinny fat" or metabolically obese normal weight (MONW).
+                </p>
+                <p>
+                    To mitigate this, health professionals recommend coupling BMI with complementary metrics such as **Waist-to-Hip Ratio (WHR)** or a dedicated **Body Fat Calculator** to form a complete metabolic overview.
+                </p>
+
+                <div class="mt-12 p-8 bg-indigo-50 dark:bg-indigo-900/20 rounded-[2rem] border border-indigo-100 dark:border-indigo-900/30 text-sm leading-relaxed">
+                    <h5 class="font-bold text-indigo-700 dark:text-indigo-400 mb-2 text-base">Launch the BMI Calculator</h5>
+                    <p class="mb-4">
+                        Eliminate manual decimal math and avoid mistakes. Use our responsive **BMI Calculator** to instantly convert between metric and imperial structures, map your weight category dynamically, and track your fitness progress in real-time.
+                    </p>
+                    <a href="../health/bmi-calculator.html" class="inline-flex items-center gap-1.5 font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+                        Open BMI Calculator Page &rarr;
+                    </a>
+                </div>
+            </section>
+
+        </article>
+
+    </main>
+
+    <!-- Footer will be injected by layout.js -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/layout.js"></script>
+</body>
+
+</html>

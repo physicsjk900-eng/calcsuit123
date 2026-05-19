@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI Calculation Formula Explained: Math and Amortization | CalcSuit Blog</title>
+    <meta name="description"
+        content="Learn the exact algebraic formula used to calculate Equated Monthly Installments (EMI). Master flat vs. reducing rate loans and amortization calculations.">
+
+    <!-- Canonical URL -->
+    <link rel=canonical href="https://calcsuit.com/blog/emi-calculation-formula.html" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <!-- MathJax for LaTeX Equations -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Header will be injected by layout.js -->
+    <div id="sidebar-container" class="contents"></div>
+
+    <main class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <article class="prose prose-slate dark:prose-invert max-w-none prose-lg">
+            
+            <header class="text-center mb-16 mt-8">
+                <span class="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-500/10 text-emerald-500 text-xs font-bold uppercase tracking-wider mb-4 inline-block">
+                    Finance & Investment
+                </span>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6">
+                    The EMI Calculation Formula:<br /> Deciphering Loan Math
+                </h1>
+                <div class="h-1.5 w-20 bg-indigo-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-slate-400 text-sm font-medium">Published May 19, 2026 • 7 min read</p>
+            </header>
+
+            <section class="space-y-6 leading-relaxed text-slate-600 dark:text-slate-300">
+                <p>
+                    Whether you are purchasing a car, securing a home mortgage, or budgeting personal expenses, understanding how your monthly payments are calculated is vital. In financial lending, this fixed payment is known as the **Equated Monthly Installment (EMI)**.
+                </p>
+                <p>
+                    An EMI represents a structured payment plan consisting of both **principal** (repaying the original borrowed sum) and **interest** (the fee charged by the lender). Over the life of the loan, the ratio of interest to principal inside each payment shifts—a process called **amortization**.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">1. The Reducing Balance EMI Formula</h2>
+                <p>
+                    Most retail loans (housing, car, personal) utilize a **reducing balance method**. In this system, interest is calculated only on the remaining unpaid principal balance at the end of each month.
+                </p>
+                <p>
+                    The algebraic formula to compute reducing balance EMIs is:
+                </p>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-indigo-500 text-center font-mono my-6 text-lg overflow-x-auto">
+                    $$EMI = P \times r \times \frac{(1 + r)^n}{(1 + r)^n - 1}$$
+                </div>
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-2xl space-y-2 text-sm">
+                    <h5 class="font-bold text-slate-900 dark:text-white">Variable Glossary:</h5>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li><strong>\(P\):</strong> Principal loan amount borrowed.</li>
+                        <li><strong>\(r\):</strong> Monthly interest rate. Calculated as: \(\frac{\text{Annual Rate}}{12 \times 100}\). (For example, an annual rate of 12% means \(r = \frac{12}{1200} = 0.01\)).</li>
+                        <li><strong>\(n\):</strong> Loan tenure in months. (For example, a 5-year loan tenure means \(n = 5 \times 12 = 60\) payments).</li>
+                    </ul>
+                </div>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">2. Step-by-Step EMI Calculation Example</h2>
+                <p>
+                    Let's calculate the EMI for a loan with the following parameters:
+                </p>
+                <ul class="list-disc pl-6 space-y-1">
+                    <li>Principal Loan Amount (\(P\)) = $10,000</li>
+                    <li>Annual Interest Rate = 12% (so monthly rate \(r = 0.01\))</li>
+                    <li>Loan Tenure = 12 months (\(n = 12\))</li>
+                </ul>
+
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-8 rounded-3xl shadow-sm space-y-4">
+                    <h4 class="font-bold text-slate-900 dark:text-white text-lg">Mathematical Walkthrough:</h4>
+                    <ul class="list-decimal pl-6 space-y-2">
+                        <li><strong>Step 1:</strong> Calculate \((1+r)^n\): \((1.01)^{12} \approx 1.1268\)</li>
+                        <li><strong>Step 2:</strong> Solve the division factor: \(\frac{1.1268}{1.1268 - 1} = \frac{1.1268}{0.1268} \approx 8.8864\)</li>
+                        <li><strong>Step 3:</strong> Multiply by Principal and Monthly Rate: \(EMI = 10000 \times 0.01 \times 8.8864 = 888.48\)</li>
+                        <li><strong>Result:</strong> Your Equated Monthly Installment is **$888.49** per month.</li>
+                        <li><strong>Total Repayment:</strong> over 12 months, you pay \(12 \times \$888.49 = \$10,661.88\) (Interest cost is \$661.88).</li>
+                    </ul>
+                </div>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">3. Flat Interest vs. Reducing Balance Rates</h2>
+                <p>
+                    Be cautious of lenders offering **flat interest rates**. In a flat interest loan, interest is calculated on the full principal value for the entire loan duration, ignoring any principal you pay off:
+                </p>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-amber-500 text-center font-mono my-6 text-sm overflow-x-auto">
+                    $$EMI\ (Flat) = \frac{P + (P \times \text{Annual Rate} \times \text{Years})}{n}$$
+                </div>
+                <p>
+                    A flat interest rate of 8% usually leads to much higher total interest costs than a reducing rate of 8%, because reducing balance accounts for your monthly principal paydowns. Always confirm which model your bank is using!
+                </p>
+
+                <div class="mt-12 p-8 bg-indigo-50 dark:bg-indigo-900/20 rounded-[2rem] border border-indigo-100 dark:border-indigo-900/30 text-sm leading-relaxed">
+                    <h5 class="font-bold text-indigo-700 dark:text-indigo-400 mb-2 text-base">Launch the EMI Calculator</h5>
+                    <p class="mb-4">
+                        Model your loan options instantly. Use our interactive **EMI Calculator** to check monthly bills, analyze interest vs. principal over time, and generate a full amortization table in seconds.
+                    </p>
+                    <a href="../finance/emi-calculator.html" class="inline-flex items-center gap-1.5 font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+                        Open EMI Calculator Page &rarr;
+                    </a>
+                </div>
+            </section>
+
+        </article>
+
+    </main>
+
+    <!-- Footer will be injected by layout.js -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/layout.js"></script>
+</body>
+
+</html>

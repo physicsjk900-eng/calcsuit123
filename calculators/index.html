@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculators Directory | Free Online Mathematics & Finance Suite | CalcSuit</title>
+    <meta name="description"
+        content="Browse our comprehensive category hubs of free online calculators. Instantly access dedicated calculators for math, financial analysis, health & fitness, conversion, and productivity.">
+
+    <!-- Canonical URL -->
+    <link rel=canonical href="https://calcsuit.com/calculators/" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body
+    class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Header will be injected by layout.js -->
+    <div id="sidebar-container" class="contents"></div>
+
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <!-- Hero Title -->
+        <div class="text-center mb-16 mt-8">
+            <span
+                class="px-4 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-widest mb-4 inline-block">
+                Category Hub
+            </span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6">
+                Calculators <span class="text-indigo-600 dark:text-indigo-400">Directory</span>
+            </h1>
+            <p class="text-xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+                Explore our topical calculator hubs. Every suite is mathematically optimized for high performance,
+                featuring self-correcting input solvers and responsive interactive visualizers.
+            </p>
+        </div>
+
+        <!-- Directory Category Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+
+            <!-- Mathematics -->
+            <div
+                class="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                <div
+                    class="w-12 h-12 bg-sky-100 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center rounded-2xl mb-6 text-xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-divide"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Mathematics Hub</h2>
+                <p class="text-slate-500 dark:text-slate-400 mb-6">
+                    Solve scientific equations, matrices, quadratic algorithms, ratio proportions, and probability
+                    distributions with high-precision statistical models.
+                </p>
+                <a href="../math/index.html"
+                    class="inline-flex items-center gap-2 text-sm font-bold text-indigo-500 hover:text-indigo-600 group/link">
+                    Explore Math Suite
+                    <i class="fas fa-arrow-right transition-transform group-hover/link:translate-x-1"></i>
+                </a>
+            </div>
+
+            <!-- Financial -->
+            <div
+                class="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                <div
+                    class="w-12 h-12 bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center rounded-2xl mb-6 text-xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Financial Hub</h2>
+                <p class="text-slate-500 dark:text-slate-400 mb-6">
+                    Master wealth growth with loan amortization schedules, EMI interest solvers, compound growth
+                    calculators, and subscription audits.
+                </p>
+                <a href="../finance/index.html"
+                    class="inline-flex items-center gap-2 text-sm font-bold text-indigo-500 hover:text-indigo-600 group/link">
+                    Explore Finance Suite
+                    <i class="fas fa-arrow-right transition-transform group-hover/link:translate-x-1"></i>
+                </a>
+            </div>
+
+            <!-- Health & Fitness -->
+            <div
+                class="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                <div
+                    class="w-12 h-12 bg-rose-100 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center rounded-2xl mb-6 text-xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Health & Fitness Hub</h2>
+                <p class="text-slate-500 dark:text-slate-400 mb-6">
+                    Optimize personal wellness with Body Mass Index (BMI), Basal Metabolic Rate (BMR), macro
+                    distributions, calorie tracking, and heart-rate zone analyses.
+                </p>
+                <a href="../health/index.html"
+                    class="inline-flex items-center gap-2 text-sm font-bold text-indigo-500 hover:text-indigo-600 group/link">
+                    Explore Health Suite
+                    <i class="fas fa-arrow-right transition-transform group-hover/link:translate-x-1"></i>
+                </a>
+            </div>
+
+            <!-- Time and Date -->
+            <div
+                class="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                <div
+                    class="w-12 h-12 bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center rounded-2xl mb-6 text-xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Time and Date Tools</h2>
+                <p class="text-slate-500 dark:text-slate-400 mb-6">
+                    Track time across time zones, calculate due dates, and analyze time-based data with precision and
+                    accuracy.
+                </p>
+                <a href="../time/index.html"
+                    class="inline-flex items-center gap-2 text-sm font-bold text-indigo-500 hover:text-indigo-600 group/link">
+                    Explore Time and Date Suite
+                    <i class="fas fa-arrow-right transition-transform group-hover/link:translate-x-1"></i>
+                </a>
+            </div>
+
+            <!-- Productivity -->
+            <div
+                class="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                <div
+                    class="w-12 h-12 bg-teal-100 dark:bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center rounded-2xl mb-6 text-xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Productivity Hub</h2>
+                <p class="text-slate-500 dark:text-slate-400 mb-6">
+                    Streamline tasks and calendars, evaluate circadian rhythm cycles, and estimate sponsor brand deal
+                    payouts with precision algorithms.
+                </p>
+                <a href="../productivity/index.html"
+                    class="inline-flex items-center gap-2 text-sm font-bold text-indigo-500 hover:text-indigo-600 group/link">
+                    Explore Productivity Suite
+                    <i class="fas fa-arrow-right transition-transform group-hover/link:translate-x-1"></i>
+                </a>
+            </div>
+
+            <!-- Industrial -->
+            <div
+                class="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                <div
+                    class="w-12 h-12 bg-amber-100 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center rounded-2xl mb-6 text-xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-industry"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Industrial Suite</h2>
+                <p class="text-slate-500 dark:text-slate-400 mb-6">
+                    Analyze physical mechanics such as Vertical Circular Motion (VCM), Ohm's law circuits, crude oil
+                    volumes, and temperature-corrected API gravity curves.
+                </p>
+                <a href="../Industrial/index.html"
+                    class="inline-flex items-center gap-2 text-sm font-bold text-indigo-500 hover:text-indigo-600 group/link">
+                    Explore Industrial Suite
+                    <i class="fas fa-arrow-right transition-transform group-hover/link:translate-x-1"></i>
+                </a>
+            </div>
+
+            <!-- Unit Conversion -->
+            <div
+                class="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                <div
+                    class="w-12 h-12 bg-sky-100 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center rounded-2xl mb-6 text-xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-ruler-combined"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Unit Conversion Hub</h2>
+                <p class="text-slate-500 dark:text-slate-400 mb-6">
+                    Convert units of measurement with ease.
+                </p>
+                <a href="../conversion/index.html"
+                    class="inline-flex items-center gap-2 text-sm font-bold text-indigo-500 hover:text-indigo-600 group/link">
+                    Explore Unit Conversion Suite
+                    <i class="fas fa-arrow-right transition-transform group-hover/link:translate-x-1"></i>
+                </a>
+            </div>
+
+            <!-- Life Style -->
+            <div
+                class="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                <div
+                    class="w-12 h-12 bg-sky-100 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center rounded-2xl mb-6 text-xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Life Style Hub</h2>
+                <p class="text-slate-500 dark:text-slate-400 mb-6">
+                    Convert units of measurement with ease.
+                </p>
+                <a href="../lifestyle/index.html"
+                    class="inline-flex items-center gap-2 text-sm font-bold text-indigo-500 hover:text-indigo-600 group/link">
+                    Explore Life Style Suite
+                    <i class="fas fa-arrow-right transition-transform group-hover/link:translate-x-1"></i>
+                </a>
+            </div>
+
+            <!-- Physics -->
+            <div
+                class="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                <div
+                    class="w-12 h-12 bg-amber-100 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center rounded-2xl mb-6 text-xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-industry"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Physics Suite</h2>
+                <p class="text-slate-500 dark:text-slate-400 mb-6">
+                    Solve complex problems with Vertical Circular Motion (VCM), Ohm's law, API gravity
+                    corrections, and oil volume calculations.
+                </p>
+                <a href="../physics/index.html"
+                    class="inline-flex items-center gap-2 text-sm font-bold text-indigo-500 hover:text-indigo-600 group/link">
+                    Explore Physics Suite
+                    <i class="fas fa-arrow-right transition-transform group-hover/link:translate-x-1"></i>
+                </a>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer will be injected by layout.js -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/layout.js"></script>
+</body>
+
+</html>

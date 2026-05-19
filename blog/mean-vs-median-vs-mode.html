@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Difference Between Mean, Median, and Mode | CalcSuit Blog</title>
+    <meta name="description"
+        content="Learn the structural differences between Mean, Median, and Mode. Understand skewness, standard calculations, and when to use each central tendency metric.">
+
+    <!-- Canonical URL -->
+    <link rel=canonical href="https://calcsuit.com/blog/mean-vs-median-vs-mode.html" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        indigo: { 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <!-- MathJax for LaTeX Equations -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Header will be injected by layout.js -->
+    <div id="sidebar-container" class="contents"></div>
+
+    <main class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <article class="prose prose-slate dark:prose-invert max-w-none prose-lg">
+            
+            <header class="text-center mb-16 mt-8">
+                <span class="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-500/10 text-emerald-500 text-xs font-bold uppercase tracking-wider mb-4 inline-block">
+                    Mathematics & Education
+                </span>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6">
+                    Mean, Median, and Mode:<br /> Understanding Central Tendency
+                </h1>
+                <div class="h-1.5 w-20 bg-indigo-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-slate-400 text-sm font-medium">Published May 19, 2026 • 6 min read</p>
+            </header>
+
+            <section class="space-y-6 leading-relaxed text-slate-600 dark:text-slate-300">
+                <p>
+                    When describing a group of numbers, our first instinct is to ask: **"What is the average?"** But in mathematics and statistical modeling, the word "average" is an umbrella term representing **Central Tendency**—the single value that best describes the center of a data distribution.
+                </p>
+                <p>
+                    There are three primary ways to measure central tendency: **Mean**, **Median**, and **Mode**. Each has unique properties, advantages, and limitations, especially when handling skewed datasets or outliers.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">1. Define the Big Three</h2>
+
+                <h3 class="text-xl font-bold text-slate-950 dark:text-white mt-6">A. The Arithmetic Mean (Average)</h3>
+                <p>
+                    The **Mean** is calculated by adding all the values in a dataset together and dividing by the total count of values. It is the most common interpretation of "average."
+                </p>
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-indigo-500 text-center font-mono my-6 text-lg overflow-x-auto">
+                    $$Mean\ (\bar{x}) = \frac{\sum x}{n}$$
+                </div>
+
+                <h3 class="text-xl font-bold text-slate-950 dark:text-white mt-6">B. The Median (Middle)</h3>
+                <p>
+                    The **Median** is the physical middle value in a sorted dataset (arranged in ascending or descending order). If the dataset contains an odd number of elements, the median is the center value. If it contains an even number, the median is the average of the two middle values.
+                </p>
+
+                <h3 class="text-xl font-bold text-slate-950 dark:text-white mt-6">C. The Mode (Frequent)</h3>
+                <p>
+                    The **Mode** is the value that appears most frequently in a dataset. A dataset can have one mode, multiple modes (bimodal or multimodal), or no mode at all if every value occurs exactly once.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">2. When to Use Which? (Handling Outliers)</h2>
+                <p>
+                    The choice of metric depends heavily on the shape of your data. The **Mean** is sensitive to extreme values (outliers), whereas the **Median** is resistant to outliers.
+                </p>
+                
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-8 rounded-3xl shadow-sm space-y-4">
+                    <h4 class="font-bold text-slate-900 dark:text-white text-base">Example Scenario: Employee Salaries</h4>
+                    <p class="text-sm">
+                        Consider a small startup with 5 employees earning the following salaries: **$40k, $45k, $50k, $55k, and $260k** (the founder).
+                    </p>
+                    <ul class="list-disc pl-6 space-y-2 text-sm">
+                        <li><strong>Mean Salary:</strong> \((40 + 45 + 50 + 55 + 260) / 5 = \$90,000\). The mean suggests the "average" employee makes $90k, which is misleading since 4 out of 5 make $55k or less.</li>
+                        <li><strong>Median Salary:</strong> Sorting the list gives $50,000 in the middle position. This is a much better representation of a typical employee salary at this firm.</li>
+                        <li><strong>Mode Salary:</strong> There is no mode, as all salaries are unique.</li>
+                    </ul>
+                </div>
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-10">3. Summary Table: Properties</h2>
+                <div class="overflow-x-auto my-6 border border-slate-200 dark:border-slate-700 rounded-2xl">
+                    <table class="w-full text-sm text-left text-slate-500 dark:text-slate-400">
+                        <thead class="text-xs text-slate-700 uppercase bg-slate-100 dark:bg-slate-800 dark:text-slate-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-4">Metric</th>
+                                <th scope="col" class="px-6 py-4">Data Type Allowed</th>
+                                <th scope="col" class="px-6 py-4">Outlier Sensitivity</th>
+                                <th scope="col" class="px-6 py-4">Best Used For</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                            <tr class="bg-white dark:bg-slate-900">
+                                <td class="px-6 py-4 font-bold text-slate-900 dark:text-white">Mean</td>
+                                <td class="px-6 py-4">Interval / Ratio (Continuous)</td>
+                                <td class="px-6 py-4 text-rose-500 font-semibold">High</td>
+                                <td class="px-6 py-4">Symmetric data without major anomalies.</td>
+                            </tr>
+                            <tr class="bg-slate-50/50 dark:bg-slate-900/50">
+                                <td class="px-6 py-4 font-bold text-slate-900 dark:text-white">Median</td>
+                                <td class="px-6 py-4">Ordinal / Interval / Ratio</td>
+                                <td class="px-6 py-4 text-emerald-500 font-semibold">None (Robust)</td>
+                                <td class="px-6 py-4">Skewed distributions (e.g. house values, household income).</td>
+                            </tr>
+                            <tr class="bg-white dark:bg-slate-900">
+                                <td class="px-6 py-4 font-bold text-slate-900 dark:text-white">Mode</td>
+                                <td class="px-6 py-4">Nominal / Categorical / Discrete</td>
+                                <td class="px-6 py-4 text-emerald-500 font-semibold">None</td>
+                                <td class="px-6 py-4">Non-numerical categories (e.g. most popular shoe size, shirt color).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-12 p-8 bg-indigo-50 dark:bg-indigo-900/20 rounded-[2rem] border border-indigo-100 dark:border-indigo-900/30 text-sm leading-relaxed">
+                    <h5 class="font-bold text-indigo-700 dark:text-indigo-400 mb-2 text-base">Launch the Average Calculator</h5>
+                    <p class="mb-4">
+                        Perform fast dataset audits. Paste your numbers into our interactive **Average Calculator** to instantly extract Mean, Median, Count, and Range summaries without tedious manual sorting or calculations.
+                    </p>
+                    <a href="../math/average-calculator.html" class="inline-flex items-center gap-1.5 font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+                        Open Average Calculator Page &rarr;
+                    </a>
+                </div>
+            </section>
+
+        </article>
+
+    </main>
+
+    <!-- Footer will be injected by layout.js -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/layout.js"></script>
+</body>
+
+</html>

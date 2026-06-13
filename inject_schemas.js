@@ -236,6 +236,31 @@ for (const calc of calculatorConfig) {
         return match; // Keep other blocks
     });
 
+    // 7.1 Update canonical URL tag
+    const canonicalTag = `<link rel="canonical" href="${canonicalUrl}" />`;
+    const canonicalRegex = /<link\s+[^>]*rel=["']?canonical["']?[^>]*\/?>|<link\s+[^>]*href=["']?[^"'\s>]+["']?[^>]*rel=["']?canonical["']?[^>]*\/?>/i;
+    if (cleanedHtml.match(canonicalRegex)) {
+        cleanedHtml = cleanedHtml.replace(canonicalRegex, canonicalTag);
+    } else {
+        if (cleanedHtml.includes('</head>')) {
+            cleanedHtml = cleanedHtml.replace('</head>', `    ${canonicalTag}\n</head>`);
+        }
+    }
+
+    // 7.2 Update og:url tag if present
+    const ogUrlRegex = /<meta\s+property=["']og:url["']\s+content=["']([^"']*)["'][^>]*>|<meta\s+content=["']([^"']*)["']\s+property=["']og:url["'][^>]*>/i;
+    const ogUrlTag = `<meta property="og:url" content="${canonicalUrl}">`;
+    if (cleanedHtml.match(ogUrlRegex)) {
+        cleanedHtml = cleanedHtml.replace(ogUrlRegex, ogUrlTag);
+    }
+
+    // 7.3 Update twitter:url tag if present
+    const twitterUrlRegex = /<meta\s+property=["']twitter:url["']\s+content=["']([^"']*)["'][^>]*>|<meta\s+name=["']twitter:url["']\s+content=["']([^"']*)["'][^>]*>|<meta\s+content=["']([^"']*)["']\s+(?:property|name)=["']twitter:url["'][^>]*>/i;
+    const twitterUrlTag = `<meta name="twitter:url" content="${canonicalUrl}">`;
+    if (cleanedHtml.match(twitterUrlRegex)) {
+        cleanedHtml = cleanedHtml.replace(twitterUrlRegex, twitterUrlTag);
+    }
+
     // 8. Inject just before </head>
     if (cleanedHtml.includes('</head>')) {
         cleanedHtml = cleanedHtml.replace('</head>', `${combinedSchemas}</head>`);

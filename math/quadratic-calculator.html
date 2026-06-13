@@ -1238,13 +1238,13 @@
                 function buildSteps(a, b, c, D, x1, x2) {
                     const isComplex = typeof x1 === 'object';
                     const steps = [
-                        { num: 1, icon: 'fa-pen', color: 'indigo', title: 'Write in Standard Form', body: `<span class="mono text-lg">(\({a})x² + (\){b})x + (\({c}) = 0</span><br><div class="mt-2 text-xs">Coefficients: <strong>a = \){a}</strong>, <strong>b = \({b}</strong>, <strong>c = \){c}</strong></div>` },
-                        { num: 2, icon: 'fa-calculator', color: 'violet', title: 'Calculate the Discriminant', body: `D = b² − 4ac<br>D = (\({b})² − 4(\){a})(\({c})<br>D = \){b * b} − \({4 * a * c}<br><strong class="text-lg mono">D = \){r(D)}</strong>` },
-                        { num: 3, icon: 'fa-square-root-variable', color: 'emerald', title: 'Apply the Quadratic Formula', body: `x = (−b ± √D) / 2a<br>x = (−(\({b}) ± √\){r(D)}) / 2(\({a})<br>x = (\){-b} ± \({r(Math.sqrt(Math.abs(D)))}) / \){2 * a}` },
+                        { num: 1, icon: 'fa-pen', color: 'indigo', title: 'Write in Standard Form', body: `<span class="mono text-lg">(${a})x² + (${b})x + (${c}) = 0</span><br><div class="mt-2 text-xs">Coefficients: <strong>a = ${a}</strong>, <strong>b = ${b}</strong>, <strong>c = ${c}</strong></div>` },
+                        { num: 2, icon: 'fa-calculator', color: 'violet', title: 'Calculate the Discriminant', body: `D = b² − 4ac<br>D = (${b})² − 4(${a})(${c})<br>D = ${b * b} − ${4 * a * c}<br><strong class="text-lg mono">D = ${r(D)}</strong>` },
+                        { num: 3, icon: 'fa-square-root-variable', color: 'emerald', title: 'Apply the Quadratic Formula', body: `x = (−b ± √D) / 2a<br>x = (−(${b}) ± √${r(D)}) / 2(${a})<br>x = ${-b} ± ${r(Math.sqrt(Math.abs(D)))} / ${2 * a}` },
                         {
                             num: 4, icon: 'fa-equals', color: 'amber', title: 'Calculate Both Roots', body: isComplex
-                                ? `x₁ = \({r(x1.real)} + \){r(Math.abs(x1.imag))}i<br>x₂ = \({r(x2.real)} − \){r(Math.abs(x2.imag))}i`
-                                : `x₁ = (\({-b} + \){r(Math.sqrt(D))}) / \({2 * a} = <strong>\){r(x1)}</strong><br>x₂ = (\({-b} − \){r(Math.sqrt(D))}) / \({2 * a} = <strong>\){r(x2)}</strong>`
+                                ? `x₁ = ${r(x1.real)} + ${r(Math.abs(x1.imag))}i<br>x₂ = ${r(x2.real)} − ${r(Math.abs(x2.imag))}i`
+                                : `x₁ = (${-b} + ${r(Math.sqrt(D))}) / ${2 * a} = <strong>${r(x1)}</strong><br>x₂ = (${-b} − ${r(Math.sqrt(D))}) / ${2 * a} = <strong>${r(x2)}</strong>`
                         }
                     ];
 

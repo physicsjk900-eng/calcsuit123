@@ -1195,7 +1195,7 @@
                     function rootHTML(root, label) {
                         const isComplex = typeof root === 'object';
                         const val = isComplex
-                            ? `\({r(root.real)} \){root.imag >= 0 ? '+' : '−'} ${r(Math.abs(root.imag))}i`
+                            ? `${r(root.real)}${root.imag >= 0 ? '+' : '−'}${r(Math.abs(root.imag))}i`
                             : r(root);
                         return `<div class="step-card bg-slate-50 dark:bg-slate-700/40 rounded-2xl p-5 border border-slate-200 dark:border-slate-600">
                     <div class="text-xs font-bold text-slate-400 uppercase mb-1">${label}</div>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="light">
 <head>
     <!-- Canonical URL -->
@@ -324,8 +324,24 @@ Reading remainders bottom-up yields: 11001.</p>
         const b16 = document.getElementById('base-16');
         const clearBtn = document.getElementById('clear-btn');
 
+        function parseInput(val, base) {
+            val = val.trim();
+            if (val === "") return "";
+            if (base === 10) {
+                return BigInt(val);
+            }
+            const prefix = base === 2 ? "0b" : base === 8 ? "0o" : "0x";
+            const isNeg = val.startsWith('-');
+            if (isNeg) val = val.slice(1);
+            if (val.toLowerCase().startsWith(prefix)) {
+                val = val.slice(prefix.length);
+            }
+            const num = BigInt(prefix + val);
+            return isNeg ? -num : num;
+        }
+
         function updateAll(val, source) {
-            if (val === "" || isNaN(val)) {
+            if (val === "") {
                 if (source !== b10) b10.value = "";
                 if (source !== b2) b2.value = "";
                 if (source !== b8) b8.value = "";
@@ -341,25 +357,25 @@ Reading remainders bottom-up yields: 11001.</p>
 
         b10.addEventListener('input', () => {
             try { 
-                const d = BigInt(b10.value); 
+                const d = parseInput(b10.value, 10); 
                 updateAll(d, b10); 
             } catch(e) { updateAll("", b10); }
         });
         b2.addEventListener('input', () => {
             try { 
-                const d = BigInt("0b" + b2.value); 
+                const d = parseInput(b2.value, 2); 
                 updateAll(d, b2); 
             } catch(e) { updateAll("", b2); }
         });
         b8.addEventListener('input', () => {
             try { 
-                const d = BigInt("0o" + b8.value); 
+                const d = parseInput(b8.value, 8); 
                 updateAll(d, b8); 
             } catch(e) { updateAll("", b8); }
         });
         b16.addEventListener('input', () => {
             try { 
-                const d = BigInt("0x" + b16.value); 
+                const d = parseInput(b16.value, 16); 
                 updateAll(d, b16); 
             } catch(e) { updateAll("", b16); }
         });

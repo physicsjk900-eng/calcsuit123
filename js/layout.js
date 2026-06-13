@@ -81,9 +81,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: '/lifestyle/timezone-calculator.html', name: 'Temporal Hub', icon: '<i class="fas fa-globe-americas"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/lifestyle/fuel-calculator.html', name: 'Fuel Cost Pro', icon: '<i class="fas fa-gas-pump"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/lifestyle/random-generator.html', name: 'Entropy Hub', icon: '<i class="fas fa-random"></i>', category: 'Technical', colorClass: 'text-sky-600' },
-        { id: '/lifestyle/screen-time-impact.html', name: 'Screen Impact', icon: '<i class="fas fa-mobile-alt"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
-        { id: '/lifestyle/carbon-footprint.html', name: 'CO2 Footprint', icon: '<i class="fas fa-leaf"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
-        { id: '/lifestyle/vacation-planner.html', name: 'Vacation Budget', icon: '<i class="fas fa-plane"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
+        // { id: '/lifestyle/screen-time-impact.html', name: 'Screen Impact', icon: '<i class="fas fa-mobile-alt"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
+        // { id: '/lifestyle/carbon-footprint.html', name: 'CO2 Footprint', icon: '<i class="fas fa-leaf"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
+        // { id: '/lifestyle/vacation-planner.html', name: 'Vacation Budget', icon: '<i class="fas fa-plane"></i>', category: 'Lifestyle', colorClass: 'text-sky-600' },
         { id: '/productivity/task-management-calculator.html', name: 'Task Manager', icon: '<i class="fas fa-tasks"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
         { id: '/productivity/task-calendar-generator.html', name: 'Task Calendar', icon: '<i class="fas fa-calendar-alt"></i>', category: 'Productivity', colorClass: 'text-teal-600' },
         { id: '/Industrial/crude-oil-calculator.html', name: 'Crude Oil', icon: '<i class="fas fa-oil-can"></i>', category: 'Industrial', colorClass: 'text-amber-600' },
@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 1. Inject SaaS Top Header HTML instead of Sidebar
     const headerHtml = `
-<header class="w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800 sticky top-0 z-[100] transition-all duration-300">
+<header class="w-full bg-blue/90 dark:bg-slate-900/90 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800 sticky top-0 z-[100] transition-all duration-300">
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
         <div class="flex justify-between items-center h-14 sm:h-16">
             

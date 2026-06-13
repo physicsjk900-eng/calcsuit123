@@ -1278,11 +1278,11 @@
                     html += `<div class="space-y-3 text-sm">
                 <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-600">
                     <span class="text-slate-500">Sum of roots (x₁+x₂) = −b/a</span>
-                    <span class="mono font-bold \({Math.abs(r(sumRoots) - r(expectedSum)) < 0.0001 ? 'text-emerald-600' : 'text-rose-500'}">\){r(sumRoots)} = ${r(expectedSum)} <i class="fas fa-check-circle ml-1"></i></span>
+                    <span class="mono font-bold ${Math.abs(r(sumRoots) - r(expectedSum)) < 0.0001 ? 'text-emerald-600' : 'text-rose-500'}">${r(sumRoots)} = ${r(expectedSum)} <i class="fas fa-check-circle ml-1"></i></span>
                 </div>
                 <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-600">
                     <span class="text-slate-500">Product of roots (x₁×x₂) = c/a</span>
-                    <span class="mono font-bold \({Math.abs(r(prodRoots) - r(expectedProd)) < 0.0001 ? 'text-emerald-600' : 'text-rose-500'}">\){r(prodRoots)} = ${r(expectedProd)} <i class="fas fa-check-circle ml-1"></i></span>
+                    <span class="mono font-bold ${Math.abs(r(prodRoots) - r(expectedProd)) < 0.0001 ? 'text-emerald-600' : 'text-rose-500'}">${r(prodRoots)} = ${r(expectedProd)} <i class="fas fa-check-circle ml-1"></i></span>
                 </div>
             </div></div>`;
 
@@ -1290,13 +1290,13 @@
                         html += `<div class="p-4 bg-slate-50 dark:bg-slate-700/40 rounded-2xl border border-slate-200 dark:border-slate-700">
                     <h3 class="font-bold text-sm text-slate-800 dark:text-white mb-3">Substitution Check</h3>
                     <div class="space-y-3 text-sm mono text-slate-600 dark:text-slate-400">
-                        <div>Substitute x₁ = \({r(x1)} into \){dispEqn.textContent}:</div>
+                        <div>Substitute x₁ = ${r(x1)} into ${dispEqn.textContent}:</div>
                         <div class="p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-600">
-                            \({a}(\){r(x1)})² + \({b}(\){r(x1)}) + ${c} ≈ <strong class="text-emerald-600">0 ✓</strong>
+                            ${a}(${r(x1)})² + ${b}(${r(x1)}) + ${c} ≈ <strong class="text-emerald-600">0 ✓</strong>
                         </div>
-                        <div>Substitute x₂ = \({r(x2)} into \){dispEqn.textContent}:</div>
+                        <div>Substitute x₂ = ${r(x2)} into ${dispEqn.textContent}:</div>
                         <div class="p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-600">
-                            \({a}(\){r(x2)})² + \({b}(\){r(x2)}) + ${c} ≈ <strong class="text-emerald-600">0 ✓</strong>
+                            ${a}(${r(x2)})² + ${b}(${r(x2)}) + ${c} ≈ <strong class="text-emerald-600">0 ✓</strong>
                         </div>
                     </div>
                 </div>`;

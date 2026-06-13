@@ -58,25 +58,6 @@
     </style>
     <link rel="icon" type="image/png" href="../images/favicon.png">
 
-    <!-- Structured Data (SEO) -->
-
-
-
-
-
-    <!-- Structured Data (SEO) -->
-
-
-
-
-
-    <!-- Structured Data (SEO) -->
-
-
-
-
-
-    <!-- Structured Data (SEO) -->
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -191,7 +172,8 @@
                         <div
                             class="bg-sky-50 dark:bg-sky-500/10 p-8 rounded-2xl border-2 border-sky-100 dark:border-sky-500/20 text-center relative overflow-hidden group">
                             <div class="absolute -right-6 -top-6 text-sky-200 dark:text-sky-900/50 text-8xl opacity-30">
-                                <i class="fas fa-compress-arrows-alt"></i></div>
+                                <i class="fas fa-compress-arrows-alt"></i>
+                            </div>
                             <h4
                                 class="text-sm font-black text-sky-600 dark:text-sky-400 uppercase tracking-widest mb-3 relative z-10">
                                 GCD (Greatest Common Divisor)</h4>
@@ -203,7 +185,8 @@
                             class="bg-indigo-50 dark:bg-indigo-500/10 p-8 rounded-2xl border-2 border-indigo-100 dark:border-indigo-500/20 text-center relative overflow-hidden">
                             <div
                                 class="absolute -right-6 -top-6 text-indigo-200 dark:text-indigo-900/50 text-8xl opacity-30">
-                                <i class="fas fa-expand-arrows-alt"></i></div>
+                                <i class="fas fa-expand-arrows-alt"></i>
+                            </div>
                             <h4
                                 class="text-sm font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-3 relative z-10">
                                 LCM (Least Common Multiple)</h4>
@@ -745,7 +728,7 @@ function euclideanGCD(a, b) {
             // Group and count
             const counts = {};
             arr.forEach(f => counts[f] = (counts[f] || 0) + 1);
-            return Object.entries(counts).map(([f, count]) => count > 1 ? `${f}^{count}` : f).join(' &times; ');
+            return Object.entries(counts).map(([f, count]) => count > 1 ? `${f}^${count}` : f).join(' &times; ');
         }
 
         function calculate() {

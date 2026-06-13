@@ -14,37 +14,67 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         .venn-circle {
-            width: 160px; height: 160px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            position: absolute; mix-blend-mode: multiply; opacity: 0.8;
-            font-weight: bold; flex-direction: column; text-align: center;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            mix-blend-mode: multiply;
+            opacity: 0.8;
+            font-weight: bold;
+            flex-direction: column;
+            text-align: center;
         }
-        .dark .venn-circle { mix-blend-mode: screen; opacity: 0.9; }
-        .venn-container { position: relative; width: 300px; height: 200px; margin: 0 auto; }
-        
-        .timer-bar { transition: width 1s linear; }
-        .accordion-content { transition: max-height 0.3s ease-out, padding 0.3s ease; max-height: 0; overflow: hidden; padding: 0 1rem; }
-        .accordion-content.open { max-height: 1000px; padding: 1rem; }
+
+        .dark .venn-circle {
+            mix-blend-mode: screen;
+            opacity: 0.9;
+        }
+
+        .venn-container {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .timer-bar {
+            transition: width 1s linear;
+        }
+
+        .accordion-content {
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 1rem;
+        }
+
+        .accordion-content.open {
+            max-height: 1000px;
+            padding: 1rem;
+        }
     </style>
     <link rel="icon" type="image/png" href="../images/favicon.png">
 
     <!-- Structured Data (SEO) -->
-    
-    
-    
-    
+
+
+
+
 
     <!-- Structured Data (SEO) -->
-    
-    
-    
-    
+
+
+
+
 
     <!-- Structured Data (SEO) -->
-    
-    
-    
-    
+
+
+
+
 
     <!-- Structured Data (SEO) -->
     <script type="application/ld+json">
@@ -124,22 +154,25 @@
 </script>
 </head>
 
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
+<body
+    class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
     <div id="sidebar-container"></div>
-    
+
     <main class="flex-1 flex flex-col items-center justify-start pt-12 px-4 pb-20 w-full relative">
         <!-- 1. Enterprise Tracker Component -->
-        <div class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden mb-12 transform transition-all">
+        <div
+            class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden mb-12 transform transition-all">
             <div class="bg-sky-600 p-8 text-white text-center relative overflow-hidden">
                 <i class="fas fa-layer-group text-5xl mb-4 opacity-90 animate-bounce"></i>
                 <h1 class="text-4xl font-extrabold tracking-tight">GCD & LCM Architect</h1>
                 <p class="text-sky-100 mt-2 font-medium">Compute, visualize, and study mathematical factors.</p>
             </div>
-            
+
             <div class="p-8 space-y-8">
                 <!-- Inputs -->
                 <div class="space-y-3">
-                    <label class="block text-sm font-bold text-slate-500 uppercase tracking-widest text-center">Numbers to Analyze (comma-separated)</label>
+                    <label class="block text-sm font-bold text-slate-500 uppercase tracking-widest text-center">Numbers
+                        to Analyze (comma-separated)</label>
                     <input type="text" id="input-numbers"
                         class="w-full bg-slate-50 dark:bg-slate-700/50 border-2 border-slate-200 dark:border-slate-600 rounded-2xl py-5 px-6 text-center text-3xl font-black font-mono focus:border-sky-500 focus:ring-4 focus:ring-sky-500/20 outline-none transition-all shadow-inner"
                         placeholder="e.g., 48, 18" value="48, 18">
@@ -148,49 +181,74 @@
                 <!-- Run Action -->
                 <button id="calculate-btn"
                     class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-5 rounded-2xl shadow-xl shadow-sky-500/30 transition-all active:scale-95 text-xl tracking-wide group">
-                    Analyze Factors <i class="fas fa-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i>
+                    Analyze Factors <i
+                        class="fas fa-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i>
                 </button>
 
                 <!-- Core Result Outputs -->
                 <div id="result-area" class="hidden animate-fade-in">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-sky-50 dark:bg-sky-500/10 p-8 rounded-2xl border-2 border-sky-100 dark:border-sky-500/20 text-center relative overflow-hidden group">
-                            <div class="absolute -right-6 -top-6 text-sky-200 dark:text-sky-900/50 text-8xl opacity-30"><i class="fas fa-compress-arrows-alt"></i></div>
-                            <h4 class="text-sm font-black text-sky-600 dark:text-sky-400 uppercase tracking-widest mb-3 relative z-10">GCD (Greatest Common Divisor)</h4>
-                            <div id="res-gcd" class="text-6xl font-black text-slate-900 dark:text-white relative z-10 transition-all scale-110">6</div>
+                        <div
+                            class="bg-sky-50 dark:bg-sky-500/10 p-8 rounded-2xl border-2 border-sky-100 dark:border-sky-500/20 text-center relative overflow-hidden group">
+                            <div class="absolute -right-6 -top-6 text-sky-200 dark:text-sky-900/50 text-8xl opacity-30">
+                                <i class="fas fa-compress-arrows-alt"></i></div>
+                            <h4
+                                class="text-sm font-black text-sky-600 dark:text-sky-400 uppercase tracking-widest mb-3 relative z-10">
+                                GCD (Greatest Common Divisor)</h4>
+                            <div id="res-gcd"
+                                class="text-6xl font-black text-slate-900 dark:text-white relative z-10 transition-all scale-110">
+                                6</div>
                         </div>
-                        <div class="bg-indigo-50 dark:bg-indigo-500/10 p-8 rounded-2xl border-2 border-indigo-100 dark:border-indigo-500/20 text-center relative overflow-hidden">
-                            <div class="absolute -right-6 -top-6 text-indigo-200 dark:text-indigo-900/50 text-8xl opacity-30"><i class="fas fa-expand-arrows-alt"></i></div>
-                            <h4 class="text-sm font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-3 relative z-10">LCM (Least Common Multiple)</h4>
-                            <div id="res-lcm" class="text-6xl font-black text-slate-900 dark:text-white relative z-10 transition-all scale-110">144</div>
+                        <div
+                            class="bg-indigo-50 dark:bg-indigo-500/10 p-8 rounded-2xl border-2 border-indigo-100 dark:border-indigo-500/20 text-center relative overflow-hidden">
+                            <div
+                                class="absolute -right-6 -top-6 text-indigo-200 dark:text-indigo-900/50 text-8xl opacity-30">
+                                <i class="fas fa-expand-arrows-alt"></i></div>
+                            <h4
+                                class="text-sm font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-3 relative z-10">
+                                LCM (Least Common Multiple)</h4>
+                            <div id="res-lcm"
+                                class="text-6xl font-black text-slate-900 dark:text-white relative z-10 transition-all scale-110">
+                                144</div>
                         </div>
                     </div>
 
                     <!-- Visualizer Interactive Component -->
                     <div class="border-t border-slate-100 dark:border-slate-700 pt-8" id="visualizer-section">
-                        <h3 class="text-center font-bold text-xl mb-2"><i class="fas fa-project-diagram text-sky-500 mr-2"></i> Prime Factor Intersection</h3>
-                        <p class="text-center text-sm text-slate-500 dark:text-slate-400 mb-8">Visualizing the building blocks of your first two numbers.</p>
-                        
+                        <h3 class="text-center font-bold text-xl mb-2"><i
+                                class="fas fa-project-diagram text-sky-500 mr-2"></i> Prime Factor Intersection</h3>
+                        <p class="text-center text-sm text-slate-500 dark:text-slate-400 mb-8">Visualizing the building
+                            blocks of your first two numbers.</p>
+
                         <div class="venn-container flex justify-center" id="venn-wrapper">
                             <!-- Left Circle -->
-                            <div class="venn-circle bg-sky-300 dark:bg-sky-600/80 left-[10px] text-sky-900 dark:text-sky-100 shadow-xl border-4 border-white dark:border-slate-800">
-                                <span id="venn-num1-label" class="text-xs font-bold bg-white/50 dark:bg-black/30 px-2 rounded-full mb-1">A</span>
+                            <div
+                                class="venn-circle bg-sky-300 dark:bg-sky-600/80 left-[10px] text-sky-900 dark:text-sky-100 shadow-xl border-4 border-white dark:border-slate-800">
+                                <span id="venn-num1-label"
+                                    class="text-xs font-bold bg-white/50 dark:bg-black/30 px-2 rounded-full mb-1">A</span>
                                 <span class="text-lg font-bold" id="venn-left-factors"></span>
                             </div>
                             <!-- Right Circle -->
-                            <div class="venn-circle bg-indigo-300 dark:bg-indigo-600/80 right-[10px] text-indigo-900 dark:text-indigo-100 shadow-xl border-4 border-white dark:border-slate-800">
-                                <span id="venn-num2-label" class="text-xs font-bold bg-white/50 dark:bg-black/30 px-2 rounded-full mb-1">B</span>
+                            <div
+                                class="venn-circle bg-indigo-300 dark:bg-indigo-600/80 right-[10px] text-indigo-900 dark:text-indigo-100 shadow-xl border-4 border-white dark:border-slate-800">
+                                <span id="venn-num2-label"
+                                    class="text-xs font-bold bg-white/50 dark:bg-black/30 px-2 rounded-full mb-1">B</span>
                                 <span class="text-lg font-bold" id="venn-right-factors"></span>
                             </div>
                             <!-- Intersection Data overlay via absolute positioning -->
-                            <div class="absolute top-[35%] left-[50%] -translate-x-[50%] text-center z-10 text-white mix-blend-normal drop-shadow-md">
-                                <span class="text-[10px] uppercase font-black tracking-widest bg-slate-900/40 rounded px-1">Shared (GCD)</span><br>
+                            <div
+                                class="absolute top-[35%] left-[50%] -translate-x-[50%] text-center z-10 text-white mix-blend-normal drop-shadow-md">
+                                <span
+                                    class="text-[10px] uppercase font-black tracking-widest bg-slate-900/40 rounded px-1">Shared
+                                    (GCD)</span><br>
                                 <span class="text-xl font-black drop-shadow-lg" id="venn-common-factors"></span>
                             </div>
                         </div>
                         <div class="text-center mt-6 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl max-w-xl mx-auto">
                             <span class="text-sm font-semibold">Formula applied: </span>
-                            <span class="font-mono text-xs bg-slate-200 dark:bg-slate-800 px-2 py-1 rounded text-sky-600 dark:text-sky-400">\[ \text{LCM}(A, B) = \frac{|A \times B|}{\text{GCD}(A, B)} \]</span>
+                            <span
+                                class="font-mono text-xs bg-slate-200 dark:bg-slate-800 px-2 py-1 rounded text-sky-600 dark:text-sky-400">\[
+                                \text{LCM}(A, B) = \frac{|A \times B|}{\text{GCD}(A, B)} \]</span>
                         </div>
                     </div>
                 </div>
@@ -198,88 +256,124 @@
         </div>
 
         <!-- 2. "Factor Frenzy" Mini Game Module -->
-        <div class="w-full max-w-4xl bg-gradient-to-br from-indigo-900 to-slate-900 border border-indigo-500/30 rounded-3xl shadow-[0_0_50px_rgba(79,70,229,0.3)] overflow-hidden mb-12 relative text-white">
+        <div
+            class="w-full max-w-4xl bg-gradient-to-br from-indigo-900 to-slate-900 border border-indigo-500/30 rounded-3xl shadow-[0_0_50px_rgba(79,70,229,0.3)] overflow-hidden mb-12 relative text-white">
             <!-- Background pattern -->
-             <div class="absolute inset-0 opacity-[0.03]" style="background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%); background-size: 20px 20px;"></div>
-             
-             <div class="p-10 relative z-10">
-                 <div class="flex justify-between items-start mb-8">
-                     <div>
-                         <h2 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400 mb-2">
-                             <i class="fas fa-gamepad text-sky-400 mr-2"></i> Factor Frenzy
-                         </h2>
-                         <p class="text-indigo-200/70 font-medium tracking-wide">Brain Training: Calculate mentally before the timer ends.</p>
-                     </div>
-                     <div class="bg-indigo-950/80 border border-indigo-500/50 rounded-2xl p-4 text-center min-w-[120px] shadow-inner backdrop-blur-md">
-                         <div class="text-[10px] uppercase tracking-widest text-indigo-400 font-black mb-1">SCORE</div>
-                         <div class="text-4xl font-black text-white" id="game-score">0</div>
-                     </div>
-                 </div>
+            <div class="absolute inset-0 opacity-[0.03]"
+                style="background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%); background-size: 20px 20px;">
+            </div>
 
-                 <!-- Game Start Screen -->
-                 <div id="game-intro" class="text-center py-10 bg-indigo-950/40 rounded-2xl border border-indigo-500/20 backdrop-blur-sm">
-                     <p class="mb-8 text-xl font-medium text-slate-300">Answer 60 seconds of rapid math problems.</p>
-                     <button id="game-start-btn" class="bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 px-10 py-5 rounded-full font-black text-2xl shadow-[0_0_30px_rgba(56,189,248,0.4)] transition-all transform hover:scale-105 active:scale-95 text-white tracking-widest">
-                         START SPRINT
-                     </button>
-                 </div>
+            <div class="p-10 relative z-10">
+                <div class="flex justify-between items-start mb-8">
+                    <div>
+                        <h2
+                            class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400 mb-2">
+                            <i class="fas fa-gamepad text-sky-400 mr-2"></i> Factor Frenzy
+                        </h2>
+                        <p class="text-indigo-200/70 font-medium tracking-wide">Brain Training: Calculate mentally
+                            before the timer ends.</p>
+                    </div>
+                    <div
+                        class="bg-indigo-950/80 border border-indigo-500/50 rounded-2xl p-4 text-center min-w-[120px] shadow-inner backdrop-blur-md">
+                        <div class="text-[10px] uppercase tracking-widest text-indigo-400 font-black mb-1">SCORE</div>
+                        <div class="text-4xl font-black text-white" id="game-score">0</div>
+                    </div>
+                </div>
 
-                 <!-- Gameplay Screen -->
-                 <div id="game-play" class="hidden">
-                     <div class="w-full bg-slate-800/80 rounded-full h-3 mb-8 overflow-hidden shadow-inner border border-slate-700">
-                         <div id="game-timer-bar" class="timer-bar bg-gradient-to-r from-emerald-400 to-sky-400 h-3 rounded-full" style="width: 100%"></div>
-                     </div>
-                     
-                     <div class="text-center py-8">
-                         <div class="inline-block bg-indigo-950/80 border-2 border-sky-500/50 rounded-3xl px-12 py-8 shadow-[0_0_40px_rgba(56,189,248,0.2)]">
-                             <h3 class="text-sky-400 font-bold tracking-widest uppercase mb-4 text-sm" id="game-question-type">Find the GCD</h3>
-                             <div class="text-6xl font-black text-white tracking-tight drop-shadow-md" id="game-question">12 & 18</div>
-                         </div>
-                     </div>
-                     
-                     <div class="mt-8 flex gap-4 max-w-lg mx-auto">
-                         <input type="number" id="game-answer" class="flex-1 bg-slate-900/50 border-2 border-indigo-500/50 focus:border-sky-400 rounded-2xl py-4 flex-grow px-6 text-center text-4xl font-black text-white focus:ring-4 focus:ring-sky-500/30 outline-none transition-all placeholder-slate-600" placeholder="Type answer">
-                         <button id="game-submit-btn" class="bg-sky-500 hover:bg-sky-400 px-10 py-4 rounded-2xl font-bold text-2xl shadow-lg transition-transform active:scale-90"><i class="fas fa-check"></i></button>
-                     </div>
-                     
-                     <!-- Feedback -->
-                     <div id="game-feedback" class="text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300">Correct! +100</div>
-                 </div>
+                <!-- Game Start Screen -->
+                <div id="game-intro"
+                    class="text-center py-10 bg-indigo-950/40 rounded-2xl border border-indigo-500/20 backdrop-blur-sm">
+                    <p class="mb-8 text-xl font-medium text-slate-300">Answer 60 seconds of rapid math problems.</p>
+                    <button id="game-start-btn"
+                        class="bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 px-10 py-5 rounded-full font-black text-2xl shadow-[0_0_30px_rgba(56,189,248,0.4)] transition-all transform hover:scale-105 active:scale-95 text-white tracking-widest">
+                        START SPRINT
+                    </button>
+                </div>
 
-                 <!-- Game Over Screen -->
-                 <div id="game-out" class="hidden text-center py-10 bg-slate-900/80 rounded-2xl backdrop-blur-md border border-slate-700">
-                     <h2 class="text-5xl font-black text-white mb-4">Time's Up!</h2>
-                     <p class="text-2xl text-slate-300 mb-8">Final Score: <span id="game-final-score" class="text-sky-400 font-bold">0</span></p>
-                     <button id="game-restart-btn" class="bg-indigo-600 hover:bg-indigo-500 px-8 py-4 rounded-xl font-bold text-lg text-white shadow-lg"><i class="fas fa-redo mr-2"></i> Play Again</button>
-                 </div>
-             </div>
+                <!-- Gameplay Screen -->
+                <div id="game-play" class="hidden">
+                    <div
+                        class="w-full bg-slate-800/80 rounded-full h-3 mb-8 overflow-hidden shadow-inner border border-slate-700">
+                        <div id="game-timer-bar"
+                            class="timer-bar bg-gradient-to-r from-emerald-400 to-sky-400 h-3 rounded-full"
+                            style="width: 100%"></div>
+                    </div>
+
+                    <div class="text-center py-8">
+                        <div
+                            class="inline-block bg-indigo-950/80 border-2 border-sky-500/50 rounded-3xl px-12 py-8 shadow-[0_0_40px_rgba(56,189,248,0.2)]">
+                            <h3 class="text-sky-400 font-bold tracking-widest uppercase mb-4 text-sm"
+                                id="game-question-type">Find the GCD</h3>
+                            <div class="text-6xl font-black text-white tracking-tight drop-shadow-md"
+                                id="game-question">12 & 18</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex gap-4 max-w-lg mx-auto">
+                        <input type="number" id="game-answer"
+                            class="flex-1 bg-slate-900/50 border-2 border-indigo-500/50 focus:border-sky-400 rounded-2xl py-4 flex-grow px-6 text-center text-4xl font-black text-white focus:ring-4 focus:ring-sky-500/30 outline-none transition-all placeholder-slate-600"
+                            placeholder="Type answer">
+                        <button id="game-submit-btn"
+                            class="bg-sky-500 hover:bg-sky-400 px-10 py-4 rounded-2xl font-bold text-2xl shadow-lg transition-transform active:scale-90"><i
+                                class="fas fa-check"></i></button>
+                    </div>
+
+                    <!-- Feedback -->
+                    <div id="game-feedback"
+                        class="text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300">
+                        Correct! +100</div>
+                </div>
+
+                <!-- Game Over Screen -->
+                <div id="game-out"
+                    class="hidden text-center py-10 bg-slate-900/80 rounded-2xl backdrop-blur-md border border-slate-700">
+                    <h2 class="text-5xl font-black text-white mb-4">Time's Up!</h2>
+                    <p class="text-2xl text-slate-300 mb-8">Final Score: <span id="game-final-score"
+                            class="text-sky-400 font-bold">0</span></p>
+                    <button id="game-restart-btn"
+                        class="bg-indigo-600 hover:bg-indigo-500 px-8 py-4 rounded-xl font-bold text-lg text-white shadow-lg"><i
+                            class="fas fa-redo mr-2"></i> Play Again</button>
+                </div>
+            </div>
         </div>
 
         <!-- 3. Interactive Educational Manual -->
-        <div class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden text-slate-700 dark:text-slate-300">
-            <div class="bg-slate-100 dark:bg-slate-800/80 p-8 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+        <div
+            class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden text-slate-700 dark:text-slate-300">
+            <div
+                class="bg-slate-100 dark:bg-slate-800/80 p-8 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
                 <div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white"><i class="fas fa-book-open text-sky-600 mr-2"></i> Study Guide & Manual</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white"><i
+                            class="fas fa-book-open text-sky-600 mr-2"></i> Study Guide & Manual</h2>
                     <p class="text-sm mt-1 font-medium">Master the concepts behind GCD and LCM step-by-step.</p>
                 </div>
             </div>
-            
+
             <div class="divide-y divide-slate-100 dark:divide-slate-700">
                 <!-- Lesson 1 -->
                 <div class="accordion-item">
-                    <button class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" onclick="toggleAccordion(this)">
-                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span class="text-sky-500 mr-2">01.</span> What is the Greatest Common Divisor (GCD)?</span>
+                    <button
+                        class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+                        onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span
+                                class="text-sky-500 mr-2">01.</span> What is the Greatest Common Divisor (GCD)?</span>
                         <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                     </button>
                     <div class="accordion-content bg-slate-50 dark:bg-slate-900/30 text-sm leading-relaxed">
-                        <p class="mb-4">The Greatest Common Divisor (GCD), also known as the Highest Common Factor (HCF), of two or more non-zero integers, is the largest positive integer that divides each of the integers without a remainder.</p>
+                        <p class="mb-4">The Greatest Common Divisor (GCD), also known as the Highest Common Factor
+                            (HCF), of two or more non-zero integers, is the largest positive integer that divides each
+                            of the integers without a remainder.</p>
                         <h4 class="font-bold mb-2">Real World Example:</h4>
-                        <p class="mb-4 border-l-4 border-sky-500 pl-4 italic">Imagine you have 24 apples and 36 oranges. You want to group them into identical fruit baskets with no fruit left over. The GCD of 24 and 36 is 12. You can create 12 baskets, each containing 2 apples (24/12) and 3 oranges (36/12).</p>
+                        <p class="mb-4 border-l-4 border-sky-500 pl-4 italic">Imagine you have 24 apples and 36 oranges.
+                            You want to group them into identical fruit baskets with no fruit left over. The GCD of 24
+                            and 36 is 12. You can create 12 baskets, each containing 2 apples (24/12) and 3 oranges
+                            (36/12).</p>
                         <h4 class="font-bold mb-2">Prime Factorization Method:</h4>
                         <p class="mb-2">1. Find the prime factors of each number.</p>
                         <p class="mb-2">2. Identify common prime factors.</p>
                         <p>3. Multiply the lowest powers of these common factors.</p>
-                        <div class="p-4 bg-white dark:bg-slate-800 rounded-lg mt-4 border border-slate-200 dark:border-slate-700 shadow-sm font-mono">
+                        <div
+                            class="p-4 bg-white dark:bg-slate-800 rounded-lg mt-4 border border-slate-200 dark:border-slate-700 shadow-sm font-mono">
                             24 = 2³ × 3<br>
                             36 = 2² × 3²<br>
                             GCD = 2² × 3 = 12
@@ -289,17 +383,25 @@
 
                 <!-- Lesson 2 -->
                 <div class="accordion-item">
-                    <button class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" onclick="toggleAccordion(this)">
-                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span class="text-indigo-500 mr-2">02.</span> What is the Least Common Multiple (LCM)?</span>
+                    <button
+                        class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+                        onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span
+                                class="text-indigo-500 mr-2">02.</span> What is the Least Common Multiple (LCM)?</span>
                         <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                     </button>
                     <div class="accordion-content bg-slate-50 dark:bg-slate-900/30 text-sm leading-relaxed">
-                        <p class="mb-4">The Least Common Multiple (LCM) of two numbers is the smallest positive integer that is divisible by both numbers.</p>
+                        <p class="mb-4">The Least Common Multiple (LCM) of two numbers is the smallest positive integer
+                            that is divisible by both numbers.</p>
                         <h4 class="font-bold mb-2">Real World Example:</h4>
-                        <p class="mb-4 border-l-4 border-indigo-500 pl-4 italic">Planet A orbits a star every 4 years. Planet B orbits the same star every 6 years. If they are aligned today, when will they align again? The LCM of 4 and 6 is 12. They will realign in exactly 12 years.</p>
+                        <p class="mb-4 border-l-4 border-indigo-500 pl-4 italic">Planet A orbits a star every 4 years.
+                            Planet B orbits the same star every 6 years. If they are aligned today, when will they align
+                            again? The LCM of 4 and 6 is 12. They will realign in exactly 12 years.</p>
                         <h4 class="font-bold mb-2">The Absolute Formula:</h4>
-                        <p class="mb-4">A powerful property links LCM and GCD. If you know the GCD, finding the LCM is instantaneous using this formula (as rendered in our calculator):</p>
-                        <div class="p-4 bg-white dark:bg-slate-800 rounded-lg mt-4 border border-slate-200 dark:border-slate-700 shadow-sm text-center">
+                        <p class="mb-4">A powerful property links LCM and GCD. If you know the GCD, finding the LCM is
+                            instantaneous using this formula (as rendered in our calculator):</p>
+                        <div
+                            class="p-4 bg-white dark:bg-slate-800 rounded-lg mt-4 border border-slate-200 dark:border-slate-700 shadow-sm text-center">
                             \[ \text{LCM}(a, b) = \frac{|a \times b|}{\text{GCD}(a, b)} \]
                         </div>
                     </div>
@@ -307,13 +409,21 @@
 
                 <!-- Lesson 3 -->
                 <div class="accordion-item">
-                    <button class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" onclick="toggleAccordion(this)">
-                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span class="text-amber-500 mr-2">03.</span> The Euclidean Algorithm (How this calculator works)</span>
+                    <button
+                        class="w-full px-8 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+                        onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg text-slate-800 dark:text-slate-100"><span
+                                class="text-amber-500 mr-2">03.</span> The Euclidean Algorithm (How this calculator
+                            works)</span>
                         <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                     </button>
                     <div class="accordion-content bg-slate-50 dark:bg-slate-900/30 text-sm leading-relaxed">
-                        <p class="mb-4">Instead of calculating prime factors (which is very slow for huge numbers), our enterprise engine uses the Euclidean Algorithm—one of the oldest algorithms still in common use, invented around 300 BC.</p>
-                        <p class="mb-4"><strong>The Principle:</strong> The GCD of two numbers also divides their difference. This allows us to repeatedly replace the larger number with the remainder of dividing the larger by the smaller, until the remainder is zero.</p>
+                        <p class="mb-4">Instead of calculating prime factors (which is very slow for huge numbers), our
+                            enterprise engine uses the Euclidean Algorithm—one of the oldest algorithms still in common
+                            use, invented around 300 BC.</p>
+                        <p class="mb-4"><strong>The Principle:</strong> The GCD of two numbers also divides their
+                            difference. This allows us to repeatedly replace the larger number with the remainder of
+                            dividing the larger by the smaller, until the remainder is zero.</p>
                         <pre class="bg-slate-900 text-sky-400 p-4 rounded-xl text-xs overflow-x-auto shadow-inner">
 function euclideanGCD(a, b) {
     while (b !== 0) {
@@ -323,184 +433,264 @@ function euclideanGCD(a, b) {
     }
     return a;
 }</pre>
-                        <p class="mt-4 italic opacity-80">This operates in O(log(min(a,b))) time complexity, making CalcSuit blisteringly fast even for 15-digit numbers.</p>
+                        <p class="mt-4 italic opacity-80">This operates in O(log(min(a,b))) time complexity, making
+                            CalcSuit blisteringly fast even for 15-digit numbers.</p>
                     </div>
                 </div>
             </div>
         </div>
-    
-<!-- SEO Content Module -->
-    <section class="w-full max-w-5xl mt-12 space-y-12">
-        <article class="bg-white dark:bg-slate-800 p-8 md:p-16 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 space-y-12">
-            
-            <!-- H2 Header & Intro -->
-            <header class="border-b border-slate-100 dark:border-slate-700 pb-8 text-center md:text-left">
-                <span class="px-4 py-1.5 rounded-full bg-sky-600/10 text-sky-500 text-xs font-bold uppercase tracking-widest mb-4 inline-block">MATH SUITE</span>
-                <h2 class="text-3xl md:text-4xl font-black text-slate-800 dark:text-white mt-2 mb-4 leading-tight">GCD & LCM Calculator - Online Solver & Formula Guide</h2>
-                <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed max-w-4xl">GCD & LCM is a vital metric in our daily routines, academic assignments, and professional workflows. This comprehensive guide details the mathematical principles, practical use cases, and steps to perform these calculations accurately. Mathematics, physics, and statistics are the foundation of modern technology, engineering, and data analysis. From calculating averages in academic studies to solving vertical circular motion equations in physics, precise calculations are essential. Numerical datasets, geometry formulas, base conversions, and quadratic equations require absolute accuracy. Our math and physics solvers are designed to perform complex computations instantly, helping you check homework, debug code, and analyze statistical variance with ease.</p>
-            </header>
 
-            <!-- Detailed Explanation & What is Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <div class="space-y-4">
+        <!-- SEO Content Module -->
+        <section class="w-full max-w-5xl mt-12 space-y-12">
+            <article
+                class="bg-white dark:bg-slate-800 p-8 md:p-16 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 space-y-12">
+
+                <!-- H2 Header & Intro -->
+                <header class="border-b border-slate-100 dark:border-slate-700 pb-8 text-center md:text-left">
+                    <span
+                        class="px-4 py-1.5 rounded-full bg-sky-600/10 text-sky-500 text-xs font-bold uppercase tracking-widest mb-4 inline-block">MATH
+                        SUITE</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-800 dark:text-white mt-2 mb-4 leading-tight">
+                        GCD & LCM Calculator - Online Solver & Formula Guide</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed max-w-4xl">GCD & LCM is a
+                        vital metric in our daily routines, academic assignments, and professional workflows. This
+                        comprehensive guide details the mathematical principles, practical use cases, and steps to
+                        perform these calculations accurately. Mathematics, physics, and statistics are the foundation
+                        of modern technology, engineering, and data analysis. From calculating averages in academic
+                        studies to solving vertical circular motion equations in physics, precise calculations are
+                        essential. Numerical datasets, geometry formulas, base conversions, and quadratic equations
+                        require absolute accuracy. Our math and physics solvers are designed to perform complex
+                        computations instantly, helping you check homework, debug code, and analyze statistical variance
+                        with ease.</p>
+                </header>
+
+                <!-- Detailed Explanation & What is Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                            <i class="fas fa-info-circle text-sky-500"></i> What is the GCD & LCM Solver?
+                        </h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">GCD & LCM calculations are
+                            key in both personal planning and professional analysis. This online tool processes your
+                            inputs instantly in your browser to deliver accurate results. By analyzing the underlying
+                            variables, users can understand the relationships between inputs and identify key insights.
+                            Computational logic relies on applying established theorems and equations. Whether solving
+                            right triangles using the Pythagorean theorem, calculating population standard deviation, or
+                            converting binary values to hexadecimal, accuracy is key. These formulas model physical
+                            constraints and statistical spreads. Understanding how variables interact—such as the
+                            relationship between standard deviation and variance—helps data analysts and engineers
+                            extract meaningful information from raw data.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                            <i class="fas fa-lightbulb text-sky-500"></i> Best Practices & Pro-Tips
+                        </h3>
+                        <div
+                            class="p-6 rounded-2xl bg-sky-500/5 border border-sky-200 dark:border-sky-900/30 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            <p class="font-bold text-sky-500 mb-2"><i class="fas fa-star mr-1"></i> Optimizing Your
+                                Results</p>
+                            Mathematical Pro-Tip: When working with statistical datasets, check for outliers that can
+                            skew the arithmetic mean, and compare the mean with the median. When performing base
+                            conversions in code, use hexadecimal for readability and binary for debugging low-level
+                            logic. Make sure to verify your input units before running calculations.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How to Use Section -->
+                <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
                     <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                        <i class="fas fa-info-circle text-sky-500"></i> What is the GCD & LCM Solver?
+                        <i class="fas fa-directions text-sky-500"></i> How to Use the GCD & LCM Calculator
                     </h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">GCD & LCM calculations are key in both personal planning and professional analysis. This online tool processes your inputs instantly in your browser to deliver accurate results. By analyzing the underlying variables, users can understand the relationships between inputs and identify key insights. Computational logic relies on applying established theorems and equations. Whether solving right triangles using the Pythagorean theorem, calculating population standard deviation, or converting binary values to hexadecimal, accuracy is key. These formulas model physical constraints and statistical spreads. Understanding how variables interact—such as the relationship between standard deviation and variance—helps data analysts and engineers extract meaningful information from raw data.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div
+                            class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <div
+                                class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm mb-3">
+                                1</div>
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-1">Input Data</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Enter the required values into the
+                                form fields. Make sure to double-check the values for accuracy.</p>
+                        </div>
+                        <div
+                            class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <div
+                                class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm mb-3">
+                                2</div>
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-1">Verify Units</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Ensure your values match the specified
+                                units (e.g. grams vs ounces, centimeters vs inches).</p>
+                        </div>
+                        <div
+                            class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <div
+                                class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm mb-3">
+                                3</div>
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-1">Run Calculation</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Click the calculate button to process
+                                the mathematical formulas instantly in your browser.</p>
+                        </div>
+                        <div
+                            class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <div
+                                class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm mb-3">
+                                4</div>
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-1">Copy Results</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Review the output, check the formulas,
+                                and copy or save the results for your records.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="space-y-4">
+
+                <!-- Mathematical Formula & Technical Description -->
+                <div class="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-700">
                     <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                        <i class="fas fa-lightbulb text-sky-500"></i> Best Practices & Pro-Tips
+                        <i class="fas fa-square-root-variable text-sky-500"></i> Formula & Computational Methodology
                     </h3>
-                    <div class="p-6 rounded-2xl bg-sky-500/5 border border-sky-200 dark:border-sky-900/30 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                        <p class="font-bold text-sky-500 mb-2"><i class="fas fa-star mr-1"></i> Optimizing Your Results</p>
-                        Mathematical Pro-Tip: When working with statistical datasets, check for outliers that can skew the arithmetic mean, and compare the mean with the median. When performing base conversions in code, use hexadecimal for readability and binary for debugging low-level logic. Make sure to verify your input units before running calculations.
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Understanding the mathematics
+                        behind the calculations helps clarify how the inputs relate to the final result. Our calculator
+                        processes the formulas instantly in your browser. Below is the equation used to calculate GCD &
+                        LCM:</p>
+                    <div
+                        class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
+                        Calculates the Greatest Common Divisor (GCD) using the Euclidean Algorithm:<br>\(\text{gcd}(a,
+                        b) = \text{gcd}(b, a \pmod b) \quad \text{until } b=0\)<br>Calculates the Least Common Multiple
+                        (LCM) as: <br>\(\text{lcm}(a, b) = \frac{|a \times b|}{\text{gcd}(a, b)}\)
                     </div>
                 </div>
-            </div>
 
-            <!-- How to Use Section -->
-            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-directions text-sky-500"></i> How to Use the GCD & LCM Calculator
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm mb-3">1</div>
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Input Data</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Enter the required values into the form fields. Make sure to double-check the values for accuracy.</p>
-                    </div>
-                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm mb-3">2</div>
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Verify Units</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Ensure your values match the specified units (e.g. grams vs ounces, centimeters vs inches).</p>
-                    </div>
-                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm mb-3">3</div>
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Run Calculation</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Click the calculate button to process the mathematical formulas instantly in your browser.</p>
-                    </div>
-                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm mb-3">4</div>
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Copy Results</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Review the output, check the formulas, and copy or save the results for your records.</p>
+                <!-- Step-by-Step Numerical Examples -->
+                <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-calculator text-sky-500"></i> Step-by-Step Calculation Examples
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Review these examples to see how the
+                        mathematical formula is applied to different input values:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
+                            <h4 class="font-bold text-slate-800 dark:text-white text-base"><i
+                                    class="fas fa-check-circle text-sky-500 mr-1"></i> Example Scenario 1</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">Finding the GCD
+                                and LCM of 12 and 18:
+                                18 % 12 = 6, 12 % 6 = 0. GCD = 6.
+                                LCM = (12 * 18) / 6 = 216 / 6 = 36.</p>
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
+                            <h4 class="font-bold text-slate-800 dark:text-white text-base"><i
+                                    class="fas fa-check-circle text-sky-500 mr-1"></i> Example Scenario 2</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">Finding the GCD
+                                and LCM of 8 and 15:
+                                Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Mathematical Formula & Technical Description -->
-            <div class="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-square-root-variable text-sky-500"></i> Formula & Computational Methodology
-                </h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Understanding the mathematics behind the calculations helps clarify how the inputs relate to the final result. Our calculator processes the formulas instantly in your browser. Below is the equation used to calculate GCD & LCM:</p>
-                <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
-                    Calculates the Greatest Common Divisor (GCD) using the Euclidean Algorithm:<br>\(\text{gcd}(a, b) = \text{gcd}(b, a \pmod b) \quad \text{until } b=0\)<br>Calculates the Least Common Multiple (LCM) as: <br>\(\text{lcm}(a, b) = \frac{|a \times b|}{\text{gcd}(a, b)}\)
-                </div>
-            </div>
-
-            <!-- Step-by-Step Numerical Examples -->
-            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-calculator text-sky-500"></i> Step-by-Step Calculation Examples
-                </h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400">Review these examples to see how the mathematical formula is applied to different input values:</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
-                        <h4 class="font-bold text-slate-800 dark:text-white text-base"><i class="fas fa-check-circle text-sky-500 mr-1"></i> Example Scenario 1</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">Finding the GCD and LCM of 12 and 18:
-18 % 12 = 6, 12 % 6 = 0. GCD = 6.
-LCM = (12 * 18) / 6 = 216 / 6 = 36.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
-                        <h4 class="font-bold text-slate-800 dark:text-white text-base"><i class="fas fa-check-circle text-sky-500 mr-1"></i> Example Scenario 2</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">Finding the GCD and LCM of 8 and 15:
-Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
+                <!-- Common Applications & Use Cases -->
+                <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-briefcase text-sky-500"></i> Common Applications & Industry Use Cases
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Visual Tile Layouts</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Determine the largest
+                                square tile size that perfectly fits a floor grid without cutting.</p>
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Scheduling Syncs</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Find the next common
+                                interval (LCM) when two periodic events will occur simultaneously.</p>
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Fraction Simplification
+                            </h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Calculate the GCD of
+                                numerator and denominator to simplify fractions.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Common Applications & Use Cases -->
-            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-briefcase text-sky-500"></i> Common Applications & Industry Use Cases
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Visual Tile Layouts</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Determine the largest square tile size that perfectly fits a floor grid without cutting.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Scheduling Syncs</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Find the next common interval (LCM) when two periodic events will occur simultaneously.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Fraction Simplification</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Calculate the GCD of numerator and denominator to simplify fractions.</p>
+                <!-- Frequently Asked Questions (FAQ) -->
+                <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-question-circle text-sky-500"></i> Frequently Asked Questions
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How does this online
+                                calculator perform calculations?</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">A: The calculations are processed
+                                instantly in your browser using standard mathematical formulas. Your data remains
+                                private and is never uploaded to external servers.</p>
+                        </div>
+                        <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: What is a Greatest
+                                Common Divisor?</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">A: The largest positive integer that
+                                divides two or more integers without leaving a remainder.</p>
+                        </div>
+                        <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How does the
+                                Euclidean algorithm work?</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">A: An ancient method to calculate the
+                                GCD of two numbers by repeatedly replacing the larger number with the remainder of
+                                dividing the two numbers.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Frequently Asked Questions (FAQ) -->
-            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-question-circle text-sky-500"></i> Frequently Asked Questions
-                </h3>
-                <div class="space-y-6">
-                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How does this online calculator perform calculations?</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">A: The calculations are processed instantly in your browser using standard mathematical formulas. Your data remains private and is never uploaded to external servers.</p>
-                    </div>
-                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: What is a Greatest Common Divisor?</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">A: The largest positive integer that divides two or more integers without leaving a remainder.</p>
-                    </div>
-                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How does the Euclidean algorithm work?</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">A: An ancient method to calculate the GCD of two numbers by repeatedly replacing the larger number with the remainder of dividing the two numbers.</p>
+
+                <!-- Related Calculators Section -->
+                <div class="pt-10 border-t border-slate-200 dark:border-slate-700">
+                    <h3 class="text-xl font-bold mb-6 text-slate-800 dark:text-white">Explore Related Math Tools</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                        <a href="../math/percentage-calculator.html"
+                            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-sky-500 hover:shadow-md transition-all text-xs font-bold text-sky-500 block">
+                            Percentage Calculator
+                        </a>
+
+                        <a href="../math/fraction-calculator.html"
+                            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-sky-500 hover:shadow-md transition-all text-xs font-bold text-sky-500 block">
+                            Fraction Calculator
+                        </a>
+
+                        <a href="../math/squareroot-calculator.html"
+                            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-sky-500 hover:shadow-md transition-all text-xs font-bold text-sky-500 block">
+                            Square Root
+                        </a>
+
+                        <a href="../math/exponent-calculator.html"
+                            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-sky-500 hover:shadow-md transition-all text-xs font-bold text-sky-500 block">
+                            Exponent Calculator
+                        </a>
+
                     </div>
                 </div>
-            </div>
 
-            
-            <!-- Related Calculators Section -->
-            <div class="pt-10 border-t border-slate-200 dark:border-slate-700">
-                <h3 class="text-xl font-bold mb-6 text-slate-800 dark:text-white">Explore Related Math Tools</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    
-                    <a href="../math/percentage-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-sky-500 hover:shadow-md transition-all text-xs font-bold text-sky-500 block">
-                        Percentage Calculator
-                    </a>
-                    
-                    <a href="../math/fraction-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-sky-500 hover:shadow-md transition-all text-xs font-bold text-sky-500 block">
-                        Fraction Calculator
-                    </a>
-                    
-                    <a href="../math/squareroot-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-sky-500 hover:shadow-md transition-all text-xs font-bold text-sky-500 block">
-                        Square Root
-                    </a>
-                    
-                    <a href="../math/exponent-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-sky-500 hover:shadow-md transition-all text-xs font-bold text-sky-500 block">
-                        Exponent Calculator
-                    </a>
-                    
+
+                <!-- Conclusion Section -->
+                <div class="pt-6 border-t border-slate-100 dark:border-slate-700 text-center">
+                    <p class="text-xs text-slate-400 max-w-3xl mx-auto mb-6">Mastering mathematical calculations
+                        requires practice and the right tools. Whether you are a student verifying algebra equations, an
+                        engineer checking circuit specs using Ohm's Law, or an analyst calculating statistical variance,
+                        CalcSuit provides precise, free solvers to handle the heavy lifting.</p>
+                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                        class="px-8 py-3 bg-slate-900 dark:bg-slate-700 hover:bg-sky-600 text-white rounded-2xl text-sm font-bold transition-all shadow-md">
+                        Start New Calculation
+                    </button>
                 </div>
-            </div>
-    
 
-            <!-- Conclusion Section -->
-            <div class="pt-6 border-t border-slate-100 dark:border-slate-700 text-center">
-                <p class="text-xs text-slate-400 max-w-3xl mx-auto mb-6">Mastering mathematical calculations requires practice and the right tools. Whether you are a student verifying algebra equations, an engineer checking circuit specs using Ohm's Law, or an analyst calculating statistical variance, CalcSuit provides precise, free solvers to handle the heavy lifting.</p>
-                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-8 py-3 bg-slate-900 dark:bg-slate-700 hover:bg-sky-600 text-white rounded-2xl text-sm font-bold transition-all shadow-md">
-                    Start New Calculation
-                </button>
-            </div>
+            </article>
+        </section>
 
-        </article>
-    </section>
-  
-<!-- /SEO Content Module -->
-</main>
+        <!-- /SEO Content Module -->
+    </main>
 
     <script src="../js/layout.js"></script>
     <script>
@@ -512,7 +702,7 @@ Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
         const resGcd = document.getElementById('res-gcd');
         const resLcm = document.getElementById('res-lcm');
         const resultArea = document.getElementById('result-area');
-        
+
         // Venn Elements
         const vennArea = document.getElementById('visualizer-section');
         const vNum1Label = document.getElementById('venn-num1-label');
@@ -555,14 +745,14 @@ Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
             // Group and count
             const counts = {};
             arr.forEach(f => counts[f] = (counts[f] || 0) + 1);
-            return Object.entries(counts).map(([f, count]) => count > 1 ? `\({f}<sup>\){count}</sup>` : f).join(' &times; ');
+            return Object.entries(counts).map(([f, count]) => count > 1 ? `${f}^{count}` : f).join(' &times; ');
         }
 
         function calculate() {
             const rawStr = inputNumbers.value;
             const items = rawStr.split(',');
             const raw = items.map(s => parseInt(s.trim())).filter(n => !isNaN(n));
-            
+
             if (raw.length < 2) {
                 alert("Please enter at least two valid integers.");
                 return;
@@ -579,14 +769,14 @@ Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
             resGcd.innerText = currentGcd;
             resLcm.innerText = currentLcm;
             resultArea.classList.remove('hidden');
-            
+
             // Visualizer Logic (only makes sense visually for 2 numbers)
             if (raw.length === 2 && raw[0] <= 10000 && raw[1] <= 10000 && raw[0] > 0 && raw[1] > 0) {
                 vennArea.classList.remove('hidden');
-                
+
                 vNum1Label.innerText = raw[0];
                 vNum2Label.innerText = raw[1];
-                
+
                 // Get absolute shared factor (GCD) and its prime factors
                 const g = currentGcd;
                 const gFactors = getPrimeFactors(g);
@@ -603,7 +793,7 @@ Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
                 vennArea.classList.add('hidden');
             }
 
-            if(window.MathJax) { MathJax.typeset(); }
+            if (window.MathJax) { MathJax.typeset(); }
         }
 
         // Run on enter key
@@ -637,7 +827,7 @@ Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
             // Mix GCD and LCM
             const isLCM = Math.random() > 0.6;
             let a, b;
-            
+
             if (isLCM) {
                 // Keep LCM relatively small to be mentally calculable
                 a = Math.floor(Math.random() * 12) + 2;
@@ -651,12 +841,12 @@ Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
                 a = base * (Math.floor(Math.random() * 5) + 1);
                 b = base * (Math.floor(Math.random() * 5) + 1);
                 // add some noise occasionally
-                if (Math.random() > 0.5) a += Math.floor(Math.random()*3);
+                if (Math.random() > 0.5) a += Math.floor(Math.random() * 3);
                 elQuestionType.innerText = "Find the GCD";
                 elQuestionType.className = "text-sky-400 font-bold tracking-widest uppercase mb-4 text-sm";
                 currentAnswer = gcd(a, b);
             }
-            
+
             elQuestion.innerText = `\({a} & \){b}`;
             inputAnswer.value = '';
             inputAnswer.focus();
@@ -667,14 +857,14 @@ Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
             timeLeft = 60;
             elScore.innerText = gameScore;
             elTimerBar.style.width = '100%';
-            
+
             elIntro.classList.add('hidden');
             elOut.classList.add('hidden');
             elPlay.classList.remove('hidden');
             isGameRunning = true;
-            
+
             generateQuestion();
-            
+
             // Timer Loop
             clearInterval(gameInterval);
             let startTime = Date.now();
@@ -682,10 +872,10 @@ Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
                 let elapsed = (Date.now() - startTime) / 1000;
                 timeLeft = 60 - elapsed;
                 let pct = (timeLeft / 60) * 100;
-                
-                if(pct < 0) pct = 0;
+
+                if (pct < 0) pct = 0;
                 elTimerBar.style.width = `${pct}%`;
-                
+
                 if (pct <= 20) {
                     elTimerBar.className = "timer-bar bg-rose-500 h-3 rounded-full";
                 } else {
@@ -704,7 +894,7 @@ Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
             elPlay.classList.add('hidden');
             elOut.classList.remove('hidden');
             finalScore.innerText = gameScore;
-            
+
             // Simple visual reward if good score
             if (gameScore > 500) {
                 finalScore.classList.add('animate-bounce');
@@ -722,24 +912,24 @@ Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
                 const points = 100 + timeBonus;
                 gameScore += points;
                 elScore.innerText = gameScore;
-                
+
                 elFeedback.innerText = `Correct! +${points}`;
                 elFeedback.className = "text-center font-bold text-xl mt-6 h-8 text-emerald-400 transition-colors duration-100";
-                
-                setTimeout(()=> {
-                   if(isGameRunning) elFeedback.className = "text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300";
+
+                setTimeout(() => {
+                    if (isGameRunning) elFeedback.className = "text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300";
                 }, 800);
-                
+
                 generateQuestion();
             } else {
                 gameScore = Math.max(0, gameScore - 50);
                 elScore.innerText = gameScore;
-                
+
                 elFeedback.innerText = `Wrong! -50`;
                 elFeedback.className = "text-center font-bold text-xl mt-6 h-8 text-rose-500 transition-colors duration-100 animate-shake";
-                
-                setTimeout(()=> {
-                   if(isGameRunning) elFeedback.className = "text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300";
+
+                setTimeout(() => {
+                    if (isGameRunning) elFeedback.className = "text-center font-bold text-xl mt-6 h-8 text-transparent transition-colors duration-300";
                 }, 800);
                 inputAnswer.value = '';
             }
@@ -749,7 +939,7 @@ Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
         document.getElementById('game-restart-btn').addEventListener('click', startGame);
         btnSubmitGame.addEventListener('click', checkAnswer);
         inputAnswer.addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') checkAnswer();
+            if (e.key === 'Enter') checkAnswer();
         });
 
 
@@ -759,10 +949,10 @@ Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
         function toggleAccordion(btn) {
             const content = btn.nextElementSibling;
             const icon = btn.querySelector('i');
-            
+
             // Close all others
             document.querySelectorAll('.accordion-content').forEach(c => {
-                if(c !== content && c.classList.contains('open')) {
+                if (c !== content && c.classList.contains('open')) {
                     c.classList.remove('open');
                     c.previousElementSibling.querySelector('i').classList.remove('rotate-180');
                 }
@@ -777,10 +967,11 @@ Since they share no prime factors, GCD = 1. LCM = 8 * 15 = 120.</p>
                 icon.classList.add('rotate-180');
             }
         }
-        
+
         // Initial render
         calculate();
 
     </script>
 </body>
+
 </html>

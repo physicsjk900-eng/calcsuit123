@@ -114,50 +114,55 @@
     <div id="sidebar-container" class="contents"></div>
 
     <!-- Main Landing Page -->
-    <main class="flex-1 w-full">
+    <main class="flex flex-col w-full" style="padding-top: 0px; margin-top: 0px;">
 
         <!-- Hero Section -->
         <section
-            class="relative bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 overflow-hidden pt-20 pb-24 lg:pt-32 lg:pb-36">
-            <!-- Subtle background pattern -->
-            <div
-                class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMTQ4LCAxNjMsIDE4NCwgMC4zKSIvPjwvc3ZnPg==')] opacity-100 [mask-image:linear-gradient(to_bottom,white,transparent)]">
-            </div>
+            class="relative inset-0 bg-[url('images/background_img.png')] border-b border-slate-200 dark:border-slate-800 overflow-hidden pt-20 pb-24 lg:pt-32 lg:pb-36 bg-cover bg-center bg-no-repeat bg-fixed">
 
-            <div class="relative w-xl max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <div
-                    class="inline-flex items-center px-4 py-2 rounded-full bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-medium text-sm mb-8 border border-indigo-100 dark:border-indigo-500/20">
-                    <span class="flex w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-400 mr-2 animate-pulse"></span>
+            <div class="relative inset-0" style="margin-left: 50px;">
+                <h1 class="text-5xl md:text-6xl lg:text-7xl sm:text-10xl font-bold text-slate-900 mb-8"
+                    style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; letter-spacing: 1px; text-align: center;  line-height:80px;">
+                    Smart <span class="text-blue-700 font-extrabold tracking-tight">Calculators</span> for Every
+                    Decision.
+                    <br>
+                    <span
+                        class="text-lg md:text-xl lg:text-2xl sm:text-3xl font-medium tracking-tight text-slate-900 mb-8">Free
+                        Online & Premium Calculators for Math, Finance, Health, Lifestyle, Industries & Much
+                        More.</span>
+                </h1>
+
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-indigo-50 text-blue-900 font-medium text-sm mb-8 border border-indigo-100"
+                    style="margin-left: 600px;">
+                    <span class="flex w-2 h-2 rounded-full bg-blue-900 mr-2 animate-pulse"></span>
                     Over 95+ Professional Tools
                 </div>
 
-                <h1
-                    class="text-5xl md:text-6xl lg:text-7xl sm:text-10xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-8">
-                    Free Online <span class="text-indigo-600 dark:text-indigo-400">Calculators</span><br /> for Math,
-                    Finance & Health
-                </h1>
-
-                <p
-                    class="mt-4 text-md md:text-lg lg:text-xl text-slate-500 dark:text-slate-400 max-w-4xl mx-auto font-medium mb-12 leading-relaxed">
+                <p class="mt-4 text-md md:text-lg lg:text-xl text-slate-800 mx-auto font-medium"
+                    style="text-align: center; padding-top: 220px; padding-bottom: none;">
                     Instantly solve complex equations with our premium suite of tools including a high-precision
                     <strong>quadratic equation calculator</strong>, <strong>standard deviation calculator</strong>,
                     <strong>percentage calculator</strong>, <strong>age calculator</strong>, <strong>probability
                         calculator</strong>, <strong>EMI calculator</strong>, and <strong>BMI calculator</strong>.
                     Access over 95+ responsive utilities designed for ultimate mathematical accuracy.
                 </p>
-
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="calculators/basic-calculator.html"
-                        class="inline-flex justify-center items-center px-8 py-4 border border-transparent text-lg font-semibold rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
-                        Open Calculator
-                    </a>
-                    <a href="calculators/index.html"
-                        class="inline-flex justify-center items-center px-8 py-4 border border-slate-300 dark:border-slate-700 text-lg font-semibold rounded-lg text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-                        Explore Catagories
-                    </a>
-                </div>
             </div>
         </section>
+        <br>
+        <br>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="calculators/basic-calculator.html"
+                class="inline-flex justify-center items-center px-8 py-4 border border-transparent text-lg font-semibold rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
+                Open Calculator
+            </a>
+            <a href="calculators/index.html"
+                class="inline-flex justify-center items-center px-8 py-4 border border-slate-300 dark:border-slate-700 text-lg font-semibold rounded-lg text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                Explore Catagories
+            </a>
+        </div>
+        <br>
+        <br>
 
         <!-- Features Grid Area -->
         <section id="tools" class="py-20 bg-slate-50 dark:bg-slate-900/50">
@@ -177,17 +182,17 @@
                             class="w-12 h-12 bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 flex items-center justify-center rounded-xl mb-6 text-xl">
                             <i class="fas fa-calculator"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Mathematics</h3>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Mathematics Suite</h3>
                         <p class="text-slate-500 dark:text-slate-400 mb-6">Scientific equations, matrices, quadratic
                             solvers,
                             and probability distributions for statistical analysis.</p>
                         <ul class="space-y-3">
-                            <li><a href="math/quadratic-calculator.html"
+                            <li><a href="math/index.html"
                                     class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center"><i
-                                        class="fas fa-arrow-right text-xs mr-2"></i> Quadratic Solver</a></li>
-                            <li><a href="math/probability-calculator.html"
-                                    class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center"><i
-                                        class="fas fa-arrow-right text-xs mr-2"></i> Probability Hub</a></li>
+                                        class="fas fa-arrow-right text-xs mr-2" style="padding-right: 15px;"></i>
+                                    Explore
+                                    More Calculators of Math
+                                    Suite (Click Here)</a></li>
                         </ul>
                     </div>
 
@@ -197,17 +202,15 @@
                             class="w-12 h-12 bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 flex items-center justify-center rounded-xl mb-6 text-xl">
                             <i class="fas fa-chart-line"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Finance Pro</h3>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Finance Suite</h3>
                         <p class="text-slate-500 dark:text-slate-400 mb-6">Analyze EMI loans, retirement (FIRE) engines,
                             and
                             business break-even models instantly.</p>
                         <ul class="space-y-3">
-                            <li><a href="finance/retirement-calculator.html"
+                            <li><a href="finance/index.html"
                                     class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center"><i
-                                        class="fas fa-arrow-right text-xs mr-2"></i> FIRE Engine</a></li>
-                            <li><a href="finance/compound-interest-calculator.html"
-                                    class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center"><i
-                                        class="fas fa-arrow-right text-xs mr-2"></i> Compound Growth</a></li>
+                                        class="fas fa-arrow-right text-xs mr-2" style="padding-right: 15px;"></i>
+                                    Explore more calculators of Finance Suite (Click Here)</a></li>
                         </ul>
                     </div>
 
@@ -217,17 +220,16 @@
                             class="w-12 h-12 bg-rose-100 dark:bg-rose-500/10 text-rose-500 flex items-center justify-center rounded-xl mb-6 text-xl">
                             <i class="fas fa-heartbeat"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Elite Health</h3>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Health Suite</h3>
                         <p class="text-slate-500 dark:text-slate-400 mb-6">Track macro nutrients, metabolic rates,
                             hydration
                             levels, and pregnancy milestones in real-time.</p>
                         <ul class="space-y-3">
-                            <li><a href="health/macro-calculator.html"
+                            <li><a href="health/index.html"
                                     class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center"><i
-                                        class="fas fa-arrow-right text-xs mr-2"></i> Macro Blueprint</a></li>
-                            <li><a href="health/calorie-calculator.html"
-                                    class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center"><i
-                                        class="fas fa-arrow-right text-xs mr-2"></i> Calorie Analysis</a></li>
+                                        class="fas fa-arrow-right text-xs mr-2" style="padding-right: 15px;">
+                                    </i>
+                                    Explore more calculators of Health Suite (Click Here)</a></li>
                         </ul>
                     </div>
 
@@ -237,17 +239,16 @@
                             class="w-12 h-12 bg-sky-100 dark:bg-sky-500/10 text-sky-600 flex items-center justify-center rounded-xl mb-6 text-xl">
                             <i class="fas fa-bed"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Lifestyle Pro</h3>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Lifestyle Suite</h3>
                         <p class="text-slate-500 dark:text-slate-400 mb-6">Optimize your sleep cycles, kitchen
                             conversions,
                             and track pet aging using metabolic curves.</p>
                         <ul class="space-y-3">
-                            <li><a href="lifestyle/sleep-calculator.html"
+                            <li><a href="lifestyle/index.html"
                                     class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center"><i
-                                        class="fas fa-arrow-right text-xs mr-2"></i> Sleep Architect</a></li>
-                            <li><a href="lifestyle/kitchen-calculator.html"
-                                    class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center"><i
-                                        class="fas fa-arrow-right text-xs mr-2"></i> Kitchen Engine</a></li>
+                                        class="fas fa-arrow-right text-xs mr-2" style="padding-right: 15px;">
+                                    </i>
+                                    Explore more calculators of Lifestyle Suite (Click Here)</a></li>
                         </ul>
                     </div>
 
@@ -257,17 +258,14 @@
                             class="w-12 h-12 bg-slate-100 dark:bg-slate-700 text-slate-600 flex items-center justify-center rounded-xl mb-6 text-xl">
                             <i class="fas fa-bolt"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Technical Suite</h3>
-                        <p class="text-slate-500 dark:text-slate-400 mb-6">Universal unit conversions, Ohm's law circuit
-                            analysis,
-                            and global time zone synchronization.</p>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Unit Conversion Suite</h3>
+                        <p class="text-slate-500 dark:text-slate-400 mb-6">Universal unit conversions Tools</p>
                         <ul class="space-y-3">
-                            <li><a href="physics/ohms-law-calculator.html"
+                            <li><a href="conversion/index.html"
                                     class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center"><i
-                                        class="fas fa-arrow-right text-xs mr-2"></i> Ohm's Law Solver</a></li>
-                            <li><a href="lifestyle/unit-converter.html"
-                                    class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center"><i
-                                        class="fas fa-arrow-right text-xs mr-2"></i> Unit Master</a></li>
+                                        class="fas fa-arrow-right text-xs mr-2" style="padding-right: 15px;">
+                                    </i>
+                                    Explore more calculators of Unit Conversion Suite (Click Here)</a></li>
                         </ul>
                     </div>
 
@@ -284,6 +282,67 @@
                             class="inline-flex items-center text-white bg-indigo-600 hover:bg-indigo-500 px-6 py-3 rounded-lg font-medium transition-colors">
                             Launch Tracker <i class="fas fa-arrow-right ml-2 text-sm"></i>
                         </a>
+                    </div>
+
+                    <!-- Time & Date Suite -->
+                    <div
+                        class="bg-white dark:bg-slate-800 rounded-2xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+                        <div
+                            class="w-12 h-12 bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 flex items-center justify-center rounded-xl mb-6 text-xl">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Time & Date Suite</h3>
+                        <p class="text-slate-500 dark:text-slate-400 mb-6">Time and date calculations, duration
+                            calculations,
+                            and time zone conversions.</p>
+                        <ul class="space-y-3">
+                            <li><a href="time/index.html"
+                                    class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center"><i
+                                        class="fas fa-arrow-right text-xs mr-2" style="padding-right: 15px;"></i>
+                                    Explore
+                                    More Calculators of Time & Date
+                                    Suite (Click Here)</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Physics Suite -->
+                    <div
+                        class="bg-white dark:bg-slate-800 rounded-2xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+                        <div
+                            class="w-12 h-12 bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 flex items-center justify-center rounded-xl mb-6 text-xl">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Physics Suite</h3>
+                        <p class="text-slate-500 dark:text-slate-400 mb-6">Physics calculations, formulas, and
+                            applications for students and professionals.</p>
+                        <ul class="space-y-3">
+                            <li><a href="physics/index.html"
+                                    class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center"><i
+                                        class="fas fa-arrow-right text-xs mr-2" style="padding-right: 15px;"></i>
+                                    Explore
+                                    More Calculators of Physics
+                                    Suite (Click Here)</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Industrial Suite -->
+                    <div
+                        class="bg-white dark:bg-slate-800 rounded-2xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+                        <div
+                            class="w-12 h-12 bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 flex items-center justify-center rounded-xl mb-6 text-xl">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Industrial Suite</h3>
+                        <p class="text-slate-500 dark:text-slate-400 mb-6">Industrial calculations, formulas, and
+                            applications for students and professionals.</p>
+                        <ul class="space-y-3">
+                            <li><a href="industry/index.html"
+                                    class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center"><i
+                                        class="fas fa-arrow-right text-xs mr-2" style="padding-right: 15px;"></i>
+                                    Explore
+                                    More Calculators of Industrial
+                                    Suite (Click Here)</a></li>
+                        </ul>
                     </div>
 
                 </div>

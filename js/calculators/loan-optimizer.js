@@ -29,6 +29,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize currency symbol on page load
     getCurrencySymbol();
 
+    window.addLumpSumRow = (amount = '', month = '') => {
+        const container = document.getElementById('lump-sum-container');
+        if (!container) return;
+
+        const row = document.createElement('div');
+        row.className = 'lump-sum-row flex gap-1.5 sm:gap-2 items-center';
+        row.innerHTML = `
+            <input type="number" class="lump-val flex-1 min-w-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-3 sm:px-4 py-2.5 sm:py-3 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-xs sm:text-sm" placeholder="Amount" value="${amount}" oninput="runOptimization()">
+            <input type="number" class="lump-month w-20 sm:w-28 shrink-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-3 sm:px-4 py-2.5 sm:py-3 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-xs sm:text-sm" placeholder="Month #" value="${month}" oninput="runOptimization()">
+            <button type="button" onclick="removeLumpSumRow(this)" class="p-2 sm:p-3 text-slate-400 hover:text-rose-500 transition-colors text-xs sm:text-sm rounded-xl shrink-0" title="Remove prepayment">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        `;
+        container.appendChild(row);
+        if (typeof window.runOptimization === 'function') {
+            window.runOptimization();
+        }
+    };
+
+    window.removeLumpSumRow = (btn) => {
+        const row = btn.closest('.lump-sum-row');
+        if (row) {
+            row.remove();
+            if (typeof window.runOptimization === 'function') {
+                window.runOptimization();
+            }
+        }
+    };
+
+    // Add initial lump sum row if container exists and is empty
+    if (document.getElementById('lump-sum-container')) {
+        window.addLumpSumRow();
+    }
+
     window.runOptimization = () => {
         getCurrencySymbol();
 
@@ -38,8 +72,17 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let extraVal = parseFloat(document.getElementById('opt-extra-val').value) || 0;
         const extraType = document.getElementById('opt-extra-type').value;
-        const lumpVal = parseFloat(document.getElementById('opt-lump-val').value) || 0;
-        const lumpMonth = parseInt(document.getElementById('opt-lump-month').value) || 0;
+
+        // Collect all dynamic lump sum entries
+        const lumpSumRows = document.querySelectorAll('#lump-sum-container .lump-sum-row');
+        const lumpSums = [];
+        lumpSumRows.forEach(r => {
+            const val = parseFloat(r.querySelector('.lump-val').value) || 0;
+            const m = parseInt(r.querySelector('.lump-month').value) || 0;
+            if (val > 0 && m > 0) {
+                lumpSums.push({ amount: val, month: m });
+            }
+        });
 
         if (isNaN(principal) || isNaN(annualRate) || isNaN(years) || principal <= 0 || annualRate <= 0 || years <= 0) {
             resetUI();
@@ -53,10 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('res-standard-emi').innerText = formatCurrency(emi);
 
         // Simulation 1: Baseline (Standard)
-        const baseline = simulateLoan(principal, monthlyRate, emi, totalMonths, 0, 'none', 0, 0);
+        const baseline = simulateLoan(principal, monthlyRate, emi, totalMonths, 0, 'none', []);
         
         // Simulation 2: Optimized
-        const optimized = simulateLoan(principal, monthlyRate, emi, totalMonths, extraVal, extraType, lumpVal, lumpMonth);
+        const optimized = simulateLoan(principal, monthlyRate, emi, totalMonths, extraVal, extraType, lumpSums);
 
         // Update Summary Cards
         const interestSaved = baseline.totalInterest - optimized.totalInterest;
@@ -86,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateInsights(interestSaved, monthsSaved, principal);
     };
 
-    function simulateLoan(p, r, emi, maxMonths, extra, extraType, lump, lumpMonth) {
+    function simulateLoan(p, r, emi, maxMonths, extra, extraType, lumpSums = []) {
         let balance = p;
         let totalInterest = 0;
         let monthsTaken = 0;
@@ -102,7 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (extraType === 'monthly') extraThisMonth = extra;
             else if (extraType === 'yearly' && monthsTaken % 12 === 0) extraThisMonth = extra;
             
-            if (monthsTaken === lumpMonth) extraThisMonth += lump;
+            if (Array.isArray(lumpSums)) {
+                lumpSums.forEach(item => {
+                    if (item.month === monthsTaken) {
+                        extraThisMonth += item.amount;
+                    }
+                });
+            }
 
             let totalPmt = principalPaid + extraThisMonth;
             

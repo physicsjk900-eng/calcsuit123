@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="light">
 
 <head>
@@ -8,10 +8,6 @@
     <meta name="description"
         content="Free advanced loan optimizer. Simulate extra payments, calculate interest savings, and view a full amortization schedule.">
     <link rel="canonical" href="https://calcsuit.com/finance/loan-optimizer.html" />
-    
-    <!-- Structured Data: JSON-LD -->
-    
-    
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -31,29 +27,13 @@
     </script>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="icon" type="image/png" href="../images/favicon.png">
 
-    <!-- Structured Data (SEO) -->
-    
-    
-    
-    
-
-    <!-- Structured Data (SEO) -->
-    
-    
-    
-    
     <!-- MathJax for LaTeX Rendering -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-    <!-- Structured Data (SEO) -->
-    
-    
-    
-    
 
     <!-- Structured Data (SEO) -->
     <script type="application/ld+json">
@@ -136,21 +116,24 @@
 <body
     class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
 
-    <div id="sidebar-container" class="contents"></div>
+    <main id="app-container"
+        class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
 
-    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
-        
         <!-- Main Panel -->
-        <div class="w-full bg-white dark:bg-slate-800 rounded-4xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col lg:flex-row">
-            
+        <div
+            class="w-full bg-white dark:bg-slate-800 rounded-4xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col lg:flex-row">
+
             <!-- Inputs Sidebar (Desktop) -->
-            <aside class="w-full lg:w-96 bg-slate-50 dark:bg-slate-900/50 p-8 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-700">
+            <aside
+                class="w-full lg:w-96 bg-slate-50 dark:bg-slate-900/50 p-8 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-700">
                 <div class="mb-10">
                     <div class="inline-flex items-center gap-2 text-amber-500 mb-4">
                         <i class="fas fa-rocket text-2xl"></i>
-                        <span class="text-[10px] font-black uppercase tracking-[0.2em]">Strategy Mode</span>
+                        <span class="text-[10px] font-black uppercase tracking-[0.2em]">Financial Strategy of
+                            Loan</span>
                     </div>
-                    <h2 class="text-3xl font-black text-slate-900 dark:text-white leading-tight">Loan <span class="text-amber-500">Optimizer</span></h2>
+                    <h2 class="text-3xl font-black text-slate-900 dark:text-white leading-tight">Loan <span
+                            class="text-amber-500">Optimizer</span></h2>
                 </div>
 
                 <div class="space-y-8">
@@ -159,20 +142,41 @@
                         <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest pl-1">Primary Terms</h3>
                         <div class="space-y-4">
                             <div class="group">
-                                <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 transition-colors group-focus-within:text-amber-500">Principal Amount</label>
+                                <label
+                                    class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 transition-colors group-focus-within:text-amber-500">Principal
+                                    Amount
+                                    <select id="opt-currency-type"
+                                        class="w-32 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-3 outline-none focus:ring-2 focus:ring-amber-500/20 font-bold text-xs"
+                                        onchange="runOptimization()">
+                                        <option value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="GBP">GBP</option>
+                                        <option value="JPY">JPY</option>
+                                        <option value="INR">INR</option>
+                                    </select></label>
                                 <div class="relative">
-                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
-                                    <input type="number" id="opt-principal" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl pl-10 pr-4 py-4 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-lg" placeholder="500,000" oninput="runOptimization()">
+                                    <span id="opt-currency-symbol"
+                                        class="absolute left-1 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                                    <input type="number" id="opt-principal"
+                                        class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl pl-10 pr-4 py-4 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-lg"
+                                        placeholder="500,000" oninput="runOptimization()">
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="group">
-                                    <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">Rate (%)</label>
-                                    <input type="number" id="opt-rate" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-lg" placeholder="7.5" step="0.1" oninput="runOptimization()">
+                                    <label
+                                        class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">Rate
+                                        (%)</label>
+                                    <input type="number" id="opt-rate"
+                                        class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-lg"
+                                        placeholder="7.5" step="0.1" oninput="runOptimization()">
                                 </div>
                                 <div class="group">
-                                    <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">Years</label>
-                                    <input type="number" id="opt-years" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-lg" placeholder="20" oninput="runOptimization()">
+                                    <label
+                                        class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">Years</label>
+                                    <input type="number" id="opt-years"
+                                        class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-lg"
+                                        placeholder="20" oninput="runOptimization()">
                                 </div>
                             </div>
                         </div>
@@ -180,23 +184,39 @@
 
                     <!-- Prepayment Strategy -->
                     <div class="space-y-5 pt-4 border-t border-slate-200 dark:border-slate-700">
-                        <h3 class="text-xs font-bold text-amber-500 uppercase tracking-widest pl-1">Prepayment Strategy</h3>
+                        <h3 class="text-xs font-bold text-amber-500 uppercase tracking-widest pl-1">Prepayment Strategy
+                        </h3>
                         <div class="space-y-4">
                             <div class="group">
-                                <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">Recurring Extra Payment</label>
+                                <label
+                                    class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">Recurring
+                                    Extra Payment</label>
                                 <div class="flex gap-2">
-                                    <input type="number" id="opt-extra-val" class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-lg" placeholder="500" oninput="runOptimization()">
-                                    <select id="opt-extra-type" class="w-32 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-3 outline-none focus:ring-2 focus:ring-amber-500/20 font-bold text-xs" onchange="runOptimization()">
+                                    <input type="number" id="opt-extra-val"
+                                        class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-lg"
+                                        placeholder="500" oninput="runOptimization()">
+                                </div>
+                                <span
+                                    class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">
+                                    Frequency <select id="opt-extra-type"
+                                        class="w-32 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-3 outline-none focus:ring-2 focus:ring-amber-500/20 font-bold text-xs"
+                                        onchange="runOptimization()">
                                         <option value="monthly">Monthly</option>
                                         <option value="yearly">Yearly</option>
                                     </select>
-                                </div>
+                                </span>
                             </div>
                             <div class="group">
-                                <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">One-Time Prepayment (Lump Sum)</label>
+                                <label
+                                    class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">One-Time
+                                    Prepayment (Lump Sum)</label>
                                 <div class="grid grid-cols-2 gap-2">
-                                    <input type="number" id="opt-lump-val" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-sm" placeholder="Amount" oninput="runOptimization()">
-                                    <input type="number" id="opt-lump-month" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-sm" placeholder="Month #" oninput="runOptimization()">
+                                    <input type="number" id="opt-lump-val"
+                                        class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-sm"
+                                        placeholder="Amount" oninput="runOptimization()">
+                                    <input type="number" id="opt-lump-month"
+                                        class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-sm"
+                                        placeholder="Month #" oninput="runOptimization()">
                                 </div>
                             </div>
                         </div>
@@ -206,40 +226,59 @@
 
             <!-- Dashboard Content Area -->
             <div class="flex-1 p-8 md:p-12">
-                
+
                 <!-- Highlights Row -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                    <div class="bg-amber-500/10 dark:bg-amber-500/5 border border-amber-500/20 p-8 rounded-3xl relative overflow-hidden group">
+                    <div
+                        class="bg-amber-500/10 dark:bg-amber-500/5 border border-amber-500/20 p-8 rounded-3xl relative overflow-hidden group">
                         <div class="relative z-10">
-                            <h4 class="text-[10px] font-black text-amber-500 uppercase tracking-widest mb-2">Total Interest Saved</h4>
-                            <div id="res-saved-interest" class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">&mdash;</div>
+                            <h4 class="text-[10px] font-black text-amber-500 uppercase tracking-widest mb-2">Total
+                                Interest Saved</h4>
+                            <div id="res-saved-interest"
+                                class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">&mdash;
+                            </div>
                         </div>
-                        <i class="fas fa-coins absolute -bottom-4 -right-4 text-amber-500/10 text-7xl rotate-12 transition-transform group-hover:rotate-0"></i>
+                        <i
+                            class="fas fa-coins absolute -bottom-4 -right-4 text-amber-500/10 text-7xl rotate-12 transition-transform group-hover:rotate-0"></i>
                     </div>
-                    <div class="bg-emerald-500/10 dark:bg-emerald-500/5 border border-emerald-500/20 p-8 rounded-3xl relative overflow-hidden group">
+                    <div
+                        class="bg-emerald-500/10 dark:bg-emerald-500/5 border border-emerald-500/20 p-8 rounded-3xl relative overflow-hidden group">
                         <div class="relative z-10">
-                            <h4 class="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-2">Years Reduced</h4>
-                            <div id="res-saved-time" class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">&mdash;</div>
+                            <h4 class="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-2">Years
+                                Reduced</h4>
+                            <div id="res-saved-time"
+                                class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">&mdash;
+                            </div>
                         </div>
-                        <i class="fas fa-hourglass-end absolute -bottom-4 -right-4 text-emerald-500/10 text-7xl rotate-12 transition-transform group-hover:rotate-0"></i>
+                        <i
+                            class="fas fa-hourglass-end absolute -bottom-4 -right-4 text-emerald-500/10 text-7xl rotate-12 transition-transform group-hover:rotate-0"></i>
                     </div>
-                    <div class="bg-indigo-500/10 dark:bg-indigo-500/5 border border-indigo-500/20 p-8 rounded-3xl relative overflow-hidden group">
+                    <div
+                        class="bg-indigo-500/10 dark:bg-indigo-500/5 border border-indigo-500/20 p-8 rounded-3xl relative overflow-hidden group">
                         <div class="relative z-10">
-                            <h4 class="text-[10px] font-black text-indigo-500 uppercase tracking-widest mb-2">New Tenure</h4>
-                            <div id="res-total-tenure" class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">&mdash;</div>
+                            <h4 class="text-[10px] font-black text-indigo-500 uppercase tracking-widest mb-2">New Tenure
+                            </h4>
+                            <div id="res-total-tenure"
+                                class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">&mdash;
+                            </div>
                         </div>
-                        <i class="fas fa-calendar-check absolute -bottom-4 -right-4 text-indigo-500/10 text-7xl rotate-12 transition-transform group-hover:rotate-0"></i>
+                        <i
+                            class="fas fa-calendar-check absolute -bottom-4 -right-4 text-indigo-500/10 text-7xl rotate-12 transition-transform group-hover:rotate-0"></i>
                     </div>
                 </div>
 
                 <!-- Chart Row -->
                 <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-12">
-                    <div class="lg:col-span-3 bg-slate-50 dark:bg-slate-900/30 rounded-4xl p-8 border border-slate-100 dark:border-slate-800 h-[400px]">
+                    <div
+                        class="lg:col-span-3 bg-slate-50 dark:bg-slate-900/30 rounded-4xl p-8 border border-slate-100 dark:border-slate-800 h-[400px]">
                         <div class="flex items-center justify-between mb-6">
-                            <h3 class="font-black text-slate-900 dark:text-white uppercase tracking-tight text-sm">Loan Balance over time</h3>
+                            <h3 class="font-black text-slate-900 dark:text-white uppercase tracking-tight text-sm">Loan
+                                Balance over time</h3>
                             <div class="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest">
-                                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-slate-300"></span> Standard</span>
-                                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Optimized</span>
+                                <span class="flex items-center gap-1.5"><span
+                                        class="w-2 h-2 rounded-full bg-slate-300"></span> Standard</span>
+                                <span class="flex items-center gap-1.5"><span
+                                        class="w-2 h-2 rounded-full bg-amber-500"></span> Optimized</span>
                             </div>
                         </div>
                         <div class="h-[300px]">
@@ -247,25 +286,33 @@
                         </div>
                     </div>
                     <div class="lg:col-span-2 space-y-6">
-                        <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
-                            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Summary Distribution</h3>
+                        <div
+                            class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Summary
+                                Distribution</h3>
                             <div class="h-48 relative flex items-center justify-center">
                                 <canvas id="distChart"></canvas>
                                 <div class="absolute text-center">
-                                    <div id="res-standard-emi" class="text-xl font-black text-slate-900 dark:text-white leading-none">&mdash;</div>
+                                    <div id="res-standard-emi"
+                                        class="text-xl font-black text-slate-900 dark:text-white leading-none">&mdash;
+                                    </div>
                                     <div class="text-[10px] font-bold text-slate-400 uppercase">Monthly EMI</div>
                                 </div>
                             </div>
                         </div>
                         <div class="bg-slate-900 dark:bg-slate-700 rounded-3xl p-8 text-white">
                             <div class="flex items-center gap-4 mb-4">
-                                <div class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-slate-900"><i class="fas fa-lightbulb"></i></div>
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-slate-900">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
                                 <div>
                                     <h4 class="font-bold text-sm">Savings Analysis</h4>
                                     <p class="text-[10px] text-slate-400 uppercase font-black">Strategy Report</p>
                                 </div>
                             </div>
-                            <p id="savings-insight" class="text-sm text-slate-300 leading-relaxed italic">Start entering your loan details to generate specialized interest-saving insights.</p>
+                            <p id="savings-insight" class="text-sm text-slate-300 leading-relaxed italic">Start entering
+                                your loan details to generate specialized interest-saving insights.</p>
                         </div>
                     </div>
                 </div>
@@ -274,18 +321,24 @@
                 <div class="pt-8 border-t border-slate-200 dark:border-slate-700">
                     <div class="flex items-center justify-between mb-8">
                         <div>
-                            <h3 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Amortization <span class="text-amber-500">Schedule</span></h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Monthly breakdown of your principal and interest</p>
+                            <h3 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Amortization
+                                <span class="text-amber-500">Schedule</span>
+                            </h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Monthly breakdown of your principal
+                                and interest</p>
                         </div>
-                        <button onclick="exportToCSV()" class="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600/50">
+                        <button onclick="exportToCSV()"
+                            class="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600/50">
                             <i class="fas fa-download"></i> Export Data
                         </button>
                     </div>
-                    
-                    <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+
+                    <div
+                        class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
                         <table class="w-full text-left text-sm">
                             <thead>
-                                <tr class="bg-slate-50 dark:bg-slate-800/80 text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                                <tr
+                                    class="bg-slate-50 dark:bg-slate-800/80 text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-200 dark:border-slate-700">
                                     <th class="px-6 py-4">Month</th>
                                     <th class="px-6 py-4">Opening Balance</th>
                                     <th class="px-6 py-4">Principal</th>
@@ -296,7 +349,10 @@
                             </thead>
                             <tbody id="schedule-body" class="divide-y divide-slate-100 dark:divide-slate-800">
                                 <!-- Injected via loan-optimizer.js -->
-                                <tr><td colspan="6" class="px-6 py-12 text-center text-slate-400 font-medium italic">Enter loan terms to generate schedule...</td></tr>
+                                <tr>
+                                    <td colspan="6" class="px-6 py-12 text-center text-slate-400 font-medium italic">
+                                        Enter loan terms to generate schedule...</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -309,188 +365,282 @@
         <div class="w-full max-w-4xl mt-20 space-y-10 pb-24">
             <h2 class="text-3xl font-black text-slate-900 dark:text-white text-center">Frequently Asked Questions</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                <div
+                    class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
                     <h4 class="font-bold text-slate-900 dark:text-white mb-3">How are interest savings calculated?</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Savings are calculated by comparing the total interest paid in a "baseline" scenario (no prepayments) against the simulation where extra payments reduce the principal balance every month.</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Savings are calculated by
+                        comparing the total interest paid in a "baseline" scenario (no prepayments) against the
+                        simulation where extra payments reduce the principal balance every month.</p>
                 </div>
-                <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                <div
+                    class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
                     <h4 class="font-bold text-slate-900 dark:text-white mb-3">What is a One-Time Prepayment?</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">This is a single lump-sum payment (like a bonus or tax refund) applied to your loan in a specific month. Our tool simulates exactly how much that one payment reduces your long-term interest cost.</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">This is a single lump-sum
+                        payment (like a bonus or tax refund) applied to your loan in a specific month. Our tool
+                        simulates exactly how much that one payment reduces your long-term interest cost.</p>
                 </div>
             </div>
         </div>
-    
-<!-- SEO Content Module -->
-    <section class="w-full max-w-5xl mt-12 space-y-12">
-        <article class="bg-white dark:bg-slate-800 p-8 md:p-16 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 space-y-12">
-            
-            <!-- H2 Header & Intro -->
-            <header class="border-b border-slate-100 dark:border-slate-700 pb-8 text-center md:text-left">
-                <span class="px-4 py-1.5 rounded-full bg-emerald-600/10 text-emerald-500 text-xs font-bold uppercase tracking-widest mb-4 inline-block">FINANCE SUITE</span>
-                <h2 class="text-3xl md:text-4xl font-black text-slate-800 dark:text-white mt-2 mb-4 leading-tight">Loan Optimizer Calculator - Online Solver & Formula Guide</h2>
-                <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed max-w-4xl">Loan Optimizer is a vital metric in our daily routines, academic assignments, and professional workflows. This comprehensive guide details the mathematical principles, practical use cases, and steps to perform these calculations accurately. In the modern economic landscape, financial literacy and precise accounting are essential pillars for both personal stability and corporate growth. Making decisions blindly without analyzing basic formulas leads to operational inefficiencies and capital leaks. High-yield accounts, debt interest charges, operational margins, and compound growth parameters all interact dynamically to shape your net worth. This online solver is engineered to bring institutional-grade financial modeling directly to your web browser. By providing instant clarity on interest charges, payment terms, tax percentages, and budget lines, we empower users to eliminate assumptions and take command of their financial future.</p>
-            </header>
 
-            <!-- Detailed Explanation & What is Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <div class="space-y-4">
+        <!-- SEO Content Module -->
+        <section class="w-full max-w-5xl mt-12 space-y-12">
+            <article
+                class="bg-white dark:bg-slate-800 p-8 md:p-16 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 space-y-12">
+
+                <!-- H2 Header & Intro -->
+                <header class="border-b border-slate-100 dark:border-slate-700 pb-8 text-center md:text-left">
+                    <span
+                        class="px-4 py-1.5 rounded-full bg-emerald-600/10 text-emerald-500 text-xs font-bold uppercase tracking-widest mb-4 inline-block">FINANCE
+                        SUITE</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-800 dark:text-white mt-2 mb-4 leading-tight">
+                        Loan Optimizer Calculator - Online Solver & Formula Guide</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed max-w-4xl">Loan Optimizer is
+                        a vital metric in our daily routines, academic assignments, and professional workflows. This
+                        comprehensive guide details the mathematical principles, practical use cases, and steps to
+                        perform these calculations accurately. In the modern economic landscape, financial literacy and
+                        precise accounting are essential pillars for both personal stability and corporate growth.
+                        Making decisions blindly without analyzing basic formulas leads to operational inefficiencies
+                        and capital leaks. High-yield accounts, debt interest charges, operational margins, and compound
+                        growth parameters all interact dynamically to shape your net worth. This online solver is
+                        engineered to bring institutional-grade financial modeling directly to your web browser. By
+                        providing instant clarity on interest charges, payment terms, tax percentages, and budget lines,
+                        we empower users to eliminate assumptions and take command of their financial future.</p>
+                </header>
+
+                <!-- Detailed Explanation & What is Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                            <i class="fas fa-info-circle text-emerald-500"></i> What is the Loan Optimizer Solver?
+                        </h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Loan Optimizer
+                            calculations are key in both personal planning and professional analysis. This online tool
+                            processes your inputs instantly in your browser to deliver accurate results. By analyzing
+                            the underlying variables, users can understand the relationships between inputs and identify
+                            key insights. Understanding the time value of money is critical when navigating financial
+                            models. Every dollar you spend on interest represents an opportunity cost—capital that could
+                            otherwise be earning compound returns in interest-bearing assets or equity markets.
+                            Amortization schedules show how payments are divided between paying down principal and
+                            paying interest charges over the life of a loan. By analyzing this data, borrowers can
+                            identify strategic prepayments that save significant money. Similarly, for businesses,
+                            identifying contribution margins and fixed costs ensures products are priced to cover
+                            overhead and generate sustainable profit.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                            <i class="fas fa-lightbulb text-emerald-500"></i> Best Practices & Pro-Tips
+                        </h3>
+                        <div
+                            class="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-200 dark:border-emerald-900/30 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            <p class="font-bold text-emerald-500 mb-2"><i class="fas fa-star mr-1"></i> Optimizing Your
+                                Results</p>
+                            Financial Pro-Tip: When analyzing interest-bearing debt, prioritize paying off high-interest
+                            balances first (the Avalanche method) to minimize total interest paid. Additionally,
+                            automate savings deposits into High-Yield Savings Accounts (HYSAs) to earn interest on your
+                            cash, and audit recurring subscriptions regularly to prevent cost leaks. Make sure to verify
+                            your input units before running calculations.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How to Use Section -->
+                <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
                     <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                        <i class="fas fa-info-circle text-emerald-500"></i> What is the Loan Optimizer Solver?
+                        <i class="fas fa-directions text-emerald-500"></i> How to Use the Loan Optimizer Calculator
                     </h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Loan Optimizer calculations are key in both personal planning and professional analysis. This online tool processes your inputs instantly in your browser to deliver accurate results. By analyzing the underlying variables, users can understand the relationships between inputs and identify key insights. Understanding the time value of money is critical when navigating financial models. Every dollar you spend on interest represents an opportunity cost—capital that could otherwise be earning compound returns in interest-bearing assets or equity markets. Amortization schedules show how payments are divided between paying down principal and paying interest charges over the life of a loan. By analyzing this data, borrowers can identify strategic prepayments that save significant money. Similarly, for businesses, identifying contribution margins and fixed costs ensures products are priced to cover overhead and generate sustainable profit.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div
+                            class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <div
+                                class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">
+                                1</div>
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-1">Input Data</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Enter the required values into the
+                                form fields. Make sure to double-check the values for accuracy.</p>
+                        </div>
+                        <div
+                            class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <div
+                                class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">
+                                2</div>
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-1">Verify Units</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Ensure your values match the specified
+                                units (e.g. grams vs ounces, centimeters vs inches).</p>
+                        </div>
+                        <div
+                            class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <div
+                                class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">
+                                3</div>
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-1">Run Calculation</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Click the calculate button to process
+                                the mathematical formulas instantly in your browser.</p>
+                        </div>
+                        <div
+                            class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <div
+                                class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">
+                                4</div>
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-1">Copy Results</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Review the output, check the formulas,
+                                and copy or save the results for your records.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="space-y-4">
+
+                <!-- Mathematical Formula & Technical Description -->
+                <div class="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-700">
                     <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                        <i class="fas fa-lightbulb text-emerald-500"></i> Best Practices & Pro-Tips
+                        <i class="fas fa-square-root-variable text-emerald-500"></i> Formula & Computational Methodology
                     </h3>
-                    <div class="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-200 dark:border-emerald-900/30 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                        <p class="font-bold text-emerald-500 mb-2"><i class="fas fa-star mr-1"></i> Optimizing Your Results</p>
-                        Financial Pro-Tip: When analyzing interest-bearing debt, prioritize paying off high-interest balances first (the Avalanche method) to minimize total interest paid. Additionally, automate savings deposits into High-Yield Savings Accounts (HYSAs) to earn interest on your cash, and audit recurring subscriptions regularly to prevent cost leaks. Make sure to verify your input units before running calculations.
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Understanding the mathematics
+                        behind the calculations helps clarify how the inputs relate to the final result. Our calculator
+                        processes the formulas instantly in your browser. Below is the equation used to calculate Loan
+                        Optimizer:</p>
+                    <div
+                        class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
+                        Compares various payment schedules and interest impacts to optimize loan
+                        payoffs:<br>\(\text{Accelerated Term} = -\frac{\log(1 - \frac{r \cdot PV}{PMT_A})}{\log(1 +
+                        r)}\)<br>Where \(PMT_A\) represents your standard payment plus any extra monthly principal
+                        payments.
                     </div>
                 </div>
-            </div>
 
-            <!-- How to Use Section -->
-            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-directions text-emerald-500"></i> How to Use the Loan Optimizer Calculator
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">1</div>
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Input Data</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Enter the required values into the form fields. Make sure to double-check the values for accuracy.</p>
-                    </div>
-                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">2</div>
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Verify Units</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Ensure your values match the specified units (e.g. grams vs ounces, centimeters vs inches).</p>
-                    </div>
-                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">3</div>
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Run Calculation</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Click the calculate button to process the mathematical formulas instantly in your browser.</p>
-                    </div>
-                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">4</div>
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Copy Results</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Review the output, check the formulas, and copy or save the results for your records.</p>
+                <!-- Step-by-Step Numerical Examples -->
+                <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-calculator text-emerald-500"></i> Step-by-Step Calculation Examples
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Review these examples to see how the
+                        mathematical formula is applied to different input values:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
+                            <h4 class="font-bold text-slate-800 dark:text-white text-base"><i
+                                    class="fas fa-check-circle text-emerald-500 mr-1"></i> Example Scenario 1</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">A $50,000 loan at
+                                6% with 120 months left. Adding $100/month extra:
+                                Reduces the remaining term from 10 years to 8.2 years, saving $2,850 in interest.</p>
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
+                            <h4 class="font-bold text-slate-800 dark:text-white text-base"><i
+                                    class="fas fa-check-circle text-emerald-500 mr-1"></i> Example Scenario 2</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">A $10,000 loan at
+                                12% with 36 months left. Adding $50/month extra:
+                                Reduces the term by 5 months, saving $284 in interest.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Mathematical Formula & Technical Description -->
-            <div class="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-square-root-variable text-emerald-500"></i> Formula & Computational Methodology
-                </h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Understanding the mathematics behind the calculations helps clarify how the inputs relate to the final result. Our calculator processes the formulas instantly in your browser. Below is the equation used to calculate Loan Optimizer:</p>
-                <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
-                    Compares various payment schedules and interest impacts to optimize loan payoffs:<br>\(\text{Accelerated Term} = -\frac{\log(1 - \frac{r \cdot PV}{PMT_A})}{\log(1 + r)}\)<br>Where \(PMT_A\) represents your standard payment plus any extra monthly principal payments.
-                </div>
-            </div>
-
-            <!-- Step-by-Step Numerical Examples -->
-            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-calculator text-emerald-500"></i> Step-by-Step Calculation Examples
-                </h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400">Review these examples to see how the mathematical formula is applied to different input values:</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
-                        <h4 class="font-bold text-slate-800 dark:text-white text-base"><i class="fas fa-check-circle text-emerald-500 mr-1"></i> Example Scenario 1</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">A $50,000 loan at 6% with 120 months left. Adding $100/month extra:
-Reduces the remaining term from 10 years to 8.2 years, saving $2,850 in interest.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
-                        <h4 class="font-bold text-slate-800 dark:text-white text-base"><i class="fas fa-check-circle text-emerald-500 mr-1"></i> Example Scenario 2</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">A $10,000 loan at 12% with 36 months left. Adding $50/month extra:
-Reduces the term by 5 months, saving $284 in interest.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Common Applications & Use Cases -->
-            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-briefcase text-emerald-500"></i> Common Applications & Industry Use Cases
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Debt Avalanche Planning</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Find the best way to distribute extra payments to pay off debt as fast as possible.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Refinancing Decisions</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">See how modifying interest rates or terms helps you pay off the balance sooner.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Financial Advisory Plans</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Help clients see the long-term benefits of paying slightly more than the minimum payment.</p>
+                <!-- Common Applications & Use Cases -->
+                <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-briefcase text-emerald-500"></i> Common Applications & Industry Use Cases
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Debt Avalanche Planning
+                            </h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Find the best way to
+                                distribute extra payments to pay off debt as fast as possible.</p>
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Refinancing Decisions
+                            </h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">See how modifying
+                                interest rates or terms helps you pay off the balance sooner.</p>
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Financial Advisory Plans
+                            </h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Help clients see the
+                                long-term benefits of paying slightly more than the minimum payment.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Frequently Asked Questions (FAQ) -->
-            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-question-circle text-emerald-500"></i> Frequently Asked Questions
-                </h3>
-                <div class="space-y-6">
-                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How does this online calculator perform calculations?</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">A: The calculations are processed instantly in your browser using standard mathematical formulas. Your data remains private and is never uploaded to external servers.</p>
-                    </div>
-                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How do extra payments reduce loan costs?</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">A: Extra payments go directly to reducing the principal balance, which lowers the interest charged in all future periods.</p>
-                    </div>
-                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: Should I pay off low-interest debt early?</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">A: It depends. If your loan interest rate is lower than the return you can earn by investing or saving, it may make sense to invest the extra cash instead.</p>
+                <!-- Frequently Asked Questions (FAQ) -->
+                <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-question-circle text-emerald-500"></i> Frequently Asked Questions
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How does this online
+                                calculator perform calculations?</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">A: The calculations are processed
+                                instantly in your browser using standard mathematical formulas. Your data remains
+                                private and is never uploaded to external servers.</p>
+                        </div>
+                        <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How do extra payments
+                                reduce loan costs?</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">A: Extra payments go directly to
+                                reducing the principal balance, which lowers the interest charged in all future periods.
+                            </p>
+                        </div>
+                        <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: Should I pay off
+                                low-interest debt early?</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">A: It depends. If your loan interest
+                                rate is lower than the return you can earn by investing or saving, it may make sense to
+                                invest the extra cash instead.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            
-            <!-- Related Calculators Section -->
-            <div class="pt-10 border-t border-slate-200 dark:border-slate-700">
-                <h3 class="text-xl font-bold mb-6 text-slate-800 dark:text-white">Explore Related Finance Tools</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    
-                    <a href="../finance/emi-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
-                        EMI Calculator
-                    </a>
-                    
-                    <a href="../finance/loan-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
-                        Loan Architect
-                    </a>
-                    
-                    <a href="../finance/interest-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
-                        Interest Calculator
-                    </a>
-                    
-                    <a href="../finance/compound-interest-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
-                        Compound Growth
-                    </a>
-                    
+
+                <!-- Related Calculators Section -->
+                <div class="pt-10 border-t border-slate-200 dark:border-slate-700">
+                    <h3 class="text-xl font-bold mb-6 text-slate-800 dark:text-white">Explore Related Finance Tools</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                        <a href="../finance/emi-calculator.html"
+                            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
+                            EMI Calculator
+                        </a>
+
+                        <a href="../finance/loan-calculator.html"
+                            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
+                            Loan Architect
+                        </a>
+
+                        <a href="../finance/interest-calculator.html"
+                            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
+                            Interest Calculator
+                        </a>
+
+                        <a href="../finance/compound-interest-calculator.html"
+                            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
+                            Compound Growth
+                        </a>
+
+                    </div>
                 </div>
-            </div>
-    
 
-            <!-- Conclusion Section -->
-            <div class="pt-6 border-t border-slate-100 dark:border-slate-700 text-center">
-                <p class="text-xs text-slate-400 max-w-3xl mx-auto mb-6">Ultimately, consistent tracking and forecasting are key to financial freedom. Whether you are budgeting for a down payment, auditing subscriptions, setting product markup prices, or planning for early retirement, using accurate financial tools ensures your decisions are based on data. CalcSuit provides private, free, and precise solvers to support your financial journey.</p>
-                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-8 py-3 bg-slate-900 dark:bg-slate-700 hover:bg-emerald-600 text-white rounded-2xl text-sm font-bold transition-all shadow-md">
-                    Start New Calculation
-                </button>
-            </div>
 
-        </article>
-    </section>
-  
-<!-- /SEO Content Module -->
-</main>
+                <!-- Conclusion Section -->
+                <div class="pt-6 border-t border-slate-100 dark:border-slate-700 text-center">
+                    <p class="text-xs text-slate-400 max-w-3xl mx-auto mb-6">Ultimately, consistent tracking and
+                        forecasting are key to financial freedom. Whether you are budgeting for a down payment, auditing
+                        subscriptions, setting product markup prices, or planning for early retirement, using accurate
+                        financial tools ensures your decisions are based on data. CalcSuit provides private, free, and
+                        precise solvers to support your financial journey.</p>
+                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                        class="px-8 py-3 bg-slate-900 dark:bg-slate-700 hover:bg-emerald-600 text-white rounded-2xl text-sm font-bold transition-all shadow-md">
+                        Start New Calculation
+                    </button>
+                </div>
+
+            </article>
+        </section>
+
+        <!-- /SEO Content Module -->
+    </main>
 
     <script src="../js/layout.js"></script>
     <script src="../js/calculators/core.js"></script>
@@ -498,4 +648,3 @@ Reduces the term by 5 months, saving $284 in interest.</p>
 </body>
 
 </html>
-

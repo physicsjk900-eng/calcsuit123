@@ -114,68 +114,70 @@
 </head>
 
 <body
-    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-4 sm:p-6 lg:p-8 relative overflow-x-hidden">
+    class="bg-mesh text-slate-800 dark:text-slate-200 transition-colors duration-500 min-h-screen flex flex-col p-2 sm:p-6 lg:p-8 relative overflow-x-hidden">
 
     <main id="app-container"
-        class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
+        class="flex-1 w-full max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-4 sm:py-8 md:py-12 relative flex flex-col items-center">
 
         <!-- Main Panel -->
         <div
-            class="w-full bg-white dark:bg-slate-800 rounded-4xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col lg:flex-row">
+            class="w-full bg-white dark:bg-slate-800 rounded-3xl sm:rounded-4xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col lg:flex-row">
 
             <!-- Inputs Sidebar (Desktop) -->
             <aside
-                class="w-full lg:w-96 bg-slate-50 dark:bg-slate-900/50 p-8 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-700">
-                <div class="mb-10">
-                    <div class="inline-flex items-center gap-2 text-amber-500 mb-4">
-                        <i class="fas fa-rocket text-2xl"></i>
+                class="w-full lg:w-96 bg-slate-50 dark:bg-slate-900/50 p-4 sm:p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-700">
+                <div class="mb-6 sm:mb-10">
+                    <div class="inline-flex items-center gap-2 text-amber-500 mb-3 sm:mb-4">
+                        <i class="fas fa-rocket text-xl sm:text-2xl"></i>
                         <span class="text-[10px] font-black uppercase tracking-[0.2em]">Financial Strategy of
                             Loan</span>
                     </div>
-                    <h2 class="text-3xl font-black text-slate-900 dark:text-white leading-tight">Loan <span
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-tight">Loan <span
                             class="text-amber-500">Optimizer</span></h2>
                 </div>
 
-                <div class="space-y-8">
+                <div class="space-y-6 sm:space-y-8">
                     <!-- Standard Settings -->
-                    <div class="space-y-5">
+                    <div class="space-y-4 sm:space-y-5">
                         <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest pl-1">Primary Terms</h3>
                         <div class="space-y-4">
                             <div class="group">
-                                <label
-                                    class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 transition-colors group-focus-within:text-amber-500">Principal
-                                    Amount
+                                <div class="flex items-center justify-between mb-2 pl-1">
+                                    <label
+                                        class="text-xs font-bold text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-amber-500">Principal
+                                        Amount</label>
                                     <select id="opt-currency-type"
-                                        class="w-32 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-3 outline-none focus:ring-2 focus:ring-amber-500/20 font-bold text-xs"
+                                        class="w-24 sm:w-28 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-2 py-1 outline-none focus:ring-2 focus:ring-amber-500/20 font-bold text-xs"
                                         onchange="runOptimization()">
                                         <option value="USD">USD</option>
                                         <option value="EUR">EUR</option>
                                         <option value="GBP">GBP</option>
                                         <option value="JPY">JPY</option>
                                         <option value="INR">INR</option>
-                                    </select></label>
+                                    </select>
+                                </div>
                                 <div class="relative">
                                     <span id="opt-currency-symbol"
                                         class="absolute left-1 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
                                     <input type="number" id="opt-principal"
-                                        class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl pl-10 pr-4 py-4 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-lg"
+                                        class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl pl-10 pr-4 py-3.5 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-base sm:text-lg"
                                         placeholder="500,000" oninput="runOptimization()">
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-2 gap-3 sm:gap-4">
                                 <div class="group">
                                     <label
                                         class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">Rate
                                         (%)</label>
                                     <input type="number" id="opt-rate"
-                                        class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-lg"
+                                        class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3.5 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-base sm:text-lg"
                                         placeholder="7.5" step="0.1" oninput="runOptimization()">
                                 </div>
                                 <div class="group">
                                     <label
                                         class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">Years</label>
                                     <input type="number" id="opt-years"
-                                        class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-lg"
+                                        class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3.5 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-base sm:text-lg"
                                         placeholder="20" oninput="runOptimization()">
                                 </div>
                             </div>
@@ -183,40 +185,38 @@
                     </div>
 
                     <!-- Prepayment Strategy -->
-                    <div class="space-y-5 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <div class="space-y-4 sm:space-y-5 pt-4 border-t border-slate-200 dark:border-slate-700">
                         <h3 class="text-xs font-bold text-amber-500 uppercase tracking-widest pl-1">Prepayment Strategy
                         </h3>
                         <div class="space-y-4">
                             <div class="group">
-                                <label
-                                    class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">Recurring
-                                    Extra Payment</label>
-                                <div class="flex gap-2">
-                                    <input type="number" id="opt-extra-val"
-                                        class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-lg"
-                                        placeholder="500" oninput="runOptimization()">
-                                </div>
-                                <span
-                                    class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">
-                                    Frequency <select id="opt-extra-type"
-                                        class="w-32 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-3 outline-none focus:ring-2 focus:ring-amber-500/20 font-bold text-xs"
+                                <div class="flex items-center justify-between mb-2 pl-1">
+                                    <label
+                                        class="text-xs font-bold text-slate-600 dark:text-slate-400 group-focus-within:text-amber-500">Recurring
+                                        Extra Payment</label>
+                                    <select id="opt-extra-type"
+                                        class="w-24 sm:w-28 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-2 py-1 outline-none focus:ring-2 focus:ring-amber-500/20 font-bold text-xs"
                                         onchange="runOptimization()">
                                         <option value="monthly">Monthly</option>
                                         <option value="yearly">Yearly</option>
                                     </select>
-                                </span>
+                                </div>
+                                <input type="number" id="opt-extra-val"
+                                    class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3.5 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-base sm:text-lg"
+                                    placeholder="500" oninput="runOptimization()">
                             </div>
-                            <div class="group">
-                                <label
-                                    class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 pl-1 group-focus-within:text-amber-500">One-Time
-                                    Prepayment (Lump Sum)</label>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <input type="number" id="opt-lump-val"
-                                        class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-sm"
-                                        placeholder="Amount" oninput="runOptimization()">
-                                    <input type="number" id="opt-lump-month"
-                                        class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-sm"
-                                        placeholder="Month #" oninput="runOptimization()">
+                            <div class="group space-y-3">
+                                <div class="flex items-center justify-between pl-1">
+                                    <label
+                                        class="block text-xs font-bold text-slate-600 dark:text-slate-400 group-focus-within:text-amber-500">
+                                        Lump-Sum Prepayments
+                                    </label>
+                                    <button type="button" onclick="addLumpSumRow()"
+                                        class="text-xs font-bold text-amber-500 hover:text-amber-600 flex items-center gap-1 transition-colors">
+                                        <i class="fas fa-plus-circle"></i> Add Payment
+                                    </button>
+                                </div>
+                                <div id="lump-sum-container" class="space-y-2">
                                 </div>
                             </div>
                         </div>
@@ -225,132 +225,144 @@
             </aside>
 
             <!-- Dashboard Content Area -->
-            <div class="flex-1 p-8 md:p-12">
+            <div class="flex-1 p-4 sm:p-8 md:p-12 min-w-0">
 
                 <!-- Highlights Row -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 md:mb-12">
                     <div
-                        class="bg-amber-500/10 dark:bg-amber-500/5 border border-amber-500/20 p-8 rounded-3xl relative overflow-hidden group">
+                        class="bg-amber-500/10 dark:bg-amber-500/5 border border-amber-500/20 p-5 sm:p-8 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
                         <div class="relative z-10">
                             <h4 class="text-[10px] font-black text-amber-500 uppercase tracking-widest mb-2">Total
                                 Interest Saved</h4>
                             <div id="res-saved-interest"
-                                class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">&mdash;
+                                class="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tighter truncate">
+                                &mdash;
                             </div>
                         </div>
                         <i
-                            class="fas fa-coins absolute -bottom-4 -right-4 text-amber-500/10 text-7xl rotate-12 transition-transform group-hover:rotate-0"></i>
+                            class="fas fa-coins absolute -bottom-4 -right-4 text-amber-500/10 text-6xl sm:text-7xl rotate-12 transition-transform group-hover:rotate-0"></i>
                     </div>
                     <div
-                        class="bg-emerald-500/10 dark:bg-emerald-500/5 border border-emerald-500/20 p-8 rounded-3xl relative overflow-hidden group">
+                        class="bg-emerald-500/10 dark:bg-emerald-500/5 border border-emerald-500/20 p-5 sm:p-8 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
                         <div class="relative z-10">
                             <h4 class="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-2">Years
                                 Reduced</h4>
                             <div id="res-saved-time"
-                                class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">&mdash;
+                                class="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tighter truncate">
+                                &mdash;
                             </div>
                         </div>
                         <i
-                            class="fas fa-hourglass-end absolute -bottom-4 -right-4 text-emerald-500/10 text-7xl rotate-12 transition-transform group-hover:rotate-0"></i>
+                            class="fas fa-hourglass-end absolute -bottom-4 -right-4 text-emerald-500/10 text-6xl sm:text-7xl rotate-12 transition-transform group-hover:rotate-0"></i>
                     </div>
                     <div
-                        class="bg-indigo-500/10 dark:bg-indigo-500/5 border border-indigo-500/20 p-8 rounded-3xl relative overflow-hidden group">
+                        class="bg-indigo-500/10 dark:bg-indigo-500/5 border border-indigo-500/20 p-5 sm:p-8 rounded-2xl sm:rounded-3xl relative overflow-hidden group sm:col-span-2 lg:col-span-1">
                         <div class="relative z-10">
                             <h4 class="text-[10px] font-black text-indigo-500 uppercase tracking-widest mb-2">New Tenure
                             </h4>
                             <div id="res-total-tenure"
-                                class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">&mdash;
+                                class="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tighter truncate">
+                                &mdash;
                             </div>
                         </div>
                         <i
-                            class="fas fa-calendar-check absolute -bottom-4 -right-4 text-indigo-500/10 text-7xl rotate-12 transition-transform group-hover:rotate-0"></i>
+                            class="fas fa-calendar-check absolute -bottom-4 -right-4 text-indigo-500/10 text-6xl sm:text-7xl rotate-12 transition-transform group-hover:rotate-0"></i>
                     </div>
                 </div>
 
                 <!-- Chart Row -->
-                <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-12">
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8 mb-8 md:mb-12">
                     <div
-                        class="lg:col-span-3 bg-slate-50 dark:bg-slate-900/30 rounded-4xl p-8 border border-slate-100 dark:border-slate-800 h-[400px]">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="font-black text-slate-900 dark:text-white uppercase tracking-tight text-sm">Loan
+                        class="lg:col-span-3 bg-slate-50 dark:bg-slate-900/30 rounded-3xl sm:rounded-4xl p-4 sm:p-8 border border-slate-100 dark:border-slate-800">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                            <h3
+                                class="font-black text-slate-900 dark:text-white uppercase tracking-tight text-xs sm:text-sm">
+                                Loan
                                 Balance over time</h3>
-                            <div class="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest">
+                            <div
+                                class="flex items-center gap-3 sm:gap-4 text-[10px] font-bold uppercase tracking-widest">
                                 <span class="flex items-center gap-1.5"><span
-                                        class="w-2 h-2 rounded-full bg-slate-300"></span> Standard</span>
+                                        class="w-2 h-2 rounded-full bg-slate-400"></span> Standard</span>
                                 <span class="flex items-center gap-1.5"><span
                                         class="w-2 h-2 rounded-full bg-amber-500"></span> Optimized</span>
                             </div>
                         </div>
-                        <div class="h-[300px]">
+                        <div class="h-[250px] sm:h-[300px] relative w-full">
                             <canvas id="loanChart"></canvas>
                         </div>
                     </div>
-                    <div class="lg:col-span-2 space-y-6">
+                    <div class="lg:col-span-2 space-y-4 sm:space-y-6">
                         <div
-                            class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
-                            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Summary
+                            class="bg-white dark:bg-slate-800 p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 sm:mb-6">
+                                Summary
                                 Distribution</h3>
-                            <div class="h-48 relative flex items-center justify-center">
+                            <div class="h-44 sm:h-48 relative flex items-center justify-center">
                                 <canvas id="distChart"></canvas>
                                 <div class="absolute text-center">
                                     <div id="res-standard-emi"
-                                        class="text-xl font-black text-slate-900 dark:text-white leading-none">&mdash;
+                                        class="text-lg sm:text-xl font-black text-slate-900 dark:text-white leading-none">
+                                        &mdash;
                                     </div>
-                                    <div class="text-[10px] font-bold text-slate-400 uppercase">Monthly EMI</div>
+                                    <div class="text-[10px] font-bold text-slate-400 uppercase mt-1">Monthly EMI</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-slate-900 dark:bg-slate-700 rounded-3xl p-8 text-white">
-                            <div class="flex items-center gap-4 mb-4">
+                        <div class="bg-slate-900 dark:bg-slate-700 rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-white">
+                            <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
                                 <div
-                                    class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-slate-900">
-                                    <i class="fas fa-lightbulb"></i>
+                                    class="w-8 sm:w-10 h-8 sm:h-10 rounded-xl bg-amber-500 flex items-center justify-center text-slate-900 shrink-0">
+                                    <i class="fas fa-lightbulb text-sm sm:text-base"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-sm">Savings Analysis</h4>
+                                    <h4 class="font-bold text-xs sm:text-sm">Savings Analysis</h4>
                                     <p class="text-[10px] text-slate-400 uppercase font-black">Strategy Report</p>
                                 </div>
                             </div>
-                            <p id="savings-insight" class="text-sm text-slate-300 leading-relaxed italic">Start entering
+                            <p id="savings-insight" class="text-xs sm:text-sm text-slate-300 leading-relaxed italic">
+                                Start entering
                                 your loan details to generate specialized interest-saving insights.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Amortization Schedule Section -->
-                <div class="pt-8 border-t border-slate-200 dark:border-slate-700">
-                    <div class="flex items-center justify-between mb-8">
+                <div class="pt-6 sm:pt-8 border-t border-slate-200 dark:border-slate-700">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
                         <div>
-                            <h3 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Amortization
+                            <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+                                Amortization
                                 <span class="text-amber-500">Schedule</span>
                             </h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Monthly breakdown of your principal
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Monthly breakdown of your
+                                principal
                                 and interest</p>
                         </div>
                         <button onclick="exportToCSV()"
-                            class="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600/50">
+                            class="self-start sm:self-auto flex items-center gap-2 px-4 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600/50">
                             <i class="fas fa-download"></i> Export Data
                         </button>
                     </div>
 
                     <div
                         class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
-                        <table class="w-full text-left text-sm">
+                        <table class="w-full text-left text-xs sm:text-sm min-w-[600px]">
                             <thead>
                                 <tr
                                     class="bg-slate-50 dark:bg-slate-800/80 text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-200 dark:border-slate-700">
-                                    <th class="px-6 py-4">Month</th>
-                                    <th class="px-6 py-4">Opening Balance</th>
-                                    <th class="px-6 py-4">Principal</th>
-                                    <th class="px-6 py-4">Interest</th>
-                                    <th class="px-6 py-4 text-amber-500">Extra</th>
-                                    <th class="px-6 py-4">Closing Balance</th>
+                                    <th class="px-4 sm:px-6 py-3.5 sm:py-4">Month</th>
+                                    <th class="px-4 sm:px-6 py-3.5 sm:py-4">Opening Balance</th>
+                                    <th class="px-4 sm:px-6 py-3.5 sm:py-4">Principal</th>
+                                    <th class="px-4 sm:px-6 py-3.5 sm:py-4">Interest</th>
+                                    <th class="px-4 sm:px-6 py-3.5 sm:py-4 text-amber-500">Extra</th>
+                                    <th class="px-4 sm:px-6 py-3.5 sm:py-4">Closing Balance</th>
                                 </tr>
                             </thead>
                             <tbody id="schedule-body" class="divide-y divide-slate-100 dark:divide-slate-800">
                                 <!-- Injected via loan-optimizer.js -->
                                 <tr>
-                                    <td colspan="6" class="px-6 py-12 text-center text-slate-400 font-medium italic">
+                                    <td colspan="6"
+                                        class="px-4 sm:px-6 py-12 text-center text-slate-400 font-medium italic">
                                         Enter loan terms to generate schedule...</td>
                                 </tr>
                             </tbody>

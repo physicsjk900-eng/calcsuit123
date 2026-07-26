@@ -4,10 +4,34 @@ document.addEventListener('DOMContentLoaded', () => {
     let loanChart = null;
     let distChart = null;
 
-    const formatCurrency = val => isNaN(val) ? "&mdash;" : '$' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const currencyMap = {
+        'USD': '$',
+        'EUR': '€',
+        'GBP': '£',
+        'JPY': '¥',
+        'INR': '₹'
+    };
+
+    const getCurrencySymbol = () => {
+        const currencySelect = document.getElementById('opt-currency-type');
+        const symbolSpan = document.getElementById('opt-currency-symbol');
+        const selectedVal = currencySelect ? currencySelect.value : 'USD';
+        const symbol = currencyMap[selectedVal] || '$';
+        if (symbolSpan) {
+            symbolSpan.innerText = symbol;
+        }
+        return symbol;
+    };
+
+    const formatCurrency = val => isNaN(val) ? "&mdash;" : getCurrencySymbol() + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const formatNumber = val => isNaN(val) ? "0" : val.toLocaleString('en-US');
 
+    // Initialize currency symbol on page load
+    getCurrencySymbol();
+
     window.runOptimization = () => {
+        getCurrencySymbol();
+
         const principal = parseFloat(document.getElementById('opt-principal').value);
         const annualRate = parseFloat(document.getElementById('opt-rate').value);
         const years = parseFloat(document.getElementById('opt-years').value);
@@ -204,6 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function resetUI() {
+        getCurrencySymbol();
         document.getElementById('res-saved-interest').innerText = "&mdash;";
         document.getElementById('res-saved-time').innerText = "&mdash;";
         document.getElementById('res-total-tenure').innerText = "&mdash;";

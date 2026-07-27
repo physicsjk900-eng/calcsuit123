@@ -30,22 +30,22 @@
     <link rel="icon" type="image/png" href="../images/favicon.png">
 
     <!-- Structured Data (SEO) -->
-    
-    
-    
-    
+
+
+
+
 
     <!-- Structured Data (SEO) -->
-    
-    
-    
-    
+
+
+
+
 
     <!-- Structured Data (SEO) -->
-    
-    
-    
-    
+
+
+
+
 
     <!-- Structured Data (SEO) -->
     <script type="application/ld+json">
@@ -135,46 +135,66 @@
 
     <div id="sidebar-container" class="contents"></div>
 
-    <main id="app-container" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
-        
+    <main id="app-container"
+        class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative flex flex-col items-center">
+
         <!-- Calculator Card -->
-        <div id="calc-interest" class="w-full max-w-3xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
+        <div id="calc-interest"
+            class="w-full max-w-3xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 md:p-10 transition-all duration-300">
             <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Interest <span class="text-emerald-500 font-light">Growth Calc</span></h2>
-                    <p class="text-sm text-slate-500 dark:text-slate-400">Simple & Compound Interest Projection</p>
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-1">Interest <span
+                            class="text-emerald-500 font-light">Growth Calculator</span></h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Simple & Compound Interest Calculation with
+                        Future values</p>
                 </div>
-                <div class="bg-emerald-100/50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-emerald-200 dark:border-emerald-800/50 shadow-sm self-start sm:self-auto uppercase tracking-tighter">
+                <div
+                    class="bg-emerald-100/50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-emerald-200 dark:border-emerald-800/50 shadow-sm self-start sm:self-auto uppercase tracking-tighter">
                     <i class="fas fa-chart-line"></i> Finance Suite
                 </div>
             </div>
 
             <div class="space-y-6">
                 <!-- Interest Type Toggle -->
-                <div class="flex p-1 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700">
+                <div
+                    class="flex p-1 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700">
                     <label class="flex-1 cursor-pointer">
-                        <input type="radio" name="interest-type" value="simple" class="sr-only peer" onchange="toggleCompoundFreq(false); calculateInterest();">
-                        <div class="py-3 text-center rounded-xl text-sm font-bold text-slate-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:text-emerald-500 peer-checked:shadow-sm transition-all uppercase tracking-widest">Simple</div>
+                        <input type="radio" name="interest-type" value="simple" class="sr-only peer"
+                            onchange="toggleCompoundFreq(false); calculateInterest();">
+                        <div
+                            class="py-3 text-center rounded-xl text-sm font-bold text-slate-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:text-emerald-500 peer-checked:shadow-sm transition-all uppercase tracking-widest">
+                            Simple</div>
                     </label>
                     <label class="flex-1 cursor-pointer">
-                        <input type="radio" name="interest-type" value="compound" class="sr-only peer" checked onchange="toggleCompoundFreq(true); calculateInterest();">
-                        <div class="py-3 text-center rounded-xl text-sm font-bold text-slate-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:text-emerald-500 peer-checked:shadow-sm transition-all uppercase tracking-widest">Compound</div>
+                        <input type="radio" name="interest-type" value="compound" class="sr-only peer" checked
+                            onchange="toggleCompoundFreq(true); calculateInterest();">
+                        <div
+                            class="py-3 text-center rounded-xl text-sm font-bold text-slate-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:text-emerald-500 peer-checked:shadow-sm transition-all uppercase tracking-widest">
+                            Compound</div>
                     </label>
                 </div>
 
                 <!-- Input Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="group">
-                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-emerald-500 transition-colors">Initial Principal</label>
+                        <label
+                            class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-emerald-500 transition-colors">Initial
+                            Principal</label>
                         <div class="relative">
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
-                            <input type="number" id="int-principal" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl pl-10 pr-4 py-4 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-bold text-xl" placeholder="10000" oninput="calculateInterest()">
+                            <span class="absolute left-1 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                            <input type="number" id="int-principal"
+                                class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl pl-10 pr-4 py-4 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-bold text-xl"
+                                placeholder="10000" oninput="calculateInterest()">
                         </div>
                     </div>
                     <div class="group">
-                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-emerald-500 transition-colors">Annual Rate</label>
+                        <label
+                            class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-emerald-500 transition-colors">Annual
+                            Rate</label>
                         <div class="relative">
-                            <input type="number" id="int-rate" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 pr-12 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-bold text-xl" placeholder="5" step="0.1" oninput="calculateInterest()">
+                            <input type="number" id="int-rate"
+                                class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 pr-12 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-bold text-xl"
+                                placeholder="5" step="0.1" oninput="calculateInterest()">
                             <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">%</span>
                         </div>
                     </div>
@@ -182,12 +202,19 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="group">
-                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-emerald-500 transition-colors">Duration (Years)</label>
-                        <input type="number" id="int-time" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-bold text-xl" placeholder="10" step="0.5" oninput="calculateInterest()">
+                        <label
+                            class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-emerald-500 transition-colors">Duration
+                            (Years)</label>
+                        <input type="number" id="int-time"
+                            class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-bold text-xl"
+                            placeholder="10" step="0.5" oninput="calculateInterest()">
                     </div>
                     <div id="compound-freq-container" class="group">
-                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-emerald-500 transition-colors">Compounding</label>
-                        <select id="int-freq" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-bold text-sm cursor-pointer" onchange="calculateInterest()">
+                        <label
+                            class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 pl-1 group-focus-within:text-emerald-500 transition-colors">Compounding</label>
+                        <select id="int-freq"
+                            class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-4 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-bold text-sm cursor-pointer"
+                            onchange="calculateInterest()">
                             <option value="1">Annually</option>
                             <option value="2">Semi-Annually</option>
                             <option value="4">Quarterly</option>
@@ -199,14 +226,22 @@
 
                 <!-- Results Display -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-                    <div class="bg-slate-50 dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-100 dark:border-slate-800/50 text-center relative group">
-                        <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Total Interest Earned</h4>
-                        <div id="int-res-interest" class="text-3xl font-black text-emerald-600 dark:text-emerald-400 tracking-tighter">&mdash;</div>
+                    <div
+                        class="bg-slate-50 dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-100 dark:border-slate-800/50 text-center relative group">
+                        <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Total Interest
+                            Earned</h4>
+                        <div id="int-res-interest"
+                            class="text-3xl font-black text-emerald-600 dark:text-emerald-400 tracking-tighter">&mdash;
+                        </div>
                     </div>
-                    <div class="bg-emerald-500 p-8 rounded-3xl text-center relative group overflow-hidden shadow-xl shadow-emerald-500/20">
+                    <div
+                        class="bg-emerald-500 p-8 rounded-3xl text-center relative group overflow-hidden shadow-xl shadow-emerald-500/20">
                         <div class="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
-                        <h4 class="text-[10px] font-black text-emerald-100 uppercase tracking-widest mb-2 relative z-10">Total Future Value</h4>
-                        <div id="int-res-total" class="text-3xl font-black text-white tracking-tighter relative z-10">&mdash;</div>
+                        <h4
+                            class="text-[10px] font-black text-emerald-100 uppercase tracking-widest mb-2 relative z-10">
+                            Total Future Value</h4>
+                        <div id="int-res-total" class="text-3xl font-black text-white tracking-tighter relative z-10">
+                            &mdash;</div>
                     </div>
                 </div>
             </div>
@@ -214,52 +249,66 @@
 
         <!-- SEO Educational Content -->
         <div class="w-full max-w-4xl mt-16 space-y-12 pb-24">
-            
+
             <!-- Hero Section -->
             <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div class="space-y-6">
-                    <h1 class="text-4xl font-black text-slate-900 dark:text-white leading-tight"> Visualize Your 
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">Wealth Growth</span>
+                    <h1 class="text-4xl font-black text-slate-900 dark:text-white leading-tight"> Visualize Your
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">Wealth
+                            Growth</span>
                     </h1>
                     <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Understanding the difference between <strong>Simple</strong> and <strong>Compound interest</strong> is the most important financial lesson you'll ever learn. One grows your money, the other multiplies it.
+                        Understanding the difference between <strong>Simple</strong> and <strong>Compound
+                            interest</strong> is the most important financial lesson you'll ever learn. One grows your
+                        money, the other multiplies it.
                     </p>
                     <div class="flex flex-wrap gap-4">
-                        <div class="px-4 py-2 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-full text-xs font-bold border border-emerald-100 dark:border-emerald-800 italic">"The 8th Wonder of the World"</div>
+                        <div
+                            class="px-4 py-2 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-full text-xs font-bold border border-emerald-100 dark:border-emerald-800 italic">
+                            "The 8th Wonder of the World"</div>
                     </div>
                 </div>
-                <div class="bg-slate-100 dark:bg-slate-800/50 rounded-4xl p-10 border border-slate-200 dark:border-slate-700 relative overflow-hidden group">
+                <div
+                    class="bg-slate-100 dark:bg-slate-800/50 rounded-4xl p-10 border border-slate-200 dark:border-slate-700 relative overflow-hidden group">
                     <div class="relative z-10">
-                        <div class="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-4">Compound Interest Formula</div>
-                        <div class="p-6 bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800 text-center font-serif text-xl overflow-x-auto">
+                        <div class="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-4">Compound
+                            Interest Formula</div>
+                        <div
+                            class="p-6 bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800 text-center font-serif text-xl overflow-x-auto">
                             $$A = P(1 + \frac{r}{n})^{nt}$$
                         </div>
                     </div>
-                    <i class="fas fa-coins absolute -bottom-10 -right-10 text-slate-200 dark:text-slate-700 text-[180px] group-hover:scale-110 transition-transform duration-700 opacity-20"></i>
+                    <i
+                        class="fas fa-coins absolute -bottom-10 -right-10 text-slate-200 dark:text-slate-700 text-[180px] group-hover:scale-110 transition-transform duration-700 opacity-20"></i>
                 </div>
             </section>
 
             <!-- Comparison Grid -->
             <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="p-8 bg-white dark:bg-slate-800 rounded-4xl border border-slate-200 dark:border-slate-700 shadow-sm border-t-4 border-t-indigo-500">
+                <div
+                    class="p-8 bg-white dark:bg-slate-800 rounded-4xl border border-slate-200 dark:border-slate-700 shadow-sm border-t-4 border-t-indigo-500">
                     <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
                         <i class="fas fa-equals text-indigo-500"></i> Simple Interest
                     </h3>
                     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
-                        Calculated only on the <strong>original principal</strong> amount. Each period, you earn the same dollar amount. Common in short-term personal loans or specific bonds.
+                        Calculated only on the <strong>original principal</strong> amount. Each period, you earn the
+                        same dollar amount. Common in short-term personal loans or specific bonds.
                     </p>
                     <div class="text-[10px] font-mono text-slate-400 uppercase tracking-widest mb-2">Formula:</div>
                     <div class="font-bold text-slate-800 dark:text-slate-200">Interest = P × R × T</div>
                 </div>
-                <div class="p-8 bg-white dark:bg-slate-800 rounded-4xl border border-slate-200 dark:border-slate-700 shadow-sm border-t-4 border-t-emerald-500">
+                <div
+                    class="p-8 bg-white dark:bg-slate-800 rounded-4xl border border-slate-200 dark:border-slate-700 shadow-sm border-t-4 border-t-emerald-500">
                     <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
                         <i class="fas fa-bolt text-emerald-500"></i> Compound Interest
                     </h3>
                     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
-                        Calculated on the <strong>principal AND the accumulated interest</strong> of previous periods. Your money earns interest, which then earns its own interest—a snowball effect.
+                        Calculated on the <strong>principal AND the accumulated interest</strong> of previous periods.
+                        Your money earns interest, which then earns its own interest—a snowball effect.
                     </p>
                     <div class="text-[10px] font-mono text-slate-400 uppercase tracking-widest mb-2">Note:</div>
-                    <div class="font-bold text-emerald-500 underline decoration-2 underline-offset-4">Interest on Interest</div>
+                    <div class="font-bold text-emerald-500 underline decoration-2 underline-offset-4">Interest on
+                        Interest</div>
                 </div>
             </section>
 
@@ -268,7 +317,9 @@
                 <div class="text-center md:text-left flex-1">
                     <h2 class="text-3xl font-black mb-4">Frequency Matters</h2>
                     <p class="text-indigo-100 leading-relaxed">
-                        The more often interest is compounded, the higher the total growth. Monthly compounding earns more than annual compounding, even with the same interest rate. Our tool handles these complex intervals instantly.
+                        The more often interest is compounded, the higher the total growth. Monthly compounding earns
+                        more than annual compounding, even with the same interest rate. Our tool handles these complex
+                        intervals instantly.
                     </p>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
@@ -285,198 +336,287 @@
 
             <!-- Pro Tips -->
             <section class="space-y-6">
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white pl-4 border-l-4 border-emerald-500">Wealth Building Insights</h2>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white pl-4 border-l-4 border-emerald-500">Wealth
+                    Building Insights</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="flex gap-4 p-6 bg-slate-50 dark:bg-slate-900/50 rounded-3xl">
                         <div class="text-emerald-500 text-xl"><i class="fas fa-hourglass-start"></i></div>
                         <div>
                             <h4 class="font-bold text-slate-900 dark:text-white mb-1">The Rule of 72</h4>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Divide 72 by your interest rate to see how many years it takes to double your money. (e.g., 6% rate = 12 years to double).</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Divide 72 by your interest rate to see
+                                how many years it takes to double your money. (e.g., 6% rate = 12 years to double).</p>
                         </div>
                     </div>
                     <div class="flex gap-4 p-6 bg-slate-50 dark:bg-slate-900/50 rounded-3xl">
                         <div class="text-indigo-500 text-xl"><i class="fas fa-shield-halved"></i></div>
                         <div>
                             <h4 class="font-bold text-slate-900 dark:text-white mb-1">Inflation Protection</h4>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Compound interest is the best defense against purchasing power loss over decades. Start early, even with small amounts.</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Compound interest is the best defense
+                                against purchasing power loss over decades. Start early, even with small amounts.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
         </div>
-    
-<!-- SEO Content Module -->
-    <section class="w-full max-w-5xl mt-12 space-y-12">
-        <article class="bg-white dark:bg-slate-800 p-8 md:p-16 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 space-y-12">
-            
-            <!-- H2 Header & Intro -->
-            <header class="border-b border-slate-100 dark:border-slate-700 pb-8 text-center md:text-left">
-                <span class="px-4 py-1.5 rounded-full bg-emerald-600/10 text-emerald-500 text-xs font-bold uppercase tracking-widest mb-4 inline-block">FINANCE SUITE</span>
-                <h2 class="text-3xl md:text-4xl font-black text-slate-800 dark:text-white mt-2 mb-4 leading-tight">Interest Calculator Calculator - Online Solver & Formula Guide</h2>
-                <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed max-w-4xl">Interest Calculator is a vital metric in our daily routines, academic assignments, and professional workflows. This comprehensive guide details the mathematical principles, practical use cases, and steps to perform these calculations accurately. In the modern economic landscape, financial literacy and precise accounting are essential pillars for both personal stability and corporate growth. Making decisions blindly without analyzing basic formulas leads to operational inefficiencies and capital leaks. High-yield accounts, debt interest charges, operational margins, and compound growth parameters all interact dynamically to shape your net worth. This online solver is engineered to bring institutional-grade financial modeling directly to your web browser. By providing instant clarity on interest charges, payment terms, tax percentages, and budget lines, we empower users to eliminate assumptions and take command of their financial future.</p>
-            </header>
 
-            <!-- Detailed Explanation & What is Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <div class="space-y-4">
+        <!-- SEO Content Module -->
+        <section class="w-full max-w-5xl mt-12 space-y-12">
+            <article
+                class="bg-white dark:bg-slate-800 p-8 md:p-16 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 space-y-12">
+
+                <!-- H2 Header & Intro -->
+                <header class="border-b border-slate-100 dark:border-slate-700 pb-8 text-center md:text-left">
+                    <span
+                        class="px-4 py-1.5 rounded-full bg-emerald-600/10 text-emerald-500 text-xs font-bold uppercase tracking-widest mb-4 inline-block">FINANCE
+                        SUITE</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-800 dark:text-white mt-2 mb-4 leading-tight">
+                        Interest Calculator Calculator - Online Solver & Formula Guide</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed max-w-4xl">Interest
+                        Calculator is a vital metric in our daily routines, academic assignments, and professional
+                        workflows. This comprehensive guide details the mathematical principles, practical use cases,
+                        and steps to perform these calculations accurately. In the modern economic landscape, financial
+                        literacy and precise accounting are essential pillars for both personal stability and corporate
+                        growth. Making decisions blindly without analyzing basic formulas leads to operational
+                        inefficiencies and capital leaks. High-yield accounts, debt interest charges, operational
+                        margins, and compound growth parameters all interact dynamically to shape your net worth. This
+                        online solver is engineered to bring institutional-grade financial modeling directly to your web
+                        browser. By providing instant clarity on interest charges, payment terms, tax percentages, and
+                        budget lines, we empower users to eliminate assumptions and take command of their financial
+                        future.</p>
+                </header>
+
+                <!-- Detailed Explanation & What is Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                            <i class="fas fa-info-circle text-emerald-500"></i> What is the Interest Calculator Solver?
+                        </h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Interest Calculator
+                            calculations are key in both personal planning and professional analysis. This online tool
+                            processes your inputs instantly in your browser to deliver accurate results. By analyzing
+                            the underlying variables, users can understand the relationships between inputs and identify
+                            key insights. Understanding the time value of money is critical when navigating financial
+                            models. Every dollar you spend on interest represents an opportunity cost—capital that could
+                            otherwise be earning compound returns in interest-bearing assets or equity markets.
+                            Amortization schedules show how payments are divided between paying down principal and
+                            paying interest charges over the life of a loan. By analyzing this data, borrowers can
+                            identify strategic prepayments that save significant money. Similarly, for businesses,
+                            identifying contribution margins and fixed costs ensures products are priced to cover
+                            overhead and generate sustainable profit.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                            <i class="fas fa-lightbulb text-emerald-500"></i> Best Practices & Pro-Tips
+                        </h3>
+                        <div
+                            class="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-200 dark:border-emerald-900/30 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            <p class="font-bold text-emerald-500 mb-2"><i class="fas fa-star mr-1"></i> Optimizing Your
+                                Results</p>
+                            Financial Pro-Tip: When analyzing interest-bearing debt, prioritize paying off high-interest
+                            balances first (the Avalanche method) to minimize total interest paid. Additionally,
+                            automate savings deposits into High-Yield Savings Accounts (HYSAs) to earn interest on your
+                            cash, and audit recurring subscriptions regularly to prevent cost leaks. Make sure to verify
+                            your input units before running calculations.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How to Use Section -->
+                <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
                     <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                        <i class="fas fa-info-circle text-emerald-500"></i> What is the Interest Calculator Solver?
+                        <i class="fas fa-directions text-emerald-500"></i> How to Use the Interest Calculator Calculator
                     </h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Interest Calculator calculations are key in both personal planning and professional analysis. This online tool processes your inputs instantly in your browser to deliver accurate results. By analyzing the underlying variables, users can understand the relationships between inputs and identify key insights. Understanding the time value of money is critical when navigating financial models. Every dollar you spend on interest represents an opportunity cost—capital that could otherwise be earning compound returns in interest-bearing assets or equity markets. Amortization schedules show how payments are divided between paying down principal and paying interest charges over the life of a loan. By analyzing this data, borrowers can identify strategic prepayments that save significant money. Similarly, for businesses, identifying contribution margins and fixed costs ensures products are priced to cover overhead and generate sustainable profit.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div
+                            class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <div
+                                class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">
+                                1</div>
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-1">Input Data</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Enter the required values into the
+                                form fields. Make sure to double-check the values for accuracy.</p>
+                        </div>
+                        <div
+                            class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <div
+                                class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">
+                                2</div>
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-1">Verify Units</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Ensure your values match the specified
+                                units (e.g. grams vs ounces, centimeters vs inches).</p>
+                        </div>
+                        <div
+                            class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <div
+                                class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">
+                                3</div>
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-1">Run Calculation</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Click the calculate button to process
+                                the mathematical formulas instantly in your browser.</p>
+                        </div>
+                        <div
+                            class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <div
+                                class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">
+                                4</div>
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-1">Copy Results</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Review the output, check the formulas,
+                                and copy or save the results for your records.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="space-y-4">
+
+                <!-- Mathematical Formula & Technical Description -->
+                <div class="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-700">
                     <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                        <i class="fas fa-lightbulb text-emerald-500"></i> Best Practices & Pro-Tips
+                        <i class="fas fa-square-root-variable text-emerald-500"></i> Formula & Computational Methodology
                     </h3>
-                    <div class="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-200 dark:border-emerald-900/30 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                        <p class="font-bold text-emerald-500 mb-2"><i class="fas fa-star mr-1"></i> Optimizing Your Results</p>
-                        Financial Pro-Tip: When analyzing interest-bearing debt, prioritize paying off high-interest balances first (the Avalanche method) to minimize total interest paid. Additionally, automate savings deposits into High-Yield Savings Accounts (HYSAs) to earn interest on your cash, and audit recurring subscriptions regularly to prevent cost leaks. Make sure to verify your input units before running calculations.
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Understanding the mathematics
+                        behind the calculations helps clarify how the inputs relate to the final result. Our calculator
+                        processes the formulas instantly in your browser. Below is the equation used to calculate
+                        Interest Calculator:</p>
+                    <div
+                        class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
+                        Simple interest is calculated as:<br>\(I = P \times r \times t\)<br>Compound interest is
+                        calculated as:<br>\(A = P(1 + \frac{r}{n})^{nt}\)<br>Where \(P\) is principal, \(r\) is annual
+                        rate, \(t\) is years, and \(n\) is compounding periods per year.
                     </div>
                 </div>
-            </div>
 
-            <!-- How to Use Section -->
-            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-directions text-emerald-500"></i> How to Use the Interest Calculator Calculator
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">1</div>
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Input Data</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Enter the required values into the form fields. Make sure to double-check the values for accuracy.</p>
-                    </div>
-                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">2</div>
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Verify Units</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Ensure your values match the specified units (e.g. grams vs ounces, centimeters vs inches).</p>
-                    </div>
-                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">3</div>
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Run Calculation</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Click the calculate button to process the mathematical formulas instantly in your browser.</p>
-                    </div>
-                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">4</div>
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-1">Copy Results</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Review the output, check the formulas, and copy or save the results for your records.</p>
+                <!-- Step-by-Step Numerical Examples -->
+                <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-calculator text-emerald-500"></i> Step-by-Step Calculation Examples
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Review these examples to see how the
+                        mathematical formula is applied to different input values:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
+                            <h4 class="font-bold text-slate-800 dark:text-white text-base"><i
+                                    class="fas fa-check-circle text-emerald-500 mr-1"></i> Example Scenario 1</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">Simple interest on
+                                $1,000 at 5% for 3 years:
+                                Interest = $1,000 * 0.05 * 3 = $150.</p>
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
+                            <h4 class="font-bold text-slate-800 dark:text-white text-base"><i
+                                    class="fas fa-check-circle text-emerald-500 mr-1"></i> Example Scenario 2</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">Compound interest
+                                on $1,000 at 5% compounded annually for 3 years:
+                                Future Value = $1,000 * (1.05)^3 = $1,157.63 (Interest earned is $157.63).</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Mathematical Formula & Technical Description -->
-            <div class="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-square-root-variable text-emerald-500"></i> Formula & Computational Methodology
-                </h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Understanding the mathematics behind the calculations helps clarify how the inputs relate to the final result. Our calculator processes the formulas instantly in your browser. Below is the equation used to calculate Interest Calculator:</p>
-                <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
-                    Simple interest is calculated as:<br>\(I = P \times r \times t\)<br>Compound interest is calculated as:<br>\(A = P(1 + \frac{r}{n})^{nt}\)<br>Where \(P\) is principal, \(r\) is annual rate, \(t\) is years, and \(n\) is compounding periods per year.
-                </div>
-            </div>
-
-            <!-- Step-by-Step Numerical Examples -->
-            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-calculator text-emerald-500"></i> Step-by-Step Calculation Examples
-                </h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400">Review these examples to see how the mathematical formula is applied to different input values:</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
-                        <h4 class="font-bold text-slate-800 dark:text-white text-base"><i class="fas fa-check-circle text-emerald-500 mr-1"></i> Example Scenario 1</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">Simple interest on $1,000 at 5% for 3 years:
-Interest = $1,000 * 0.05 * 3 = $150.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-2">
-                        <h4 class="font-bold text-slate-800 dark:text-white text-base"><i class="fas fa-check-circle text-emerald-500 mr-1"></i> Example Scenario 2</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line">Compound interest on $1,000 at 5% compounded annually for 3 years:
-Future Value = $1,000 * (1.05)^3 = $1,157.63 (Interest earned is $157.63).</p>
+                <!-- Common Applications & Use Cases -->
+                <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-briefcase text-emerald-500"></i> Common Applications & Industry Use Cases
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Personal Loans</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Calculate interest
+                                earnings or borrow costs for simple financial agreements.</p>
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Certificate of Deposit
+                                (CD)</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">See how much interest
+                                you will earn by locking funds in a CD for 1-5 years.</p>
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Investment Modeling</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Compare growth
+                                projections between simple and compound interest accounts.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Common Applications & Use Cases -->
-            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-briefcase text-emerald-500"></i> Common Applications & Industry Use Cases
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Personal Loans</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Calculate interest earnings or borrow costs for simple financial agreements.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Certificate of Deposit (CD)</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">See how much interest you will earn by locking funds in a CD for 1-5 years.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Investment Modeling</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Compare growth projections between simple and compound interest accounts.</p>
+                <!-- Frequently Asked Questions (FAQ) -->
+                <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fas fa-question-circle text-emerald-500"></i> Frequently Asked Questions
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How does this online
+                                calculator perform calculations?</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">A: The calculations are processed
+                                instantly in your browser using standard mathematical formulas. Your data remains
+                                private and is never uploaded to external servers.</p>
+                        </div>
+                        <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How does simple
+                                interest differ from compound interest?</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">A: Simple interest is calculated only
+                                on the initial principal. Compound interest is calculated on the principal plus any
+                                accumulated interest.</p>
+                        </div>
+                        <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
+                            <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: What is APR vs. APY?
+                            </h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">A: APR (Annual Percentage Rate) does
+                                not account for compounding interest, whereas APY (Annual Percentage Yield) includes
+                                compounding, showing the actual annual return.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Frequently Asked Questions (FAQ) -->
-            <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-700">
-                <h3 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-question-circle text-emerald-500"></i> Frequently Asked Questions
-                </h3>
-                <div class="space-y-6">
-                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How does this online calculator perform calculations?</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">A: The calculations are processed instantly in your browser using standard mathematical formulas. Your data remains private and is never uploaded to external servers.</p>
-                    </div>
-                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: How does simple interest differ from compound interest?</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">A: Simple interest is calculated only on the initial principal. Compound interest is calculated on the principal plus any accumulated interest.</p>
-                    </div>
-                    <div class="pb-4 border-b border-slate-100 dark:border-slate-700">
-                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 text-base">Q: What is APR vs. APY?</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">A: APR (Annual Percentage Rate) does not account for compounding interest, whereas APY (Annual Percentage Yield) includes compounding, showing the actual annual return.</p>
+
+                <!-- Related Calculators Section -->
+                <div class="pt-10 border-t border-slate-200 dark:border-slate-700">
+                    <h3 class="text-xl font-bold mb-6 text-slate-800 dark:text-white">Explore Related Finance Tools</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                        <a href="../finance/emi-calculator.html"
+                            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
+                            EMI Calculator
+                        </a>
+
+                        <a href="../finance/loan-calculator.html"
+                            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
+                            Loan Architect
+                        </a>
+
+                        <a href="../finance/loan-optimizer.html"
+                            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
+                            Loan Optimizer
+                        </a>
+
+                        <a href="../finance/compound-interest-calculator.html"
+                            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
+                            Compound Growth
+                        </a>
+
                     </div>
                 </div>
-            </div>
 
-            
-            <!-- Related Calculators Section -->
-            <div class="pt-10 border-t border-slate-200 dark:border-slate-700">
-                <h3 class="text-xl font-bold mb-6 text-slate-800 dark:text-white">Explore Related Finance Tools</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    
-                    <a href="../finance/emi-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
-                        EMI Calculator
-                    </a>
-                    
-                    <a href="../finance/loan-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
-                        Loan Architect
-                    </a>
-                    
-                    <a href="../finance/loan-optimizer.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
-                        Loan Optimizer
-                    </a>
-                    
-                    <a href="../finance/compound-interest-calculator.html" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:border-emerald-500 hover:shadow-md transition-all text-xs font-bold text-emerald-500 block">
-                        Compound Growth
-                    </a>
-                    
+
+                <!-- Conclusion Section -->
+                <div class="pt-6 border-t border-slate-100 dark:border-slate-700 text-center">
+                    <p class="text-xs text-slate-400 max-w-3xl mx-auto mb-6">Ultimately, consistent tracking and
+                        forecasting are key to financial freedom. Whether you are budgeting for a down payment, auditing
+                        subscriptions, setting product markup prices, or planning for early retirement, using accurate
+                        financial tools ensures your decisions are based on data. CalcSuit provides private, free, and
+                        precise solvers to support your financial journey.</p>
+                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                        class="px-8 py-3 bg-slate-900 dark:bg-slate-700 hover:bg-emerald-600 text-white rounded-2xl text-sm font-bold transition-all shadow-md">
+                        Start New Calculation
+                    </button>
                 </div>
-            </div>
-    
 
-            <!-- Conclusion Section -->
-            <div class="pt-6 border-t border-slate-100 dark:border-slate-700 text-center">
-                <p class="text-xs text-slate-400 max-w-3xl mx-auto mb-6">Ultimately, consistent tracking and forecasting are key to financial freedom. Whether you are budgeting for a down payment, auditing subscriptions, setting product markup prices, or planning for early retirement, using accurate financial tools ensures your decisions are based on data. CalcSuit provides private, free, and precise solvers to support your financial journey.</p>
-                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-8 py-3 bg-slate-900 dark:bg-slate-700 hover:bg-emerald-600 text-white rounded-2xl text-sm font-bold transition-all shadow-md">
-                    Start New Calculation
-                </button>
-            </div>
+            </article>
+        </section>
 
-        </article>
-    </section>
-  
-<!-- /SEO Content Module -->
-</main>
+        <!-- /SEO Content Module -->
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../js/layout.js"></script>
